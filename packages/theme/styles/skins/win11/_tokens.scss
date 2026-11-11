@@ -51,6 +51,10 @@
     --sn-menu-item-padding-x: #{px(12)};
     --sn-menu-item-radius: #{px(4)};
     --sn-dialog-padding: #{px(24)};
+    // Buttons: primary first, Cancel last (ContentDialog)
+    --sn-dialog-order-default: 1;
+    --sn-dialog-order-other: 2;
+    --sn-dialog-order-cancel: 3;
     --sn-dialog-width: #{px(440)};
     --sn-tooltip-radius: #{px(4)};
     --sn-calendar-cell: #{px(36)};

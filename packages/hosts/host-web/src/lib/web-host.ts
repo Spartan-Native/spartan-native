@@ -11,6 +11,7 @@ import {
   type Unsubscribe,
 } from '@spartan-native/theme';
 import { detectPlatform, type NavigatorLike } from './detect-platform';
+import { supportsFilePickers, webDialogs } from './web-dialogs';
 
 export interface WebHostOptions {
   /** Accent used where the browser does not expose the system accent. Default: the platform's stock accent. */
@@ -53,6 +54,7 @@ const QUERIES = {
  * | accent | CSS `AccentColor` where the browser exposes the real one (Firefox, Safari), else `options.accent` / the platform's stock accent | on focus / visibility |
  * | window focus | `focus` / `blur` / `visibilitychange` | yes |
  * | OS and skin | User-Agent Client Hints, else the user-agent string | once |
+ * | file dialogs | File System Access pickers (Chromium); absent elsewhere | – |
  *
  * ```ts
  * provideSpartanNative({ host: webHost() })
@@ -167,7 +169,7 @@ export function webHost(options: WebHostOptions = {}): NativeHost {
     customTitleBar: level(!!nav && 'windowControlsOverlay' in nav),
     notifications: level(!!win && 'Notification' in win),
     taskbarProgress: level(!!nav && 'setAppBadge' in nav),
-    fileDialogs: level(!!win && 'showOpenFilePicker' in win),
+    fileDialogs: level(supportsFilePickers(win)),
     osVersion: level(!!nav?.userAgentData),
   };
   const capabilities = Object.fromEntries(CAPABILITIES.map((c) => [c, support[c] ?? 'none'])) as HostCapabilities;
@@ -211,6 +213,7 @@ export function webHost(options: WebHostOptions = {}): NativeHost {
         };
       },
     },
+    ...(win && supportsFilePickers(win) ? { dialogs: webDialogs(win) } : {}),
   };
 }
 

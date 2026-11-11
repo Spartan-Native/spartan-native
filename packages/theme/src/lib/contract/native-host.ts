@@ -152,6 +152,79 @@ export interface MenuHost {
   onAction(cb: (id: string) => void): Unsubscribe;
 }
 
+/** One entry of a file dialog's type list. */
+export interface FileFilter {
+  /** Shown in the dialog: `'Images'`. */
+  readonly name: string;
+  /** Without the dot: `['png', 'jpg']`. `['*']` matches every file. */
+  readonly extensions: readonly string[];
+}
+
+interface FileDialogOptions {
+  /** The dialog's title (not shown by every OS). */
+  readonly title?: string;
+  /** The text of the confirm button. Default: the OS's own ("Open", "Save", …). */
+  readonly buttonLabel?: string;
+  /** Native hosts: the folder to start in. Browsers ignore it. */
+  readonly directory?: string;
+}
+
+export interface OpenFileOptions extends FileDialogOptions {
+  readonly filters?: readonly FileFilter[];
+  /** Default: false. */
+  readonly multiple?: boolean;
+}
+
+export interface SaveFileOptions extends FileDialogOptions {
+  readonly filters?: readonly FileFilter[];
+  /** The suggested file name: `'Report.pdf'`. */
+  readonly fileName?: string;
+}
+
+export type PickFolderOptions = FileDialogOptions;
+
+/**
+ * A file or folder the user chose. Native hosts give a `path`; the browser has no paths
+ * and gives a File System Access `handle` instead. `name` is always set.
+ */
+export interface PickedFile {
+  readonly name: string;
+  readonly path?: string;
+  readonly handle?: FileSystemHandle;
+}
+
+/** The OS's own alert. Buttons are listed in reading order; the OS places them its own way. */
+export interface MessageOptions {
+  /** Default: `'info'`. Picks the icon. */
+  readonly kind?: 'info' | 'question' | 'warning' | 'error';
+  readonly title?: string;
+  readonly message: string;
+  /** Default: one "OK" button with id `'ok'`. */
+  readonly buttons?: readonly { readonly id: string; readonly label: string }[];
+  /** Enter presses this one. */
+  readonly defaultId?: string;
+  /** Esc (and closing the alert) presses this one. */
+  readonly cancelId?: string;
+}
+
+/**
+ * Native file dialogs and alerts. Optional on NativeHost; present exactly when the
+ * `fileDialogs` capability isn't `none`. A cancelled dialog resolves to `[]` or `null`, never rejects.
+ */
+export interface DialogHost {
+  /** Resolves the chosen files, or `[]` when cancelled. */
+  openFile(options?: OpenFileOptions): Promise<PickedFile[]>;
+  /** Resolves where to save, or `null` when cancelled. */
+  saveFile(options?: SaveFileOptions): Promise<PickedFile | null>;
+  /** Resolves the chosen folder, or `null` when cancelled. */
+  pickFolder(options?: PickFolderOptions): Promise<PickedFile | null>;
+  /**
+   * Shows the OS's alert and resolves the id of the pressed button (`cancelId` when it was
+   * dismissed). Absent where the OS has none (the browser): draw an hlm-alert-dialog instead.
+   */
+  message?(options: MessageOptions): Promise<string | null>;
+}
+
 /** OS notifications. Specified in phase 05 (docs/10-open-questions.md, Q2). */
 export type NotificationHost = Record<string, never>;
 
@@ -164,6 +237,8 @@ export interface NativeHost {
   readonly window: WindowHost;
   /** Native menus; absent when the runtime has none (then desktop-ui draws them in the page). */
   readonly menus?: MenuHost;
+  /** File dialogs and alerts; absent when the runtime has none (capability `fileDialogs`). */
+  readonly dialogs?: DialogHost;
   readonly notifications?: NotificationHost;
 }
 

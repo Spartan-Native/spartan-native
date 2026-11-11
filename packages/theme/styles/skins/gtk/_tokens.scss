@@ -52,6 +52,10 @@
     --sn-menu-item-padding-x: #{px(10)};
     --sn-menu-item-radius: #{px(6)};
     --sn-dialog-padding: #{px(24)};
+    // Buttons: Cancel first, the suggested action last (libadwaita AlertDialog)
+    --sn-dialog-order-cancel: 1;
+    --sn-dialog-order-other: 2;
+    --sn-dialog-order-default: 3;
     --sn-dialog-width: #{px(400)};
     --sn-tooltip-radius: #{px(6)};
     --sn-popover-padding: #{px(14)};

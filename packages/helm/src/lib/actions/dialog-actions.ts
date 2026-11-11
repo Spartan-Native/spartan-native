@@ -74,4 +74,29 @@ export class SnCancelAction {
   }
 }
 
-export const SnDialogActionsImports = [SnActionScope, SnDefaultAction, SnCancelAction] as const;
+/**
+ * A row of dialog buttons, put in the order of the current OS (docs/05, Q5): the
+ * snDefaultAction, the snCancelAction and every other button. Write them in any order;
+ * the skin decides where each goes. spartan's hlm-dialog-footer and hlm-alert-dialog-footer
+ * get the same treatment without this directive. It sets an attribute, not `data-slot`, so it
+ * can sit on another component's host (`<div hlmCardFooter snDialogButtons>`).
+ *
+ * | Skin | Order |
+ * | --- | --- |
+ * | Windows, KDE | default · other · cancel |
+ * | macOS | other ‹gap› cancel · default |
+ * | GNOME | cancel · other · default |
+ * | ChromeOS, web | other · cancel · default |
+ *
+ * ```html
+ * <div snDialogButtons>
+ *   <button hlmBtn snDefaultAction>Save</button>
+ *   <button hlmBtn variant="outline">Don't save</button>
+ *   <button hlmBtn variant="outline" snCancelAction>Cancel</button>
+ * </div>
+ * ```
+ */
+@Directive({ selector: '[snDialogButtons]', host: { 'data-sn-dialog-buttons': '' } })
+export class SnDialogButtons {}
+
+export const SnDialogActionsImports = [SnActionScope, SnDefaultAction, SnCancelAction, SnDialogButtons] as const;

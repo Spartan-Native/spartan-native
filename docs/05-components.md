@@ -51,7 +51,7 @@ The component comparison artboard (`Main.dc.html`, "Light vs dark per platform")
 | Cursor | Arrow (`cursor: default`) on all controls, not the web hand pointer |
 | Chrome text | Not selectable (`user-select: none`) on buttons, tabs, menus and title bars |
 | Dialog keys | Enter triggers the default button, Esc cancels |
-| Dialog button order | Per OS. The mockup shows Don't save / Cancel / Save; finalize the per-OS order (see Q5) |
+| Dialog button order | Per OS (Q5): Windows and KDE put the default button first and Cancel last; macOS puts the default button on the right, Cancel left of it and other buttons apart on the far left; GNOME puts Cancel first and the default button last. Mark the buttons with `snDefaultAction` / `snCancelAction`; hlm dialog footers and `[snDialogButtons]` reorder them |
 | List and table selection | Click selects one; Shift-click selects a range from the anchor; Ctrl/⌘-click toggles; ↑ ↓ move; Home/End; type-ahead jumps by prefix; Ctrl/⌘A selects all; Esc clears. The table status line reads "{n} selected · click, Shift-click, Ctrl-click · ↑ ↓ Home End · type to jump · Ctrl+A · Esc clears" |
 | Shortcut display | `⌘X` on macOS, `Ctrl+X` elsewhere; Rename is `↩` vs `F2`; Delete is `⌘⌫` vs `Del` |
 | Accessibility | Real `<button>`/`<input>`; `aria-pressed`, `aria-checked`, `aria-selected`, `aria-sort`, `aria-expanded`, `aria-current="page"` as in the mockups; contrast ≥ 4.5:1 |

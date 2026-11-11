@@ -63,6 +63,13 @@
     --sn-menu-item-radius: var(--sn-radius-control);
     --sn-dialog-padding: #{px(24)};
     --sn-dialog-width: #{px(440)};
+    // Dialog button order (docs/05, Q5), read by @spartan-native/helm: `order` of the
+    // default (Enter), cancel (Esc) and other buttons, and the gap that pushes the
+    // other buttons away (macOS: "Don't Save" sits on the far left). Default: GNOME-like.
+    --sn-dialog-order-other: 1;
+    --sn-dialog-order-cancel: 2;
+    --sn-dialog-order-default: 3;
+    --sn-dialog-other-push: 0;
     --sn-tooltip-radius: #{px(4)};
     --sn-popover-padding: #{px(14)};
     --sn-toast-radius: var(--sn-radius-surface);

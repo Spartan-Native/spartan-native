@@ -4,9 +4,11 @@ Every adapter implements the same `NativeHost` interface and shares the same typ
 
 ## Shared contract (`@spartan-native/theme`)
 
-The contract below is as designed. `WindowHost`, `MenuHost`, `Capability` and `Unsubscribe` are now specified in `packages/theme/src/lib/contract/native-host.ts`; `NotificationHost` is still open (see Q2).
+The contract below is as designed. `WindowHost`, `MenuHost`, `DialogHost`, `Capability` and `Unsubscribe` are now specified in `packages/theme/src/lib/contract/native-host.ts`; `NotificationHost` is still open (see Q2).
 
 **Menus** (`MenuHost`, optional): `setApplicationMenu(menu)`, `showContextMenu(menu, { x, y })` and `onAction(cb)`. A menu is plain `MenuItem` data (label, `type` normal/checkbox/radio/separator, `accelerator` in the portable `mod+shift+s` notation, `enabled`, `checked`, `role`, `submenu`, `id`), so it crosses into Go, Rust, Node or .NET. A chosen item is reported by its `id`; roles are handled by the OS. A host offers `menus` exactly when `nativeMenus` isn't `none` (a conformance check).
+
+**Dialogs** (`DialogHost`, optional): `openFile({ filters, multiple })`, `saveFile({ filters, fileName })`, `pickFolder()` and, where the OS has one, `message({ kind, message, buttons, defaultId, cancelId })`. A chosen file is a `PickedFile`: native hosts give its `path`; the browser has no paths and gives a File System Access `handle`. A cancelled dialog resolves to `[]` or `null`, never rejects. A host offers `dialogs` exactly when `fileDialogs` isn't `none` (a conformance check). `host-web` has no `message()`: draw an `hlm-alert-dialog` there.
 
 ```ts
 // Implemented by every adapter, consumed by every component.
@@ -18,6 +20,7 @@ export interface NativeHost {
   onAppearanceChange(cb: (s: AppearanceState) => void): Unsubscribe;
   readonly window: WindowHost;                // focus, effects, title bar
   readonly menus?: MenuHost;                  // native app & context menus
+  readonly dialogs?: DialogHost;              // file dialogs and alerts
   readonly notifications?: NotificationHost;
 }
 

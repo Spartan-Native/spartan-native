@@ -149,6 +149,21 @@ export const CHECKS: readonly Check[] = [
     },
   },
   {
+    id: 'dialogs-match-capability',
+    title: 'dialogs are present exactly when fileDialogs is not none',
+    run: (h) => {
+      const level = h.capabilities.fileDialogs;
+      const d = h.dialogs;
+      if (level === 'none') {
+        expect(!d, 'fileDialogs is "none" but the host has dialogs');
+        return;
+      }
+      expect(d, `fileDialogs is "${level}" but the host has no dialogs`);
+      for (const m of ['openFile', 'saveFile', 'pickFolder'] as const) expect(typeof d![m] === 'function', `dialogs.${m} must be a function`);
+      expect(d!.message === undefined || typeof d!.message === 'function', 'dialogs.message must be a function when present');
+    },
+  },
+  {
     id: 'unsubscribe',
     title: 'subscriptions return an unsubscribe function that can be called twice',
     run: (h) => {

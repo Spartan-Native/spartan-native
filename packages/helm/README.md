@@ -12,6 +12,7 @@
 | `snDefaultAction` | Enter in the surrounding dialog or form presses this button |
 | `snCancelAction` | Esc in the surrounding dialog or form presses this button |
 | `snActionScope` | Marks a custom area for the two above (dialogs and forms are scopes already) |
+| `snDialogButtons` | A row of dialog buttons in the OS's order: default, cancel and other buttons move to where the skin puts them (`--sn-dialog-order-*`). hlm dialog and alert-dialog footers get this without the directive |
 
 ### Selection model
 

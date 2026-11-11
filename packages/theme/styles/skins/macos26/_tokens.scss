@@ -52,6 +52,11 @@
     --sn-menu-item-padding-x: #{px(8)};
     --sn-menu-item-radius: #{px(6)};
     --sn-dialog-padding: #{px(20)};
+    // Buttons: default on the right, Cancel left of it, "Don't Save" apart on the far left
+    --sn-dialog-order-other: 1;
+    --sn-dialog-order-cancel: 2;
+    --sn-dialog-order-default: 3;
+    --sn-dialog-other-push: auto;
     --sn-dialog-width: #{px(340)};
     --sn-tooltip-radius: #{px(6)};
     --sn-calendar-cell: #{px(30)};

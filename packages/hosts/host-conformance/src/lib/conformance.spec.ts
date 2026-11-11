@@ -24,7 +24,7 @@ describe('checkHostConformance', () => {
     const broken: NativeHost = {
       ...good,
       runtime: 'carrier-pigeon' as NativeHost['runtime'],
-      capabilities: { ...good.capabilities, systemAccent: 'sometimes' as never },
+      capabilities: { ...good.capabilities, systemAccent: 'sometimes' as never, fileDialogs: 'native' }, // …but no dialogs
       appearance: async () => ({ ...(await good.appearance()), accent: 'blue', skin: 'gtk' }),
       onAppearanceChange: () => undefined as never, // forgot to return unsubscribe
     };
@@ -38,6 +38,7 @@ describe('checkHostConformance', () => {
     expect(failed['capabilities']).toContain('systemAccent');
     expect(failed['appearance']).toContain('#rrggbb');
     expect(failed['skin-agrees']).toContain('gtk');
+    expect(failed['dialogs-match-capability']).toContain('no dialogs');
     expect(failed['unsubscribe']).toBeDefined();
     expect(failed['live-appearance']).toBeDefined();
   });

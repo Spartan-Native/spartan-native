@@ -11,6 +11,7 @@ import { SnDialogActionsImports } from './dialog-actions';
       <textarea id="notes"></textarea>
       <button type="button" snCancelAction (click)="log.set('cancel')">Cancel</button>
       <button type="button" snDefaultAction [disabled]="disabled()" (click)="log.set('save')">Save</button>
+      <div snDialogButtons id="row"><button type="button">Don't save</button></div>
     </form>
   `,
 })
@@ -47,5 +48,13 @@ describe('snDefaultAction / snCancelAction', () => {
     await fixture.whenStable();
     await press('#name', 'Enter');
     expect(host.log()).toBe('');
+  });
+
+  it('marks a button row so the skin can order its buttons', async () => {
+    const { fixture } = await setup();
+    const el: HTMLElement = fixture.nativeElement;
+    expect(el.querySelector('#row')!.hasAttribute('data-sn-dialog-buttons')).toBe(true);
+    expect(el.querySelector('[snDefaultAction]')!.hasAttribute('data-sn-default-action')).toBe(true);
+    expect(el.querySelector('[snCancelAction]')!.hasAttribute('data-sn-cancel-action')).toBe(true);
   });
 });

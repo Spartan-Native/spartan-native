@@ -16,7 +16,7 @@ import { SnDialogActionsImports } from '../lib/actions/dialog-actions';
     <form hlmCard (submit)="$event.preventDefault()">
       <div hlmCardHeader>
         <h3 hlmCardTitle>New destination</h3>
-        <p hlmCardDescription>Enter saves, Esc cancels, from any field. Enter in the notes adds a line.</p>
+        <p hlmCardDescription>Enter saves, Esc cancels, from any field. Enter in the notes adds a line. The buttons follow the OS's order.</p>
       </div>
       <div hlmCardContent class="fields">
         <label hlmLabel for="da-name">Name</label>
@@ -26,9 +26,10 @@ import { SnDialogActionsImports } from '../lib/actions/dialog-actions';
         <label hlmLabel for="da-notes">Notes</label>
         <textarea hlmTextarea id="da-notes" rows="2"></textarea>
       </div>
-      <div hlmCardFooter class="actions">
-        <button hlmBtn variant="outline" type="button" snCancelAction (click)="log.set('Cancelled')">Cancel</button>
+      <div hlmCardFooter snDialogButtons>
         <button hlmBtn type="button" snDefaultAction (click)="log.set('Saved')">Create</button>
+        <button hlmBtn variant="outline" type="button" (click)="log.set('Tested')">Test connection</button>
+        <button hlmBtn variant="outline" type="button" snCancelAction (click)="log.set('Cancelled')">Cancel</button>
       </div>
     </form>
 
@@ -53,7 +54,6 @@ import { SnDialogActionsImports } from '../lib/actions/dialog-actions';
     :host { display: flex; flex-direction: column; gap: 16px; max-width: 420px; align-items: flex-start; }
     form { width: 100%; }
     .fields { display: grid; gap: 6px; }
-    .actions { justify-content: flex-end; gap: 8px; }
     .status { margin: 0; font-size: var(--sn-font-size-small); color: var(--sn-color-fg-muted); }
   `,
 })
@@ -61,7 +61,7 @@ export class DialogActionsDemo {
   protected readonly log = signal('none yet');
 }
 
-/** snDefaultAction (Enter) and snCancelAction (Esc) in a form and in a spartan dialog. */
+/** snDefaultAction (Enter), snCancelAction (Esc) and snDialogButtons (per-OS order) in a form and in a spartan dialog. */
 const meta: Meta = {
   title: 'Helm/Default & cancel buttons',
   decorators: [moduleMetadata({ imports: [DialogActionsDemo] })],

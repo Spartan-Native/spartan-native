@@ -1,0 +1,50 @@
+// ============================================================================
+//  snDialogButtons, hlm-dialog-footer, hlm-alert-dialog-footer: button order per OS
+//
+//  Hooks:  [data-sn-dialog-buttons], [data-slot="dialog-footer"],
+//          [data-slot="alert-dialog-footer"]
+//          > [data-sn-default-action]   Enter (snDefaultAction)
+//          > [data-sn-cancel-action]    Esc (snCancelAction)
+//          > anything else              "other" (e.g. Don't save)
+//
+//  Tokens (set per skin by the theme):
+//    --sn-dialog-order-default / -cancel / -other   flex `order` of each kind
+//    --sn-dialog-other-push                         margin after the last other button
+//                                                   (`auto` on macOS: it moves to the far left)
+//
+//  A row without a default or cancel button keeps its source order.
+// ============================================================================
+
+$row: ':is([data-sn-dialog-buttons], [data-slot="dialog-footer"], [data-slot="alert-dialog-footer"])';
+$default: '[data-sn-default-action]';
+$cancel: '[data-sn-cancel-action]';
+$other: ':not(#{$default}, #{$cancel})';
+
+@layer spartan-native.helm {
+  [data-sn-dialog-buttons] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--sn-dialog-buttons-gap, 8px);
+  }
+
+  #{$row}:has(> :is(#{$default}, #{$cancel})) {
+    > #{$default} {
+      order: var(--sn-dialog-order-default, 3);
+    }
+
+    > #{$cancel} {
+      order: var(--sn-dialog-order-cancel, 2);
+    }
+
+    > #{$other} {
+      order: var(--sn-dialog-order-other, 1);
+    }
+
+    // The last "other" button (in source order) holds the gap
+    > #{$other}:not(:has(~ #{$other})) {
+      margin-inline-end: var(--sn-dialog-other-push, 0);
+    }
+  }
+}

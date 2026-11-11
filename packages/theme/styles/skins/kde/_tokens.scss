@@ -52,6 +52,10 @@
     --sn-menu-item-padding-x: #{px(8)};
     --sn-menu-item-radius: #{px(4)};
     --sn-dialog-padding: #{px(18)};
+    // Buttons: OK first, Cancel last (KDE HIG, QDialogButtonBox)
+    --sn-dialog-order-default: 1;
+    --sn-dialog-order-other: 2;
+    --sn-dialog-order-cancel: 3;
     --sn-dialog-width: #{px(420)};
     --sn-tooltip-radius: #{px(5)};
     --sn-calendar-cell: #{px(32)};

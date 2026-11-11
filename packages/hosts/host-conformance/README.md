@@ -43,6 +43,7 @@ report.results;  // [{ id, title, status: 'pass' | 'fail' | 'skip', detail? }]
 | `skin-agrees` | `appearance().skin` equals `platform().skin` |
 | `focus` | `window.isFocused()` resolves a boolean |
 | `menus-match-capability` | `menus` is present exactly when `nativeMenus` isn't `none`; it has `onAction` and at least one of `setApplicationMenu` / `showContextMenu` |
+| `dialogs-match-capability` | `dialogs` is present exactly when `fileDialogs` isn't `none`; it has `openFile`, `saveFile` and `pickFolder` (`message` is optional) |
 | `unsubscribe` | subscriptions return an unsubscribe function, safe to call twice |
 | `graceful` | nothing throws for capabilities reported as `none` |
 | `live-appearance` | *(driver)* an OS change is notified, with the new values |

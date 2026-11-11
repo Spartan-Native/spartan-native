@@ -1,7 +1,7 @@
 {
   "name": "@spartan-native/helm",
   "version": "0.0.0",
-  "description": "Desktop behaviors for spartan/ui: the desktop selection model for lists and tables, and default (Enter) / cancel (Esc) buttons.",
+  "description": "Desktop behaviors for spartan/ui: the desktop selection model for lists and tables, default (Enter) / cancel (Esc) buttons, and dialog buttons in each OS's order.",
   "keywords": [
     "angular",
     "spartan-ng",

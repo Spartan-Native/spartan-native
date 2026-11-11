@@ -31,6 +31,8 @@ That's all: `SpartanNativeTheme`, the skins and every component now follow the O
 
 The other capabilities are reported honestly: `customTitleBar` (Window Controls Overlay), `notifications`, `taskbarProgress` (app badge) and `fileDialogs` (File System Access) are `partial` where the API exists, else `none`. Window materials, native menus and the Linux desktop are `none`.
 
+Where the File System Access pickers exist (Chromium), `host.dialogs` opens and saves files and picks folders. You get a `handle` back instead of a path. There is no `message()`: browsers have no OS alert with custom buttons.
+
 **Browser limits:**
 - **Accent on Chromium (Chrome, Edge, Brave, Electron-free PWAs):** Chromium returns its own fixed blue for `AccentColor` (anti-fingerprinting), so the OS accent can't reach the page. The adapter detects it, reports `systemAccent: 'none'`, and uses the platform's stock accent. Offer an in-app accent picker (`theme.override({ accent })`). The desktop adapters (Wails, Tauri, Electron, Photino) will read the real accent natively.
 - **Frozen versions:** without Client Hints, Windows and macOS versions are frozen in the user-agent string. Windows maps to the Windows 11 skin and macOS to macOS 26.
