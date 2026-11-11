@@ -1,0 +1,34 @@
+<!-- The window. snSheetHost: macOS sheets (sn-modal-sheet) hang from here, under the title bar. -->
+<div class="sn-window window" snSheetHost>
+  @if (windowControls(); as controls) {
+    <!-- A drag region already; with wailsHost() its buttons act on the real window. -->
+    <sn-title-bar [title]="title" [windowControls]="controls" />
+  }
+
+  <div class="body">
+    <sn-sidebar-nav class="sn-sidebar sidebar" aria-label="Sections">
+      <sn-sidebar-section>
+        <button snSidebarItem icon="lucideHouse" [active]="page() === 'home'" (click)="page.set('home')">Home</button>
+        <button snSidebarItem icon="lucideList" [active]="page() === 'items'" (click)="page.set('items')">Items</button>
+      </sn-sidebar-section>
+      <sn-sidebar-section>
+        <button snSidebarItem icon="lucideSettings" [active]="page() === 'settings'" (click)="page.set('settings')">Settings</button>
+      </sn-sidebar-section>
+    </sn-sidebar-nav>
+
+    <main class="sn-content content">
+      @switch (page()) {
+        @case ('items') { <app-list-page class="page" /> }
+        @case ('settings') { <app-settings-page class="page" /> }
+        @default {
+          <sn-status-page class="page" icon="lucideHouse" title="Welcome"
+                          description="Pick a section in the sidebar to get started." />
+        }
+      }
+    </main>
+  </div>
+
+  <sn-status-bar>
+    <span snStatusItem>Ready</span>
+  </sn-status-bar>
+</div>

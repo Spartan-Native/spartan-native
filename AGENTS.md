@@ -31,3 +31,7 @@ Each published package has its own `AGENTS.md`, written for agents that build ap
 | `@spartan-native/host-electron`, `-tauri`, `-dotnet` | `packages/hosts/<host>/AGENTS.md` (scaffolds: "don't use yet") |
 
 **Keep them in sync.** When you add, rename or remove a public export, input, slot, token or host service, update that package's `AGENTS.md` in the same change. These files must only refer to other packages by name (`@spartan-native/theme`), never by repo path, because the repo isn't there once the package is installed.
+
+## The agent skill (`tools/claude-plugin`)
+
+`tools/claude-plugin/skills/spartan-native` is a skill (and Claude Code plugin, listed in `.claude-plugin/marketplace.json`) for agents building apps **with** the packages. It links the package `AGENTS.md` files together and ships ready templates. When a change affects app setup, the host list, which component to use for a need, or anything a template uses, update `SKILL.md`, `references/` or `templates/` in the same change.

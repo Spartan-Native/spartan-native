@@ -1,0 +1,12 @@
+/* src/styles.css: Tailwind 4 + the spartan/ui preset.
+   The Spartan Native skins are the NEXT entry in angular.json "styles" (src/theme.scss).
+   Don't add component colors here: the skins own every visual value. */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@spartan-ng/brain/hlm-tailwind-preset.css';
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}

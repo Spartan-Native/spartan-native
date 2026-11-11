@@ -1,0 +1,11 @@
+{
+  "name": "spartan-native",
+  "owner": { "name": "Spartan Native" },
+  "plugins": [
+    {
+      "name": "spartan-native",
+      "source": "./tools/claude-plugin",
+      "description": "Skill for building native-looking Angular apps with the @spartan-native packages (theme, helm, desktop-ui, hosts)."
+    }
+  ]
+}

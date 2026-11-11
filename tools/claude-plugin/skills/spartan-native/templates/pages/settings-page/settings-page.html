@@ -1,0 +1,34 @@
+<sn-settings-group title="General">
+  <sn-settings-row title="Launch at login" subtitle="Start in the background when you sign in">
+    <ng-icon snSettingsIcon name="lucidePower" />
+    <hlm-switch aria-label="Launch at login" [checked]="launchAtLogin()" (checkedChange)="launchAtLogin.set($event)" />
+  </sn-settings-row>
+
+  <!-- Same setting, the OS's own words for it -->
+  <sn-settings-row *snPlatformIf="'macos'; else trayRow" title="Show in menu bar">
+    <ng-icon snSettingsIcon name="lucideBell" />
+    <hlm-switch aria-label="Show in menu bar" [checked]="notifications()" (checkedChange)="notifications.set($event)" />
+  </sn-settings-row>
+  <ng-template #trayRow>
+    <sn-settings-row title="Show in system tray">
+      <ng-icon snSettingsIcon name="lucideBell" />
+      <hlm-switch aria-label="Show in system tray" [checked]="notifications()" (checkedChange)="notifications.set($event)" />
+    </sn-settings-row>
+  </ng-template>
+
+  <sn-settings-row title="Keep history" subtitle="Days before old entries are removed">
+    <sn-number-box ariaLabel="Days to keep history" [(value)]="keepDays" [min]="1" [max]="365" />
+  </sn-settings-row>
+</sn-settings-group>
+
+<sn-settings-group title="Appearance" description="System follows your device's light or dark setting.">
+  <sn-settings-row title="Theme">
+    <ng-icon snSettingsIcon name="lucideSunMoon" />
+    <hlm-toggle-group type="single" variant="outline" size="sm" [nullable]="false" aria-label="Theme"
+                      [value]="appearance()" (valueChange)="setAppearance($event)">
+      <button hlmToggleGroupItem value="system">System</button>
+      <button hlmToggleGroupItem value="light">Light</button>
+      <button hlmToggleGroupItem value="dark">Dark</button>
+    </hlm-toggle-group>
+  </sn-settings-row>
+</sn-settings-group>

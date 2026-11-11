@@ -1,0 +1,9 @@
+/* Layout only: groups, rows, icons and controls are styled per OS by desktop-ui. */
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-inline-size: 48rem;
+  padding: 1.5rem;
+  overflow: auto;
+}

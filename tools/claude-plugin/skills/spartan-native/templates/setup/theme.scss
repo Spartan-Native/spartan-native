@@ -1,0 +1,6 @@
+// src/theme.scss: the Spartan Native skins. Must load AFTER src/styles.css.
+// angular.json → projects.<app>.architect.build.options.styles:
+//   ["src/styles.css", "src/theme.scss"]
+@use '@spartan-native/theme/styles/spartan-native';
+@use '@spartan-native/helm/styles/spartan-native-helm'; // desktop behaviors (selection, dialog button order)
+// @spartan-native/desktop-ui needs no stylesheet: its styles are component-scoped.

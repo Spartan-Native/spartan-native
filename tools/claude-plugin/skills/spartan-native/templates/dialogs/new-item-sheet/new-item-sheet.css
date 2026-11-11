@@ -1,0 +1,13 @@
+/* Layout only: the sheet, its padding and its buttons are styled per OS by desktop-ui. */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-inline-size: min(22rem, 80vw);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}

@@ -1,0 +1,41 @@
+<!-- The OS's command surface: CommandBar, NSToolbar, AdwHeaderBar, KToolBar… -->
+<sn-command-bar title="Items">
+  <button snCommand icon="lucidePlus" label="New" (click)="adding.set(true)"></button>
+  <button snCommand icon="lucidePencil" label="Rename" [disabled]="selection().length !== 1" (click)="rename(selection()[0])"></button>
+  <button snCommand icon="lucideTrash2" label="Delete" [disabled]="!hasSelection()" (click)="remove(selection())"></button>
+
+  <ng-template snCommandOverflow>
+    <div hlmDropdownMenu>
+      <button hlmDropdownMenuItem (triggered)="selection.set([])">Clear selection</button>
+    </div>
+  </ng-template>
+</sn-command-bar>
+
+@if (items().length === 0) {
+  <sn-status-page class="fill" icon="lucideInbox" title="No items yet" description="Create your first item to get started.">
+    <button hlmBtn (click)="adding.set(true)">New item</button>
+  </sn-status-page>
+} @else {
+  <div class="table">
+    <table hlmTable snSelectable="grid" [(selection)]="selection" (activated)="open($event)" aria-label="Items">
+      <thead hlmTHead>
+        <tr hlmTr>
+          <th hlmTh>Name</th>
+          <th hlmTh>Kind</th>
+          <th hlmTh class="size">Size</th>
+        </tr>
+      </thead>
+      <tbody hlmTBody>
+        @for (item of items(); track item.id) {
+          <tr hlmTr snSelectableItem [value]="item.id" [snContextMenu]="rowMenu(item)">
+            <td hlmTd>{{ item.name }}</td>
+            <td hlmTd class="sn-text-muted">{{ item.kind }}</td>
+            <td hlmTd class="size">{{ item.sizeMb }} MB</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<app-new-item-sheet [(open)]="adding" (created)="create($event)" />

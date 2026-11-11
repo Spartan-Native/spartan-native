@@ -1,0 +1,17 @@
+<sn-modal-sheet [(open)]="open" title="New item">
+  <!-- Enter submits the form natively; Esc and Cancel close the sheet. -->
+  <form class="form" id="new-item-form" novalidate (submit)="$event.preventDefault(); submit()">
+    <div class="field">
+      <label hlmLabel for="new-item-name">Name</label>
+      <input hlmInput id="new-item-name" autocomplete="off" [value]="name()" (input)="name.set($any($event.target).value)" />
+    </div>
+    <div class="field">
+      <label hlmLabel for="new-item-kind">Kind</label>
+      <input hlmInput id="new-item-kind" [value]="kind()" (input)="kind.set($any($event.target).value)" />
+    </div>
+  </form>
+
+  <!-- Write the buttons in any order: the sheet places them per OS. -->
+  <button hlmBtn variant="outline" snSheetCancel>Cancel</button>
+  <button hlmBtn snSheetPrimary type="submit" form="new-item-form" [disabled]="!name().trim()">Create</button>
+</sn-modal-sheet>

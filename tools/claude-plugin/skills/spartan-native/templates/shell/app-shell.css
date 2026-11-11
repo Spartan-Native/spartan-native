@@ -1,0 +1,37 @@
+/* Layout only. Backgrounds, borders and the title bar come from the theme's
+   material classes (sn-window, sn-sidebar, sn-content) and desktop-ui. */
+:host {
+  display: block;
+  block-size: 100vh;
+}
+
+.window {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  min-block-size: 0;
+}
+
+.sidebar {
+  flex: none;
+  inline-size: 15rem;
+  overflow: auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-inline-size: 0;
+  overflow: auto;
+}
+
+.page {
+  flex: 1;
+  min-block-size: 0;
+}

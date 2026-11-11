@@ -1,0 +1,21 @@
+/* Layout only: the command bar, table, rows and selection are styled by the skins. */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+.table,
+.fill {
+  flex: 1;
+  min-block-size: 0;
+}
+
+.table {
+  overflow: auto;
+}
+
+.size {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
