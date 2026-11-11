@@ -13,7 +13,7 @@ import {
   Injector,
   input,
 } from '@angular/core';
-import { injectSkin, skinFamily, SpartanNativeTheme } from '@spartan-native/theme';
+import { injectPlatformFamily, SpartanNativeTheme } from '@spartan-native/theme';
 import { inPageMenu, type SnMenuItem } from './menu-model';
 import { SnMenuTemplates } from './menu-templates';
 import { SnNativeMenus } from './native-menus';
@@ -61,8 +61,8 @@ export class SnContextMenu {
   private readonly menus = inject(SnNativeMenus);
   private readonly hostWindow = inject(SpartanNativeTheme, { optional: true })?.window;
   private readonly element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
-  private readonly skin = injectSkin();
-  private readonly family = computed(() => skinFamily(this.skin()));
+  /** The real OS: shortcut notation and the Edit roles' keys follow the keyboard, not the skin. */
+  private readonly family = injectPlatformFamily();
 
   /** The OS shows the menu. */
   private readonly useNative = computed(() => this.native() !== 'never' && this.menus.canShowContextMenu);

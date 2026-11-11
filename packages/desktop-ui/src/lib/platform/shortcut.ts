@@ -1,10 +1,9 @@
 import { computed, Directive, input } from '@angular/core';
-import { injectSkin, type PlatformFamily, skinFamily } from '@spartan-native/theme';
+import { injectPlatformFamily, injectSkin, type PlatformFamily } from '@spartan-native/theme';
 
 /**
  * Keyboard shortcuts written once, shown the way each OS shows them. Only the family
- * matters: macOS (`mac`, `macc`) uses symbols, every other skin (`win`, `w10`, `gtk`, `qt`,
- * `cros`, and `web`) uses Ctrl+ words.
+ * matters: macOS uses symbols, every other family (Windows, Linux, ChromeOS, web) uses Ctrl+ words.
  *
  *   formatShortcut('mod+shift+s', 'macos')    → '⇧⌘S'
  *   formatShortcut('mod+shift+s', 'windows')  → 'Ctrl+Shift+S'
@@ -46,10 +45,10 @@ export function formatShortcut(shortcut: string, family: PlatformFamily): string
 }
 
 /**
- * Shows a shortcut in the active skin's notation, and follows the skin live:
- *  - macOS 26 (`mac`) and macOS 13–15 (`macc`): symbols in Apple's order, no separators (⇧⌘S)
- *  - Windows 11 (`win`), Windows 10 (`w10`), GNOME (`gtk`), KDE Plasma (`qt`), ChromeOS (`cros`):
- *    words joined with `+` (Ctrl+Shift+S)
+ * Shows a shortcut in the notation of the keyboard the user really has: the real OS
+ * (`injectPlatformFamily()`), not the skin, so a Mac dressed as Windows still shows ⌘.
+ *  - macOS: symbols in Apple's order, no separators (⇧⌘S)
+ *  - Windows, Linux, ChromeOS, web: words joined with `+` (Ctrl+Shift+S)
  *
  * The text is also the element's aria-label, so screen readers read the same thing.
  *
@@ -71,6 +70,6 @@ export class SnShortcut {
   /** The shortcut in the portable notation, e.g. `mod+shift+s`. */
   readonly shortcut = input.required<string>({ alias: 'snShortcut' });
   protected readonly skin = injectSkin();
-  protected readonly family = computed(() => skinFamily(this.skin()));
+  protected readonly family = injectPlatformFamily();
   protected readonly text = computed(() => formatShortcut(this.shortcut(), this.family()));
 }

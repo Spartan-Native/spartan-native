@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { SpartanNativeTheme, type MenuItem } from '@spartan-native/theme';
+import { type MenuItem, type Skin, skinFamily, SpartanNativeTheme } from '@spartan-native/theme';
 import { SnContextMenu } from './context-menu';
 import { inPageMenu, matchesAccelerator, toHostMenu, type SnMenuItem } from './menu-model';
 import { SnMenubar } from './menubar';
@@ -66,8 +66,13 @@ describe('menu model', () => {
 function fakeTheme(level: 'native' | 'none' = 'native') {
   const listeners = new Set<(id: string) => void>();
   const sent: { app: MenuItem[][]; context: { menu: MenuItem[]; at: { x: number; y: number } }[] } = { app: [], context: [] };
+  const skin = signal('win');
+  const native = signal<string | null>(null); // the real OS, when it differs from the skin
   const theme = {
-    skin: signal('win'),
+    skin,
+    native,
+    nativeSkin: computed(() => native() ?? skin()),
+    platformFamily: computed(() => skinFamily((native() ?? skin()) as Skin)),
     capabilities: { nativeMenus: level },
     window: { minimize: vi.fn(async () => undefined) },
     menus: {
@@ -204,6 +209,22 @@ describe('SnMenubar', () => {
   it('stays in the page on Windows in auto mode, even with native menus', async () => {
     const { theme } = fakeTheme();
     const { el } = await setup('win', theme);
+    expect(el.querySelector('[data-slot="menubar"]')).not.toBeNull();
+    expect(theme.menus.setApplicationMenu).not.toHaveBeenCalled();
+  });
+
+  it('follows the real OS, not the skin: a Mac dressed as Windows keeps the macOS menu bar', async () => {
+    const { theme } = fakeTheme();
+    theme.native.set('mac');
+    const { el } = await setup('win', theme);
+    expect(el.querySelector('[data-slot="menubar"]')).toBeNull();
+    expect(theme.menus.setApplicationMenu).toHaveBeenCalled();
+  });
+
+  it('a PC dressed as macOS keeps the menu in the page, with Ctrl shortcuts', async () => {
+    const { theme } = fakeTheme('none');
+    theme.native.set('win');
+    const { el } = await setup('mac', theme);
     expect(el.querySelector('[data-slot="menubar"]')).not.toBeNull();
     expect(theme.menus.setApplicationMenu).not.toHaveBeenCalled();
   });

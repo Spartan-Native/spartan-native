@@ -78,11 +78,9 @@
     margin-inline-end: auto;
   }
 
-  // The OS draws the caption buttons: use the Window Controls Overlay rectangle
-  // (fallback: room for three 46px caption buttons)
+  // The OS draws the caption buttons (the room for them: see the end of this file)
   &[data-controls='native'] {
     height: env(titlebar-area-height, 2rem);
-    padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 8.625rem)));
   }
 }
 
@@ -102,10 +100,9 @@
     font-weight: var(--sn-font-weight-strong);
   }
 
-  // The OS draws the traffic lights at the start of the overlay rectangle
+  // The OS draws the traffic lights (the room for them: see the end of this file)
   &[data-controls='native'] {
     height: env(titlebar-area-height, 2.375rem);
-    padding-inline-start: env(titlebar-area-x, 4.875rem);
   }
 }
 
@@ -116,7 +113,6 @@
 
   &[data-controls='native'] {
     height: env(titlebar-area-height, 1.75rem);
-    padding-inline-start: env(titlebar-area-x, 4.375rem);
   }
 }
 
@@ -134,7 +130,6 @@
 
   &[data-controls='native'] {
     min-height: env(titlebar-area-height, 2.875rem);
-    padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 6rem)));
   }
 }
 
@@ -150,7 +145,6 @@
 
   &[data-controls='native'] {
     min-height: env(titlebar-area-height, 2.125rem);
-    padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 5.5rem)));
   }
 }
 
@@ -167,8 +161,37 @@
 
   &[data-controls='native'] {
     min-height: env(titlebar-area-height, 2.25rem);
-    padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 6.75rem)));
   }
+}
+
+// --- Room for the OS's own window buttons ----------------------------------------------------
+// With windowControls="native" the OS draws the buttons where the *real* OS puts them, whatever
+// the skin: data-native is the real OS's skin. Uses the Window Controls Overlay rectangle where
+// there is one; the fallbacks are each OS's button widths.
+:host([data-native='win']),
+:host([data-native='w10']) {
+  padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 8.625rem)));
+}
+
+:host([data-native='mac']) {
+  padding-inline-start: env(titlebar-area-x, 4.875rem);
+}
+
+:host([data-native='macc']) {
+  padding-inline-start: env(titlebar-area-x, 4.375rem);
+}
+
+:host([data-native='gtk']),
+:host([data-native='web']) {
+  padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 6rem)));
+}
+
+:host([data-native='qt']) {
+  padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 5.5rem)));
+}
+
+:host([data-native='cros']) {
+  padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 6.75rem)));
 }
 
 // --- Windows contrast themes ---------------------------------------------------------------

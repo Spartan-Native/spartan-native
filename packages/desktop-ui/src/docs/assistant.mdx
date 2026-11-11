@@ -1,0 +1,79 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/assistant.stories';
+
+<Meta of={Stories} />
+
+# Assistant and setup checklist
+
+`<sn-assistant>` is a step-by-step setup flow. Its pages are templates; it shows the current one with the
+OS's own navigation:
+
+| OS | Renders as | Navigation |
+| --- | --- | --- |
+| Windows 11 / 10 | Wizard | "Step 2 of 4" over the page title; Back · Next · Cancel at the bottom right; Finish on the last page |
+| macOS | Setup Assistant page | Large centered title; Cancel at the leading edge, Go Back · Continue at the end; Done on the last page |
+| GNOME | Assistant pages | Back (Cancel on the first page) and Next in a header bar around the title; page dots at the bottom |
+| KDE Plasma | QWizard | The list of steps at the side; Back · Next · Cancel at the bottom right |
+| ChromeOS | M3 flow | Headline, page dots, Cancel at the leading edge, Back · Next at the end |
+
+`<sn-checklist>` lists the tasks of a "get started" screen: numbered rows that tick off as they are done, each with
+an action that hides once the task is done.
+
+<Canvas of={Stories.InASheet} />
+
+## Usage
+
+<Source
+  language="html"
+  code={`<sn-modal-sheet [(open)]="setup" title="Set up Harbor">
+  <sn-assistant [(step)]="step" (finish)="save()" (cancel)="setup.set(false)">
+    <ng-template snAssistantPage title="Welcome">…</ng-template>
+    <ng-template snAssistantPage title="Destination" [canContinue]="!!destination()">…</ng-template>
+    <ng-template snAssistantPage title="Schedule">…</ng-template>
+  </sn-assistant>
+</sn-modal-sheet>
+
+<sn-checklist aria-label="Get started">
+  <sn-checklist-item title="Add a destination" [done]="!!destination()">
+    Where your backups go.
+    <button hlmBtn size="sm" variant="outline" snChecklistAction (click)="add()">Add…</button>
+  </sn-checklist-item>
+</sn-checklist>`}
+/>
+
+## API
+
+### `sn-assistant`
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `step` | `number` (model) | `0` | The current page, from 0. |
+| `cancelable` | `boolean` | `true` | Show a Cancel button. |
+| `backLabel`, `nextLabel`, `finishLabel`, `cancelLabel` | `string` | the OS's words | Button texts (to translate them). |
+| `progressLabel` | `string` | `'Step {current} of {total}'` | The Windows progress line. |
+| `(finish)` | `void` | | Next on the last page. |
+| `(cancel)` | `void` | | The Cancel button. |
+
+### `ng-template[snAssistantPage]`
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | required | The page's heading (and its entry in the KDE step list). |
+| `canContinue` | `boolean` | `true` | False disables Next / Continue. |
+
+### `sn-checklist-item`
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | required | The task. |
+| `done` | `boolean` | `false` | Ticks the row off and hides its action. |
+| `keepAction` | `boolean` | `false` | Keep the action once done ("Change…"). |
+| `doneLabel`, `todoLabel` | `string` | `'done'`, `'to do'` | Read by screen readers after the title. |
+
+Content is the description; `[snChecklistAction]` is the action.
+
+## Accessibility
+
+- The current page is a `role="group"` labelled by its title; moving to another page puts the focus on that title.
+- The assistant's buttons are real buttons with the skin's button styles; Next is disabled while `canContinue` is false.
+- The checklist is a `role="list"`; each task says whether it is done.

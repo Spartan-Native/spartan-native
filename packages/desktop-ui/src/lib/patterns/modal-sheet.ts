@@ -30,6 +30,9 @@ let nextId = 0;
  *
  * Mark the buttons with `snSheetCancel` and `snSheetPrimary` so they can be placed per OS.
  * Esc and the Cancel button close the sheet (`open` becomes false); the primary button is yours to handle.
+ * A third button that doesn't close the sheet (Back, Don't Save, Help) goes in `snSheetSecondary`:
+ * at the leading edge on macOS, KDE and ChromeOS, between primary and Cancel on Windows, and in
+ * a row under the content on GNOME.
  * On macOS the sheet hangs from the title bar of the nearest ancestor marked `snSheetHost`
  * (the window frame); without one it hangs from the top of the viewport.
  *
@@ -39,6 +42,7 @@ let nextId = 0;
  *   <sn-modal-sheet [(open)]="adding" title="New destination">
  *     <label hlmLabel>Name <input hlmInput /></label>
  *     <button hlmBtn variant="outline" snSheetCancel>Cancel</button>
+ *     <button hlmBtn variant="outline" snSheetSecondary (click)="back()">Back</button>
  *     <button hlmBtn snSheetPrimary (click)="create()">Create</button>
  *   </sn-modal-sheet>
  * </div>
@@ -59,6 +63,7 @@ let nextId = 0;
         <h2 class="title" [id]="titleId">{{ title() }}</h2>
         <div class="body"><ng-content /></div>
         <div class="actions">
+          <span class="secondary"><ng-content select="[snSheetSecondary]" /></span>
           <span class="cancel" (click)="open.set(false)"><ng-content select="[snSheetCancel]" /></span>
           <span class="primary"><ng-content select="[snSheetPrimary]" /></span>
         </div>

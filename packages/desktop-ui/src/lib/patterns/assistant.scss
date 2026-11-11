@@ -1,0 +1,232 @@
+// Assistant per OS: Windows wizard · macOS Setup Assistant · GNOME (header bar + dots) ·
+// KDE QWizard (step list) · ChromeOS M3 flow.
+
+:host {
+  display: flex;
+  gap: 1.5rem;
+  min-width: 0;
+  color: var(--sn-color-fg);
+  font-family: var(--sn-font-sans);
+  font-size: var(--sn-font-size);
+  line-height: var(--sn-line-height);
+}
+
+.main {
+  display: grid;
+  grid-template-areas:
+    'head'
+    'page'
+    'dots'
+    'nav';
+  grid-template-rows: auto 1fr auto auto;
+  flex: 1;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.head {
+  grid-area: head;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.page-title {
+  margin: 0;
+  font-size: var(--sn-font-size-title);
+  font-weight: var(--sn-font-weight-strong);
+  outline: none;
+}
+
+.progress {
+  color: var(--sn-color-fg-muted);
+  font-size: var(--sn-font-size-small);
+}
+
+.page {
+  grid-area: page;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.dots {
+  grid-area: dots;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--sn-color-fg) 25%, transparent);
+
+  &[data-current] {
+    background: var(--sn-color-fg);
+  }
+}
+
+.nav {
+  grid-area: nav;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+// The buttons' look comes from the theme (spartan's button hooks); this is only their structure,
+// in the base layer, so every skin's button rules win.
+@layer spartan-native.base {
+  .sn-assistant-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--sn-control-height);
+    padding-inline: var(--sn-control-padding-x, 0.75rem);
+    border: 1px solid var(--sn-color-border);
+    border-radius: var(--sn-radius-control);
+    background: var(--sn-color-control, var(--sn-color-bg));
+    color: var(--sn-color-fg);
+    font: inherit;
+    font-weight: var(--sn-font-weight-control);
+    white-space: nowrap;
+
+    &.bg-primary {
+      border-color: transparent;
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+
+    &:focus-visible {
+      outline: var(--sn-focus-outline);
+      outline-offset: var(--sn-focus-offset);
+    }
+  }
+}
+
+// --- Windows: Back · Next · Cancel ---------------------------------------------------------------
+:host([data-family='windows']) {
+  .back {
+    order: 1;
+  }
+
+  .next {
+    order: 2;
+  }
+
+  .cancel {
+    order: 3;
+    margin-inline-start: 0.5rem;
+  }
+}
+
+// --- macOS: centered title, Cancel at the leading edge, Go Back · Continue at the end -------------
+:host([data-family='macos']) {
+  .head {
+    align-items: center;
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: calc(var(--sn-font-size) * 1.85);
+    font-weight: 700;
+  }
+
+  .cancel {
+    margin-inline-end: auto;
+  }
+}
+
+// --- GNOME: Back / Cancel and Next in a header bar around the title, dots at the bottom ----------
+:host([data-skin='gtk']),
+:host([data-family='web']) {
+  .main {
+    grid-template-areas:
+      'nav'
+      'page'
+      'dots';
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .head {
+    grid-area: nav;
+    align-items: center;
+    align-self: center;
+    pointer-events: none;
+  }
+
+  .page-title {
+    font-size: var(--sn-font-size);
+    font-weight: 700;
+  }
+
+  .nav {
+    justify-content: space-between;
+  }
+
+  // Back replaces Cancel at the start once there is a page to go back to
+  .cancel:has(+ .back) {
+    display: none;
+  }
+
+  .next {
+    margin-inline-start: auto;
+  }
+}
+
+// --- KDE: the steps at the side, Back · Next · Cancel ----------------------------------------------
+.steps {
+  display: none;
+}
+
+:host([data-skin='qt']) {
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    margin: 0;
+    padding: 0.75rem 1.5rem 0.75rem 0;
+    border-inline-end: 1px solid var(--sn-color-border);
+    list-style: none;
+    color: var(--sn-color-fg-muted);
+
+    [aria-current='step'] {
+      color: var(--sn-color-fg);
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    [data-done]::before {
+      content: '✓ ';
+    }
+  }
+
+  .back {
+    order: 1;
+  }
+
+  .next {
+    order: 2;
+  }
+
+  .cancel {
+    order: 3;
+  }
+}
+
+// --- ChromeOS: headline, dots, Back · Next at the end ----------------------------------------------
+:host([data-skin='cros']) {
+  .page-title {
+    font-size: 1.75rem;
+    font-weight: 400;
+  }
+
+  .cancel {
+    margin-inline-end: auto;
+  }
+}

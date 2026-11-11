@@ -57,6 +57,17 @@
   gap: 0.5rem;
 }
 
+// No sheet buttons (e.g. an sn-assistant brings its own): no actions row, and no Windows footer band
+.sheet.sheet .actions:not(:has(> :not(:empty))) {
+  display: none;
+}
+
+// Back / Don't Save / Help: at the leading edge, apart from the buttons that end the sheet
+.secondary {
+  margin-inline-end: auto;
+}
+
+.secondary,
 .cancel,
 .primary {
   display: grid;
@@ -126,8 +137,14 @@
     border-top: 1px solid var(--sn-color-stroke);
   }
 
+  // ContentDialog order: primary, secondary, close
   .primary {
+    order: -2;
+  }
+
+  .secondary {
     order: -1;
+    margin-inline-end: 0;
   }
 }
 
@@ -143,7 +160,8 @@
 .sheet[data-skin='web'] {
   grid-template-areas:
     'cancel title primary'
-    'body body body';
+    'body body body'
+    'secondary secondary secondary';
 
   .title {
     grid-column: 1 / -1;
@@ -178,6 +196,13 @@
 
   .primary {
     grid-column: 3;
+  }
+
+  // AdwDialog: extra actions sit in the content, under the form
+  .secondary {
+    grid-area: secondary;
+    justify-self: start;
+    margin: 0 var(--sn-dialog-padding) var(--sn-dialog-padding);
   }
 }
 

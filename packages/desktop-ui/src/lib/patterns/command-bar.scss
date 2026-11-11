@@ -1,4 +1,9 @@
 // Command surface per OS: CommandBar · NSToolbar · AdwHeaderBar · KToolBar · M3 top app bar.
+//
+// Three regions: .lead (start content, and the commands on GNOME) · .title · .trail (the
+// commands elsewhere, the overflow button, end content). A centered title (data-title=center)
+// keeps the two sides the same width while they fit, so it stays centered, and moves aside
+// instead of running under them when one side is wider.
 
 :host {
   display: flex;
@@ -11,11 +16,40 @@
   user-select: none;
 }
 
+.lead,
+.trail,
+.cluster {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lead {
+  flex: none;
+}
+
+.trail {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+
 .title {
+  flex: 0 1 auto;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+:host([data-title='center']) {
+  .lead,
+  .trail {
+    flex: 1 1 0;
+  }
+
+  .title {
+    text-align: center;
+  }
 }
 
 .commands {
@@ -23,6 +57,35 @@
   align-items: center;
   gap: 0.25rem;
   min-width: 0;
+}
+
+// --- Groups ----------------------------------------------------------------------------
+:host ::ng-deep [data-slot='sn-command-group'] {
+  display: flex;
+  align-items: center;
+  gap: inherit;
+
+  // a group whose commands all moved into the overflow menu
+  &:not(:has(> [data-slot='sn-command']:not([data-collapsed]))) {
+    display: none;
+  }
+}
+
+// Windows, GNOME, KDE: a separator between a group and its neighbours
+:host(:is([data-family='windows'], [data-family='linux'], [data-family='web'])) ::ng-deep .commands > [data-slot='sn-command-group'] {
+  &:not(:first-child)::before,
+  &:not(:last-child):not(:has(+ [data-slot='sn-command-group']))::after {
+    content: '';
+    align-self: stretch;
+    width: 1px;
+    margin-block: 0.375rem;
+    background: var(--sn-color-border);
+  }
+}
+
+// ChromeOS: groups are spaced, not divided
+:host([data-family='chromeos']) ::ng-deep .commands > [data-slot='sn-command-group'] + * {
+  margin-inline-start: 0.5rem;
 }
 
 // --- One command -------------------------------------------------------------------------
@@ -99,6 +162,45 @@
   }
 }
 
+// commands in the overflow menu
+:host ::ng-deep [data-slot='sn-command'][data-collapsed] {
+  display: none !important;
+}
+
+// the bar dropped the labels to make room: icon-only like macOS (keyed on data-compact alone, so
+// the bar can measure the result at once)
+:host([data-compact]) ::ng-deep [data-slot='sn-command']:has(> :is(ng-icon, svg, img)) {
+  flex-direction: row;
+  min-width: 0;
+  padding-inline: 0;
+  aspect-ratio: 1;
+
+  .label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+// --- The accent command (variant="accent") ------------------------------------------------
+:host ::ng-deep [data-slot='sn-command'][data-variant='accent'] {
+  background: var(--sn-color-primary);
+  border-color: var(--sn-color-primary-edge, transparent);
+  color: var(--sn-color-primary-fg);
+
+  &:hover:not(:disabled),
+  &[aria-expanded='true'] {
+    background: color-mix(in srgb, var(--sn-color-primary) 90%, var(--sn-color-fg));
+  }
+
+  &:active:not(:disabled) {
+    background: color-mix(in srgb, var(--sn-color-primary) 80%, var(--sn-color-fg));
+  }
+}
+
 // --- Windows 11: CommandBar · Title ……… [+ New][↗ Share][🗑 Delete][…] -------------------------
 :host([data-family='windows']) {
   min-height: 3rem;
@@ -107,10 +209,6 @@
   .title {
     font-size: calc(var(--sn-font-size) * 1.43);
     font-weight: var(--sn-font-weight-strong);
-  }
-
-  .commands {
-    margin-inline-start: auto;
   }
 
   ::ng-deep [data-slot='sn-command'] {
@@ -146,8 +244,8 @@
     font-weight: 700;
   }
 
-  .commands {
-    margin-inline-start: auto;
+  .commands,
+  .cluster {
     gap: 0.5rem;
   }
 
@@ -163,17 +261,33 @@
   }
 }
 
-// macOS 26: the commands (and the overflow) share one Liquid Glass capsule
+// macOS 26: the commands (and the overflow) share one Liquid Glass capsule; with groups, each
+// group is a capsule of its own, and so is every command outside a group.
+@mixin mac-capsule {
+  padding: 0.125rem;
+  border-radius: var(--sn-radius-pill);
+  background: var(--sn-color-glass);
+  border: 1px solid var(--sn-color-glass-border);
+  box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), var(--sn-shadow-card);
+  -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+  backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+  gap: 0;
+}
+
 :host([data-skin='mac']) {
-  .commands {
-    padding: 0.125rem;
-    border-radius: var(--sn-radius-pill);
-    background: var(--sn-color-glass);
-    border: 1px solid var(--sn-color-glass-border);
-    box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), var(--sn-shadow-card);
-    -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
-    backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
-    gap: 0;
+  .cluster:not(:has([data-slot='sn-command-group'])):has([data-slot='sn-command']:not([data-collapsed], [hidden])) {
+    @include mac-capsule;
+
+    .commands {
+      gap: 0;
+    }
+  }
+
+  .cluster:has([data-slot='sn-command-group']) {
+    .more:not([hidden]),
+    ::ng-deep :is([data-slot='sn-command-group'], .commands > [data-slot='sn-command']:not([data-variant='accent'])) {
+      @include mac-capsule;
+    }
   }
 
   ::ng-deep [data-slot='sn-command'] {
@@ -204,16 +318,10 @@
   box-shadow: inset 0 -1px 0 var(--sn-color-border);
 
   .title {
-    position: absolute;
-    left: 50%;
-    translate: -50% 0;
-    max-width: 40%;
     font-weight: 700;
-    pointer-events: none;
   }
 
   .commands {
-    flex: 1;
     gap: 0.375rem;
   }
 
@@ -221,10 +329,6 @@
     min-height: 2.125rem;
     min-width: 2.125rem;
     font-weight: 700;
-  }
-
-  ::ng-deep [data-slot='sn-command'].more {
-    margin-inline-start: auto;
   }
 }
 
@@ -235,10 +339,20 @@
   padding-inline: 0.75rem 0.375rem;
   gap: 0.75rem;
 
+  // the commands follow the title; the menu button stays at the end
+  .trail {
+    justify-content: flex-start;
+  }
+
+  .cluster {
+    flex: 1;
+  }
+
+  .more {
+    margin-inline-start: auto;
+  }
+
   .title {
-    position: static;
-    translate: none;
-    max-width: none;
     font-size: calc(var(--sn-font-size) * 1.15);
     font-weight: 400;
     padding-inline-end: 0.75rem;
@@ -281,8 +395,8 @@
     font-weight: 400;
   }
 
-  .commands {
-    margin-inline-start: auto;
+  .commands,
+  .cluster {
     gap: 0;
   }
 
@@ -334,7 +448,7 @@
   }
 
   // the macOS 26 capsule is drawn with a shadow, which contrast themes remove
-  :host([data-skin='mac']) .commands {
+  :host([data-skin='mac']) :is(.cluster, [data-slot='sn-command-group']) {
     border-color: CanvasText;
   }
 }

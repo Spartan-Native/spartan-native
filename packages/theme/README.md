@@ -35,6 +35,12 @@ const theme = inject(SpartanNativeTheme);
 theme.skin();                       // 'win' | 'mac' | 'gtk' | …
 theme.override({ scheme: 'dark' }); // e.g. from an in-app settings screen
 theme.followSystem();               // back to the OS values
+
+// keep the user's choice between launches (applied before the first render)
+provideSpartanNative({ host, persist: true });
+
+// the real OS, whatever skin the user picked: for keys and native window buttons
+theme.platformFamily();             // 'macos' on a Mac dressed as Windows
 ```
 
 Without Angular (or before bootstrap), `applySpartanNative(element, appearance)` does the same on any element. The static palettes in `contract/_palette-defaults.scss` make it work as plain CSS too: `<html class="t-gtk dark" data-sn-skin="gtk">`.
@@ -158,8 +164,10 @@ The toolbar addon is React (Storybook's manager UI), so it lives outside the Ang
 
 | Export | What it is |
 | --- | --- |
-| `provideSpartanNative({ host, overrides? })` | Angular providers; reads the host before first render |
-| `SpartanNativeTheme` | Signals: `appearance`, `skin`, `scheme`, `textScale`, `focused`, `platform`, `overrides`, `followsSystem`; `override()`, `followSystem()`, `capability()` |
+| `provideSpartanNative({ host, overrides?, persist? })` | Angular providers; reads the host (and persisted overrides) before first render |
+| `SpartanNativeTheme` | Signals: `appearance`, `skin`, `scheme`, `textScale`, `focused`, `platform`, `nativeSkin`, `platformFamily`, `overrides`, `followsSystem`; `override()`, `followSystem()`, `capability()` |
+| `injectPlatformFamily()`, `injectNativeSkin()` | The real OS as a signal (behavior), next to `injectSkin()` (look) |
+| `SKIN_LABELS`, `SKIN_OPTIONS`, `TEXT_SCALE_OPTIONS`, `SCHEME_LABELS`, `CONTRAST_LABELS` | Display names for appearance settings |
 | `applySpartanNative(el, appearance)` | Framework-free: classes + variables on any element |
 | `derivePalette({ skin, accent, scheme, reduceTransparency })` | The color algorithm |
 | `paletteToCssVars(palette)` | `--sn-color-*` map |

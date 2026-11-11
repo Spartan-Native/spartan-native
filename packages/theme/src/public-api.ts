@@ -14,6 +14,7 @@ export * from './lib/palette/palette-css-vars';
 
 // Skins
 export * from './lib/skin/resolve-skin';
+export * from './lib/skin/skin-labels';
 
 // Angular integration
 export * from './lib/provider/apply-appearance';

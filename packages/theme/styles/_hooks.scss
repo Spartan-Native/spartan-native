@@ -244,7 +244,8 @@ $backdrop: '.cdk-overlay-backdrop:not(.cdk-overlay-transparent-backdrop)';
 
 // --- Tooltip (hlmTooltip): brain renders the bubble as <ng-component>;
 //     its transform-origin class is the only stable mark.
-$tooltip: '[class*="tooltip-content-transform-origin"]';
+// hlmTooltip, and desktop-ui's snTooltip (data-slot="sn-tooltip")
+$tooltip: ':is([class*="tooltip-content-transform-origin"], [data-slot="sn-tooltip"])';
 $tooltip-arrow: '[class*="tooltip-content-transform-origin"] > span:has(> svg)';
 
 // --- Focus: everything that shows the platform focus ring ---
