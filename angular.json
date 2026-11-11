@@ -194,32 +194,6 @@
         }
       }
     },
-    "host-tauri": {
-      "projectType": "library",
-      "root": "packages/hosts/host-tauri",
-      "sourceRoot": "packages/hosts/host-tauri/src",
-      "prefix": "sn",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "configurations": {
-            "production": {
-              "tsConfig": "packages/hosts/host-tauri/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "packages/hosts/host-tauri/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test",
-          "options": {
-            "tsConfig": "packages/hosts/host-tauri/tsconfig.spec.json"
-          }
-        }
-      }
-    },
     "host-electron": {
       "projectType": "library",
       "root": "packages/hosts/host-electron",
@@ -242,32 +216,6 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "packages/hosts/host-electron/tsconfig.spec.json"
-          }
-        }
-      }
-    },
-    "host-dotnet": {
-      "projectType": "library",
-      "root": "packages/hosts/host-dotnet",
-      "sourceRoot": "packages/hosts/host-dotnet/src",
-      "prefix": "sn",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "configurations": {
-            "production": {
-              "tsConfig": "packages/hosts/host-dotnet/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "packages/hosts/host-dotnet/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test",
-          "options": {
-            "tsConfig": "packages/hosts/host-dotnet/tsconfig.spec.json"
           }
         }
       }

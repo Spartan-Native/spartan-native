@@ -1,6 +1,6 @@
 # spartan-native agent skill and Claude Code plugin
 
-**Layer 05 · dev tooling.** A skill that teaches coding agents to build native-looking Angular apps with the `@spartan-native/*` packages: set up the theme and the right host for the runtime (Wails, browser/PWA), pick desktop-ui and spartan/ui components instead of hand-styling, and write screens as separate `.ts` / `.html` / `.css` files with layout-only CSS.
+**Layer 05 · dev tooling.** A skill that teaches coding agents to build native-looking Angular apps with the `@spartan-native/*` packages: set up the theme and the right host for the runtime (Wails, Tauri, Photino.NET, browser/PWA), pick desktop-ui and spartan/ui components instead of hand-styling, and write screens as separate `.ts` / `.html` / `.css` files with layout-only CSS.
 
 This folder isn't an npm package and isn't part of the Angular workspace build.
 
@@ -12,13 +12,17 @@ tools/claude-plugin/
     ├── references/
     │   ├── setup.md                    shared Angular + Tailwind + spartan + theme setup
     │   ├── host-wails.md               Go + Wails v3
+    │   ├── host-tauri.md               Rust + Tauri v2
+    │   ├── host-dotnet.md              .NET + Photino.NET
     │   ├── host-web.md                 browser and PWA
-    │   ├── other-runtimes.md           Electron, Tauri, .NET (scaffolds: use webHost)
+    │   ├── other-runtimes.md           Electron (scaffold: use webHost)
     │   ├── components.md               "I need X" → which component
     │   └── styling.md                  layout-only CSS rules and tokens
     └── templates/
         ├── setup/                      app.config.ts, styles.css, theme.scss
         ├── wails/main.go               Wails window + Spartan Native service
+        ├── tauri/                      lib.rs, tauri.conf.json (+ macOS), capabilities/default.json
+        ├── dotnet/Program.cs           Photino.NET window + Spartan Native service
         ├── shell/                      main window: title bar, sidebar, content, status bar
         ├── pages/list-page/            command bar + selectable table + empty state
         ├── pages/settings-page/        settings groups and rows

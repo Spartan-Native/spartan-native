@@ -1,6 +1,6 @@
 {
   "name": "spartan-native",
   "version": "0.1.0",
-  "description": "Build native-looking Angular desktop and web apps with Spartan Native: set up the theme and the right host (Wails, browser/PWA), then compose screens from stock spartan/ui and desktop-ui components instead of hand-styling them.",
-  "keywords": ["angular", "spartan-ng", "spartan-native", "wails", "desktop", "native-ui", "theme"]
+  "description": "Build native-looking Angular desktop and web apps with Spartan Native: set up the theme and the right host (Wails, Tauri, Photino.NET, browser/PWA), then compose screens from stock spartan/ui and desktop-ui components instead of hand-styling them.",
+  "keywords": ["angular", "spartan-ng", "spartan-native", "wails", "tauri", "photino", "desktop", "native-ui", "theme"]
 }

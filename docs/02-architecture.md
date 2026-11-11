@@ -66,8 +66,8 @@ The pieces stock spartan does not have: window chrome and the larger patterns ea
 Adapters that read the real system settings and expose window and OS services. Each one passes the same conformance tests.
 
 - `host-web`: browser APIs for web and PWA.
-- `host-wails` (Go module; its own repository, [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails)) and `host-tauri` (Rust plugin crate, Tauri v2).
-- `host-electron` (main-process module + preload) and `host-dotnet` (C# library for Photino.NET).
+- `host-wails` (Go module; its own repository, [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails)) and `host-tauri` (Rust plugin crate, Tauri v2; its own repository, [`Spartan-Native/host-tauri`](https://github.com/Spartan-Native/host-tauri)).
+- `host-electron` (main-process module + preload) and `host-dotnet` (C# library for Photino.NET; its own repository, [`Spartan-Native/host-dotnet`](https://github.com/Spartan-Native/host-dotnet)).
 - Capability flags, so components degrade gracefully. See [07](07-host-adapters.md).
 
 ### 05 `spartan-native-plugin` (Claude Code)
@@ -97,9 +97,9 @@ export const appConfig = {
 | --- | --- | --- | --- | --- |
 | Web + PWA | `@spartan-native/host-web` | `webHost()` | none (browser APIs only) | any modern browser |
 | Go + Wails | `@spartan-native/host-wails` | `wailsHost()` | Go module `github.com/spartan-native/host-wails` (repository [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails)) | WebView2 · WKWebView · WebKitGTK |
-| Rust + Tauri | `@spartan-native/host-tauri` | `tauriHost()` | Rust plugin crate (Tauri v2) | WebView2 · WKWebView · WebKitGTK |
+| Rust + Tauri | `@spartan-native/host-tauri` | `tauriHost()` | Rust plugin crate `tauri-plugin-spartan-native` (repository [`Spartan-Native/host-tauri`](https://github.com/Spartan-Native/host-tauri)) | WebView2 · WKWebView · WebKitGTK |
 | TS + Electron | `@spartan-native/host-electron` | `electronHost()` | main-process module + preload | bundled Chromium |
-| .NET + Photino | `@spartan-native/host-dotnet` | `dotnetHost()` | C# library for Photino.NET | WebView2 · WKWebView · WebKitGTK |
+| .NET + Photino | `@spartan-native/host-dotnet` | `dotnetHost()` | NuGet package `SpartanNative.Photino` (repository [`Spartan-Native/host-dotnet`](https://github.com/Spartan-Native/host-dotnet)) | WebView2 · WKWebView · WebKitGTK |
 
 ### What `provideSpartanNative` should do (derived from the design)
 

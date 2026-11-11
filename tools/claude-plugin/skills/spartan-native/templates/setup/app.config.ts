@@ -10,6 +10,16 @@ import { isWails, wailsHost } from '@spartan-native/host-wails';
 import { webHost } from '@spartan-native/host-web';
 const host = isWails() ? wailsHost() : webHost();
 
+// --- Tauri v2 desktop app, with a browser fallback ---------------------------
+// import { isTauri, tauriHost } from '@spartan-native/host-tauri';
+// import { webHost } from '@spartan-native/host-web';
+// const host = isTauri() ? tauriHost() : webHost();
+
+// --- Photino.NET desktop app, with a browser fallback ------------------------
+// import { dotnetHost, isPhotino } from '@spartan-native/host-dotnet';
+// import { webHost } from '@spartan-native/host-web';
+// const host = isPhotino() ? dotnetHost() : webHost();
+
 // --- Browser / PWA only ------------------------------------------------------
 // import { webHost } from '@spartan-native/host-web';
 // const host = webHost();

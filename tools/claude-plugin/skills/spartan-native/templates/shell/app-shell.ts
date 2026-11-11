@@ -36,13 +36,14 @@ export class AppShell {
 
   /**
    * Who draws the window buttons, or `null` for no title bar at all:
-   *  - Wails on Windows / Linux: frameless window, the app draws them ('custom')
-   *  - Wails on macOS: hidden-inset title bar, the OS draws the traffic lights ('native')
+   *  - Wails or Tauri on Windows / Linux: frameless window, the app draws them ('custom')
+   *  - Wails or Tauri on macOS: hidden-inset / overlay title bar, the OS draws the traffic lights ('native')
+   *  - Photino.NET: the OS frame draws the whole title bar (null)
    *  - PWA with Window Controls Overlay: the OS draws them ('native')
    *  - a browser tab or a standalone PWA: the browser / OS owns the title bar (null)
    */
   protected readonly windowControls = computed<'custom' | 'native' | null>(() => {
-    if (this.theme.runtime === 'wails') {
+    if (this.theme.runtime === 'wails' || this.theme.runtime === 'tauri') {
       return skinFamily(this.theme.skin()) === 'macos' ? 'native' : 'custom';
     }
     return this.displayMode() === 'overlay' ? 'native' : null;

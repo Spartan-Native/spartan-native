@@ -15,9 +15,7 @@
       "@spartan-native/desktop-ui": ["./packages/desktop-ui/src/public-api.ts"],
       "@spartan-native/helm": ["./packages/helm/src/public-api.ts"],
       "@spartan-native/host-conformance": ["./packages/hosts/host-conformance/src/public-api.ts"],
-      "@spartan-native/host-dotnet": ["./packages/hosts/host-dotnet/src/public-api.ts"],
       "@spartan-native/host-electron": ["./packages/hosts/host-electron/src/public-api.ts"],
-      "@spartan-native/host-tauri": ["./packages/hosts/host-tauri/src/public-api.ts"],
       "@spartan-native/host-web": ["./packages/hosts/host-web/src/public-api.ts"],
       "@spartan-native/theme": ["./packages/theme/src/public-api.ts"],
       "@spartan-native/theme/storybook": ["./packages/theme/storybook/src/public-api.ts"],
@@ -122,22 +120,10 @@
       "path": "./packages/hosts/host-web/tsconfig.spec.json"
     },
     {
-      "path": "./packages/hosts/host-tauri/tsconfig.lib.json"
-    },
-    {
-      "path": "./packages/hosts/host-tauri/tsconfig.spec.json"
-    },
-    {
       "path": "./packages/hosts/host-electron/tsconfig.lib.json"
     },
     {
       "path": "./packages/hosts/host-electron/tsconfig.spec.json"
-    },
-    {
-      "path": "./packages/hosts/host-dotnet/tsconfig.lib.json"
-    },
-    {
-      "path": "./packages/hosts/host-dotnet/tsconfig.spec.json"
     },
     {
       "path": "./packages/hosts/host-conformance/tsconfig.lib.json"
