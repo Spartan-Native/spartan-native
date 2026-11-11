@@ -28,7 +28,7 @@ Spartan Native is a native-look theme for [spartan/ui](https://spartan.ng) (Angu
 | 05 | [Components](05-components.md) | The 28 spartan/helm components that get skins, plus the desktop interaction rules |
 | 06 | [OS patterns](06-os-patterns.md) | Six signature OS patterns and their counterparts on each platform (`desktop-ui`) |
 | 07 | [Host contract & adapters](07-host-adapters.md) | The `NativeHost` interface, the five adapters and the capability matrix |
-| 08 | [Sample app: Harbor Backup](08-sample-app.md) | The reference app used to validate everything end to end |
+| 08 | [Sample app: Harbor Backup](08-sample-app.md) | The reference app used to validate everything end to end (lives in the harbor repository) |
 | 09 | [Roadmap & milestones](09-roadmap.md) | Phases with deliverables and exit criteria |
 | 10 | [Open questions](10-open-questions.md) | Decisions the mockups leave open |
 

@@ -12,7 +12,7 @@ import (
 	"log"
 	"runtime"
 
-	spartannative "github.com/spartan-native/host-wails/native"
+	spartannative "github.com/spartan-native/host-wails"
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
 

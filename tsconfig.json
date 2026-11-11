@@ -18,7 +18,6 @@
       "@spartan-native/host-dotnet": ["./packages/hosts/host-dotnet/src/public-api.ts"],
       "@spartan-native/host-electron": ["./packages/hosts/host-electron/src/public-api.ts"],
       "@spartan-native/host-tauri": ["./packages/hosts/host-tauri/src/public-api.ts"],
-      "@spartan-native/host-wails": ["./packages/hosts/host-wails/src/public-api.ts"],
       "@spartan-native/host-web": ["./packages/hosts/host-web/src/public-api.ts"],
       "@spartan-native/theme": ["./packages/theme/src/public-api.ts"],
       "@spartan-native/theme/storybook": ["./packages/theme/storybook/src/public-api.ts"],
@@ -123,12 +122,6 @@
       "path": "./packages/hosts/host-web/tsconfig.spec.json"
     },
     {
-      "path": "./packages/hosts/host-wails/tsconfig.lib.json"
-    },
-    {
-      "path": "./packages/hosts/host-wails/tsconfig.spec.json"
-    },
-    {
       "path": "./packages/hosts/host-tauri/tsconfig.lib.json"
     },
     {
@@ -157,12 +150,6 @@
     },
     {
       "path": "./apps/playground/tsconfig.spec.json"
-    },
-    {
-      "path": "./apps/harbor-backup/tsconfig.app.json"
-    },
-    {
-      "path": "./apps/harbor-backup/tsconfig.spec.json"
     }
   ]
 }

@@ -19,4 +19,4 @@ It will implement the contract from `@spartan-native/theme` (`NativeHost`, with 
 provideSpartanNative({ host: dotnetHost() })
 ```
 
-Implementers: follow `@spartan-native/host-wails` as the reference adapter, and run `describeHostConformance` against a fake runtime.
+Implementers: follow `@spartan-native/host-wails` (its own repository, `Spartan-Native/host-wails`) as the reference adapter, and run `describeHostConformance` against a fake runtime.

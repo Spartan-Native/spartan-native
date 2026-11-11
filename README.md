@@ -8,7 +8,7 @@
 
 Spartan Native is a native-look theme for [spartan/ui](https://spartan.ng) (Angular). It does not fork spartan. Your components stay the same and read one shared set of CSS variables. A **skin** changes their geometry, materials and states to match each OS, and a **host adapter** feeds in the settings the user already chose in the OS: accent color, light/dark, contrast, transparency, text size and window focus. The same app runs in a browser/PWA and in Wails, Tauri, Electron or Photino.NET. Only one line of `app.config.ts` changes per runtime.
 
-> **Status:** `@spartan-native/theme` is implemented for **Windows 11, macOS 26 and GNOME**, with a Storybook and the Harbor Backup sample app. `@spartan-native/helm` has its first desktop behaviors (selection model, default/cancel buttons), and `@spartan-native/desktop-ui` has window chrome, the six OS patterns, a status bar, the controls spartan lacks (split button, number box, tree view) and the menubar adapter with context menus (the macOS global menu bar and OS context menus through Wails). `@spartan-native/host-web` reads the OS settings live in any browser (and Harbor installs as a PWA), and `@spartan-native/host-conformance` tests every adapter. `@spartan-native/host-wails` reads the real OS settings through a Go service (Harbor runs as a Wails desktop app). Tauri, Electron and Photino are still scaffolds. The full spec is in [`docs/`](docs/README.md); the next steps are in the [roadmap](docs/09-roadmap.md).
+> **Status:** `@spartan-native/theme` is implemented for **Windows 11, macOS 26 and GNOME**, with a Storybook and the Harbor Backup sample app (in its own repository, [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor)). `@spartan-native/helm` has its first desktop behaviors (selection model, default/cancel buttons), and `@spartan-native/desktop-ui` has window chrome, the six OS patterns, a status bar, the controls spartan lacks (split button, number box, tree view) and the menubar adapter with context menus (the macOS global menu bar and OS context menus through Wails). `@spartan-native/host-web` reads the OS settings live in any browser (and Harbor installs as a PWA), and `@spartan-native/host-conformance` tests every adapter. `@spartan-native/host-wails` reads the real OS settings through a Go service (Harbor runs as a Wails desktop app); it lives in its own repository, [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails), together with its Go module. Tauri, Electron and Photino are still scaffolds. The full spec is in [`docs/`](docs/README.md); the next steps are in the [roadmap](docs/09-roadmap.md).
 
 ---
 
@@ -116,19 +116,23 @@ spartan-native/
 │   ├── desktop-ui/       03  title bar, window controls, settings list, status page      [Storybook :6008]
 │   └── hosts/            04  runtime adapters behind the NativeHost contract
 │       ├── host-web/             browser / PWA (implemented)
-│       ├── host-wails/           Go + Wails v3 (+ native/ Go module) (implemented)
 │       ├── host-tauri/           Rust + Tauri v2  (+ native/ Rust crate)
 │       ├── host-electron/        Electron         (+ native/ main + preload)
 │       ├── host-dotnet/          Photino.NET      (+ native/ C# library)
 │       └── host-conformance/     the test suite every adapter must pass (implemented)
 ├── apps/
-│   ├── playground/           docs playground (the living spec)
-│   ├── harbor-backup/        Harbor Backup sample app (browser, installable PWA)
-│   └── harbor-desktop/       Harbor as a Wails v3 desktop app (Go)
+│   └── playground/           docs playground (the living spec)
 ├── libs/spartan-ui/           stock spartan/ui helm components (generated, never edited; workspace-local)
 ├── tools/claude-plugin/  05  Claude Code plugin (not part of the Angular build)
 └── docs/                     the implementation spec, images and design sources
 ```
+
+Two parts live in their own repositories:
+
+| Repository | What it is |
+| --- | --- |
+| [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails) | `@spartan-native/host-wails` (Go + Wails v3, implemented) and its Go module `github.com/spartan-native/host-wails` |
+| [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor) | The Harbor Backup sample app: browser, installable PWA, and a Wails v3 desktop shell |
 
 ### Dependency graph
 
@@ -147,10 +151,8 @@ Each library declares Angular, spartan/ui and its sibling `@spartan-native/*` pa
 | Command | What it does |
 | --- | --- |
 | `npm start` | Serve the playground |
-| `npm run start:harbor` | Serve the Harbor Backup sample app |
-| `npm run start:harbor-desktop` | Build and run Harbor as a Wails desktop app (needs Go) |
 | `npm run build:libs` | Build all libraries in dependency order into `dist/` |
-| `npm run build` | Libraries, then both apps |
+| `npm run build` | Libraries, then the playground |
 | `npm test` | Unit tests (Vitest via `@angular/build:unit-test`) |
 | `npm run storybook:theme` / `:helm` / `:desktop-ui` | Interactive Storybook for one lower layer |
 | `npm run build-storybook:<lib>` | Static Storybook into `dist/storybook/<lib>` |
@@ -175,7 +177,6 @@ Each Storybook is self-contained in its project's `.storybook/` folder. They sha
 | `npm run storybook:theme` (:6006) | The stock spartan/ui components, themed |
 | `npm run storybook:helm` (:6007) | The selection model on a list and a table, and default/cancel buttons |
 | `npm run storybook:desktop-ui` (:6008) | Title bar, settings list, status page, shortcuts and `*snPlatformIf` on every OS |
-| `npm run storybook:harbor` (:6010) | The Harbor Backup window, with text size and window focus added to the toolbar |
 
 ## Docs
 
@@ -184,7 +185,7 @@ Each Storybook is self-contained in its project's `.storybook/` folder. They sha
 | [Overview](docs/01-overview.md) | [Architecture](docs/02-architecture.md) |
 | [Tokens & palette](docs/03-theme-tokens.md) | [Platform skins](docs/04-platform-skins.md) |
 | [Components](docs/05-components.md) | [OS patterns](docs/06-os-patterns.md) |
-| [Host adapters](docs/07-host-adapters.md) | [Sample app](docs/08-sample-app.md) |
+| [Host adapters](docs/07-host-adapters.md) | [Sample app](docs/08-sample-app.md) (in the harbor repository) |
 | [Roadmap](docs/09-roadmap.md) | [Open questions](docs/10-open-questions.md) |
 
 <sub>Images are rendered from the design canvas "Spartan Native Theme — Wails" (`docs/reference/design-source/`) with the scripts in `docs/reference/screenshot-tools/`. Platform names are trademarks of their respective owners.</sub>

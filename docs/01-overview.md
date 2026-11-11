@@ -46,7 +46,7 @@ Spartan Native is a theme layer for stock spartan/ui. It does not fork spartan. 
 - `@spartan-native/desktop-ui`: title bars, OS signature patterns, shortcut formatter.
 - `@spartan-native/host-*`: adapters for web/PWA, Wails, Tauri, Electron and Photino.NET.
 - `spartan-native-plugin`: a Claude Code plugin with the conventions.
-- A docs playground and the Harbor Backup sample app.
+- A docs playground and the Harbor Backup sample app (in its own repository, [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor)).
 
 ## Out of scope (as designed)
 
