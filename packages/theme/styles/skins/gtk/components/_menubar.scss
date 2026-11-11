@@ -1,0 +1,37 @@
+// ============================================================================
+//  GNOME · Menu bar (hlm-menubar): GtkPopoverMenuBar on a card; the open title
+//  gets the button fill.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$menubar} {
+      min-height: #{px(40)};
+      padding: 0 #{px(4)};
+      border: 0;
+      border-radius: #{px(8)};
+      background: var(--sn-color-surface);
+      box-shadow: 0 0 0 1px var(--sn-color-stroke);
+    }
+
+    #{h.$menubar-trigger} {
+      min-height: #{px(30)};
+      padding-inline: #{px(10)};
+      border-radius: var(--sn-radius-control);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 7%, transparent);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-fg) 14%, transparent);
+      }
+    }
+
+    #{h.$menubar-trigger-open} {
+      background: var(--sn-color-control);
+    }
+  }
+}

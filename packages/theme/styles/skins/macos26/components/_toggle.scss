@@ -1,0 +1,60 @@
+// ============================================================================
+//  macOS 26 · Segmented control (hlm-toggle-group) and toggle buttons (hlmToggle)
+//  A glass capsule; the "on" segment is a raised white pill with accent text.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+@use '../glass' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$toggle-group} {
+      @include glass;
+      gap: #{px(2)};
+      padding: #{px(3)};
+      border-radius: var(--sn-radius-pill);
+    }
+
+    #{h.$toggle} {
+      min-width: #{px(32)};
+      min-height: #{px(26)};
+      padding-inline: #{px(10)};
+      border: 0;
+      border-radius: var(--sn-radius-pill);
+      background: transparent;
+    }
+
+    // A lone toggle sits on glass like a push button
+    #{h.$toggle-single} {
+      @include glass;
+      min-height: var(--sn-control-height);
+    }
+
+    #{h.$toggle-off} {
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+      }
+
+      &:active {
+        filter: brightness(0.88);
+      }
+    }
+
+    #{h.$toggle-on} {
+      background: var(--sn-color-segment-on);
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.14);
+      color: var(--sn-color-accent-text);
+      --ng-icon__color: var(--sn-color-accent-text);
+    }
+  }
+
+  .t-mac.dark #{h.$toggle-off}:active {
+    filter: brightness(1.3);
+  }
+
+  // Inactive window: the selected segment keeps its pill but loses the accent
+  .t-mac.inactive #{h.$toggle-on} {
+    color: var(--sn-color-fg);
+    --ng-icon__color: var(--sn-color-fg);
+  }
+}

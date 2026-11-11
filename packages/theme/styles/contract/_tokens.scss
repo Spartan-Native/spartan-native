@@ -64,6 +64,21 @@
     --sn-dialog-padding: #{px(24)};
     --sn-dialog-width: #{px(440)};
     --sn-tooltip-radius: #{px(4)};
+    --sn-popover-padding: #{px(14)};
+    --sn-toast-radius: var(--sn-radius-surface);
+    --sn-command-item-height: #{px(34)};
+
+    // --- Calendar (hlm-calendar) ---------------------------------------------
+    --sn-calendar-cell: #{px(32)};
+    --sn-calendar-cell-radius: 50%;
+
+    // --- Disclosure, loading and scrolling -------------------------------------
+    --sn-accordion-header-height: #{px(44)};
+    --sn-spinner-color: var(--sn-color-primary);
+    --sn-scrollbar-thickness: 2px;          // thumb at rest
+    --sn-scrollbar-hover-thickness: 6px;    // thumb while the pointer is over the bar
+    --sn-scrollbar-thumb: color-mix(in srgb, var(--sn-color-fg) 40%, transparent);
+    --sn-scrollbar-thumb-hover: var(--sn-scrollbar-thumb);
 
     // --- Selection (sidebar items, list rows) --------------------------------
     --sn-selection-bg: var(--sn-color-hover);

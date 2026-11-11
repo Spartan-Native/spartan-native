@@ -1,0 +1,33 @@
+// ============================================================================
+//  Windows 11 · Expander (hlm-accordion): each item is its own card;
+//  an open item draws a line between header and content.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$accordion} {
+      gap: #{px(4)};
+    }
+
+    #{h.$accordion-item} {
+      border: 1px solid var(--sn-color-stroke);
+      border-radius: var(--sn-radius-control);
+      background: var(--sn-color-surface);
+    }
+
+    #{h.$accordion-trigger} {
+      border-radius: var(--sn-radius-control);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+      }
+    }
+
+    #{h.$accordion-item}[data-state='open'] #{h.$accordion-body} {
+      padding-top: #{px(12)};
+      border-top: 1px solid var(--sn-color-stroke);
+    }
+  }
+}

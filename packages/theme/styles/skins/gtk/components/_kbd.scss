@@ -1,0 +1,17 @@
+// ============================================================================
+//  GNOME · Keyboard key (hlmKbd): the .keycap style from the shortcuts window
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$kbd} {
+      border: 0;
+      border-radius: #{px(6)};
+      background: var(--sn-color-control);
+      box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--sn-color-fg) 14%, transparent);
+      font-weight: 700;
+    }
+  }
+}

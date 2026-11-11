@@ -1,0 +1,32 @@
+// ============================================================================
+//  ChromeOS · M3 side sheet (hlm-sheet): surfaceContainerLow, rounded on the
+//  edge that faces the content.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$sheet} {
+      border: 0;
+      background: var(--sn-color-surface-solid);
+      box-shadow: 0 4px 8px 3px rgb(0 0 0 / 0.15);
+
+      &[data-side='right'] {
+        border-radius: #{px(16)} 0 0 #{px(16)};
+      }
+
+      &[data-side='left'] {
+        border-radius: 0 #{px(16)} #{px(16)} 0;
+      }
+
+      &[data-side='bottom'] {
+        border-radius: #{px(28)} #{px(28)} 0 0;
+      }
+
+      &[data-side='top'] {
+        border-radius: 0 0 #{px(28)} #{px(28)};
+      }
+    }
+  }
+}

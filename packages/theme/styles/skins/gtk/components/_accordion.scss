@@ -1,0 +1,36 @@
+// ============================================================================
+//  GNOME · AdwExpanderRow (hlm-accordion): rows in a boxed list
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$accordion} {
+      overflow: hidden;
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-surface);
+      box-shadow: 0 0 0 1px rgb(0 0 6 / 0.04), 0 1px 3px 1px rgb(0 0 6 / 0.08);
+    }
+
+    #{h.$accordion-item} {
+      border: 0;
+    }
+
+    #{h.$accordion-item} + #{h.$accordion-item} {
+      border-top: 1px solid var(--sn-color-stroke);
+    }
+
+    #{h.$accordion-trigger} {
+      border-radius: 0;
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 7%, transparent);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-fg) 14%, transparent);
+      }
+    }
+  }
+}

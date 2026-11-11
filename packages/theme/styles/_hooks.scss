@@ -110,14 +110,126 @@ $slider-thumb: '[brnSliderThumb]';
 //  <html>, so `.t-win …` selectors reach them.
 // ============================================================================
 
-// --- Menus: dropdown menu panel and the select list share one look ---
-$menu: '[data-slot="dropdown-menu"], hlm-select-content';
-$menu-item: '[data-slot="dropdown-menu-item"], [data-slot="dropdown-menu-checkbox-item"], [data-slot="dropdown-menu-radio-item"], [data-slot="dropdown-menu-sub-trigger"], [data-slot="select-item"]';
+// --- Menus: dropdown, context and menubar menus, the select list and the
+//     combobox / autocomplete lists share one look. The combobox and
+//     autocomplete panels have no data-slot, so their element names are the hook.
+$menu: '[data-slot="dropdown-menu"], hlm-select-content, hlm-combobox-content, [hlmComboboxContent], hlm-autocomplete-content, [hlmAutocompleteContent]';
+$menu-item: '[data-slot="dropdown-menu-item"], [data-slot="dropdown-menu-checkbox-item"], [data-slot="dropdown-menu-radio-item"], [data-slot="dropdown-menu-sub-trigger"], [data-slot="select-item"], [data-slot="combobox-item"], [data-slot="autocomplete-item"]';
 $menu-item-highlighted: ':is(#{$menu-item}):is(:hover, :focus, [data-highlighted])';
 $menu-item-destructive: '[data-slot="dropdown-menu-item"][data-variant="destructive"]';
-$menu-separator: '[data-slot="dropdown-menu-separator"], [data-slot="select-separator"]';
-$menu-label: '[data-slot="dropdown-menu-label"], [data-slot="select-label"]';
+$menu-separator: '[data-slot="dropdown-menu-separator"], [data-slot="select-separator"], [data-slot="combobox-separator"], [data-slot="autocomplete-separator"]';
+$menu-label: '[data-slot="dropdown-menu-label"], [data-slot="select-label"], [data-slot="combobox-label"], [data-slot="autocomplete-label"]';
 $menu-shortcut: '[data-slot="dropdown-menu-shortcut"]';
+// "No matches" in a combobox, autocomplete or command palette
+$list-empty: '[data-slot="combobox-empty"], [data-slot="autocomplete-empty"], [data-slot="command-empty"]';
+
+// --- Menubar (hlm-menubar): its menus are ordinary dropdown menus ($menu) ---
+$menubar: '[data-slot="menubar"]';
+$menubar-trigger: '[data-slot="menubar"] [data-slot="menubar-trigger"]';
+$menubar-trigger-open: '[data-slot="menubar"] [data-slot="menubar-trigger"]:is([aria-expanded="true"], [data-state="open"])';
+
+// --- Popover and hover card: one floating panel look ---
+$popover: '[data-slot="popover-content"], [data-slot="hover-card-content"]';
+$popover-title: '[data-slot="popover-title"]';
+$popover-description: '[data-slot="popover-description"]';
+
+// --- Command palette (hlm-command) ---
+//     Items mark the keyboard row with data-selected; the input sits in an
+//     input group whose height and radius are !important utilities, so skins
+//     style the wrapper and make the inner group transparent.
+$command: '[data-slot="command"]';
+$command-in-dialog: ':is([data-slot="dialog-content"]) [data-slot="command"]';
+$command-input-wrapper: '[data-slot="command-input-wrapper"]';
+$command-input-group: '[data-slot="command-input-wrapper"] [data-slot="input-group"]';
+$command-input: '[data-slot="command-input"]';
+$command-list: '[data-slot="command-list"]';
+$command-group: '[data-slot="command-group"]';
+$command-group-label: '[data-slot="command-group"] [data-slot="command-group-label"]';
+$command-item: '[data-slot="command-item"]';
+$command-item-selected: '[data-slot="command-item"][data-selected]:not([data-selected="false"])';
+$command-item-hover: '[data-slot="command-item"]:not([data-selected]:not([data-selected="false"])):hover';
+$command-separator: '[data-slot="command-separator"]';
+$command-shortcut: '[data-slot="command-shortcut"]';
+
+// --- Toast (hlm-toaster → brain's sonner) ---
+//     Sonner's own CSS is unlayered, so it beats every layer. Skins set its
+//     variables (--normal-bg, …) where they can and use !important for the rest.
+//     The toast also carries `rounded-2xl!`, a utility that even !important
+//     can't beat from a later layer: skins set --radius on it instead
+//     (rounded-2xl = --radius × 1.8).
+$toaster: '[data-sonner-toaster]';
+$toast: '[data-sonner-toast]';
+$toast-icon: '[data-sonner-toast] [data-icon]';
+$toast-content: '[data-sonner-toast] [data-content]';
+$toast-title: '[data-sonner-toast] [data-title]';
+$toast-description: '[data-sonner-toast] [data-description]';
+$toast-action: '[data-sonner-toast] :is([data-button], #{$button}):not([data-cancel], .bg-secondary)';
+$toast-cancel: '[data-sonner-toast] :is([data-cancel], #{$button}.bg-secondary)';
+$toast-close: '[data-sonner-toast] [data-close-button]';
+
+// --- Toggle (hlmToggle) and toggle group (hlm-toggle-group) ---
+$toggle-group: '[data-slot="toggle-group"]';
+$toggle-group-item: '[data-slot="toggle-group-item"]';
+$toggle: '[data-slot="toggle"], [data-slot="toggle-group-item"]';
+$toggle-single: '[data-slot="toggle"]';
+$toggle-on: ':is([data-slot="toggle"], [data-slot="toggle-group-item"]):is([data-state="on"], [aria-pressed="true"])';
+$toggle-off: ':is([data-slot="toggle"], [data-slot="toggle-group-item"]):not([data-state="on"], [aria-pressed="true"])';
+
+// --- Breadcrumb and pagination (pagination links are hlmBtn ghost/outline) ---
+$breadcrumb-list: '[data-slot="breadcrumb-list"]';
+$breadcrumb-link: '[data-slot="breadcrumb-link"]';
+$breadcrumb-page: '[data-slot="breadcrumb-page"]';
+$breadcrumb-separator: '[data-slot="breadcrumb-separator"]';
+$pagination-link: '[data-slot="pagination-link"]';
+$pagination-link-active: '[data-slot="pagination-link"][data-active="true"]';
+
+// --- Accordion (hlm-accordion) ---
+//     The trigger holds two chevrons: down (shown when closed) and up (open).
+$accordion: '[data-slot="accordion"]';
+$accordion-item: '[data-slot="accordion-item"]';
+$accordion-trigger: '[data-slot="accordion-trigger"]';
+// Relative to the trigger: write `#{$accordion-trigger} #{$accordion-icon-closed}`
+$accordion-icon-closed: '[data-slot="accordion-trigger-icon"]:first-of-type';
+$accordion-icon-open: '[data-slot="accordion-trigger-icon"]:last-of-type';
+$accordion-content: '[data-slot="accordion-content"]';
+$accordion-body: '[data-slot="accordion-content"] > div';
+
+// --- Avatar (hlm-avatar) ---
+$avatar: '[data-slot="avatar"]';
+$avatar-fallback: '[data-slot="avatar-fallback"]';
+$avatar-badge: '[data-slot="avatar-badge"]';
+$avatar-group: '[data-slot="avatar-group"]';
+$avatar-group-count: '[data-slot="avatar-group-count"]';
+
+// --- Calendar (hlm-calendar) and date picker ---
+//     Day cells are hlmBtn ghost buttons: the calendar hooks are written to be
+//     more specific than $button-ghost so the button skin doesn't win.
+$calendar: '[data-slot="calendar"]';
+$calendar-header: '[data-slot="calendar"] [brnCalendarHeader]';
+$calendar-nav: '[data-slot="calendar"] button[type="button"]:is([data-slot="calendar-previous-button"], [data-slot="calendar-next-button"])';
+$calendar-weekday: '[data-slot="calendar"] thead th';
+$calendar-day: '[data-slot="calendar"] button[brnCalendarCellButton][role="gridcell"]';
+$calendar-day-today: '[data-slot="calendar"] button[brnCalendarCellButton][role="gridcell"][data-today="true"]';
+$calendar-day-selected: '[data-slot="calendar"] button[brnCalendarCellButton][role="gridcell"]:is([data-selected-single="true"], [data-range-start="true"], [data-range-end="true"])';
+$calendar-day-in-range: '[data-slot="calendar"] button[brnCalendarCellButton][role="gridcell"][data-range-middle="true"]';
+$calendar-day-outside: '[data-slot="calendar"] button[brnCalendarCellButton][role="gridcell"][data-outside="true"]';
+$calendar-day-disabled: '[data-slot="calendar"] button[brnCalendarCellButton][role="gridcell"]:is(:disabled, [data-disabled="true"])';
+
+// --- Sheet (hlm-sheet): a side panel ---
+$sheet: '[data-slot="sheet-content"]';
+$sheet-title: '[data-slot="sheet-title"]';
+$sheet-description: '[data-slot="sheet-description"]';
+$sheet-footer: '[data-slot="sheet-footer"]';
+
+// --- Kbd (hlmKbd) ---
+$kbd: '[data-slot="kbd"]';
+
+// --- Loading: spinner and skeleton ---
+$spinner: '[data-slot="spinner"]';
+$skeleton: '[data-slot="skeleton"]';
+
+// --- Scroll area (hlm-scroll-area = ngx-scrollbar): styled by its --scrollbar-* variables ---
+$scroll-area: '[data-slot="scroll-area"]';
 
 // --- Dialogs: hlm-dialog and hlm-alert-dialog ---
 $dialog: '[data-slot="dialog-content"], [data-slot="alert-dialog-content"]';
@@ -136,5 +248,5 @@ $tooltip: '[class*="tooltip-content-transform-origin"]';
 $tooltip-arrow: '[class*="tooltip-content-transform-origin"] > span:has(> svg)';
 
 // --- Focus: everything that shows the platform focus ring ---
-$focusable: '#{$button}, [role="checkbox"], [role="switch"], [role="tab"], #{$select-trigger}, #{$slider-thumb}';
+$focusable: '#{$button}, [role="checkbox"], [role="switch"], [role="tab"], #{$select-trigger}, #{$slider-thumb}, #{$toggle}, #{$accordion-trigger}, #{$menubar-trigger}, #{$calendar-day}';
 $text-field: '#{$input}, #{$textarea}';

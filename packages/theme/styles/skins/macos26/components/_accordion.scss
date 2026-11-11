@@ -1,0 +1,49 @@
+// ============================================================================
+//  macOS 26 · Disclosure group (hlm-accordion): one glass group with hairlines
+//  between rows; the chevron points right when closed and down when open.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+@use '../glass' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$accordion} {
+      @include glass;
+      overflow: hidden;
+      border-radius: #{px(12)};
+    }
+
+    #{h.$accordion-item} {
+      border: 0;
+    }
+
+    #{h.$accordion-item} + #{h.$accordion-item} {
+      border-top: 1px solid var(--sn-color-stroke);
+    }
+
+    #{h.$accordion-trigger} {
+      border-radius: 0;
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+      }
+    }
+
+    // One chevron, rotated: › closed, ⌄ open
+    // !important: see the chevron note in base/_components.scss
+    #{h.$accordion-trigger} #{h.$accordion-icon-closed} {
+      display: inline-block !important;
+      rotate: -90deg;
+      transition: rotate var(--sn-duration-fast) var(--sn-easing);
+    }
+
+    #{h.$accordion-trigger}[aria-expanded='true'] #{h.$accordion-icon-closed} {
+      rotate: 0deg;
+    }
+
+    #{h.$accordion-trigger} #{h.$accordion-icon-open} {
+      display: none !important;
+    }
+  }
+}

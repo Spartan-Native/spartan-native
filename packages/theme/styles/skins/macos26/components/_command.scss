@@ -1,0 +1,54 @@
+// ============================================================================
+//  macOS 26 · Spotlight-style palette (hlm-command): a glass panel with a large
+//  borderless search field; the keyboard row fills with the accent.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+@use '../glass' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$command} {
+      --radius: calc(#{px(22)} / 1.4);
+      @include glass(var(--sn-shadow-overlay));
+    }
+
+    #{h.$command-input-wrapper} {
+      min-height: #{px(54)};
+      padding-inline: #{px(10)};
+    }
+
+    #{h.$command-input} {
+      font-size: 1.4em;
+    }
+
+    #{h.$command-item} {
+      border-radius: #{px(10)};
+    }
+
+    #{h.$command-item-hover} {
+      background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+    }
+
+    #{h.$command-item-selected} {
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+      --ng-icon__color: var(--sn-color-primary-fg);
+
+      #{h.$command-shortcut} {
+        color: var(--sn-color-primary-fg);
+      }
+    }
+  }
+
+  // Inactive window: the keyboard row turns grey
+  .t-mac.inactive #{h.$command-item-selected} {
+    background: color-mix(in srgb, var(--sn-color-fg) 14%, transparent);
+    color: var(--sn-color-fg);
+    --ng-icon__color: var(--sn-color-fg);
+
+    #{h.$command-shortcut} {
+      color: var(--sn-color-fg-muted);
+    }
+  }
+}

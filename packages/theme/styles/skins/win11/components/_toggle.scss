@@ -1,0 +1,43 @@
+// ============================================================================
+//  Windows 11 · ToggleButton (hlmToggle) and a row of them (hlm-toggle-group)
+//  Subtle buttons; "on" is an accent tint with accent text.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$toggle-group} {
+      gap: #{px(2)};
+    }
+
+    #{h.$toggle} {
+      min-width: #{px(34)};
+      padding-inline: #{px(8)};
+      border: 1px solid transparent;
+      border-radius: var(--sn-radius-control);
+      background: transparent;
+    }
+
+    #{h.$toggle-off} {
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-fg) 3%, transparent);
+        color: color-mix(in srgb, var(--sn-color-fg) 62%, transparent);
+      }
+    }
+
+    #{h.$toggle-on} {
+      background: var(--sn-color-secondary);
+      color: var(--sn-color-accent-text);
+      --ng-icon__color: var(--sn-color-accent-text);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-secondary), var(--sn-color-fg) 5%);
+      }
+    }
+  }
+}

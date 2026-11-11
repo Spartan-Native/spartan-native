@@ -1,0 +1,33 @@
+// ============================================================================
+//  ChromeOS · Menu bar (hlm-menubar): a tonal 48px bar with pill titles
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$menubar} {
+      min-height: #{px(48)};
+      padding: 0 #{px(4)};
+      border: 0;
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-glass);
+    }
+
+    #{h.$menubar-trigger} {
+      min-height: #{px(36)};
+      padding-inline: #{px(12)};
+      border-radius: var(--sn-radius-pill);
+      font-weight: 500;
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+      }
+    }
+
+    #{h.$menubar-trigger-open} {
+      background: var(--sn-color-secondary);
+      color: var(--sn-color-secondary-fg);
+    }
+  }
+}

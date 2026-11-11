@@ -1,0 +1,32 @@
+// ============================================================================
+//  KDE Breeze · Menu bar (hlm-menubar): flush with the window, a line below;
+//  hover and open titles get the accent outline and tint.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$menubar} {
+      min-height: #{px(30)};
+      padding: 0 #{px(2)};
+      border: 0;
+      border-bottom: 1px solid var(--sn-color-border);
+      border-radius: 0;
+      background: var(--sn-color-bg);
+    }
+
+    #{h.$menubar-trigger} {
+      min-height: #{px(26)};
+      padding-inline: #{px(8)};
+      border: 1px solid transparent;
+      border-radius: var(--sn-menu-item-radius);
+    }
+
+    #{h.$menubar-trigger}:hover,
+    #{h.$menubar-trigger-open} {
+      border-color: var(--sn-color-primary);
+      background: color-mix(in srgb, var(--sn-color-primary) 18%, transparent);
+    }
+  }
+}

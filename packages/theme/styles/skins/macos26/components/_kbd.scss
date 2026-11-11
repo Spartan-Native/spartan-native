@@ -1,0 +1,15 @@
+// ============================================================================
+//  macOS 26 · Keyboard key (hlmKbd): a small glass keycap
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+@use '../glass' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$kbd} {
+      @include glass;
+      border-radius: #{px(6)};
+    }
+  }
+}

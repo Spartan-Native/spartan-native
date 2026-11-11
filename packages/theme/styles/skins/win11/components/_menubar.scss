@@ -1,0 +1,35 @@
+// ============================================================================
+//  Windows 11 · MenuBar (hlm-menubar): a 40px bar of subtle buttons
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$menubar} {
+      min-height: #{px(40)};
+      padding: 0 #{px(4)};
+      border: 1px solid var(--sn-color-stroke);
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-surface);
+    }
+
+    #{h.$menubar-trigger} {
+      min-height: var(--sn-control-height);
+      padding-inline: #{px(10)};
+      border-radius: var(--sn-radius-control);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-fg) 3%, transparent);
+      }
+    }
+
+    #{h.$menubar-trigger-open} {
+      background: var(--sn-color-hover);
+    }
+  }
+}

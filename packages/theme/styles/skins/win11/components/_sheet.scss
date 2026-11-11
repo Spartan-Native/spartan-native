@@ -1,0 +1,16 @@
+// ============================================================================
+//  Windows 11 · Side pane (hlm-sheet): an acrylic panel with a hairline edge
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$sheet} {
+      border-color: var(--sn-color-stroke);
+      background: var(--sn-color-acrylic);
+      box-shadow: -8px 0 24px rgb(0 0 0 / 0.14);
+      -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+      backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    }
+  }
+}

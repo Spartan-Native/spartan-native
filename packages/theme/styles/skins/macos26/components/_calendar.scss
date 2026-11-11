@@ -1,0 +1,35 @@
+// ============================================================================
+//  macOS 26 · Date picker calendar (hlm-calendar)
+//  Month title on the left; today in accent text; the selected day is an accent disc.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$calendar-header} {
+      order: -10000;
+      flex: 1;
+      padding-inline-start: #{px(6)};
+    }
+
+    #{h.$calendar-day} {
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+      }
+    }
+
+    #{h.$calendar-day-today} {
+      color: var(--sn-color-accent-text);
+      font-weight: 700;
+    }
+  }
+
+  .t-mac.inactive #{h.$calendar-day-selected} {
+    &,
+    &:hover {
+      background: color-mix(in srgb, var(--sn-color-fg) 14%, transparent);
+      color: var(--sn-color-fg);
+    }
+  }
+}

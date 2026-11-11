@@ -101,5 +101,74 @@ $hairline: 0 0 0 0.5px color-mix(in srgb, var(--sn-color-fg) 18%, transparent), 
       border-radius: #{px(10)};
       box-shadow: var(--sn-shadow-card);
     }
+
+    // --- Floating panels: vibrancy, tighter corners ---------------------------------------
+    #{h.$popover},
+    #{h.$sheet} {
+      border-color: transparent;
+      border-radius: #{px(10)};
+      box-shadow: var(--sn-shadow-overlay);
+    }
+
+    #{h.$toast} {
+      --normal-border: transparent;
+      --sn-toast-radius: #{px(14)};
+      box-shadow: var(--sn-shadow-overlay) !important;
+    }
+
+    #{h.$command} {
+      --radius: calc(#{px(12)} / 1.4);
+      border-color: transparent;
+      box-shadow: var(--sn-shadow-overlay);
+    }
+
+    #{h.$command-item} {
+      border-radius: #{px(5)};
+    }
+
+    // --- Menu bar: the system bar is flush and square ----------------------------------------
+    #{h.$menubar} {
+      border-color: transparent;
+      border-radius: 0;
+      box-shadow: var(--sn-shadow-card);
+    }
+
+    #{h.$menubar-trigger} {
+      min-height: #{px(20)};
+      border-radius: #{px(4)};
+    }
+
+    // --- Segmented control: rounded rectangle, not a capsule ----------------------------------
+    #{h.$toggle-group} {
+      padding: #{px(2)};
+      border-color: transparent;
+      border-radius: #{px(7)};
+      box-shadow: var(--sn-shadow-card);
+    }
+
+    #{h.$toggle} {
+      min-height: #{px(20)};
+      border-radius: #{px(5)};
+    }
+
+    #{h.$toggle-single} {
+      min-height: var(--sn-control-height);
+      border-color: transparent;
+      border-radius: var(--sn-radius-control);
+      background: var(--sn-color-surface-solid);
+      box-shadow: 0 0 0 0.5px color-mix(in srgb, var(--sn-color-fg) 18%, transparent), 0 1px 1px rgb(0 0 0 / 0.12);
+    }
+
+    #{h.$accordion} {
+      border-color: transparent;
+      border-radius: #{px(8)};
+      box-shadow: var(--sn-shadow-card);
+    }
+
+    #{h.$kbd} {
+      border-color: transparent;
+      border-radius: #{px(4)};
+      box-shadow: var(--sn-shadow-card);
+    }
   }
 }

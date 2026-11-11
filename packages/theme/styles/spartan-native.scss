@@ -28,6 +28,7 @@
 @use 'base/root';
 @use 'base/materials';
 @use 'base/tones';
+@use 'base/components';   // shared structure of the components below; skins dress it
 
 // 3. Skins: one folder per platform, each overriding only what differs
 @use 'skins/win11';

@@ -1,0 +1,24 @@
+// ============================================================================
+//  ChromeOS · M3 date picker (hlm-calendar): 40px round days; today is outlined
+//  in the primary color, the selection a primary disc.
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$calendar-nav} {
+      border-radius: 50%;
+    }
+
+    #{h.$calendar-day} {
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+      }
+    }
+
+    #{h.$calendar-day-today} {
+      box-shadow: inset 0 0 0 1px var(--sn-color-primary);
+      color: var(--sn-color-primary);
+    }
+  }
+}

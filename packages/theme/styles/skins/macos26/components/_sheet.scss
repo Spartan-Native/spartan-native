@@ -1,0 +1,41 @@
+// ============================================================================
+//  macOS 26 · Side panel (hlm-sheet): a floating glass panel, inset from the
+//  window edges like an Inspector, not a full-height drawer.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+@use '../glass' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$sheet} {
+      @include glass(var(--sn-shadow-overlay));
+      border-radius: #{px(18)};
+
+      &:is([data-side='left'], [data-side='right']) {
+        inset-block: #{px(8)};
+        height: auto;
+      }
+
+      &[data-side='right'] {
+        right: #{px(8)};
+      }
+
+      &[data-side='left'] {
+        left: #{px(8)};
+      }
+
+      &:is([data-side='top'], [data-side='bottom']) {
+        inset-inline: #{px(8)};
+      }
+
+      &[data-side='top'] {
+        top: #{px(8)};
+      }
+
+      &[data-side='bottom'] {
+        bottom: #{px(8)};
+      }
+    }
+  }
+}

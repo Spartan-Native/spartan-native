@@ -1,0 +1,37 @@
+// ============================================================================
+//  GNOME · Search popover (hlm-command): a filled search entry over a list of
+//  rows with a neutral highlight.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$command} {
+      --radius: calc(var(--sn-radius-surface) / 1.4);
+      border: 0;
+      background: var(--sn-color-surface-solid);
+      box-shadow: var(--sn-shadow-overlay);
+    }
+
+    #{h.$command-input-wrapper} {
+      min-height: #{px(36)};
+      margin: #{px(8)} #{px(8)} #{px(2)};
+      border-radius: var(--sn-radius-input);
+      background: var(--sn-color-control);
+    }
+
+    #{h.$command-item} {
+      border-radius: var(--sn-menu-item-radius);
+    }
+
+    #{h.$command-item-hover} {
+      background: color-mix(in srgb, var(--sn-color-fg) 7%, transparent);
+    }
+
+    #{h.$command-item-selected} {
+      background: color-mix(in srgb, var(--sn-color-fg) 10%, transparent);
+      color: var(--sn-color-fg);
+    }
+  }
+}

@@ -1,0 +1,15 @@
+// ============================================================================
+//  ChromeOS · M3 popover (hlm-popover, hlm-hover-card): surfaceContainer, elevation 2
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$popover} {
+      border: 0;
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-glass);
+      box-shadow: var(--sn-shadow-overlay);
+    }
+  }
+}

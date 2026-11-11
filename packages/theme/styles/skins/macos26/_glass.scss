@@ -1,0 +1,12 @@
+// ============================================================================
+//  macOS 26 · the Liquid Glass recipe, shared by the panels that float over
+//  content (popovers, palettes, toasts, sheets) and by grouped controls.
+// ============================================================================
+
+@mixin glass($shadow: var(--sn-shadow-card)) {
+  border: 1px solid var(--sn-color-glass-border);
+  background: var(--sn-color-glass);
+  box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), $shadow;
+  -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+  backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+}

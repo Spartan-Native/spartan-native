@@ -1,0 +1,58 @@
+// ============================================================================
+//  ChromeOS · M3 segmented button (hlm-toggle-group) and toggle buttons (hlmToggle)
+//  Outlined segments sharing borders, pill ends; "on" is the secondary container.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$toggle-group} {
+      gap: 0;
+    }
+
+    #{h.$toggle} {
+      min-width: #{px(40)};
+      min-height: #{px(40)};
+      padding-inline: #{px(12)};
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-pill);
+      background: transparent;
+      font-weight: 500;
+    }
+
+    #{h.$toggle-group-item} {
+      border-radius: 0;
+
+      &:first-child {
+        border-start-start-radius: #{px(20)};
+        border-end-start-radius: #{px(20)};
+      }
+
+      &:last-child {
+        border-start-end-radius: #{px(20)};
+        border-end-end-radius: #{px(20)};
+      }
+    }
+
+    #{h.$toggle-group-item} + #{h.$toggle-group-item} {
+      margin-inline-start: -1px;
+    }
+
+    #{h.$toggle-off} {
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
+      }
+    }
+
+    #{h.$toggle-on} {
+      background: var(--sn-color-secondary);
+      color: var(--sn-color-secondary-fg);
+      --ng-icon__color: var(--sn-color-secondary-fg);
+    }
+  }
+}

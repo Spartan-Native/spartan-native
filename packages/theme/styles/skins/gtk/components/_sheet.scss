@@ -1,0 +1,14 @@
+// ============================================================================
+//  GNOME · Side panel (hlm-sheet): an opaque AdwOverlaySplitView-style sidebar
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$sheet} {
+      border: 0;
+      background: var(--sn-color-surface-solid);
+      box-shadow: -2px 0 12px rgb(0 0 0 / 0.2);
+    }
+  }
+}

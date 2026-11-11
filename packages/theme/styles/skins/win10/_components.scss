@@ -219,5 +219,52 @@ $edge: color-mix(in srgb, var(--sn-color-fg) 45%, transparent);
     #{h.$alert} {
       border-radius: 0;
     }
+
+    // --- Flyouts, toasts, palettes, panes: solid and square -----------------------------
+    #{h.$popover},
+    #{h.$command},
+    #{h.$sheet} {
+      background: var(--sn-color-surface-solid);
+    }
+
+    #{h.$toast} {
+      --normal-bg: var(--sn-color-surface-solid);
+    }
+
+    // Command palette: the Windows 10 selection fill, no pill
+    #{h.$command-item} {
+      border-radius: 0;
+    }
+
+    #{h.$command-item-selected} {
+      background: var(--sn-selection-bg);
+
+      &::before {
+        display: none;
+      }
+    }
+
+    // --- Menu bar and toggle buttons: square ---------------------------------------------
+    #{h.$menubar-trigger},
+    #{h.$toggle},
+    #{h.$kbd} {
+      border-radius: 0;
+    }
+
+    #{h.$toggle-on} {
+      background: var(--sn-selection-bg);
+      color: var(--sn-color-fg);
+      --ng-icon__color: var(--sn-color-fg);
+    }
+
+    #{h.$accordion-item},
+    #{h.$accordion-trigger} {
+      border-radius: 0;
+    }
+
+    // --- Calendar: square cells; the selected day keeps the 2px accent frame -------------
+    #{h.$calendar-day-today} {
+      background: var(--sn-color-primary);
+    }
   }
 }

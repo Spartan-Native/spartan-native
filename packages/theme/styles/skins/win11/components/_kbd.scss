@@ -1,0 +1,15 @@
+// ============================================================================
+//  Windows 11 · Keyboard key (hlmKbd): a keycap with a heavier bottom edge
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$kbd} {
+      border: 1px solid var(--sn-color-stroke);
+      border-bottom-width: 2px;
+      border-radius: var(--sn-radius-control);
+      background: var(--sn-color-surface);
+    }
+  }
+}

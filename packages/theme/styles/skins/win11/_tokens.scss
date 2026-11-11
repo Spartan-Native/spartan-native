@@ -53,6 +53,9 @@
     --sn-dialog-padding: #{px(24)};
     --sn-dialog-width: #{px(440)};
     --sn-tooltip-radius: #{px(4)};
+    --sn-calendar-cell: #{px(36)};
+    --sn-calendar-cell-radius: 50%;
+    --sn-accordion-header-height: #{px(44)};
 
     // Selection: neutral fill + the accent pill
     --sn-selection-bg: var(--sn-color-hover);

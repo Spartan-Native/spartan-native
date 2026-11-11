@@ -1,0 +1,32 @@
+// ============================================================================
+//  macOS 26 · Notification banner (hlm-toaster): a glass card; the action is a
+//  borderless accent-text button.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../glass' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$toast} {
+      --normal-bg: var(--sn-color-glass);
+      --normal-border: var(--sn-color-glass-border);
+      --sn-toast-radius: var(--sn-radius-surface);
+      @include glass(var(--sn-shadow-overlay));
+      box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), var(--sn-shadow-overlay) !important;
+    }
+
+    #{h.$toast-action} {
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+      color: var(--sn-color-accent-text);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+        filter: none;
+      }
+    }
+  }
+}

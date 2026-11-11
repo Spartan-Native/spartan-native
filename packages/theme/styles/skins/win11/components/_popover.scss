@@ -1,0 +1,17 @@
+// ============================================================================
+//  Windows 11 · Flyout (hlm-popover, hlm-hover-card): acrylic, 8px corners, no arrow
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$popover} {
+      border: 1px solid var(--sn-color-stroke);
+      border-radius: var(--sn-radius-overlay);
+      background: var(--sn-color-acrylic);
+      box-shadow: var(--sn-shadow-overlay);
+      -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+      backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    }
+  }
+}

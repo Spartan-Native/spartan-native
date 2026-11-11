@@ -1,0 +1,43 @@
+// ============================================================================
+//  ChromeOS · Launcher-style palette (hlm-command): a 28px dialog surface with
+//  a pill search bar; rows are pills with a tonal selection.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$command} {
+      --radius: calc(var(--sn-radius-overlay) / 1.4);
+      border: 0;
+      background: var(--sn-color-acrylic);
+      box-shadow: var(--sn-shadow-window);
+    }
+
+    #{h.$command-input-wrapper} {
+      min-height: #{px(48)};
+      margin: #{px(8)};
+      padding-inline: #{px(10)};
+      border-radius: #{px(24)};
+      background: var(--sn-color-track);
+    }
+
+    #{h.$command-item} {
+      border-radius: var(--sn-radius-pill);
+      padding-inline: #{px(16)};
+    }
+
+    #{h.$command-item-hover} {
+      background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+    }
+
+    #{h.$command-item-selected} {
+      background: var(--sn-color-secondary);
+      color: var(--sn-color-secondary-fg);
+
+      #{h.$command-shortcut} {
+        color: var(--sn-color-secondary-fg);
+      }
+    }
+  }
+}

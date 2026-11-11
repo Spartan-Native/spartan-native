@@ -1,0 +1,32 @@
+// ============================================================================
+//  macOS 26 · Menu bar (hlm-menubar): a slim glass strip; the open title gets a
+//  neutral rounded highlight.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+@use '../glass' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$menubar} {
+      @include glass;
+      min-height: #{px(30)};
+      padding: 0 #{px(10)};
+      border-radius: #{px(10)};
+    }
+
+    #{h.$menubar-trigger} {
+      min-height: #{px(22)};
+      padding-inline: #{px(9)};
+      border-radius: #{px(6)};
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+      }
+    }
+
+    #{h.$menubar-trigger-open} {
+      background: color-mix(in srgb, var(--sn-color-fg) 14%, transparent);
+    }
+  }
+}

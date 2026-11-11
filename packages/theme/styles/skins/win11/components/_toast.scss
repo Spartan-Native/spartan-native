@@ -1,0 +1,35 @@
+// ============================================================================
+//  Windows 11 · Toast (hlm-toaster): an acrylic notification card
+//  The action is a standard button, not an accent one.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$toast} {
+      --normal-bg: var(--sn-color-acrylic);
+      --normal-border: var(--sn-color-stroke);
+      --sn-toast-radius: var(--sn-radius-overlay);
+      -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+      backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    }
+
+    #{h.$toast-action} {
+      height: var(--sn-control-height-small);
+      border-color: var(--sn-color-stroke);
+      border-bottom-color: var(--sn-color-stroke-bottom);
+      background: var(--sn-color-surface);
+      color: var(--sn-color-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-surface-solid), var(--sn-color-fg) 5%);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-surface-solid), var(--sn-color-fg) 2%);
+        color: color-mix(in srgb, var(--sn-color-fg) 62%, transparent);
+      }
+    }
+  }
+}

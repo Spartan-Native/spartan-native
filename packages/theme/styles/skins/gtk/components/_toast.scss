@@ -1,0 +1,42 @@
+// ============================================================================
+//  GNOME · AdwToast (hlm-toaster): a dark pill with the title and one action.
+//  No icon, no description: Adwaita toasts are a single line.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$toast} {
+      --normal-bg: var(--sn-color-toast);
+      --normal-text: #fff;
+      --normal-border: transparent;
+      --sn-toast-radius: #{px(999)};
+      padding: #{px(6)} #{px(6)} #{px(6)} #{px(20)} !important;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.25) !important;
+    }
+
+    #{h.$toast-icon},
+    #{h.$toast-description} {
+      display: none !important;
+    }
+
+    #{h.$toast-title} {
+      font-weight: 400 !important;
+    }
+
+    #{h.$toast-action} {
+      border-radius: var(--sn-radius-pill);
+      background: rgb(255 255 255 / 0.14);
+      color: #fff;
+
+      &:hover {
+        background: rgb(255 255 255 / 0.22);
+      }
+
+      &:active {
+        background: rgb(255 255 255 / 0.3);
+      }
+    }
+  }
+}

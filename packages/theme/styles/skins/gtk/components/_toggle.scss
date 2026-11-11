@@ -1,0 +1,58 @@
+// ============================================================================
+//  GNOME · Toggle buttons (hlmToggle) and a .linked box of them (hlm-toggle-group)
+//  Filled bold buttons; "checked" is the darker track fill. A group joins its
+//  buttons with a 1px gap and rounds only the outer corners.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$toggle-group} {
+      gap: 1px;
+    }
+
+    #{h.$toggle} {
+      min-width: #{px(36)};
+      min-height: var(--sn-control-height);
+      padding-inline: #{px(10)};
+      border: 0;
+      border-radius: var(--sn-radius-control);
+      background: var(--sn-color-control);
+      font-weight: 700;
+    }
+
+    #{h.$toggle-group-item} {
+      border-radius: 0;
+
+      &:first-child {
+        border-start-start-radius: var(--sn-radius-control);
+        border-end-start-radius: var(--sn-radius-control);
+      }
+
+      &:last-child {
+        border-start-end-radius: var(--sn-radius-control);
+        border-end-end-radius: var(--sn-radius-control);
+      }
+    }
+
+    #{h.$toggle-off} {
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-control), var(--sn-color-fg) 6%);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-control), var(--sn-color-fg) 14%);
+      }
+    }
+
+    #{h.$toggle-on} {
+      background: var(--sn-color-track);
+      color: var(--sn-color-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-track), var(--sn-color-fg) 6%);
+      }
+    }
+  }
+}

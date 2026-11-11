@@ -1,0 +1,38 @@
+// ============================================================================
+//  ChromeOS · M3 Snackbar (hlm-toaster): inverse surface, 4px corners; the
+//  action is a text button in the inverse primary.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$toast} {
+      --normal-bg: var(--sn-color-toast);
+      --normal-text: var(--sn-color-bg);
+      --normal-border: transparent;
+      --sn-toast-radius: #{px(4)};
+      box-shadow: 0 3px 5px rgb(0 0 0 / 0.2) !important;
+    }
+
+    #{h.$toast-description} {
+      color: color-mix(in srgb, var(--sn-color-bg) 82%, transparent) !important;
+    }
+
+    #{h.$toast-action} {
+      padding-inline: #{px(12)};
+      border-color: transparent;
+      background: transparent;
+      color: var(--sn-color-primary-edge);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary-edge) 8%, transparent);
+        box-shadow: none;
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-primary-edge) 12%, transparent);
+      }
+    }
+  }
+}

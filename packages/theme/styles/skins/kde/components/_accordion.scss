@@ -1,0 +1,47 @@
+// ============================================================================
+//  KDE Breeze · Collapsible sections (hlm-accordion): one framed group;
+//  the arrow points right when closed and down when open.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$accordion} {
+      overflow: hidden;
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-surface);
+    }
+
+    #{h.$accordion-item} {
+      border: 0;
+    }
+
+    #{h.$accordion-item} + #{h.$accordion-item} {
+      border-top: 1px solid var(--sn-color-stroke);
+    }
+
+    #{h.$accordion-trigger} {
+      border-radius: 0;
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary) 15%, transparent);
+      }
+    }
+
+    // !important: see the chevron note in base/_components.scss
+    #{h.$accordion-trigger} #{h.$accordion-icon-closed} {
+      display: inline-block !important;
+      rotate: -90deg;
+    }
+
+    #{h.$accordion-trigger}[aria-expanded='true'] #{h.$accordion-icon-closed} {
+      rotate: 0deg;
+    }
+
+    #{h.$accordion-trigger} #{h.$accordion-icon-open} {
+      display: none !important;
+    }
+  }
+}

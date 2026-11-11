@@ -54,6 +54,13 @@
     --sn-dialog-padding: #{px(20)};
     --sn-dialog-width: #{px(340)};
     --sn-tooltip-radius: #{px(6)};
+    --sn-calendar-cell: #{px(30)};
+    --sn-calendar-cell-radius: 50%;
+    --sn-accordion-header-height: #{px(36)};
+    --sn-spinner-color: var(--sn-color-fg-muted);
+    --sn-scrollbar-thickness: 6px;
+    --sn-scrollbar-hover-thickness: 8px;
+    --sn-scrollbar-thumb: color-mix(in srgb, var(--sn-color-fg) 32%, transparent);
 
     // Selection: accent-tinted row, accent icon
     --sn-selection-bg: var(--sn-color-secondary);

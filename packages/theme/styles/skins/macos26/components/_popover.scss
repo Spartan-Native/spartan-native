@@ -1,0 +1,15 @@
+// ============================================================================
+//  macOS 26 · Popover (hlm-popover, hlm-hover-card): a glass panel, 16px corners
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+@use '../glass' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$popover} {
+      @include glass(var(--sn-shadow-overlay));
+      border-radius: #{px(16)};
+    }
+  }
+}

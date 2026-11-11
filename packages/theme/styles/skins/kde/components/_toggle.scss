@@ -1,0 +1,58 @@
+// ============================================================================
+//  KDE Breeze · Toggle buttons (hlmToggle) and a joined row (hlm-toggle-group)
+//  Framed buttons that share borders; "on" is an accent tint with an accent frame.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$toggle-group} {
+      gap: 0;
+    }
+
+    #{h.$toggle} {
+      min-width: #{px(34)};
+      min-height: var(--sn-control-height);
+      padding-inline: #{px(8)};
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-control);
+      background: var(--sn-color-control);
+    }
+
+    #{h.$toggle-group-item} {
+      position: relative;
+      border-radius: 0;
+
+      &:first-child {
+        border-start-start-radius: var(--sn-radius-control);
+        border-end-start-radius: var(--sn-radius-control);
+      }
+
+      &:last-child {
+        border-start-end-radius: var(--sn-radius-control);
+        border-end-end-radius: var(--sn-radius-control);
+      }
+    }
+
+    #{h.$toggle-group-item} + #{h.$toggle-group-item} {
+      margin-inline-start: -1px;
+    }
+
+    :is(#{h.$toggle}):hover {
+      z-index: 1;
+      border-color: var(--sn-color-primary);
+    }
+
+    :is(#{h.$toggle}):active {
+      background: color-mix(in srgb, var(--sn-color-primary) 30%, var(--sn-color-control));
+    }
+
+    #{h.$toggle-on} {
+      z-index: 1;
+      border-color: var(--sn-color-primary);
+      background: color-mix(in srgb, var(--sn-color-primary) 20%, var(--sn-color-control));
+      color: var(--sn-color-fg);
+    }
+  }
+}

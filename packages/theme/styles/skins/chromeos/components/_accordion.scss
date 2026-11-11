@@ -1,0 +1,37 @@
+// ============================================================================
+//  ChromeOS · Expandable list (hlm-accordion): an elevated card with dividers
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$accordion} {
+      overflow: hidden;
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-surface);
+      box-shadow: var(--sn-shadow-card);
+    }
+
+    #{h.$accordion-item} {
+      border: 0;
+    }
+
+    #{h.$accordion-item} + #{h.$accordion-item} {
+      border-top: 1px solid var(--sn-color-stroke);
+    }
+
+    #{h.$accordion-trigger} {
+      padding-inline: #{px(16)};
+      border-radius: 0;
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+      }
+    }
+
+    #{h.$accordion-body} {
+      padding-inline: #{px(16)};
+    }
+  }
+}

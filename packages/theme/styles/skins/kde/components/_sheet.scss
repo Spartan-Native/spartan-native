@@ -1,0 +1,14 @@
+// ============================================================================
+//  KDE Breeze · Side panel (hlm-sheet): window background with a framed edge
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$sheet} {
+      border-color: var(--sn-color-border);
+      background: var(--sn-color-bg);
+      box-shadow: -4px 0 16px rgb(0 0 0 / 0.15);
+    }
+  }
+}

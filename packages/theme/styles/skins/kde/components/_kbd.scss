@@ -1,0 +1,15 @@
+// ============================================================================
+//  KDE Breeze · Keyboard key (hlmKbd): a framed button-colored key
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$kbd} {
+      border: 1px solid var(--sn-color-border);
+      border-radius: #{px(3)};
+      background: var(--sn-color-control);
+    }
+  }
+}

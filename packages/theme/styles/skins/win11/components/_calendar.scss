@@ -1,0 +1,41 @@
+// ============================================================================
+//  Windows 11 · CalendarView (hlm-calendar)
+//  Month title on the left, arrows on the right; round day cells. Today is an
+//  accent disc; the selected day is an accent ring.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$calendar-header} {
+      order: -10000;
+      flex: 1;
+      padding-inline-start: #{px(6)};
+    }
+
+    #{h.$calendar-day} {
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+      }
+    }
+
+    #{h.$calendar-day-today} {
+      &,
+      &:hover {
+        background: var(--sn-color-primary);
+        color: var(--sn-color-primary-fg);
+        font-weight: 600;
+      }
+    }
+
+    #{h.$calendar-day-selected} {
+      &,
+      &:hover {
+        background: transparent;
+        color: var(--sn-color-fg);
+        box-shadow: inset 0 0 0 2px var(--sn-color-primary);
+      }
+    }
+  }
+}

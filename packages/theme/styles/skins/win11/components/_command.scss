@@ -1,0 +1,49 @@
+// ============================================================================
+//  Windows 11 · Command palette (hlm-command): an acrylic flyout with a search
+//  row on top; the keyboard row gets the neutral fill and the accent pill.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$command} {
+      --radius: calc(var(--sn-radius-overlay) / 1.4);
+      border: 1px solid var(--sn-color-stroke);
+      background: var(--sn-color-acrylic);
+      box-shadow: 0 8px 32px rgb(0 0 0 / 0.2);
+      -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+      backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    }
+
+    #{h.$command-input-wrapper} {
+      min-height: #{px(48)};
+      border-bottom: 1px solid var(--sn-color-stroke);
+    }
+
+    #{h.$command-item} {
+      border-radius: var(--sn-menu-item-radius);
+    }
+
+    #{h.$command-item-hover} {
+      background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+    }
+
+    #{h.$command-item-selected} {
+      background: var(--sn-color-hover);
+      color: var(--sn-color-fg);
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset-inline-start: 0;
+        top: 50%;
+        width: 3px;
+        height: #{px(16)};
+        translate: 0 -50%;
+        border-radius: 2px;
+        background: var(--sn-color-primary);
+      }
+    }
+  }
+}

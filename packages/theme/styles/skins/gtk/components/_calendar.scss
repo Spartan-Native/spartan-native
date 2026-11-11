@@ -1,0 +1,18 @@
+// ============================================================================
+//  GNOME · GtkCalendar (hlm-calendar): centered month title between the arrows,
+//  rounded-square days; today is extra bold, the selection an accent fill.
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$calendar-header} {
+      flex: 1;
+      text-align: center;
+    }
+
+    #{h.$calendar-day-today} {
+      font-weight: 800;
+    }
+  }
+}

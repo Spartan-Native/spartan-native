@@ -55,6 +55,13 @@
     --sn-dialog-padding: #{px(24)};
     --sn-dialog-width: #{px(400)};
     --sn-tooltip-radius: #{px(4)};
+    --sn-command-item-height: #{px(44)};
+    --sn-calendar-cell: #{px(40)};
+    --sn-calendar-cell-radius: 50%;
+    --sn-accordion-header-height: #{px(48)};
+    --sn-scrollbar-thickness: 4px;
+    --sn-scrollbar-hover-thickness: 6px;
+    --sn-scrollbar-thumb: color-mix(in srgb, var(--sn-color-fg) 30%, transparent);
 
     // Selection: the secondary container
     --sn-selection-bg: var(--sn-color-secondary);

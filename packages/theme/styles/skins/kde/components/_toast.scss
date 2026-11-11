@@ -1,0 +1,16 @@
+// ============================================================================
+//  KDE Breeze · Notification popup (hlm-toaster): a framed card
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$toast} {
+      --normal-bg: var(--sn-color-surface-solid);
+      --normal-border: var(--sn-color-border);
+      --sn-toast-radius: #{px(8)};
+      box-shadow: 0 4px 16px rgb(0 0 0 / 0.2) !important;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+// ============================================================================
+//  Windows 11 · BreadcrumbBar (hlm-breadcrumb): the large page-header trail
+//  Pagination links are buttons and take the button skin as they are.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$breadcrumb-list} {
+      gap: #{px(8)};
+      font-size: #{px(20)};
+    }
+  }
+}

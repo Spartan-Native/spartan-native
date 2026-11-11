@@ -54,6 +54,15 @@
     --sn-dialog-padding: #{px(24)};
     --sn-dialog-width: #{px(400)};
     --sn-tooltip-radius: #{px(6)};
+    --sn-popover-padding: #{px(14)};
+    --sn-calendar-cell: #{px(34)};
+    --sn-calendar-cell-radius: #{px(6)};
+    --sn-accordion-header-height: #{px(50)};
+    --sn-spinner-color: var(--sn-color-fg);
+    --sn-scrollbar-thickness: 2px;
+    --sn-scrollbar-hover-thickness: 6px;
+    --sn-scrollbar-thumb: color-mix(in srgb, var(--sn-color-fg) 30%, transparent);
+    --sn-scrollbar-thumb-hover: color-mix(in srgb, var(--sn-color-fg) 45%, transparent);
 
     // Selection: a neutral pill, no accent
     --sn-selection-bg: var(--sn-color-control);
