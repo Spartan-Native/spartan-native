@@ -8,7 +8,7 @@
 
 Spartan Native is a native-look theme for [spartan/ui](https://spartan.ng) (Angular). It does not fork spartan. Your components stay the same and read one shared set of CSS variables. A **skin** changes their geometry, materials and states to match each OS, and a **host adapter** feeds in the settings the user already chose in the OS: accent color, light/dark, contrast, transparency, text size and window focus. The same app runs in a browser/PWA and in Wails, Tauri, Electron or Photino.NET. Only one line of `app.config.ts` changes per runtime.
 
-> **Status:** `@spartan-native/theme` is implemented for **Windows 11, macOS 26 and GNOME**, with a Storybook and the Harbor Backup sample app (in its own repository, [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor)). `@spartan-native/helm` has its first desktop behaviors (selection model, default/cancel buttons), and `@spartan-native/desktop-ui` has window chrome, the six OS patterns, a status bar, the controls spartan lacks (split button, number box, tree view) and the menubar adapter with context menus (the macOS global menu bar and OS context menus through Wails). `@spartan-native/host-web` reads the OS settings live in any browser (and Harbor installs as a PWA), and `@spartan-native/host-conformance` tests every adapter. `@spartan-native/host-wails` reads the real OS settings through a Go service (Harbor runs as a Wails desktop app); it lives in its own repository, [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails), together with its Go module. Tauri, Electron and Photino are still scaffolds. The full spec is in [`docs/`](docs/README.md); the next steps are in the [roadmap](docs/09-roadmap.md).
+> **Status:** `@spartan-native/theme` is implemented for **Windows 11, macOS 26 and GNOME**, with a Storybook and the Harbor Backup sample app (in its own repository, [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor)). `@spartan-native/helm` has its first desktop behaviors (selection model, default/cancel buttons), and `@spartan-native/desktop-ui` has window chrome, the six OS patterns, a status bar, the controls spartan lacks (split button, number box, tree view) and the menubar adapter with context menus (the macOS global menu bar and OS context menus through Wails). `@spartan-native/host-web` reads the OS settings live in any browser (and Harbor installs as a PWA), and `@spartan-native/host-conformance` tests every adapter. `@spartan-native/host-wails` reads the real OS settings through a Go service (Harbor runs as a Wails desktop app); it lives in its own repository, [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails), together with its Go module. `@spartan-native/host-tauri` (a Tauri v2 plugin in Rust) and `@spartan-native/host-dotnet` (a .NET library for Photino.NET) are ports of it, each in its own repository too; both pass the conformance suite and read the OS on macOS, but haven't run in a real app window yet. Electron is still a scaffold. The full spec is in [`docs/`](docs/README.md); the next steps are in the [roadmap](docs/09-roadmap.md).
 
 ---
 
@@ -116,9 +116,7 @@ spartan-native/
 │   ├── desktop-ui/       03  title bar, window controls, settings list, status page      [Storybook :6008]
 │   └── hosts/            04  runtime adapters behind the NativeHost contract
 │       ├── host-web/             browser / PWA (implemented)
-│       ├── host-tauri/           Rust + Tauri v2  (+ native/ Rust crate)
 │       ├── host-electron/        Electron         (+ native/ main + preload)
-│       ├── host-dotnet/          Photino.NET      (+ native/ C# library)
 │       └── host-conformance/     the test suite every adapter must pass (implemented)
 ├── apps/
 │   └── playground/           docs playground (the living spec)
@@ -127,11 +125,13 @@ spartan-native/
 └── docs/                     the implementation spec, images and design sources
 ```
 
-Two parts live in their own repositories:
+These parts live in their own repositories:
 
 | Repository | What it is |
 | --- | --- |
 | [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails) | `@spartan-native/host-wails` (Go + Wails v3, implemented) and its Go module `github.com/spartan-native/host-wails` |
+| [`Spartan-Native/host-tauri`](https://github.com/Spartan-Native/host-tauri) | `@spartan-native/host-tauri` (Rust + Tauri v2) and its plugin crate `tauri-plugin-spartan-native` |
+| [`Spartan-Native/host-dotnet`](https://github.com/Spartan-Native/host-dotnet) | `@spartan-native/host-dotnet` (.NET + Photino.NET) and its NuGet package `SpartanNative.Photino` |
 | [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor) | The Harbor Backup sample app: browser, installable PWA, and a Wails v3 desktop shell |
 
 ### Dependency graph

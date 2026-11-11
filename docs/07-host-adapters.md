@@ -71,24 +71,24 @@ N = native · P = partial or fallback · X = not available (components fall back
 | --- | --- | --- | --- | --- | --- | --- |
 | System accent | Appearance | P: configured; CSS `AccentColor` where supported | N: per-OS Go code + portal | N: plugin per OS + portal | N: `systemPreferences`; portal on Linux | N: WinRT · AppKit · D-Bus |
 | Light / dark | Appearance | N: `prefers-color-scheme` | N: runtime events | N: theme events | N: `nativeTheme` | N: OS events |
-| High contrast | Appearance | N: `forced-colors`, `prefers-contrast` | P: via CSS media queries | P: via CSS media queries | N: `nativeTheme` | P: via CSS media queries |
+| High contrast | Appearance | N: `forced-colors`, `prefers-contrast` | P: via CSS media queries | N: read from OS (contrast theme, Increase contrast, portal) | N: `nativeTheme` | N: read from OS (contrast theme, Increase contrast, portal) |
 | Reduce transparency | Appearance | P: media query where supported | N: read from OS | N: read from OS | N: `nativeTheme` | N: read from OS |
 | Text size | Appearance | P: browser font size | N: Windows & GNOME; in-app on macOS | N: same | N: same | N: same |
 | Window focus | Window | N: focus / blur events | N: window events | N: window events | N: BrowserWindow events | N: window events |
 | Mica · acrylic · vibrancy | Window | X: glass blurs page content only | N: Mica, translucent macOS | N: window effects | N: `backgroundMaterial`, vibrancy | P: limited by Photino |
 | Custom title bar | Window | P: Window Controls Overlay (Chromium) | N: frameless + drag regions | N: overlay or frameless | N: `titleBarOverlay` | P: frameless only |
-| Native menus & context menus | OS services | X: HTML menus | N on macOS (global menu bar + context menus); P on Windows/Linux (context menus; the app menu reaches only new, framed windows) | N: Menu API | N: Menu API | P: limited |
+| Native menus & context menus | OS services | X: HTML menus | N on macOS (global menu bar + context menus); P on Windows/Linux (context menus; the app menu reaches only new, framed windows) | N on macOS (global menu bar + context menus); P on Windows/Linux (context menus; the app menu is the window's menu bar, which frameless windows don't show) | N: Menu API | X: none in Photino (desktop-ui draws them) |
 | Notifications | OS services | P: Notification API, needs permission | P: varies by version | N: notification plugin | N: built in | P: via OS APIs |
 | Taskbar / dock progress | OS services | P: app badge only | P: custom native code | N: `setProgressBar` | N: `setProgressBar` | P: custom native code |
-| File dialogs | OS services | P: File System Access (Chromium) | N: runtime dialogs | N: dialog plugin | N: dialog module | N: Photino dialogs |
+| File dialogs | OS services | P: File System Access (Chromium) | N: runtime dialogs | N: dialog plugin | N: dialog module | N: Photino dialogs (no alert with custom buttons, so no `message`) |
 | OS version & skin | Platform | P: UA Client Hints, Chromium only | N: `RtlGetVersion` · sysctl · env | N: native version APIs | N: `os.release()` · `getSystemVersion()` | N: `Environment.OSVersion` |
 | GTK vs Qt detection | Linux | X: not detectable | N: `XDG_CURRENT_DESKTOP` | N: `XDG_CURRENT_DESKTOP` | N: `XDG_CURRENT_DESKTOP` | N: `XDG_CURRENT_DESKTOP` |
 
 ## Adapter order and conformance
 
-> **Implemented:** `@spartan-native/host-wails` (Go service per OS; passes the suite; verified on macOS; in its own repository, [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails)), `@spartan-native/host-web` (passes the suite) and `@spartan-native/host-conformance` (12 checks; the live ones run when the adapter's test supplies a driver). The web column of the matrix above is now measured, not planned. One finding: Chromium returns a fixed `AccentColor` (`#0075ff`), so the web accent is real only on Firefox and Safari.
+> **Implemented:** `@spartan-native/host-wails` (Go service per OS; passes the suite; verified on macOS; in its own repository, [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails)), `@spartan-native/host-tauri` and `@spartan-native/host-dotnet` (ports of the Wails service to a Rust Tauri plugin and a .NET library for Photino; both pass the suite and read the OS live on macOS, but haven't run in an app window yet; repositories [`Spartan-Native/host-tauri`](https://github.com/Spartan-Native/host-tauri) and [`Spartan-Native/host-dotnet`](https://github.com/Spartan-Native/host-dotnet)), `@spartan-native/host-web` (passes the suite) and `@spartan-native/host-conformance` (12 checks; the live ones run when the adapter's test supplies a driver). The web column of the matrix above is now measured, not planned. One finding: Chromium returns a fixed `AccentColor` (`#0075ff`), so the web accent is real only on Firefox and Safari.
 
-- **Order:** Web/PWA from day one, then Electron → Tauri → Wails → Photino.NET.
+- **Order:** planned as Web/PWA from day one, then Electron → Tauri → Wails → Photino.NET. Built: Web/PWA, Wails, then Tauri and Photino.NET as ports of the Wails service; Electron is next.
 - **Conformance:** every adapter must pass the same suite. It should check contract shape, capability flags that match real behavior, live change events (scheme, accent, focus), skin resolution, and graceful fallback when a capability is `none`.
 - **Wails note:** the canvas is titled "Spartan Native Theme — Wails" and Wails is the default adapter shown on the project page. Treat Wails as the primary desktop target for dogfooding, even though it comes fourth in the build order (see Q3).
 

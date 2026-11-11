@@ -25,9 +25,7 @@ const libs = [
   'helm',
   'desktop-ui',
   'host-web',
-  'host-tauri',
   'host-electron',
-  'host-dotnet',
   'host-conformance',
 ];
 

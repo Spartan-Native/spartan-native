@@ -13,7 +13,7 @@ It also owns the **host contract** (`NativeHost`), which every `@spartan-native/
 | `@spartan-native/theme` | 01 (required) | Skins, tokens, palette, `provideSpartanNative()`, the host contract |
 | `@spartan-native/helm` | 02 | Desktop behaviors: selection model, Enter/Esc buttons, dialog button order |
 | `@spartan-native/desktop-ui` | 03 | Title bar, OS patterns, menus, tree, number box, split button, status bar |
-| `@spartan-native/host-*` | 04 | Reading the real OS (`host-web`, `host-wails`; Electron, Tauri and .NET are scaffolds) |
+| `@spartan-native/host-*` | 04 | Reading the real OS (`host-web`, `host-wails`, `host-tauri`, `host-dotnet`; Electron is a scaffold) |
 
 ## Set up an app
 

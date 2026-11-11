@@ -1,6 +1,6 @@
 # Shared Angular setup
 
-These steps apply to every runtime. The host-specific steps come after them, in `host-wails.md`, `host-web.md` or `other-runtimes.md`.
+These steps apply to every runtime. The host-specific steps come after them, in `host-wails.md`, `host-tauri.md`, `host-dotnet.md`, `host-web.md` or `other-runtimes.md`.
 
 Requirements: Angular 22+, Tailwind CSS 4, spartan/ui (`@spartan-ng/brain` 1.9+).
 

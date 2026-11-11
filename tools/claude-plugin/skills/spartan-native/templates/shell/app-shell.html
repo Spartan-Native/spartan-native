@@ -1,7 +1,7 @@
 <!-- The window. snSheetHost: macOS sheets (sn-modal-sheet) hang from here, under the title bar. -->
 <div class="sn-window window" snSheetHost>
   @if (windowControls(); as controls) {
-    <!-- A drag region already; with wailsHost() its buttons act on the real window. -->
+    <!-- A drag region already; with wailsHost() or tauriHost() its buttons act on the real window. -->
     <sn-title-bar [title]="title" [windowControls]="controls" />
   }
 

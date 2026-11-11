@@ -32,7 +32,7 @@ The project is at phase 01. The phases and their one-line descriptions come from
 
 ## Phase 04: Host adapters
 
-- `host-web` (complete), then Electron, Tauri, Wails (Go module + TS package) and Photino.NET (C# + TS package).
+- `host-web` (complete), Wails (Go module + TS package, complete), Tauri (Rust plugin + TS package) and Photino.NET (C# + TS package) (implemented, not yet run in an app window), then Electron.
 - Shared conformance suite; capability flags checked against reality. Fill in the matrix in [07](07-host-adapters.md) with confirmed values.
 
 ## Phase 05: Desktop UI & integration

@@ -88,6 +88,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Dependencies first, same order as build:libs.
-          for lib in theme helm desktop-ui host-web host-tauri host-electron host-dotnet host-conformance; do
+          for lib in theme helm desktop-ui host-web host-electron host-conformance; do
             npm publish "dist/$lib" --tag "$DIST_TAG"
           done

@@ -77,5 +77,5 @@ Import groups: desktop-ui `SnDesktopUiImports` (everything) or one group (`SnWin
 | --- | --- |
 | Different content per OS ("menu bar" vs "system tray") | `*snPlatformIf="'macos'; else other"` |
 | Current skin in code | `injectSkin()` → `'win' \| 'w10' \| 'mac' \| 'macc' \| 'gtk' \| 'qt' \| 'cros' \| 'web'`; `skinFamily(skin)` → `'windows' \| 'macos' \| 'linux' \| 'chromeos' \| 'web'` |
-| Runtime in code | `inject(SpartanNativeTheme).runtime` → `'wails' \| 'web' \| …` |
+| Runtime in code | `inject(SpartanNativeTheme).runtime` → `'wails' \| 'tauri' \| 'dotnet' \| 'web' \| …` |
 | Optional host feature | `theme.capability('fileDialogs') !== 'none'` |
