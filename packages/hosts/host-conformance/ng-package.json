@@ -3,5 +3,8 @@
   "dest": "../../../dist/host-conformance",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "assets": [
+    "AGENTS.md"
+  ]
 }

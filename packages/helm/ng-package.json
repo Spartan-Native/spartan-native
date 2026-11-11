@@ -9,6 +9,7 @@
       "glob": "**/*.scss",
       "input": "styles",
       "output": "styles"
-    }
+    },
+    "AGENTS.md"
   ]
 }

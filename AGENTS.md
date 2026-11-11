@@ -17,3 +17,17 @@ To check a change, use the lighter commands instead:
 | `ng build <project>` | Building a single package or app |
 
 If a change probably affects the screenshots (skin CSS, tokens, component styles), say so in your summary and suggest that the user run `npm run test:visual`. Don't run it yourself.
+
+## Package AGENTS.md files
+
+Each published package has its own `AGENTS.md`, written for agents that build apps **with** the package. It covers what the package exports, how to set it up, and the rules for using it. It ships inside the built package, through the `assets` entry in each `ng-package.json`, so it ends up in `node_modules/@spartan-native/<package>/AGENTS.md`.
+
+| Package | File |
+| --- | --- |
+| `@spartan-native/theme` | `packages/theme/AGENTS.md` |
+| `@spartan-native/helm` | `packages/helm/AGENTS.md` |
+| `@spartan-native/desktop-ui` | `packages/desktop-ui/AGENTS.md` |
+| `@spartan-native/host-web`, `-wails`, `-conformance` | `packages/hosts/<host>/AGENTS.md` |
+| `@spartan-native/host-electron`, `-tauri`, `-dotnet` | `packages/hosts/<host>/AGENTS.md` (scaffolds: "don't use yet") |
+
+**Keep them in sync.** When you add, rename or remove a public export, input, slot, token or host service, update that package's `AGENTS.md` in the same change. These files must only refer to other packages by name (`@spartan-native/theme`), never by repo path, because the repo isn't there once the package is installed.
