@@ -1,5 +1,5 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { injectSkin, skinFamily } from '@spartan-native/theme';
+import { injectNativeSkin, injectSkin, skinFamily } from '@spartan-native/theme';
 import { SnWindowControls, type WindowButton } from './window-controls';
 
 /**
@@ -24,7 +24,9 @@ import { SnWindowControls, type WindowButton } from './window-controls';
  * ```
  *
  * Set `windowControls="native"` when the OS draws its own buttons
- * (Electron titleBarOverlay, Window Controls Overlay): space is left for them.
+ * (Electron titleBarOverlay, Window Controls Overlay, a macOS hidden-inset title bar): space is
+ * left for them where the real OS puts them, so a Mac dressed as Windows keeps the room for its
+ * traffic lights at the start, and the layout of the rest follows the skin.
  */
 @Component({
   selector: 'sn-title-bar',
@@ -38,6 +40,8 @@ import { SnWindowControls, type WindowButton } from './window-controls';
     '[attr.data-family]': 'family()',
     '[attr.data-skin]': 'skin()',
     '[attr.data-controls]': 'windowControls()',
+    // where the OS draws its own buttons follows the real OS, not the skin
+    '[attr.data-native]': 'windowControls() === "native" ? nativeSkin() : null',
   },
   template: `
     @if (family() === 'macos' && windowControls() === 'custom') {
@@ -88,6 +92,8 @@ export class SnTitleBar {
 
   protected readonly skin = injectSkin();
   protected readonly family = computed(() => skinFamily(this.skin()));
+  /** The real OS's skin: where and how big its own window buttons are. */
+  protected readonly nativeSkin = injectNativeSkin();
   /** Windows, KDE and ChromeOS show the app icon in the title bar; macOS and GNOME don't. */
   protected readonly showIcon = computed(() => this.family() === 'windows' || this.skin() === 'qt' || this.skin() === 'cros');
 }

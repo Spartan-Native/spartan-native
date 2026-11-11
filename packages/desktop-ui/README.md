@@ -2,7 +2,7 @@
 
 **Layer 03 · optional.** The pieces stock spartan doesn't have: **window chrome** and the **patterns each OS is known for**. Each component changes its *layout* per OS, not just its colors, and follows the skin live.
 
-> Status: **implemented for all seven skins** (Windows 11 and 10, macOS 26 and 13–15, GNOME, KDE Plasma, ChromeOS): title bar, window controls, status bar, the six OS patterns (command bar, coach mark, modal sheet, inspector, settings list, status page), sidebar navigation, the desktop controls spartan lacks (split button, number box, tree view), shortcut formatting and `*snPlatformIf`, and the menubar adapter with context menus (native through the host, in the page otherwise). Every component also follows Windows contrast themes (`forced-colors`). Spec: [`06-os-patterns.md`](../../docs/06-os-patterns.md).
+> Status: **implemented for all seven skins** (Windows 11 and 10, macOS 26 and 13–15, GNOME, KDE Plasma, ChromeOS): title bar, window controls, status bar, the six OS patterns (command bar, coach mark, modal sheet, inspector, settings list, status page), an assistant and a setup checklist, sidebar navigation, a skinned tooltip, the desktop controls spartan lacks (split button, number box, tree view), shortcut formatting and `*snPlatformIf`, and the menubar adapter with context menus (native through the host, in the page otherwise). Every component also follows Windows contrast themes (`forced-colors`). Spec: [`06-os-patterns.md`](../../docs/06-os-patterns.md).
 
 ## Components
 
@@ -14,6 +14,9 @@
 | `<sn-command-bar>` | **CommandBar** | unified NSToolbar | AdwHeaderBar | KToolBar | top app bar |
 | `<sn-coach-mark>` + `[snCoachMarkFor]` | **TeachingTip** | NSPopover | GtkPopover | Kirigami popup | rich tooltip |
 | `<sn-modal-sheet>` | ContentDialog | **sheet** from the title bar | AdwDialog, buttons in the header bar | window-modal dialog | M3 dialog |
+| `<sn-assistant>` | wizard: Step n of m, Back · Next · Cancel | Setup Assistant page, Go Back · Continue | pages with a header bar and dots | **QWizard** with the step list | M3 flow with dots |
+| `<sn-checklist>` | numbered setup tasks that tick off, the same on every skin (accent tick) | | | | |
+| `[snTooltip]` | Fluent ToolTip card | help tag | inverse bubble | framed tooltip | M3 plain tooltip |
 | `<sn-inspector-layout>` + `<sn-inspector>` | SplitView pane | **Inspector** | AdwOverlaySplitView | Dolphin information panel | side sheet |
 | `<sn-sidebar-nav>` | accent pill (10: 4px bar) | accent fill, grey when inactive | neutral rounded selection | accent-filled selection | tonal pill |
 | `<sn-settings-group>` + `<sn-settings-row>` | SettingsCards (10: plain rows) | grouped Form section | **AdwPreferencesGroup** | Kirigami FormLayout | settings list in a tonal card |
@@ -63,14 +66,14 @@ Every component reads `injectSkin()` from `@spartan-native/theme`: the theme ser
 | Path | Purpose |
 | --- | --- |
 | `src/lib/window/` | `SnTitleBar`, `SnWindowControls`, `SnStatusBar` |
-| `src/lib/patterns/` | `SnCommandBar`, `SnCoachMark`, `SnModalSheet`, `SnInspector…`, `SnSidebarNav…`, `SnSettingsGroup`, `SnSettingsRow`, `SnStatusPage` |
+| `src/lib/patterns/` | `SnCommandBar`, `SnCommandGroup`, `SnCoachMark`, `SnModalSheet`, `SnAssistant`, `SnChecklist`, `SnInspector…`, `SnSidebarNav…`, `SnSettingsGroup`, `SnSettingsRow`, `SnStatusPage` |
 | `src/lib/controls/` | `SnSplitButton`, `SnNumberBox`, `SnTree…`: desktop controls spartan doesn't have |
 | `src/lib/platform/` | `formatShortcut()`, `SnShortcut`, `SnPlatformIf` |
 | `src/lib/menubar/` | `SnMenubar`, `SnContextMenu`, `SnNativeMenus` and the menu model (`SnMenuItem`, `toHostMenu()`, `inPageMenu()`) |
 | `src/stories/` | one stories file per component |
 | `src/docs/` | one docs page (MDX) per component |
 
-Imports: `SnWindowImports` (with the status bar), `SnControlsImports`, `SnMenuImports`, `SnSplitButtonImports`, `SnNumberBox`, `SnTreeImports`, `SnStatusBarImports`, `SnCommandBarImports`, `SnCoachMarkImports`, `SnModalSheet`, `SnInspectorImports`, `SnSidebarNavImports`, `SnSettingsImports`, `SnStatusPage`, `SnPlatformImports`, or `SnDesktopUiImports` for everything.
+Imports: `SnWindowImports` (with the status bar), `SnControlsImports`, `SnMenuImports`, `SnSplitButtonImports`, `SnNumberBox`, `SnTreeImports`, `SnStatusBarImports`, `SnCommandBarImports`, `SnCoachMarkImports`, `SnModalSheet`, `SnAssistantImports`, `SnChecklistImports`, `SnTooltip`, `SnInspectorImports`, `SnSidebarNavImports`, `SnSettingsImports`, `SnStatusPage`, `SnPlatformImports`, or `SnDesktopUiImports` for everything.
 
 ## Dependencies
 

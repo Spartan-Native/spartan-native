@@ -21,7 +21,8 @@ Import groups: desktop-ui `SnDesktopUiImports` (everything) or one group (`SnWin
 
 | Need | Use | Package |
 | --- | --- | --- |
-| Toolbar over a view (New, Share, Delete) | `<sn-command-bar title="…">` + `button[snCommand]` + `ng-template[snCommandOverflow]` | desktop-ui |
+| Toolbar over a view (New, Share, Delete) | `<sn-command-bar title="…">` + `button[snCommand]`; `<sn-command-group>` for capsules/dividers, `variant="accent"` for the main action, `priority` / `secondary` for what collapses into the overflow, `titlePosition="center"` for a centered title | desktop-ui |
+| A page's own commands in the shell's bar | `<sn-command-bar [commands]="pageCommandsTemplate">` (not a separate toolbar) | desktop-ui |
 | Standard button | `<button hlmBtn variant="outline">` | spartan |
 | Suggested / primary action | `<button hlmBtn>` (default variant = accent) | spartan |
 | Flat / toolbar-style button | `<button hlmBtn variant="ghost">` | spartan |
@@ -63,12 +64,14 @@ Import groups: desktop-ui `SnDesktopUiImports` (everything) or one group (`SnWin
 
 | Need | Use | Package |
 | --- | --- | --- |
-| Short modal form (New item…) | `<sn-modal-sheet [(open)] title>` + `[snSheetCancel]` / `[snSheetPrimary]` | desktop-ui |
+| Short modal form (New item…) | `<sn-modal-sheet [(open)] title>` + `[snSheetCancel]` / `[snSheetPrimary]` (+ `[snSheetSecondary]` for Back / Don't Save) | desktop-ui |
+| Step-by-step setup (wizard, Setup Assistant) | `<sn-assistant>` + `ng-template[snAssistantPage]`, in an `sn-modal-sheet` without sheet buttons | desktop-ui |
+| "Get started" task list | `<sn-checklist>` + `<sn-checklist-item [done]>` + `[snChecklistAction]` | desktop-ui |
 | Confirmation ("Delete 3 files?") | `<sn-modal-sheet role="alertdialog">` or `hlm-alert-dialog` | desktop-ui / spartan |
 | Larger dialog | `hlm-dialog` (footer buttons get OS order automatically) | spartan + helm |
 | Button row outside a dialog in OS order | `snDialogButtons` on the row | helm |
 | Onboarding / teaching tip | `<sn-coach-mark>` + `[snCoachMarkFor]` | desktop-ui |
-| Tooltip | `hlmTooltip` | spartan |
+| Tooltip | `[snTooltip]="text"` (the skin's tooltip) or `hlmTooltip` | desktop-ui / spartan |
 | Native open / save / folder / message dialog | `inject(NATIVE_HOST).dialogs?.openFile(…)` etc. | theme (host) |
 
 ## Per-OS differences
@@ -79,3 +82,5 @@ Import groups: desktop-ui `SnDesktopUiImports` (everything) or one group (`SnWin
 | Current skin in code | `injectSkin()` → `'win' \| 'w10' \| 'mac' \| 'macc' \| 'gtk' \| 'qt' \| 'cros' \| 'web'`; `skinFamily(skin)` → `'windows' \| 'macos' \| 'linux' \| 'chromeos' \| 'web'` |
 | Runtime in code | `inject(SpartanNativeTheme).runtime` → `'wails' \| 'tauri' \| 'dotnet' \| 'web' \| …` |
 | Optional host feature | `theme.capability('fileDialogs') !== 'none'` |
+| The real OS for behavior (keys, native window buttons), whatever skin the user picked | `injectPlatformFamily()` (not `skinFamily(injectSkin()())`) |
+| A "Look like" / appearance settings screen | `SKIN_OPTIONS`, `TEXT_SCALE_OPTIONS`, `SKIN_LABELS` from the theme in `sn-settings-row`s; `theme.override(…)`; `provideSpartanNative({ persist: true })` to keep the choice |

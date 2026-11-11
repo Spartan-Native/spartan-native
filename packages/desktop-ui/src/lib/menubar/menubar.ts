@@ -11,7 +11,7 @@ import {
   untracked,
   viewChild,
 } from '@angular/core';
-import { injectSkin, skinFamily, SpartanNativeTheme } from '@spartan-native/theme';
+import { injectPlatformFamily, injectSkin, skinFamily, SpartanNativeTheme } from '@spartan-native/theme';
 import { inPageMenu, itemsWithAccelerators, matchesAccelerator, type SnMenuItem } from './menu-model';
 import { SnMenuTemplates } from './menu-templates';
 import { SnNativeMenus } from './native-menus';
@@ -94,7 +94,7 @@ export type SnMenubarNative = 'auto' | 'always' | 'never';
         }
       </div>
     }
-    <sn-menu-templates #templates [family]="family()" [beforeRun]="restoreFocus" />
+    <sn-menu-templates #templates [family]="platform()" [beforeRun]="restoreFocus" />
   `,
   styleUrl: './menubar.scss',
 })
@@ -108,6 +108,8 @@ export class SnMenubar {
 
   protected readonly skin = injectSkin();
   protected readonly family = computed(() => skinFamily(this.skin()));
+  /** The real OS: what the keyboard, the shortcut notation and the macOS menu bar follow. */
+  protected readonly platform = injectPlatformFamily();
   private readonly menus = inject(SnNativeMenus);
   private readonly hostWindow = inject(SpartanNativeTheme, { optional: true })?.window;
   private readonly element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
@@ -117,12 +119,12 @@ export class SnMenubar {
   readonly isNative = computed(() => {
     const mode = this.native();
     if (mode === 'never' || !this.menus.canSetApplicationMenu) return false;
-    return mode === 'always' || this.family() === 'macos';
+    return mode === 'always' || this.platform() === 'macos';
   });
 
   /** The menu as drawn in the page: roles replaced by ordinary items. */
   protected readonly pageMenu = computed(() =>
-    inPageMenu(this.menu(), this.family(), {
+    inPageMenu(this.menu(), this.platform(), {
       minimize: this.hostWindow?.minimize && (() => void this.hostWindow!.minimize!()),
       toggleMaximize: this.hostWindow?.toggleMaximize && (() => void this.hostWindow!.toggleMaximize!()),
       close: this.hostWindow?.close && (() => void this.hostWindow!.close!()),
@@ -151,7 +153,7 @@ export class SnMenubar {
   protected onDocumentKeydown(event: KeyboardEvent): void {
     if (this.isNative() || event.defaultPrevented || event.repeat) return;
     // F10 focuses the menu bar (Windows, GNOME, KDE)
-    if (event.key === 'F10' && !event.shiftKey && !event.ctrlKey && !event.altKey && !event.metaKey && this.family() !== 'macos') {
+    if (event.key === 'F10' && !event.shiftKey && !event.ctrlKey && !event.altKey && !event.metaKey && this.platform() !== 'macos') {
       const first = this.bar()?.nativeElement.querySelector('[data-slot="menubar-trigger"]:not([aria-disabled="true"])') as HTMLElement | null;
       if (first) {
         event.preventDefault();
@@ -159,7 +161,7 @@ export class SnMenubar {
       }
       return;
     }
-    const family = this.family();
+    const family = this.platform();
     const item = this.accelerated().find((i) => i.enabled !== false && matchesAccelerator(event, i.accelerator!, family));
     if (!item) return;
     event.preventDefault();

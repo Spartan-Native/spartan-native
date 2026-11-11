@@ -11,6 +11,36 @@
 @use '../functions' as *;
 
 @layer spartan-native.base {
+  // --- desktop-ui's snTooltip ----------------------------------------------------
+  // The same default as hlmTooltip (an inverse label); skins that restyle the tooltip
+  // ($tooltip) restyle this one too.
+  [data-slot="sn-tooltip"] {
+    max-width: 20rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--sn-tooltip-radius, 0.25rem);
+    background: var(--sn-color-fg);
+    color: var(--sn-color-bg);
+    font-family: var(--sn-font-sans);
+    font-size: var(--sn-font-size-small);
+    line-height: var(--sn-line-height);
+    pointer-events: none;
+  }
+
+  // --- Lists in alerts and dialogs ---------------------------------------------
+  // Tailwind's reset removes list markers; prose in an alert or dialog description keeps them.
+  :is(#{h.$alert-description}, #{h.$dialog-description}) :is(ul, ol) {
+    margin-block: 0.25em;
+    padding-inline-start: 1.25em;
+  }
+
+  :is(#{h.$alert-description}, #{h.$dialog-description}) ul {
+    list-style: disc;
+  }
+
+  :is(#{h.$alert-description}, #{h.$dialog-description}) ol {
+    list-style: decimal;
+  }
+
   // --- Popover and hover card -----------------------------------------------
   #{h.$popover} {
     min-width: #{px(240)};

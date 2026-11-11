@@ -42,10 +42,13 @@ export const appConfig: ApplicationConfig = {
 
 | Symbol | Use |
 | --- | --- |
-| `provideSpartanNative({ host, overrides? })` | Wires everything. `overrides` (a `Partial<AppearanceState>`) wins over the OS |
-| `SpartanNativeTheme` (inject) | Live state as signals: `appearance()`, `skin()`, `scheme()`, `textScale()`, `platform()`, `focused()`, `followsSystem()`, `overrides()`. Fields: `runtime`, `window`, `menus`, `capabilities`. Methods: `override(patch)`, `followSystem()`, `capability(name)` |
+| `provideSpartanNative({ host, overrides?, persist? })` | Wires everything. `overrides` (a `Partial<AppearanceState>`) wins over the OS. `persist: true` keeps the user's overrides in `localStorage` (`spartan-native:overrides`) between launches and applies them before the first render; `persist: { key, storage }` for another key or store. Stored overrides win over `overrides` |
+| `SpartanNativeTheme` (inject) | Live state as signals: `appearance()`, `skin()`, `scheme()`, `textScale()`, `platform()`, `nativeSkin()` (the real OS's skin, whatever the user picked), `platformFamily()` (the real OS family), `focused()`, `followsSystem()`, `overrides()`. Fields: `runtime`, `window`, `menus`, `capabilities`. Methods: `override(patch)`, `followSystem()`, `capability(name)` |
 | `injectSkin()` | `Signal<Skin>`. Works with or without the provider (falls back to `<html data-sn-skin>`) |
 | `skinFamily(skin)` | `'windows' \| 'macos' \| 'linux' \| 'chromeos' \| 'web'` |
+| `injectPlatformFamily()`, `injectNativeSkin()` | The **real** OS (family / skin) as a signal, for behavior: shortcut notation, where the OS draws window buttons, the macOS menu bar. A Mac dressed as Windows is still `macos`. Without the provider: `<html data-sn-platform>`, then the skin |
+| `SKIN_LABELS`, `SCHEME_LABELS`, `CONTRAST_LABELS`, `SKIN_OPTIONS`, `TEXT_SCALE_OPTIONS` | Display names for an appearance settings screen ("Windows 11", "KDE Plasma", "125 %"); `SnOption<T>` is `{ value, label }` |
+| `readStoredOverrides(storage, key?)` | Reads persisted overrides (valid appearance fields only), e.g. to show them before bootstrap |
 | `NATIVE_HOST`, `SPARTAN_NATIVE_OPTIONS` | Injection tokens. `inject(NATIVE_HOST)` gives the raw host, e.g. for `dialogs` |
 
 ### Without Angular
@@ -93,9 +96,10 @@ State classes on `<html>`: `dark`, `rt` (reduce transparency), `inactive` (windo
 2. **Size with rem or the theme's tokens**, not px, so the OS text size (`--sn-text-scale`) scales your UI. Useful tokens: `--sn-control-height`, `--sn-radius-control|surface|overlay`, `--sn-font-size`, `--sn-font-size-small`, `--sn-dialog-padding`, `--sn-row-height`.
 3. **Use the material classes for the app frame:** `sn-window`, `sn-sidebar`, `sn-content`, `sn-glass`, `sn-chrome` (dims with the inactive window), `sn-list-item`. For status tints on `hlmBadge` or `hlmAlert`, use `sn-tone-success|warning|danger|accent`.
 4. **Use spartan's variants for intent.** `outline` is the platform's standard button, `default` is the accent/suggested action, and `ghost` is flat. Don't restyle components per OS in app code; the skins already do that.
-5. **Per-OS logic belongs in templates** through `*snPlatformIf` (desktop-ui) or `injectSkin()`, not in user-agent sniffing.
-6. **Cascade:** all theme CSS sits in `@layer spartan-native`, after Tailwind's `utilities`. Your unlayered CSS beats the skins, so keep overrides minimal and token-based.
-7. **Never use `!important`** to fight a skin. If a skin is wrong, fix the token or the skin file.
+5. **Per-OS logic belongs in templates** through `*snPlatformIf` (desktop-ui) or `injectSkin()`, not in user-agent sniffing. The skin is the *look*; for *behavior* that follows the real OS (keys, native window buttons) use `injectPlatformFamily()`.
+6. **Don't persist the appearance yourself.** Use `provideSpartanNative({ persist: true })` instead of mirroring `override()` into storage.
+7. **Cascade:** all theme CSS sits in `@layer spartan-native`, after Tailwind's `utilities`. Your unlayered CSS beats the skins, so keep overrides minimal and token-based.
+8. **Never use `!important`** to fight a skin. If a skin is wrong, fix the token or the skin file.
 
 ## Don't
 

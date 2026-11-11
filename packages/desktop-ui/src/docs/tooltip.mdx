@@ -1,0 +1,24 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/tooltip.stories';
+
+<Meta of={Stories} />
+
+# Tooltip
+
+`snTooltip` shows a short label when the pointer rests on an element (after 0.6 s) or when it gets the keyboard
+focus, drawn as the active skin draws tooltips: a light card on Windows 11 and macOS, an inverse bubble on GNOME,
+a framed surface on KDE, an M3 plain tooltip on ChromeOS. Esc, a click or leaving the element hides it.
+
+Icon-only commands in `<sn-command-bar>` use it for their labels.
+
+<Canvas of={Stories.Default} />
+
+<Source language="html" code={`<button hlmBtn size="icon" aria-label="Refresh" snTooltip="Refresh">…</button>`} />
+
+| Input | Type | Default | Description |
+| --- | --- | --- | --- |
+| `snTooltip` | `string` | `''` | The text. Empty: no tooltip. |
+| `snTooltipDisabled` | `boolean` | `false` | Turns it off. |
+
+The bubble is `aria-hidden`: it is a visual hint, so give the element its own accessible name (`aria-label`, or
+visible text). It carries `data-slot="sn-tooltip"`, the theme's tooltip hook.

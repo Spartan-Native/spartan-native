@@ -20,7 +20,27 @@ file list). For app-wide menus use a menu bar; for commands on one item use a co
 | KDE Plasma | KToolBar | Title, separator, tool buttons with text beside the icon, ☰ at the end; Breeze accent frame on hover |
 | ChromeOS | M3 top app bar (small) | Large title left, round icon buttons right, `⋮` overflow |
 
-On icon-only skins the label stays as the button's accessible name and becomes its tooltip.
+On icon-only skins the label stays as the button's accessible name and shows as the skin's own tooltip.
+
+The title is a heading (level 1 by default) and sits where the skin puts it: centered on GNOME, at the start
+elsewhere. `titlePosition="center"` centers it on every skin (a Finder-style header); a centered title stays
+centered while both sides fit, and moves aside instead of running under the commands.
+
+## Groups, priorities and overflow
+
+`<sn-command-group>` keeps related commands together: each group is its own Liquid Glass capsule on macOS 26,
+groups are divided by a separator on Windows, GNOME and KDE, and spaced on ChromeOS. `variant="accent"` marks the
+view's main action.
+
+When the bar is too narrow it first drops the labels (Windows, KDE), then moves commands into the overflow menu,
+lowest `priority` first. `secondary` commands always live there, and `overflowItems` adds more entries after them.
+Commands a page declares go through `[commands]`: they behave exactly like projected ones.
+
+<Canvas of={Stories.GroupsAndAccent} />
+
+<Canvas of={Stories.Narrow} />
+
+<Canvas of={Stories.CenteredTitle} />
 
 <Canvas of={Stories.InAWindow} />
 
@@ -69,7 +89,12 @@ import { lucidePlus, lucideShare2, lucideTrash2 } from '@ng-icons/lucide';
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| `title` | `string` | `''` | Title of the view. Also the toolbar's accessible name. |
+| `title` | `string` | `''` | Title of the view, as a heading. Also the toolbar's accessible name. |
+| `titlePosition` | `'auto' \| 'start' \| 'center'` | `'auto'` | `auto`: the skin's place (centered on GNOME). |
+| `headingLevel` | `number` | `1` | The title's `aria-level`; `0` makes it plain text. |
+| `commands` | `TemplateRef \| null` | `null` | Commands declared elsewhere (e.g. by the current page), rendered after the projected ones. |
+| `overflowItems` | `SnMenuItem[]` | `[]` | More entries for the overflow menu. |
+| `collapse` | `'auto' \| 'none'` | `'auto'` | `none`: never drop labels or collapse commands. |
 | `ariaLabel` | `string` | `''` | Accessible name of the toolbar when it should differ from `title`. |
 | `overflowLabel` | `string` | `'More options'` | Accessible name and tooltip of the overflow button. |
 
@@ -83,13 +108,23 @@ No outputs: each command is a plain `<button>`, listen to its `(click)`.
 | `icon` | `string` | `''` | An `@ng-icons` name the app registered with `provideIcons()`. Or project your own `<svg>` / `<ng-icon>`. Without any icon the label always shows. |
 | `disabled` | `boolean` | `false` | Disables the command; arrow keys skip it. |
 | `hideLabel` | `boolean` | `false` | Icon-only on every OS (like an AppBarButton with a collapsed label). |
+| `variant` | `'default' \| 'accent'` | `'default'` | `accent`: filled with the accent color, for the view's main action. |
+| `priority` | `number` | `0` | Lower priorities move into the overflow menu first when the bar is too narrow. |
+| `secondary` | `boolean` | `false` | Always in the overflow menu (WinUI secondary commands). |
+
+### `sn-command-group` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` | `''` | Accessible name of the group (`role="group"`). |
 
 ### Content slots
 
 | Selector | Where it goes |
 | --- | --- |
 | `button[snCommand]` (default slot) | The primary commands, inside the toolbar. |
-| `ng-template[snCommandOverflow]` | The overflow menu's content. Put an `hlmDropdownMenu` (or any `cdkMenu`) inside. The overflow button only appears when this is present. |
+| `sn-command-group` (default slot) | A group of commands; nest `button[snCommand]` inside. |
+| `ng-template[snCommandOverflow]` | Your own overflow menu (an `hlmDropdownMenu` or any `cdkMenu`). Used while the bar has nothing of its own for the menu; once commands collapse (or with `secondary` commands or `overflowItems`) the bar draws the menu itself. |
 | `[snCommandBarStart]` | Before the title, outside the toolbar: back button, sidebar toggle, macOS window controls. |
 | `[snCommandBarEnd]` | After the commands, outside the toolbar: search field, GNOME window controls. |
 
@@ -101,6 +136,10 @@ No outputs: each command is a plain `<button>`, listen to its `(click)`.
 | `data-family` | host | `windows`, `macos`, `linux`, `chromeos`, `web` |
 | `data-skin` | host | `win`, `w10`, `mac`, `macc`, `gtk`, `qt`, `cros`, `web` |
 | `data-icon-only` | command | present when the label is hidden |
+| `data-variant` | command | `accent` |
+| `data-collapsed` | command | present while it is in the overflow menu |
+| `data-compact` | host | present when the bar dropped the labels to make room |
+| `data-title` | host | `start`, `center` |
 | `.sn-chrome` | host | the theme dims the bar when the window is inactive |
 
 ## Accessibility
@@ -109,4 +148,6 @@ No outputs: each command is a plain `<button>`, listen to its `(click)`.
 - Roving tabindex: Tab enters the toolbar once, on the last focused command (or the first enabled one).
 - ← → move between commands and wrap; Home and End jump to the first and last. Disabled commands are skipped. The arrow direction follows RTL.
 - The overflow button has `aria-haspopup="menu"` and `aria-expanded`. Enter, Space or ↓ open the menu and focus its first item, ↑ its last; Esc closes it and returns focus to the button.
-- Icon-only commands keep their label as visually hidden text, so screen readers announce it, and show it as a tooltip.
+- Icon-only commands keep their label as visually hidden text, so screen readers announce it, and show it as the skin's tooltip.
+- The title is a heading (`role="heading"`, `aria-level` from `headingLevel`).
+- Collapsed commands leave the toolbar (and the arrow-key order) and appear as items of the overflow menu.

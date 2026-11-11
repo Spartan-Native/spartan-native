@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, linkedSignal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, linkedSignal, signal, type TemplateRef, viewChild } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   lucideFile,
@@ -7,6 +7,9 @@ import {
   lucideFileText,
   lucideFolderInput,
   lucideInfo,
+  lucideRedo2,
+  lucideRefreshCw,
+  lucideUndo2,
   lucideLink,
   lucidePencil,
   lucidePlus,
@@ -145,13 +148,57 @@ class CommandBarDemo {
 }
 
 /**
+ * Groups, an accent command, priorities and secondary commands, in a bar whose width you set.
+ * Narrow it: labels drop first (Windows, KDE), then Share (priority 0) and Duplicate move into the
+ * overflow menu before Undo/Redo (priority 1); New (priority 2) stays longest. Rename and Properties
+ * are always there. Refresh comes from a template declared elsewhere (`[commands]`).
+ */
+@Component({
+  selector: 'sn-command-bar-groups-demo',
+  imports: [SnCommandBarImports],
+  providers: [provideIcons({ lucidePlus, lucideShare2, lucideTrash2, lucideUndo2, lucideRedo2, lucidePencil, lucideRefreshCw, lucideFile })],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <div class="sn-window" [style.width]="width()">
+      <sn-command-bar title="Quarterly documents" [commands]="pageCommands()" [overflowItems]="more" [titlePosition]="titlePosition()">
+        <button snCommand icon="lucidePlus" label="New" variant="accent" priority="2" (click)="log.set('New')"></button>
+        <sn-command-group label="History">
+          <button snCommand icon="lucideUndo2" label="Undo" priority="1" (click)="log.set('Undo')"></button>
+          <button snCommand icon="lucideRedo2" label="Redo" priority="1" (click)="log.set('Redo')"></button>
+        </sn-command-group>
+        <sn-command-group label="Selection">
+          <button snCommand icon="lucideShare2" label="Share" (click)="log.set('Share')"></button>
+          <button snCommand icon="lucideFile" label="Duplicate" (click)="log.set('Duplicate')"></button>
+          <button snCommand icon="lucideTrash2" label="Delete" priority="1" (click)="log.set('Delete')"></button>
+        </sn-command-group>
+        <button snCommand icon="lucidePencil" label="Rename" secondary (click)="log.set('Rename')"></button>
+      </sn-command-bar>
+      <p class="status">{{ log() }}</p>
+    </div>
+    <ng-template #page>
+      <button snCommand icon="lucideRefreshCw" label="Refresh" (click)="log.set('Refresh')"></button>
+    </ng-template>
+  `,
+  styles: `
+    .status { margin: 0; padding: 0.5rem 1rem; font-size: var(--sn-font-size-small); color: var(--sn-color-fg-muted); background: var(--sn-color-bg); }
+  `,
+})
+class CommandBarGroupsDemo {
+  readonly width = input('46rem');
+  readonly titlePosition = input<'auto' | 'start' | 'center'>('auto');
+  protected readonly pageCommands = viewChild<TemplateRef<unknown>>('page');
+  protected readonly more = [{ label: 'Properties', action: () => this.log.set('Properties') }];
+  protected readonly log = signal('no command yet');
+}
+
+/**
  * The window's command surface: a CommandBar on Windows, a unified toolbar on macOS, an
  * AdwHeaderBar on GNOME, a KToolBar on KDE and a top app bar on ChromeOS, from the same markup.
  * Switch the OS in the toolbar. Tab into the bar, then use ← → Home End.
  */
 const meta: Meta = {
   title: 'Desktop UI/Patterns/Command bar',
-  decorators: [moduleMetadata({ imports: [CommandBarDemo] })],
+  decorators: [moduleMetadata({ imports: [CommandBarDemo, CommandBarGroupsDemo] })],
 };
 export default meta;
 
@@ -168,4 +215,19 @@ export const WithOverflow: StoryObj = {
 export const DisabledCommands: StoryObj = {
   name: 'Disabled commands',
   render: () => ({ template: `<div style="padding: 2rem"><sn-command-bar-demo initialSelection="" [overflow]="true" /></div>` }),
+};
+
+export const GroupsAndAccent: StoryObj = {
+  name: 'Groups and accent command',
+  render: () => ({ template: `<div style="padding: 2rem; min-height: 16rem"><sn-command-bar-groups-demo /></div>` }),
+};
+
+export const Narrow: StoryObj = {
+  name: 'Narrow: labels drop, then commands collapse',
+  render: () => ({ template: `<div style="padding: 2rem; min-height: 16rem"><sn-command-bar-groups-demo width="24rem" /></div>` }),
+};
+
+export const CenteredTitle: StoryObj = {
+  name: 'Centered title on every skin',
+  render: () => ({ template: `<div style="padding: 2rem; min-height: 16rem"><sn-command-bar-groups-demo titlePosition="center" /></div>` }),
 };
