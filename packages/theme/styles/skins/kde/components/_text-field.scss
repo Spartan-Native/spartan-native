@@ -1,0 +1,59 @@
+// ============================================================================
+//  KDE Plasma · Text fields: Breeze line edit and combo box
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$input},
+    #{h.$textarea} {
+      height: var(--sn-input-height);
+      padding-inline: var(--sn-input-padding-x);
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-input);
+      background: var(--sn-color-surface-solid);
+      box-shadow: none;
+      font-size: var(--sn-font-size);
+
+      &::placeholder {
+        color: var(--sn-color-fg-muted);
+      }
+
+      &:hover {
+        border-color: color-mix(in srgb, var(--sn-color-primary) 60%, var(--sn-color-border));
+      }
+
+      &:focus-visible,
+      &:focus {
+        outline: none;
+        border-color: var(--sn-color-primary);
+        box-shadow: none;
+      }
+    }
+
+    #{h.$textarea} {
+      height: auto;
+      padding-block: 0.4em;
+    }
+
+    // Combo box: a push button with the arrow
+    #{h.$select-trigger} {
+      height: var(--sn-control-height);
+      padding-inline: var(--sn-input-padding-x);
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-control);
+      background: var(--sn-color-control);
+      box-shadow: none;
+      font-size: var(--sn-font-size);
+
+      &:hover {
+        border-color: var(--sn-color-primary);
+      }
+    }
+
+    #{h.$label} {
+      font-size: var(--sn-font-size);
+      font-weight: 400;
+    }
+  }
+}

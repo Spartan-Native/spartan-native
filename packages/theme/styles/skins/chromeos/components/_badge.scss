@@ -1,0 +1,17 @@
+// ============================================================================
+//  ChromeOS · Badge: an 8px-radius chip
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$badge} {
+      height: px(22);
+      padding-inline: px(8);
+      border-radius: px(8);
+      font-size: var(--sn-font-size-small);
+      font-weight: 500;
+    }
+  }
+}

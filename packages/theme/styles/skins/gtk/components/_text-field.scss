@@ -1,0 +1,56 @@
+// ============================================================================
+//  GNOME · Entry (hlmInput, hlmTextarea) and drop-down (hlm-select)
+//  Filled, borderless; focus is an inner accent outline.
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$input},
+    #{h.$textarea} {
+      height: var(--sn-input-height);
+      padding-inline: var(--sn-input-padding-x);
+      border: 0;
+      border-radius: var(--sn-radius-input);
+      background: var(--sn-color-control);
+      box-shadow: none;
+      font-size: var(--sn-font-size);
+
+      &::placeholder {
+        color: var(--sn-color-fg-muted);
+      }
+
+      &:focus-visible,
+      &:focus {
+        outline: var(--sn-focus-outline);
+        outline-offset: var(--sn-focus-offset);
+        box-shadow: none;
+      }
+    }
+
+    #{h.$textarea} {
+      height: auto;
+      padding-block: 0.5em;
+    }
+
+    // GtkDropDown: a standard button with a chevron
+    #{h.$select-trigger} {
+      height: var(--sn-control-height);
+      padding-inline: var(--sn-input-padding-x);
+      border: 0;
+      border-radius: var(--sn-radius-control);
+      background: var(--sn-color-control);
+      box-shadow: none;
+      font-size: var(--sn-font-size);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-control), var(--sn-color-fg) 6%);
+      }
+    }
+
+    #{h.$label} {
+      font-size: var(--sn-font-size);
+      font-weight: 400;
+    }
+  }
+}

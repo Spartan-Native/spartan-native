@@ -1,0 +1,122 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/title-bar.stories';
+
+<Meta of={Stories} />
+
+# Title bar
+
+`<sn-title-bar>` is the top strip of a frameless window: the title, an optional subtitle, your own buttons, and
+the window's minimize / maximize / close buttons, laid out the way the OS lays them out. The whole bar is a window
+drag region for Electron/Chromium (`app-region`), Wails (`--wails-draggable`) and Tauri (`data-tauri-drag-region`);
+buttons inside it are not. Use it when your app draws its own window frame. If the OS draws the buttons for you
+(Electron `titleBarOverlay`, Tauri overlay, Window Controls Overlay in a PWA), set `windowControls="native"` and the
+bar leaves their space free.
+
+| OS | Renders as | Native control |
+| --- | --- | --- |
+| Windows 11 | 32px bar: app icon and title on the left, your buttons, then 46px caption buttons on the right; close turns red | Win32 / WinUI title bar |
+| Windows 10 | As Windows 11, title closer to the edge, square maximize glyph, the Windows 10 close red | Windows 10 title bar |
+| macOS 26 | 38px unified bar: traffic lights on the left, title centered and semibold | NSWindow unified title bar |
+| macOS 13–15 | The classic 28px bar: lights 8px from the edge, title centered | NSWindow title bar |
+| GNOME | Header bar: your buttons at the start, bold title centered, a round close button on the right | AdwHeaderBar |
+| KDE | 34px Breeze bar: app icon on the left, title centered, minimize / maximize / close on the right with a circle on hover (red for close) | Breeze window decoration |
+| ChromeOS | 36px caption bar: app icon and title on the left, round Material caption buttons on the right | ChromeOS frame caption bar |
+
+An unknown OS (`web`) gets the GNOME look. When the window loses focus the theme dims the bar (it has the `sn-chrome`
+class): grey traffic lights on macOS, faded text on Windows, KDE and ChromeOS, faded contents on GNOME.
+
+## Examples
+
+Custom-drawn controls. Click maximize to toggle the restore glyph.
+
+<Canvas of={Stories.Default} />
+
+A subtitle under the title.
+
+<Canvas of={Stories.WithSubtitle} />
+
+Leading content next to the title, such as a sidebar toggle.
+
+<Canvas of={Stories.WithStartContent} />
+
+`maximized` shows the restore glyph.
+
+<Canvas of={Stories.Maximized} />
+
+`windowControls="native"`: no buttons are drawn; the space the OS buttons need is left free.
+
+<Canvas of={Stories.NativeControls} />
+
+The window is inactive.
+
+<Canvas of={Stories.Inactive} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnTitleBar } from '@spartan-native/desktop-ui';
+// or SnWindowImports = [SnTitleBar, SnWindowControls]
+import { HlmButtonImports } from '@spartan-ng/helm/button';`}
+/>
+
+<Source
+  language="html"
+  code={`<sn-title-bar title="Harbor Backup" subtitle="Office NAS" (close)="host.close()">
+  <img snTitleBarIcon src="harbor.svg" alt="" />
+  <button snTitleBarStart hlmBtn variant="ghost" size="icon-sm" aria-label="Toggle sidebar">…</button>
+  <button snTitleBarEnd hlmBtn variant="ghost" size="icon-sm" aria-label="Search">…</button>
+</sn-title-bar>
+
+<!-- the OS draws the buttons -->
+<sn-title-bar title="Harbor Backup" windowControls="native" />`}
+/>
+
+With a host that owns a window (`wailsHost()`, `tauriHost()`, …) the buttons act on the real window and the
+maximize glyph follows its state; see [Window controls](?path=/docs/desktop-ui-window-window-controls--docs).
+
+## API
+
+### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | `''` | The window title. |
+| `subtitle` | `string` | `''` | A second, smaller line under the title. |
+| `windowControls` | `'custom' \| 'native'` | `'custom'` | `custom` draws the window buttons; `native` draws none and leaves room for the OS's (from the `titlebar-area-*` environment variables, with a per-OS fallback). |
+| `buttons` | `readonly WindowButton[]` | `['minimize', 'maximize', 'close']` | Which window buttons to draw. Close is always drawn. macOS always shows all three lights. |
+| `maximized` | `boolean` | `false` | Show the restore glyph instead of maximize. |
+
+### Outputs
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `minimize` | `void` | The minimize button was clicked. |
+| `maximize` | `void` | The maximize / restore / zoom button was clicked. |
+| `close` | `void` | The close button was clicked. |
+
+### Content slots
+
+| Selector | Content |
+| --- | --- |
+| `[snTitleBarIcon]` | The app icon. Shown on Windows, KDE and ChromeOS only; sized 1rem. |
+| `[snTitleBarStart]` | Content before the title (GNOME: at the start of the header bar). |
+| `[snTitleBarEnd]` | Content after the title, before the window buttons. |
+
+Buttons, links, inputs and `[role=button]` elements in the start and end slots are excluded from the drag region.
+
+### CSS hooks
+
+| Hook | Meaning |
+| --- | --- |
+| `data-slot="sn-title-bar"` | The host. |
+| `data-family`, `data-skin` | The OS family (`windows`, `macos`, `linux`, `chromeos`, `web`) and skin (`win`, `w10`, `mac`, `macc`, `gtk`, `qt`, `cros`) it is drawn for. |
+| `data-controls` | `custom` or `native`. |
+| `.sn-chrome` | Always set; the theme dims it when the window is inactive. |
+
+## Accessibility
+
+- The host has `role="banner"`. The title is plain text; the window itself should carry the accessible name.
+- The window buttons are real `<button>`s in a group labelled "Window", with the labels Minimize, Maximize /
+  Restore (Zoom on macOS) and Close. They are in the Tab order after your end-slot content (macOS: before the title).
+- Give icon-only buttons you put in the slots an `aria-label`.

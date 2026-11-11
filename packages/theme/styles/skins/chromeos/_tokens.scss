@@ -1,0 +1,91 @@
+// ============================================================================
+//  ChromeOS · Material 3: tokens
+//  Only what differs from contract/_tokens.scss. Colors are the M3 tonal
+//  palette from derivePalette() (glass-border = primary container, etc.).
+// ============================================================================
+@use '../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    // Typography: Roboto / Google Sans, medium-weight labels
+    --sn-font-sans: 'Google Sans Text', 'Google Sans', Roboto, system-ui, sans-serif;
+    --sn-font-mono: 'Roboto Mono', 'Cascadia Mono', monospace;
+    --sn-font-size: #{px(14)};
+    --sn-font-size-small: #{px(12)};
+    --sn-font-size-title: #{px(22)};
+    --sn-line-height: 1.43;
+    --sn-font-weight-control: 500;
+    --sn-font-weight-strong: 500;
+
+    // Shape: pill buttons, 4px outlined fields, 12px cards, 28px dialogs
+    --sn-radius-control: var(--sn-radius-pill);
+    --sn-radius-input: #{px(4)};
+    --sn-radius-surface: #{px(12)};
+    --sn-radius-overlay: #{px(28)};
+    --sn-radius-window: #{px(12)};
+
+    // Density: 36px buttons, 40px fields, 48px tabs and rows
+    --sn-control-height: #{px(36)};
+    --sn-control-height-small: #{px(32)};
+    --sn-control-padding-x: #{px(20)};
+    --sn-input-height: #{px(40)};
+    --sn-input-padding-x: #{px(12)};
+    --sn-check-size: #{px(18)};
+    --sn-check-radius: #{px(2)};
+    --sn-switch-width: #{px(52)};
+    --sn-switch-height: #{px(32)};
+    --sn-switch-thumb-width: #{px(16)};
+    --sn-switch-thumb-height: #{px(16)};
+    --sn-switch-inset: #{px(6)};
+    --sn-switch-border: 2px;
+    --sn-progress-height: #{px(4)};
+    --sn-tab-height: #{px(48)};
+    --sn-card-padding: #{px(16)};
+    --sn-list-item-height: #{px(48)};
+    --sn-list-item-radius: var(--sn-radius-pill);
+    --sn-slider-track-height: #{px(4)};
+    --sn-slider-thumb-width: #{px(20)};
+    --sn-slider-thumb-height: #{px(20)};
+
+    // Overlays
+    --sn-menu-padding: #{px(8)};
+    --sn-menu-item-height: #{px(40)};
+    --sn-menu-item-padding-x: #{px(16)};
+    --sn-menu-item-radius: 0px;
+    --sn-dialog-padding: #{px(24)};
+    --sn-dialog-width: #{px(400)};
+    --sn-tooltip-radius: #{px(4)};
+
+    // Selection: the secondary container
+    --sn-selection-bg: var(--sn-color-secondary);
+    --sn-selection-fg: var(--sn-color-secondary-fg);
+    --sn-selection-indicator: transparent;
+    --sn-row-height: #{px(48)};
+    --sn-row-selected-bg: var(--sn-color-secondary);
+    --sn-row-selected-fg: var(--sn-color-secondary-fg);
+    --sn-row-selected-indicator: transparent;
+    --sn-row-focus-ring: 3px solid var(--sn-color-primary);
+
+    // Materials: tonal surfaces, no blur
+    --sn-material-blur: 0px;
+    --sn-material-saturate: 100%;
+    --sn-window-bg: var(--sn-color-bg);
+    --sn-sidebar-bg: var(--sn-color-sidebar);
+    --sn-content-bg: var(--sn-color-bg);
+    --sn-content-border: transparent;
+
+    // Elevation: M3 levels 1 and 2
+    --sn-shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 3px 1px rgb(0 0 0 / 0.15);
+    --sn-shadow-overlay: 0 1px 2px rgb(0 0 0 / 0.3), 0 2px 6px 2px rgb(0 0 0 / 0.15);
+    --sn-shadow-window: 0 4px 8px 3px rgb(0 0 0 / 0.15), 0 1px 3px rgb(0 0 0 / 0.3);
+
+    // Focus: a 3px primary outline outside the control
+    --sn-focus-outline: 3px solid var(--sn-color-primary);
+    --sn-focus-offset: 2px;
+    --sn-focus-shadow: none;
+
+    // Motion: M3 standard
+    --sn-duration-fast: 200ms;
+    --sn-easing: cubic-bezier(0.2, 0, 0, 1);
+  }
+}

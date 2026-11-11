@@ -1,0 +1,25 @@
+// ============================================================================
+//  Windows 11 · Focus and window states
+// ============================================================================
+@use '../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    // Focus: the Fluent focus rectangle on every control
+    :is(#{h.$focusable}):focus-visible {
+      outline: var(--sn-focus-outline);
+      outline-offset: var(--sn-focus-offset);
+      box-shadow: var(--sn-focus-shadow);
+    }
+  }
+
+  // Inactive window: Mica turns solid and the title bar text greys out
+  .t-win.inactive {
+    --sn-window-bg: var(--sn-color-bg);
+    --sn-material-blur: 0px;
+
+    .sn-chrome {
+      color: color-mix(in srgb, var(--sn-color-fg) 45%, transparent);
+    }
+  }
+}

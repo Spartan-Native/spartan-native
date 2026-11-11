@@ -1,0 +1,32 @@
+// ============================================================================
+//  GNOME · Alert (hlmAlert): an Adwaita card; tones tint it
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$alert} {
+      padding: px(12) px(16);
+      border: 0;
+      border-radius: var(--sn-radius-surface);
+      background: color-mix(in srgb, var(--sn-alert-tone, var(--sn-color-surface-solid)) 14%, var(--sn-color-surface-solid));
+      box-shadow: var(--sn-shadow-card);
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size);
+    }
+
+    #{h.$alert-icon} {
+      --ng-icon__color: var(--sn-alert-tone, var(--sn-color-accent-text));
+    }
+
+    #{h.$alert-title} {
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    #{h.$alert-description} {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size);
+    }
+  }
+}

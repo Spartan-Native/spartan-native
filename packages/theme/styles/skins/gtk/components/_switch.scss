@@ -1,0 +1,44 @@
+// ============================================================================
+//  GNOME · Switch (hlm-switch): 48 × 26 track, round white knob
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$switch} {
+      width: var(--sn-switch-width);
+      height: var(--sn-switch-height);
+      padding-inline: var(--sn-switch-inset);
+      border: 0;
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-track);
+      box-shadow: none;
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-track), var(--sn-color-fg) 8%);
+      }
+    }
+
+    #{h.$switch-on} {
+      background: var(--sn-color-primary);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary), #fff 10%);
+      }
+    }
+
+    #{h.$switch-thumb} {
+      width: var(--sn-switch-thumb-width);
+      height: var(--sn-switch-thumb-height);
+      background: #fff;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+      translate: 0 0;
+      transition: translate var(--sn-duration-fast) var(--sn-easing);
+    }
+
+    #{h.$switch-thumb-on} {
+      background: #fff;
+      translate: calc(var(--sn-switch-width) - var(--sn-switch-thumb-width) - 2 * var(--sn-switch-inset)) 0;
+    }
+  }
+}

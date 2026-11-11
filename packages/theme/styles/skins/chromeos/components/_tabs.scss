@@ -1,0 +1,54 @@
+// ============================================================================
+//  ChromeOS · Tabs: M3 primary tabs. 48px, a 3px rounded underline in primary.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$tabs-list} {
+      height: auto;
+      padding: 0;
+      gap: 0;
+      border-bottom: 1px solid var(--sn-color-stroke);
+      border-radius: 0;
+      background: transparent;
+    }
+
+    #{h.$tab} {
+      position: relative;
+      height: var(--sn-tab-height);
+      padding-inline: #{px(16)};
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-control);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+      }
+
+      &::after {
+        content: '';
+        inset: auto #{px(16)} 0 #{px(16)};
+        height: 3px;
+        border-radius: #{px(3)} #{px(3)} 0 0;
+        background: var(--sn-color-primary);
+        opacity: 0;
+      }
+    }
+
+    #{h.$tab-active} {
+      background: transparent;
+      box-shadow: none;
+      color: var(--sn-color-primary);
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+}

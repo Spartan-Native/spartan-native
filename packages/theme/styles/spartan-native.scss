@@ -1,0 +1,42 @@
+// ============================================================================
+//  Spartan Native: the theme
+//
+//  Import this once, after Tailwind and the spartan preset:
+//
+//    // angular.json → styles
+//    "src/styles.css",                                          // @import 'tailwindcss'; spartan preset
+//    "node_modules/@spartan-native/theme/styles/spartan-native.scss"
+//
+//  Then put a skin on <html> with provideSpartanNative() (recommended), or by hand:
+//    <html class="t-win" data-sn-skin="win">
+//    <html class="t-mac dark" data-sn-skin="mac">
+//    <html class="t-gtk rt" data-sn-skin="gtk">
+//
+//  Everything lives in one cascade layer, `spartan-native`, ordered AFTER
+//  Tailwind's `utilities`. So the skins beat spartan's utility classes without
+//  !important, and your own unlayered CSS still beats the skins.
+// ============================================================================
+
+@use 'layers';
+
+// 1. Contract: every token with its default, and the bridge to spartan's names
+@use 'contract/tokens';
+@use 'contract/palette-defaults';
+@use 'contract/spartan-bridge';
+
+// 2. Base: root typography, desktop behaviors, materials and tones
+@use 'base/root';
+@use 'base/materials';
+@use 'base/tones';
+
+// 3. Skins: one folder per platform, each overriding only what differs
+@use 'skins/win11';
+@use 'skins/win10';         // .t-win.t-w10: overrides win11
+@use 'skins/macos26';
+@use 'skins/macos-classic'; // .t-mac.t-macc: overrides macos26
+@use 'skins/gtk';
+@use 'skins/kde';
+@use 'skins/chromeos';
+
+// 4. States that apply across skins: reduced transparency, contrast, motion
+@use 'base/states';

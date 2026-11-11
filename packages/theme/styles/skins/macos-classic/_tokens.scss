@@ -1,0 +1,58 @@
+// ============================================================================
+//  macOS 13–15: tokens
+//  Only what differs from macos26. Smaller rounded-rect controls, vibrancy
+//  instead of Liquid Glass, flat window background.
+// ============================================================================
+@use '../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-mac.t-macc {
+    // Shape: rounded rectangles, not capsules
+    --sn-radius-control: #{px(6)};
+    --sn-radius-input: #{px(5)};
+    --sn-radius-surface: #{px(10)};
+    --sn-radius-overlay: #{px(12)};
+    --sn-radius-window: #{px(10)};
+
+    // Density: the AppKit regular control size
+    --sn-control-height: #{px(22)};
+    --sn-control-height-small: #{px(20)};
+    --sn-control-padding-x: #{px(12)};
+    --sn-input-height: #{px(22)};
+    --sn-input-padding-x: #{px(6)};
+    --sn-check-size: #{px(14)};
+    --sn-check-radius: #{px(4)};
+    --sn-switch-width: #{px(38)};
+    --sn-switch-height: #{px(22)};
+    --sn-switch-thumb-width: #{px(20)};
+    --sn-switch-thumb-height: #{px(20)};
+    --sn-switch-inset: #{px(1)};
+    --sn-tab-height: #{px(20)};
+    --sn-card-padding: #{px(16)};
+    --sn-list-item-radius: #{px(5)};
+    --sn-slider-track-height: #{px(4)};
+    --sn-slider-thumb-width: #{px(20)};
+    --sn-slider-thumb-height: #{px(20)};
+
+    // Overlays
+    --sn-menu-padding: #{px(5)};
+    --sn-menu-item-height: #{px(22)};
+    --sn-menu-item-padding-x: #{px(10)};
+    --sn-menu-item-radius: #{px(4)};
+    --sn-dialog-width: #{px(280)};
+    --sn-tooltip-radius: #{px(4)};
+
+    // Materials: vibrancy (palette: glass at 72–80 %, no highlight)
+    --sn-material-blur: 30px;
+    --sn-material-saturate: 150%;
+
+    // Elevation: hairline + small shadow
+    --sn-shadow-card: 0 0 0 0.5px var(--sn-color-stroke), 0 1px 2px rgb(0 0 0 / 0.08);
+    --sn-shadow-overlay: 0 0 0 0.5px rgb(0 0 0 / 0.15), 0 10px 30px rgb(0 0 0 / 0.2);
+
+    // Focus: the 3px halo
+    --sn-focus-shadow: 0 0 0 3px var(--sn-color-ring);
+
+    --sn-duration-fast: 150ms;
+  }
+}

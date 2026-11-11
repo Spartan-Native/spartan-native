@@ -1,0 +1,10 @@
+@use 'sass:math';
+
+// px(32) → 2rem
+//
+// Write sizes as the platform's pixel value at 100 % text size. The root font
+// size is 16px × --sn-text-scale (base/_root.scss), so every size written with
+// px() grows with the OS text-size setting, the way WinUI, AppKit and GTK do.
+@function px($value) {
+  @return math.div($value, 16) * 1rem;
+}

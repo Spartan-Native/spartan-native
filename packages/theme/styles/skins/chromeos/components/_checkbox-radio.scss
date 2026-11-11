@@ -1,0 +1,59 @@
+// ============================================================================
+//  ChromeOS · Checkbox and radio: 2px outlines, an 8px state-layer halo on hover
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+$halo: 0 0 0 8px color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$checkbox} {
+      width: var(--sn-check-size);
+      height: var(--sn-check-size);
+      border: 2px solid var(--sn-color-fg-muted);
+      border-radius: var(--sn-check-radius);
+      background: transparent;
+      box-shadow: none;
+      transition: box-shadow var(--sn-duration-fast) var(--sn-easing);
+
+      &:hover {
+        box-shadow: $halo;
+      }
+
+      ng-icon {
+        font-size: calc(var(--sn-check-size) * 0.75);
+      }
+    }
+
+    #{h.$checkbox-on} {
+      border-color: var(--sn-color-primary);
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+    }
+
+    #{h.$radio} {
+      width: px(20);
+      height: px(20);
+      border: 2px solid var(--sn-color-fg-muted);
+      background: transparent;
+      box-shadow: none;
+    }
+
+    #{h.$radio-item}:hover #{h.$radio},
+    #{h.$radio}:hover {
+      box-shadow: $halo;
+    }
+
+    #{h.$radio-on} {
+      border-color: var(--sn-color-primary);
+      background: transparent;
+    }
+
+    #{h.$radio-dot-on} {
+      width: 50%;
+      height: 50%;
+      background: var(--sn-color-primary);
+    }
+  }
+}

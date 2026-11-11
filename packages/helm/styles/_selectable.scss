@@ -1,0 +1,101 @@
+// ============================================================================
+//  snSelectable / snSelectableItem: lists and tables with the desktop selection model
+//
+//  Hooks:  [data-slot="sn-selectable"]        the list or table (focusable)
+//          [data-slot="sn-selectable-item"]   a row; [data-selected], [data-active]
+//
+//  Tokens (set per skin by the theme):
+//    --sn-row-height, --sn-list-item-radius
+//    --sn-row-selected-bg / -fg            selection while the list has focus
+//    --sn-row-selected-bg-unfocused / -fg  selection when it doesn't (grey on macOS)
+//    --sn-row-selected-indicator           the Windows 11 accent pill
+//    --sn-row-focus-ring                   the keyboard cursor
+// ============================================================================
+
+$list: '[data-slot="sn-selectable"]';
+$item: '[data-slot="sn-selectable-item"]';
+
+@layer spartan-native.helm {
+  #{$list} {
+    outline: none;
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
+
+    // Focused by keyboard with no row yet: ring the whole list
+    &:focus-visible:not(:has([data-active])) {
+      outline: var(--sn-row-focus-ring);
+      outline-offset: 2px;
+    }
+  }
+
+  // --- List rows (role="option") ---------------------------------------------
+  #{$list}[role='listbox'] #{$item} {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    min-height: var(--sn-row-height);
+    padding-inline: 0.75em;
+    border-radius: var(--sn-list-item-radius);
+    color: var(--sn-color-fg);
+
+    &:hover:not([data-selected]) {
+      background: color-mix(in srgb, var(--sn-color-fg) 5%, transparent);
+    }
+
+    // The Windows 11 selection pill (transparent on other skins)
+    &[data-selected]::before {
+      content: '';
+      position: absolute;
+      inset-inline-start: 0;
+      top: 50%;
+      width: 3px;
+      height: 1em;
+      translate: 0 -50%;
+      border-radius: 2px;
+      background: var(--sn-row-selected-indicator);
+    }
+  }
+
+  // --- Table rows (role="row") -------------------------------------------------
+  #{$list}[role='grid'] #{$item} {
+    // A selectable <tr hlmTr> carries this data-slot instead of "table-row", so the theme's
+    // table skin no longer reaches it: give it the neutral hairline instead of the stock --border.
+    border-color: color-mix(in srgb, var(--sn-color-fg) 10%, transparent);
+
+    &:hover:not([data-selected]) {
+      background: color-mix(in srgb, var(--sn-color-fg) 4%, transparent);
+    }
+
+    > :first-child {
+      box-shadow: inset 3px 0 0 transparent;
+    }
+
+    &[data-selected] > :first-child {
+      box-shadow: inset 3px 0 0 var(--sn-row-selected-indicator);
+    }
+  }
+
+  // --- Selected: accent-driven while focused, muted when not -------------------
+  #{$list} #{$item}[data-selected] {
+    background: var(--sn-row-selected-bg-unfocused);
+    color: var(--sn-row-selected-fg-unfocused);
+  }
+
+  #{$list}:focus-within #{$item}[data-selected] {
+    background: var(--sn-row-selected-bg);
+    color: var(--sn-row-selected-fg);
+
+    // secondary text follows the selection color (e.g. white on the macOS accent)
+    * {
+      color: inherit;
+    }
+  }
+
+  // --- The keyboard cursor, only when focus came from the keyboard --------------
+  #{$list}:focus-visible #{$item}[data-active] {
+    outline: var(--sn-row-focus-ring);
+    outline-offset: -2px;
+  }
+}

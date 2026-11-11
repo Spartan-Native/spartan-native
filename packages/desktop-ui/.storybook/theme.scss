@@ -1,0 +1,19 @@
+// The Spartan Native theme, resolved by package name like any consumer would,
+// then the helm package's styles.
+@use '@spartan-native/theme/styles/spartan-native';
+// The list/table selection model (snSelectable), used by the inspector stories.
+@use '../../helm/styles/spartan-native-helm';
+
+// Story-only: the window-controls demo strip puts the buttons where each OS does.
+.sn-story-controls-strip {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 20rem;
+  height: 2.5rem;
+  overflow: hidden;
+}
+
+[data-sn-skin^='mac'] .sn-story-controls-strip {
+  justify-content: flex-start;
+  padding-inline: 0.75rem; // the inset a macOS title bar gives its traffic lights
+}

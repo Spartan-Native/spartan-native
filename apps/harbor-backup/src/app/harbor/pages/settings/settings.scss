@@ -1,0 +1,101 @@
+// Settings page layout. The groups, rows and controls draw themselves per OS.
+
+:host {
+  display: block;
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 1.5rem 1.5rem;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 44rem;
+}
+
+p,
+h2 {
+  margin: 0;
+}
+
+.radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  hlm-slider {
+    width: 10rem;
+  }
+}
+
+.readout {
+  min-width: 5.5rem;
+  font-size: var(--sn-font-size-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--sn-color-fg-muted);
+}
+
+.add {
+  width: 16rem;
+}
+
+.select {
+  min-width: 9rem;
+}
+
+.mono {
+  font-family: var(--sn-font-mono);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+// Advanced exclusions
+.exclusions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: -0.75rem;
+}
+
+.disclosure {
+  align-self: flex-start;
+
+  ng-icon {
+    transition: transform 150ms;
+  }
+
+  &[data-state='open'] ng-icon {
+    transform: rotate(180deg);
+  }
+}
+
+.exclusions-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+// About
+.app-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.licenses {
+  margin: 0;
+  font-size: var(--sn-font-size-small);
+}

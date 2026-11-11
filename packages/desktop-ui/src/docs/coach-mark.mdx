@@ -1,0 +1,120 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/coach-mark.stories';
+
+<Meta of={Stories} />
+
+# Coach mark
+
+`<sn-coach-mark>` is a small, non-modal popup that points at one control and explains it: a title, a short body,
+an optional icon or hero image, a close button and up to two actions. It is anchored to its control with
+`[snCoachMarkFor]` and positioned by the CDK overlay, flipping to the other side when there is no room. Use it to
+introduce a feature once, such as "Sync across devices" next to the Sync button. Don't use it for errors, for
+anything the user must answer before going on (use a modal sheet), or for plain hover help (use a tooltip).
+
+| OS | Renders as | Native control |
+| --- | --- | --- |
+| Windows 11 | Acrylic card with a tail pointing at the anchor, close button top-right, buttons share the width with the primary first | TeachingTip |
+| Windows 10 | As Windows 11, square corners, solid background | TeachingTip |
+| macOS 26 | Glass popover with a rounded arrow, small round close button, buttons at the bottom-right with the primary last | NSPopover |
+| macOS 13–15 | As macOS 26 with the smaller classic radius and no glass highlight | NSPopover |
+| GNOME | Opaque rounded popover with an arrow, bold title, buttons at the end with the primary last | GtkPopover |
+| KDE | Breeze frame, no arrow, buttons at the end in KDE order (primary, then Not now) | Kirigami popup |
+| ChromeOS | Tonal container, no arrow, muted body, text buttons at the start | Material 3 rich tooltip |
+
+An unknown OS (`web`) gets the GNOME look.
+
+## Examples
+
+Open on load, pointing at the Sync button.
+
+<Canvas of={Stories.OpenOnLoad} />
+
+Click Sync to show and hide it. Esc closes it and puts focus back on Sync.
+
+<Canvas of={Stories.Toggle} />
+
+`placement` picks the preferred side (`top`, `bottom`, `start`, `end`); the arrow follows the side it lands on.
+
+<Canvas of={Stories.Placement} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnCoachMark, SnCoachMarkFor } from '@spartan-native/desktop-ui';
+import { HlmButtonImports } from '@spartan-ng/helm/button';`}
+/>
+
+<Source
+  language="html"
+  code={`<button hlmBtn [snCoachMarkFor]="tip" (click)="tip.toggle()">Sync</button>
+
+<sn-coach-mark #tip title="Sync across devices" [(open)]="showSyncTip" placement="bottom">
+  Turn on sync to keep your backups available on every device you sign in to.
+  <button snCoachMarkAction hlmBtn variant="secondary" (click)="tip.hide()">Not now</button>
+  <button snCoachMarkAction hlmBtn (click)="turnOnSync()">Turn on</button>
+</sn-coach-mark>`}
+/>
+
+Write the actions secondary first, primary last. Windows and KDE show them in reverse, as their native
+controls do. The coach mark does not close itself when an action is clicked; set `open` to `false` in the handler.
+
+## API
+
+### `<sn-coach-mark>` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | required | The heading. Also labels the popup. |
+| `open` | `boolean` (model) | `false` | Shown or hidden. Two-way: `[(open)]`. |
+| `placement` | `'top' \| 'bottom' \| 'start' \| 'end'` | `'bottom'` | Preferred side of the anchor. Tries centered, then start- and end-aligned, then the opposite side. |
+| `icon` | `string` | `''` | An @ng-icons name registered with `provideIcons()`, shown before the title. |
+| `closeLabel` | `string` | `'Close'` | Accessible label of the close button. |
+
+### Outputs
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `openChange` | `boolean` | Emitted when the close button or Esc closes it (part of `[(open)]`). |
+
+### Methods
+
+| Name | Description |
+| --- | --- |
+| `show()` / `hide()` / `toggle()` | Open or close it from code, for example from a template reference (`#tip`). |
+
+### `[snCoachMarkFor]`
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `snCoachMarkFor` | `SnCoachMark` | The coach mark to anchor to this element. While it is open, the anchor gets `aria-describedby` pointing at the body, and Esc on the anchor closes it. |
+
+### Content slots
+
+| Selector | Content |
+| --- | --- |
+| (default) | The body text. |
+| `[snCoachMarkAction]` | Action buttons, one attribute per button. |
+| `[snCoachMarkHero]` | An image shown edge to edge above the title (TeachingTip HeroContent). |
+
+### CSS hooks
+
+| Hook | Meaning |
+| --- | --- |
+| `data-slot="sn-coach-mark"` | The host. It is moved into the overlay pane while open. |
+| `data-family`, `data-skin` | The OS family and skin it is drawn for. |
+| `data-side` | `top`, `bottom`, `left` or `right`: the side of the anchor it is on. Present only while open. |
+| `data-placed` | Set once the overlay has positioned it (useful for screenshots). |
+| `--sn-coach-mark-beak-at` | Where along the edge the arrow sits, in px; set from the anchor's center. |
+| `.sn-coach-mark-pane` | Class on the CDK overlay pane. |
+
+## Accessibility
+
+- The host has `role="dialog"`, labelled by the title and described by the body. It is non-modal: opening it
+  does not move focus and nothing outside it is blocked or dimmed.
+- It is rendered as an inline popover right after the anchor in the DOM, so Tab from the anchor goes into it
+  (close button, then the actions) and on to the rest of the page. There is no focus trap.
+- Esc inside it, or on the anchor, closes it. If focus was inside, it goes back to the anchor; closing with
+  the close button or an action does the same.
+- Clicking outside does not close it, like a TeachingTip without light dismiss.
+- The fade-in is turned off with `prefers-reduced-motion`.

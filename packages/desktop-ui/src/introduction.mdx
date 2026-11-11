@@ -1,0 +1,41 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Desktop UI/Introduction" />
+
+# @spartan-native/desktop-ui
+
+The pieces stock spartan doesn't have: **window chrome** and the **patterns each OS is known for**. Each component changes its *layout* per OS, not just its colors. On its home OS it is the native control; everywhere else it becomes that platform's closest counterpart. Switch the OS in the toolbar to see it.
+
+Every page below has the per-OS table, live examples, usage, the API and accessibility notes.
+
+## Window
+
+| Component | Windows 11 / 10 | macOS 26 / 13–15 | GNOME | KDE Plasma | ChromeOS |
+| --- | --- | --- | --- | --- | --- |
+| [`<sn-title-bar>`](?path=/docs/desktop-ui-window-title-bar--docs) | icon + title left, caption buttons right | traffic lights left, title centered | header bar, bold centered title | Breeze title bar, title centered | caption bar, round buttons |
+| [`<sn-window-controls>`](?path=/docs/desktop-ui-window-window-controls--docs) | – □ × (close turns red) | ● ● ● (grey when inactive) | round × (all three with `linuxAll`) | Breeze glyph buttons | M3 round caption buttons |
+
+## Patterns
+
+| Component | Windows 11 / 10 | macOS 26 / 13–15 | GNOME | KDE Plasma | ChromeOS |
+| --- | --- | --- | --- | --- | --- |
+| [`<sn-command-bar>`](?path=/docs/desktop-ui-patterns-command-bar--docs) | **CommandBar** | unified NSToolbar | AdwHeaderBar | KToolBar | top app bar |
+| [`<sn-coach-mark>`](?path=/docs/desktop-ui-patterns-coach-mark--docs) | **TeachingTip** | NSPopover | GtkPopover | Kirigami popup | rich tooltip |
+| [`<sn-modal-sheet>`](?path=/docs/desktop-ui-patterns-modal-sheet--docs) | ContentDialog | **sheet** from the title bar | AdwDialog, buttons in the header bar | window-modal dialog | M3 dialog |
+| [`<sn-inspector>`](?path=/docs/desktop-ui-patterns-inspector--docs) | SplitView pane | **Inspector** | AdwOverlaySplitView | Dolphin information panel | side sheet |
+| [`<sn-sidebar-nav>`](?path=/docs/desktop-ui-patterns-sidebar-navigation--docs) | accent pill (10: 4px bar) | accent fill, grey when inactive | neutral rounded selection | accent-filled selection | tonal pill |
+| [`<sn-settings-group>`](?path=/docs/desktop-ui-patterns-settings-list--docs) | SettingsCards (10: plain rows) | grouped Form section | **AdwPreferencesGroup** | Kirigami FormLayout | settings list in a tonal card |
+| [`<sn-status-page>`](?path=/docs/desktop-ui-patterns-status-page--docs) | Fluent empty state | ContentUnavailableView | **AdwStatusPage** | PlaceholderMessage | M3 empty state |
+
+**Bold** marks the OS a pattern comes from.
+
+## Platform helpers
+
+| Helper | What it does |
+| --- | --- |
+| [`<kbd snShortcut>`](?path=/docs/desktop-ui-platform-shortcut--docs) | `mod+shift+s` → ⇧⌘S on macOS, Ctrl+Shift+S elsewhere |
+| [`*snPlatformIf`](?path=/docs/desktop-ui-platform-platform-if--docs) | renders per skin (`'mac'`) or family (`'macos'`, `'windows'`, `'linux'`), with `else` |
+
+## Not yet
+
+The **menubar adapter** (the global macOS menu bar through the host, an in-window menubar elsewhere) waits for the host's menu contract (`MenuHost`), which is still a placeholder.

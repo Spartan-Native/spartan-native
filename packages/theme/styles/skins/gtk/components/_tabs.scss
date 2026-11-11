@@ -1,0 +1,46 @@
+// ============================================================================
+//  GNOME · Tabs (hlm-tabs) as an AdwViewSwitcher / linked toggle group
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$tabs-list} {
+      height: auto;
+      padding: #{px(3)};
+      gap: #{px(3)};
+      border-radius: calc(var(--sn-radius-control) + #{px(3)});
+      background: var(--sn-color-control);
+    }
+
+    #{h.$tab} {
+      height: var(--sn-tab-height);
+      padding-inline: #{px(14)};
+      border: 0;
+      border-radius: var(--sn-radius-control);
+      background: transparent;
+      box-shadow: none;
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-control);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 7%, transparent);
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+
+    #{h.$tab-active} {
+      background: var(--sn-color-segment-on);
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.12);
+
+      &:hover {
+        background: var(--sn-color-segment-on);
+      }
+    }
+  }
+}

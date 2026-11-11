@@ -1,0 +1,53 @@
+// ============================================================================
+//  Windows 11 · MenuFlyout (hlm-dropdown-menu) and ComboBox list (hlm-select-content)
+//  Acrylic flyout, 8px corners, rounded items with a neutral hover.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$menu} {
+      padding: var(--sn-menu-padding);
+      border: 1px solid var(--sn-color-stroke);
+      border-radius: var(--sn-radius-overlay);
+      background: var(--sn-color-acrylic);
+      box-shadow: var(--sn-shadow-overlay);
+      color: var(--sn-color-fg);
+      -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+      backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    }
+
+    :is(#{h.$menu-item}) {
+      min-height: var(--sn-menu-item-height);
+      padding-inline: var(--sn-menu-item-padding-x);
+      border-radius: var(--sn-menu-item-radius);
+      font-size: var(--sn-font-size);
+      color: var(--sn-color-fg);
+    }
+
+    #{h.$menu-item-highlighted} {
+      background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+      color: var(--sn-color-fg);
+    }
+
+    #{h.$menu-item-destructive} {
+      color: var(--sn-color-danger);
+    }
+
+    :is(#{h.$menu-separator}) {
+      margin-block: #{px(4)};
+      background: var(--sn-color-stroke-bottom);
+    }
+
+    :is(#{h.$menu-label}) {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+
+    #{h.$menu-shortcut} {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+  }
+}

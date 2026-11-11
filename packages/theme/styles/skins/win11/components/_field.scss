@@ -1,0 +1,33 @@
+// ============================================================================
+//  Windows 11 · Field (hlmField) and Separator (hlmSeparator)
+//  Group headers in BodyStrong, captions in the secondary text color.
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$field-legend} {
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    #{h.$field-description} {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+
+    #{h.$field-error} {
+      color: var(--sn-color-danger);
+      font-size: var(--sn-font-size-small);
+    }
+
+    // The skins restyle text-field borders, so they own the invalid state too
+    #{h.$text-field-invalid} {
+      border-color: var(--sn-color-danger);
+    }
+
+    #{h.$separator} {
+      background: var(--sn-color-stroke-bottom);
+    }
+  }
+}

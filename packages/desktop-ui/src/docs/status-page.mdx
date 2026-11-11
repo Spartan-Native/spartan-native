@@ -1,0 +1,90 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/status-page.stories';
+
+<Meta of={Stories} />
+
+# Status page
+
+`<sn-status-page>` fills a page or pane with a single message: an icon, a title, an optional description and
+optional actions. Use it for empty states ("No backups yet"), for errors that block the whole view ("Office NAS is
+offline") and for empty search results. Don't use it for messages next to other content; use an alert for that.
+
+| OS | Renders as | Native control |
+| --- | --- | --- |
+| Windows 11 | Accent glyph in a tinted circle, 20px semibold title, muted description, buttons below | Fluent empty-state page |
+| Windows 10 | As Windows 11, with the square Windows 10 buttons | Fluent empty-state page |
+| macOS 26 | Medium grey icon, bold title, muted description | ContentUnavailableView |
+| macOS 13–15 | As macOS 26, with the classic controls | ContentUnavailableView |
+| GNOME | 128px faded icon, large heavy title, description in body color, pill buttons | AdwStatusPage |
+| KDE | 64px faded icon, muted level-2 heading and explanation, a normal button | Kirigami PlaceholderMessage |
+| ChromeOS | Icon in a primary-container circle, light 22px headline, muted description | Material 3 empty state |
+
+An unknown OS (`web`) gets the GNOME look.
+
+## Examples
+
+<Canvas of={Stories.Default} />
+
+Two actions.
+
+<Canvas of={Stories.TwoActions} />
+
+No actions.
+
+<Canvas of={Stories.WithoutActions} />
+
+Title only.
+
+<Canvas of={Stories.TitleOnly} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnStatusPage } from '@spartan-native/desktop-ui';
+import { provideIcons } from '@ng-icons/core';
+import { lucideCloudUpload } from '@ng-icons/lucide';
+import { HlmButtonImports } from '@spartan-ng/helm/button';
+
+// in the component: providers: [provideIcons({ lucideCloudUpload })]`}
+/>
+
+<Source
+  language="html"
+  code={`<sn-status-page icon="lucideCloudUpload" title="No backups yet"
+                description="Add a destination to start protecting your files.">
+  <button hlmBtn (click)="addDestination()">Add destination</button>
+</sn-status-page>`}
+/>
+
+## API
+
+### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `icon` | `string` | `''` | An @ng-icons name registered with `provideIcons()`. Empty: no icon. |
+| `title` | `string` | required | The headline. |
+| `description` | `string` | `''` | A sentence that says what to do next. |
+
+No outputs: the buttons you project have their own.
+
+### Content slots
+
+| Selector | Content |
+| --- | --- |
+| (default) | Action buttons, centered under the text. The row is hidden when empty. |
+
+### CSS hooks
+
+| Hook | Meaning |
+| --- | --- |
+| `data-slot="sn-status-page"` | The host. |
+| `data-family`, `data-skin` | The OS family and skin it is drawn for. |
+| `.icon`, `h2`, `p`, `.actions` | The parts, for local overrides. |
+
+## Accessibility
+
+- The host has `role="status"`, so a screen reader announces it when it appears in place of content.
+- The title is an `<h2>`; the icon is decorative (`aria-hidden`).
+- Focus is not moved. Put the most useful action first so it is the first Tab stop.

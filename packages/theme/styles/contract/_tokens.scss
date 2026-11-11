@@ -1,0 +1,104 @@
+// ============================================================================
+//  The token contract.
+//
+//  Every non-color token with its default value. Skins override only what
+//  differs (skins/*/_tokens.scss). Components and apps read ONLY these names.
+//
+//  Color tokens (--sn-color-*) come from derivePalette(): written inline on the
+//  root at runtime, with static defaults in _palette-defaults.scss.
+// ============================================================================
+@use '../functions' as *;
+
+@layer spartan-native.tokens {
+  :root,
+  [data-sn-skin] {
+    // --- Text size: set by the runtime from the OS (1 = 100 %) -------------
+    --sn-text-scale: 1;
+
+    // --- Typography ----------------------------------------------------------
+    --sn-font-sans: system-ui, sans-serif;
+    --sn-font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Source Code Pro', monospace;
+    --sn-font-size: #{px(14)};          // body and controls
+    --sn-font-size-small: #{px(12)};    // captions, badges
+    --sn-font-size-title: #{px(20)};    // page titles
+    --sn-line-height: 1.43;
+    --sn-font-weight-control: 500;      // button and tab labels
+    --sn-font-weight-strong: 600;       // headings, selected tabs
+
+    // --- Shape ---------------------------------------------------------------
+    --sn-radius-control: #{px(6)};      // buttons
+    --sn-radius-input: var(--sn-radius-control);
+    --sn-radius-surface: #{px(10)};     // cards, groups
+    --sn-radius-overlay: #{px(12)};     // dialogs, menus
+    --sn-radius-window: #{px(10)};
+    --sn-radius-pill: 999px;
+
+    // --- Density -------------------------------------------------------------
+    --sn-control-height: #{px(36)};
+    --sn-control-height-small: #{px(28)};
+    --sn-control-padding-x: #{px(12)};
+    --sn-input-height: var(--sn-control-height);
+    --sn-input-padding-x: #{px(10)};
+    --sn-check-size: #{px(16)};         // checkbox and radio
+    --sn-check-radius: #{px(4)};
+    --sn-switch-width: #{px(36)};
+    --sn-switch-height: #{px(20)};
+    --sn-switch-thumb-width: #{px(16)};
+    --sn-switch-thumb-height: #{px(16)};
+    --sn-switch-inset: #{px(2)};        // gap between track and thumb
+    --sn-switch-border: 0px;
+    --sn-progress-height: #{px(6)};
+    --sn-tab-height: #{px(30)};
+    --sn-card-padding: #{px(20)};
+    --sn-list-item-height: #{px(36)};
+    --sn-list-item-radius: var(--sn-radius-control);
+    --sn-slider-track-height: #{px(4)};
+    --sn-slider-thumb-width: #{px(16)};
+    --sn-slider-thumb-height: #{px(16)};
+
+    // --- Overlays: menus, dialogs, tooltips ---------------------------------
+    --sn-menu-padding: #{px(4)};
+    --sn-menu-item-height: #{px(30)};
+    --sn-menu-item-padding-x: #{px(10)};
+    --sn-menu-item-radius: var(--sn-radius-control);
+    --sn-dialog-padding: #{px(24)};
+    --sn-dialog-width: #{px(440)};
+    --sn-tooltip-radius: #{px(4)};
+
+    // --- Selection (sidebar items, list rows) --------------------------------
+    --sn-selection-bg: var(--sn-color-hover);
+    --sn-selection-fg: var(--sn-color-fg);
+    --sn-selection-indicator: transparent; // Windows 11 draws an accent pill
+
+    // --- Row selection (lists and tables with the desktop selection model) ---
+    --sn-row-height: var(--sn-list-item-height);
+    --sn-row-selected-bg: var(--sn-selection-bg);
+    --sn-row-selected-fg: var(--sn-selection-fg);
+    --sn-row-selected-indicator: var(--sn-selection-indicator);
+    --sn-row-selected-bg-unfocused: var(--sn-row-selected-bg); // when the list doesn't have focus
+    --sn-row-selected-fg-unfocused: var(--sn-row-selected-fg);
+    --sn-row-focus-ring: 2px solid var(--sn-color-ring);
+
+    // --- Materials -------------------------------------------------------------
+    --sn-material-blur: 0px;
+    --sn-material-saturate: 100%;
+    --sn-window-bg: var(--sn-color-bg);      // behind everything in the window
+    --sn-sidebar-bg: var(--sn-color-sidebar);
+    --sn-content-bg: var(--sn-color-bg);
+    --sn-content-border: transparent;
+
+    // --- Elevation -------------------------------------------------------------
+    --sn-shadow-card: 0 1px 2px rgb(0 0 0 / 0.06);
+    --sn-shadow-overlay: 0 8px 24px rgb(0 0 0 / 0.16);
+    --sn-shadow-window: 0 16px 40px rgb(0 0 0 / 0.22);
+
+    // --- Focus -------------------------------------------------------------------
+    --sn-focus-outline: 2px solid var(--sn-color-ring);
+    --sn-focus-offset: 2px;
+    --sn-focus-shadow: none;
+
+    // --- Motion ------------------------------------------------------------------
+    --sn-duration-fast: 120ms;
+    --sn-easing: cubic-bezier(0.2, 0, 0, 1);
+  }
+}

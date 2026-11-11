@@ -1,0 +1,19 @@
+// ============================================================================
+//  Windows 11 · ProgressBar (hlm-progress): a 3px rounded accent bar
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$progress} {
+      height: var(--sn-progress-height);
+      border-radius: var(--sn-radius-pill);
+      background: color-mix(in srgb, var(--sn-color-control-strong) 45%, transparent);
+    }
+
+    #{h.$progress-bar} {
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-primary);
+    }
+  }
+}

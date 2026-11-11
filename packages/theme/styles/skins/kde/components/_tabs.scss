@@ -1,0 +1,49 @@
+// ============================================================================
+//  KDE Plasma · Tabs: Breeze tab bar. The active tab is a raised sheet with
+//  a 2px accent line on top.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$tabs-list} {
+      height: auto;
+      padding: 0;
+      gap: 0;
+      border-bottom: 1px solid var(--sn-color-border);
+      border-radius: 0;
+      background: transparent;
+    }
+
+    #{h.$tab} {
+      height: var(--sn-tab-height);
+      padding-inline: #{px(16)};
+      border: 0;
+      border-radius: var(--sn-radius-control) var(--sn-radius-control) 0 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size);
+      font-weight: 400;
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+
+    #{h.$tab-active} {
+      background: var(--sn-color-surface-solid);
+      box-shadow: inset 0 2px 0 var(--sn-color-primary), inset 1px 0 0 var(--sn-color-border),
+        inset -1px 0 0 var(--sn-color-border);
+
+      &:hover {
+        background: var(--sn-color-surface-solid);
+      }
+    }
+  }
+}

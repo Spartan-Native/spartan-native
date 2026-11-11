@@ -1,0 +1,59 @@
+// ============================================================================
+//  Windows 11 · Tabs (hlm-tabs) as a SelectorBar / Pivot
+//  No container; the selected tab is bold with a short accent pill under it.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$tabs-list} {
+      height: auto;
+      padding: 0;
+      gap: #{px(4)};
+      background: transparent;
+      border-radius: 0;
+    }
+
+    #{h.$tab} {
+      position: relative;
+      height: var(--sn-tab-height);
+      padding-inline: #{px(12)};
+      border: 0;
+      border-radius: var(--sn-radius-control);
+      background: transparent;
+      box-shadow: none;
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size);
+      font-weight: 400;
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+        color: var(--sn-color-fg);
+      }
+
+      // the selection pill
+      &::after {
+        content: '';
+        inset: auto auto 2px 50%;
+        width: #{px(16)};
+        height: 3px;
+        translate: -50% 0;
+        border-radius: 2px;
+        background: var(--sn-color-primary);
+        opacity: 0;
+      }
+    }
+
+    #{h.$tab-active} {
+      background: transparent;
+      color: var(--sn-color-fg);
+      font-weight: var(--sn-font-weight-strong);
+      box-shadow: none;
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+}

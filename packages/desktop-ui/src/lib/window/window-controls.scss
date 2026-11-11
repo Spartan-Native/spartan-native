@@ -1,0 +1,227 @@
+// Window controls per skin. Colors read the theme's tokens; sizes are rem so they
+// grow with the OS text size (1rem = 16px at 100 %).
+
+:host {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  // never a drag region, even inside one (Electron/Chromium, Wails)
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+  --wails-draggable: no-drag;
+}
+
+button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: default;
+  transition: background-color var(--sn-duration-fast) var(--sn-easing), color var(--sn-duration-fast) var(--sn-easing);
+
+  &:focus-visible {
+    outline: var(--sn-focus-outline);
+    outline-offset: calc(var(--sn-focus-offset) * -1);
+  }
+}
+
+svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+// --- Windows 11 / 10: caption buttons ---------------------------------------------------
+:host([data-family='windows']) {
+  align-self: stretch;
+
+  .caption {
+    width: 2.875rem; // 46px
+    height: 100%;
+    min-height: 2rem;
+
+    svg {
+      width: 0.625rem;
+      height: 0.625rem;
+      stroke-linecap: butt;
+      stroke-linejoin: miter;
+    }
+
+    &:hover {
+      background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+    }
+
+    &:active {
+      background: color-mix(in srgb, var(--sn-color-fg) 4%, transparent);
+    }
+
+    // the Windows close red is fixed by the OS, not the accent
+    &.close:hover {
+      background: #c42b1c;
+      color: #fff;
+    }
+
+    &.close:active {
+      background: #c83c31;
+      color: #fff;
+    }
+  }
+}
+
+// Windows 10: stronger grey hover, the Windows 10 close red
+:host([data-skin='w10']) .caption {
+  &:hover {
+    background: color-mix(in srgb, var(--sn-color-fg) 10%, transparent);
+  }
+
+  &:active {
+    background: color-mix(in srgb, var(--sn-color-fg) 20%, transparent);
+  }
+
+  &.close:hover {
+    background: #e81123;
+  }
+
+  &.close:active {
+    background: #f1707a;
+  }
+}
+
+// --- macOS: traffic lights ---------------------------------------------------------
+:host([data-family='macos']) {
+  gap: 0.5rem;
+  padding-inline: 0.125rem;
+
+  .light {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.18);
+    color: rgb(0 0 0 / 0.55);
+
+    // the light colors are fixed by AppKit, not the accent
+    &.close { background: #ff5f57; }
+    &.minimize { background: #febc2e; }
+    &.zoom { background: #28c840; }
+
+    svg {
+      width: 0.5rem;
+      height: 0.5rem;
+      stroke-width: 1.4;
+      opacity: 0;
+    }
+  }
+
+  // glyphs show while the pointer is over the group (or a light has focus), like AppKit
+  &:hover .light svg,
+  &:focus-within .light svg {
+    opacity: 1;
+  }
+}
+
+// macOS 26 spaces the (slightly larger) lights a little wider
+:host([data-skin='mac']) {
+  gap: 0.5625rem;
+
+  .light {
+    width: 0.8125rem;
+    height: 0.8125rem;
+  }
+}
+
+// inactive window: the lights turn grey (.light only exists on macOS).
+// !important: it must win over the per-light colors above.
+:host-context(.inactive) .light {
+  background: color-mix(in srgb, var(--sn-color-fg) 22%, transparent) !important;
+  box-shadow: none;
+}
+
+// --- GNOME (and the web fallback): round header-bar buttons ----------------------------
+:host([data-family='linux']),
+:host([data-family='web']) {
+  gap: 0.75rem;
+
+  .round {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--sn-color-fg) 10%, transparent);
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+      stroke-width: 1.6;
+    }
+
+    &:hover {
+      background: color-mix(in srgb, var(--sn-color-fg) 15%, transparent);
+    }
+
+    &:active {
+      background: color-mix(in srgb, var(--sn-color-fg) 24%, transparent);
+    }
+  }
+}
+
+// --- KDE Plasma: Breeze buttons, a circle shows on hover -------------------------------
+:host([data-skin='qt']) {
+  gap: 0.25rem;
+  padding-inline-end: 0.125rem;
+
+  .caption {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+
+    svg {
+      width: 0.625rem;
+      height: 0.625rem;
+      stroke-width: 1.2;
+    }
+
+    &:hover {
+      background: color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
+    }
+
+    &:active {
+      background: color-mix(in srgb, var(--sn-color-fg) 22%, transparent);
+    }
+
+    // Breeze's close red
+    &.close:hover,
+    &.close:active {
+      background: #da4453;
+      color: #fff;
+    }
+  }
+}
+
+// --- ChromeOS: Material 3 round caption buttons -------------------------------------------
+:host([data-skin='cros']) {
+  gap: 0.125rem;
+
+  .caption {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+
+    svg {
+      width: 0.75rem;
+      height: 0.75rem;
+      stroke-width: 1.2;
+    }
+
+    // M3 state layers: 8 % hover, 12 % pressed
+    &:hover {
+      background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+    }
+
+    &:active {
+      background: color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
+    }
+  }
+}

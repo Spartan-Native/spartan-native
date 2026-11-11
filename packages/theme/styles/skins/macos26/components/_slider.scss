@@ -1,0 +1,32 @@
+// ============================================================================
+//  macOS 26 · Slider (hlm-slider): thin track, a white capsule knob that grows when pressed
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$slider-track} {
+      height: var(--sn-slider-track-height);
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-track);
+    }
+
+    #{h.$slider-range} {
+      background: var(--sn-color-primary);
+    }
+
+    #{h.$slider-thumb} {
+      width: var(--sn-slider-thumb-width);
+      height: var(--sn-slider-thumb-height);
+      border: 0;
+      border-radius: var(--sn-radius-pill);
+      background: #fff;
+      box-shadow: 0 1px 4px rgb(0 0 0 / 0.25), inset 0 0 0 0.5px rgb(0 0 0 / 0.08);
+      transition: scale var(--sn-duration-fast) var(--sn-easing);
+
+      &:active {
+        scale: 1.12;
+      }
+    }
+  }
+}

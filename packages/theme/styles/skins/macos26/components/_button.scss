@@ -1,0 +1,94 @@
+// ============================================================================
+//  macOS 26 · Button (hlmBtn): capsule push buttons
+//  Push button (outline) is glass · Default button (default) glows with the accent
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-mac {
+    // --- Every variant: capsule ------------------------------------------------
+    #{h.$button} {
+      height: var(--sn-control-height);
+      padding-inline: var(--sn-control-padding-x);
+      border: 1px solid transparent;
+      border-radius: var(--sn-radius-control);
+      box-shadow: none;
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-control);
+      translate: none;
+      transition: filter var(--sn-duration-fast) var(--sn-easing), background-color var(--sn-duration-fast);
+
+      &:hover {
+        filter: brightness(1.04);
+      }
+
+      &:active {
+        filter: brightness(0.88);
+      }
+    }
+
+    &.dark #{h.$button}:active {
+      filter: brightness(1.3);
+    }
+
+    #{h.$button-small} {
+      height: var(--sn-control-height-small);
+      padding-inline: calc(var(--sn-control-padding-x) * 0.75);
+    }
+
+    #{h.$button-icon} {
+      width: var(--sn-control-height);
+      padding: 0;
+    }
+
+    // --- Push button (variant="outline"): a piece of glass ---------------------
+    #{h.$button-outline} {
+      background: var(--sn-color-glass);
+      color: var(--sn-color-fg);
+      border-color: var(--sn-color-glass-border);
+      box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), 0 1px 3px rgb(0 0 0 / 0.08);
+      -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+      backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    }
+
+    // --- Default button (variant="default"): accent, inner highlight, glow -----
+    #{h.$button-primary} {
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+      box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 4px 14px var(--sn-color-ring);
+    }
+
+    // --- Tinted (secondary) ------------------------------------------------------
+    #{h.$button-secondary} {
+      background: var(--sn-color-secondary);
+      color: var(--sn-color-secondary-fg);
+    }
+
+    // --- Borderless (ghost): accent text --------------------------------------------
+    #{h.$button-ghost} {
+      background: transparent;
+      color: var(--sn-color-accent-text);
+
+      &:hover {
+        filter: none;
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+      }
+    }
+
+    // --- Destructive ------------------------------------------------------------------
+    #{h.$button-destructive} {
+      background: var(--sn-color-danger);
+      color: var(--sn-color-danger-fg);
+    }
+
+    #{h.$button-link} {
+      color: var(--sn-color-accent-text);
+    }
+
+    // --- Disabled: AppKit fades the whole control ------------------------------------
+    #{h.$button-disabled} {
+      opacity: 0.45;
+      filter: none;
+    }
+  }
+}

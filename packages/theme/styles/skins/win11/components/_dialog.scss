@@ -1,0 +1,60 @@
+// ============================================================================
+//  Windows 11 · ContentDialog (hlm-dialog, hlm-alert-dialog)
+//  Left-aligned title; buttons share a full-width footer band.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$backdrop} {
+      background: var(--sn-color-scrim);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    :is(#{h.$dialog}) {
+      width: min(var(--sn-dialog-width), calc(100vw - 2rem));
+      max-width: none;
+      gap: #{px(12)};
+      padding: var(--sn-dialog-padding);
+      border: 1px solid var(--sn-color-stroke);
+      border-radius: var(--sn-radius-overlay);
+      background: var(--sn-color-surface-solid);
+      box-shadow: 0 32px 64px rgb(0 0 0 / 0.2), 0 2px 21px rgb(0 0 0 / 0.15);
+      color: var(--sn-color-fg);
+      text-align: start;
+    }
+
+    :is(#{h.$dialog-header}) {
+      text-align: start;
+      place-items: start;
+    }
+
+    :is(#{h.$dialog-title}) {
+      font-size: calc(var(--sn-font-size) * 1.43); // 20px
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    :is(#{h.$dialog-description}) {
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size);
+    }
+
+    // The footer band: flush with the dialog edges, buttons equal width
+    :is(#{h.$dialog-footer}) {
+      display: flex;
+      flex-direction: row;
+      gap: #{px(8)};
+      margin: #{px(12)} calc(-1 * var(--sn-dialog-padding)) calc(-1 * var(--sn-dialog-padding));
+      padding: var(--sn-dialog-padding);
+      border-top: 1px solid var(--sn-color-stroke);
+      border-radius: 0 0 var(--sn-radius-overlay) var(--sn-radius-overlay);
+      background: var(--sn-color-bg);
+    }
+
+    #{h.$dialog-footer-button} {
+      flex: 1;
+    }
+  }
+}

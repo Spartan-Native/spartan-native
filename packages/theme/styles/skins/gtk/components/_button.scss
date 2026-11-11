@@ -1,0 +1,106 @@
+// ============================================================================
+//  GNOME · Button (hlmBtn): filled grey buttons with bold labels
+//  Standard (outline) · suggested-action (default) · flat (ghost) · destructive-action
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    // --- Every variant -----------------------------------------------------------
+    #{h.$button} {
+      height: var(--sn-control-height);
+      padding-inline: var(--sn-control-padding-x);
+      border: 0;
+      border-radius: var(--sn-radius-control);
+      box-shadow: none;
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-control);
+      translate: none;
+      transition: background-color var(--sn-duration-fast) var(--sn-easing);
+    }
+
+    #{h.$button-small} {
+      height: var(--sn-control-height-small);
+      padding-inline: calc(var(--sn-control-padding-x) * 0.7);
+    }
+
+    #{h.$button-icon} {
+      width: var(--sn-control-height);
+      padding: 0;
+    }
+
+    // --- Standard button (variant="outline"): filled, no border ------------------
+    #{h.$button-outline} {
+      background: var(--sn-color-control);
+      color: var(--sn-color-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-control), var(--sn-color-fg) 6%);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-control), var(--sn-color-fg) 14%);
+      }
+    }
+
+    // --- suggested-action (variant="default") -------------------------------------
+    #{h.$button-primary} {
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary), #fff 10%);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-primary), #000 12%);
+      }
+    }
+
+    // --- Secondary (accent-tinted) --------------------------------------------------
+    #{h.$button-secondary} {
+      background: var(--sn-color-secondary);
+      color: var(--sn-color-secondary-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-secondary), var(--sn-color-fg) 6%);
+      }
+    }
+
+    // --- flat (variant="ghost") -----------------------------------------------------
+    #{h.$button-ghost} {
+      background: transparent;
+      color: var(--sn-color-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 7%, transparent);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-fg) 14%, transparent);
+      }
+    }
+
+    // --- destructive-action ---------------------------------------------------------
+    #{h.$button-destructive} {
+      background: var(--sn-color-danger);
+      color: var(--sn-color-danger-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-danger), #fff 10%);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-danger), #000 12%);
+      }
+    }
+
+    #{h.$button-link} {
+      color: var(--sn-color-accent-text);
+    }
+
+    #{h.$button-disabled} {
+      opacity: 0.5;
+    }
+  }
+}

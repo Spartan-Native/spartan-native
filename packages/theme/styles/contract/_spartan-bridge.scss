@@ -1,0 +1,53 @@
+// ============================================================================
+//  Bridge: Spartan Native tokens → spartan/ui (shadcn-style) variable names.
+//
+//  This is what makes STOCK spartan components follow the system accent and
+//  the platform neutrals, even before any skin restyles their shape.
+// ============================================================================
+
+@layer spartan-native.tokens {
+  :root,
+  [data-sn-skin] {
+    --background: var(--sn-color-bg);
+    --foreground: var(--sn-color-fg);
+
+    --card: var(--sn-color-surface-solid);
+    --card-foreground: var(--sn-color-fg);
+    --popover: var(--sn-color-surface-solid);
+    --popover-foreground: var(--sn-color-fg);
+
+    --primary: var(--sn-color-primary);
+    --primary-foreground: var(--sn-color-primary-fg);
+    --secondary: var(--sn-color-secondary);
+    --secondary-foreground: var(--sn-color-secondary-fg);
+    --muted: var(--sn-color-muted);
+    --muted-foreground: var(--sn-color-fg-muted);
+    --accent: var(--sn-color-hover);
+    --accent-foreground: var(--sn-color-fg);
+    --destructive: var(--sn-color-danger);
+
+    --border: var(--sn-color-border);
+    --input: var(--sn-color-border);
+    --ring: var(--sn-color-accent);
+
+    --chart-1: var(--sn-color-primary);
+    --chart-2: var(--sn-color-success);
+    --chart-3: var(--sn-color-warning);
+    --chart-4: var(--sn-color-danger);
+    --chart-5: var(--sn-color-accent-text);
+
+    --sidebar: var(--sn-color-sidebar);
+    --sidebar-foreground: var(--sn-color-fg);
+    --sidebar-primary: var(--sn-color-primary);
+    --sidebar-primary-foreground: var(--sn-color-primary-fg);
+    --sidebar-accent: var(--sn-selection-bg);
+    --sidebar-accent-foreground: var(--sn-selection-fg);
+    --sidebar-border: var(--sn-color-border);
+    --sidebar-ring: var(--sn-color-accent);
+
+    // spartan derives sm…4xl from --radius; cards use radius-xl (= radius × 1.4)
+    --radius: calc(var(--sn-radius-surface) / 1.4);
+    --font-sans: var(--sn-font-sans);
+    --font-mono: var(--sn-font-mono);
+  }
+}

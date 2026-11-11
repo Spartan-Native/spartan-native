@@ -1,0 +1,99 @@
+// ============================================================================
+//  Materials: classes for the app's own layout (window, sidebar, content).
+//
+//  Each class reads tokens that the skins set, so the same markup becomes
+//  Mica + acrylic on Windows 11, Liquid Glass on macOS 26 and flat Adwaita
+//  surfaces on GNOME.
+//
+//    <div class="sn-window">                 the app window
+//      <nav class="sn-sidebar">…</nav>       sidebar (Mica / glass / sidebar color)
+//      <main class="sn-content">…</main>     content (acrylic / clear / background)
+//    </div>
+// ============================================================================
+
+@layer spartan-native.base {
+  .sn-wall {
+    background: var(--sn-color-wall);
+  }
+
+  .sn-window {
+    background: var(--sn-window-bg);
+    color: var(--sn-color-fg);
+    border-radius: var(--sn-radius-window);
+    box-shadow: var(--sn-shadow-window);
+    overflow: hidden;
+  }
+
+  .sn-sidebar {
+    background: var(--sn-sidebar-bg);
+    -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+  }
+
+  .sn-content {
+    background: var(--sn-content-bg);
+    border: 1px solid var(--sn-content-border);
+  }
+
+  .sn-glass {
+    background: var(--sn-color-glass);
+    border: 1px solid var(--sn-color-glass-border);
+    box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), var(--sn-shadow-card);
+    -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+  }
+
+  .sn-acrylic {
+    background: var(--sn-color-acrylic);
+    -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+  }
+
+  // A list or sidebar item. Mark the current one with aria-current or aria-selected.
+  .sn-list-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+    min-height: var(--sn-list-item-height);
+    padding-inline: 0.75em;
+    border-radius: var(--sn-list-item-radius);
+    position: relative;
+    color: var(--sn-color-fg);
+    transition: background-color var(--sn-duration-fast) var(--sn-easing);
+
+    &:hover {
+      background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+    }
+
+    &:is([aria-current='page'], [aria-current='true'], [aria-selected='true']) {
+      background: var(--sn-selection-bg);
+      color: var(--sn-selection-fg);
+
+      // The Windows 11 selection pill; transparent on other skins.
+      &::before {
+        content: '';
+        position: absolute;
+        inset-inline-start: 0;
+        top: 50%;
+        width: 3px;
+        height: 1em;
+        translate: 0 -50%;
+        border-radius: 2px;
+        background: var(--sn-selection-indicator);
+      }
+    }
+  }
+
+  // Window chrome (title bar, header bar, toolbar): dims when the window is inactive.
+  .sn-chrome {
+    transition: color var(--sn-duration-fast) var(--sn-easing), opacity var(--sn-duration-fast) var(--sn-easing);
+  }
+
+  .sn-text-muted {
+    color: var(--sn-color-fg-muted);
+  }
+
+  .sn-text-accent {
+    color: var(--sn-color-accent-text);
+  }
+}

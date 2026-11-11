@@ -1,0 +1,4 @@
+/* Tailwind 4 + the spartan/ui preset. Tailwind finds the classes by scanning the workspace. */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@spartan-ng/brain/hlm-tailwind-preset.css';

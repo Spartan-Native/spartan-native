@@ -1,0 +1,62 @@
+// ============================================================================
+//  Windows 11 · CheckBox (hlm-checkbox) and RadioButton (hlm-radio)
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    // --- CheckBox -------------------------------------------------------------
+    #{h.$checkbox} {
+      width: var(--sn-check-size);
+      height: var(--sn-check-size);
+      border: 1px solid var(--sn-color-control-strong);
+      border-radius: var(--sn-check-radius);
+      background: var(--sn-color-surface);
+      box-shadow: none;
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-surface-solid), var(--sn-color-fg) 5%);
+      }
+
+      ng-icon {
+        font-size: calc(var(--sn-check-size) * 0.65);
+      }
+    }
+
+    #{h.$checkbox-on} {
+      background: var(--sn-color-primary);
+      border-color: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary) 90%, var(--sn-color-bg));
+      }
+    }
+
+    // --- RadioButton: an accent ring around a light dot ------------------------
+    #{h.$radio} {
+      width: var(--sn-check-size);
+      height: var(--sn-check-size);
+      border: 1px solid var(--sn-color-control-strong);
+      background: var(--sn-color-surface);
+      box-shadow: none;
+    }
+
+    #{h.$radio-dot} {
+      width: 0;
+      height: 0;
+      transition: width var(--sn-duration-fast) var(--sn-easing), height var(--sn-duration-fast) var(--sn-easing);
+    }
+
+    #{h.$radio-on} {
+      background: var(--sn-color-primary);
+      border-color: var(--sn-color-primary);
+    }
+
+    #{h.$radio-dot-on} {
+      width: 50%;
+      height: 50%;
+      background: var(--sn-color-primary-fg);
+    }
+  }
+}

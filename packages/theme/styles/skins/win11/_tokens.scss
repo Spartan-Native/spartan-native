@@ -1,0 +1,89 @@
+// ============================================================================
+//  Windows 11 · Fluent: tokens
+//  Only what differs from contract/_tokens.scss.
+// ============================================================================
+@use '../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    // Typography: Segoe UI Variable, 14px body
+    --sn-font-sans: 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+    --sn-font-mono: 'Cascadia Mono', Consolas, monospace;
+    --sn-font-size: #{px(14)};
+    --sn-font-size-small: #{px(12)};
+    --sn-font-size-title: #{px(28)};
+    --sn-line-height: 1.43;
+    --sn-font-weight-control: 400;
+    --sn-font-weight-strong: 600;
+
+    // Shape: 4px controls, 8px surfaces and overlays
+    --sn-radius-control: #{px(4)};
+    --sn-radius-surface: #{px(8)};
+    --sn-radius-overlay: #{px(8)};
+    --sn-radius-window: #{px(8)};
+
+    // Density: 32px controls
+    --sn-control-height: #{px(32)};
+    --sn-control-height-small: #{px(24)};
+    --sn-control-padding-x: #{px(12)};
+    --sn-input-height: #{px(32)};
+    --sn-input-padding-x: #{px(11)};
+    --sn-check-size: #{px(20)};
+    --sn-check-radius: #{px(4)};
+    --sn-switch-width: #{px(40)};
+    --sn-switch-height: #{px(20)};
+    --sn-switch-thumb-width: #{px(12)};
+    --sn-switch-thumb-height: #{px(12)};
+    --sn-switch-inset: #{px(3)};
+    --sn-switch-border: 1px;
+    --sn-progress-height: #{px(3)};
+    --sn-tab-height: #{px(32)};
+    --sn-card-padding: #{px(16)};
+    --sn-list-item-height: #{px(36)};
+    --sn-list-item-radius: #{px(4)};
+    --sn-slider-track-height: #{px(4)};
+    --sn-slider-thumb-width: #{px(20)};
+    --sn-slider-thumb-height: #{px(20)};
+
+    // Overlays: menus, dialogs, tooltips
+    --sn-menu-padding: #{px(4)};
+    --sn-menu-item-height: #{px(30)};
+    --sn-menu-item-padding-x: #{px(12)};
+    --sn-menu-item-radius: #{px(4)};
+    --sn-dialog-padding: #{px(24)};
+    --sn-dialog-width: #{px(440)};
+    --sn-tooltip-radius: #{px(4)};
+
+    // Selection: neutral fill + the accent pill
+    --sn-selection-bg: var(--sn-color-hover);
+    --sn-selection-fg: var(--sn-color-fg);
+    --sn-selection-indicator: var(--sn-color-primary);
+    --sn-row-height: #{px(32)};
+    --sn-row-selected-bg: var(--sn-color-hover);
+    --sn-row-selected-fg: var(--sn-color-fg);
+    --sn-row-selected-indicator: var(--sn-color-primary);
+    --sn-row-focus-ring: 2px solid var(--sn-color-fg);
+
+    // Materials: Mica window, acrylic content layer
+    --sn-material-blur: 30px;
+    --sn-material-saturate: 125%;
+    --sn-window-bg: var(--sn-color-wall);
+    --sn-sidebar-bg: transparent;
+    --sn-content-bg: var(--sn-color-acrylic);
+    --sn-content-border: var(--sn-color-stroke);
+
+    // Elevation: cards use a stroke, not a shadow
+    --sn-shadow-card: none;
+    --sn-shadow-overlay: 0 8px 16px rgb(0 0 0 / 0.14);
+    --sn-shadow-window: 0 0 0 1px var(--sn-color-stroke), 0 16px 40px rgb(0 0 0 / 0.22);
+
+    // Focus: the Fluent double ring (2px foreground outline)
+    --sn-focus-outline: 2px solid var(--sn-color-fg);
+    --sn-focus-offset: 1px;
+    --sn-focus-shadow: none;
+
+    // Motion: Fluent "fast" + decelerate
+    --sn-duration-fast: 83ms;
+    --sn-easing: cubic-bezier(0, 0, 0, 1);
+  }
+}

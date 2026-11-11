@@ -1,0 +1,33 @@
+// ============================================================================
+//  macOS 26 · Field (hlmField) and Separator (hlmSeparator)
+//  Grouped-form section headers, secondary-label captions, hairline separators.
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$field-legend} {
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    #{h.$field-description} {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+
+    #{h.$field-error} {
+      color: var(--sn-color-danger);
+      font-size: var(--sn-font-size-small);
+    }
+
+    // The skins restyle text-field borders, so they own the invalid state too
+    #{h.$text-field-invalid} {
+      border-color: var(--sn-color-danger);
+    }
+
+    #{h.$separator} {
+      background: color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
+    }
+  }
+}

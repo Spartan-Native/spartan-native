@@ -1,0 +1,13 @@
+// ============================================================================
+//  @spartan-native/helm: styles for the desktop behaviors
+//
+//  Load after the theme:
+//    @use '@spartan-native/theme/styles/spartan-native';
+//    @use '@spartan-native/helm/styles/spartan-native-helm';
+//
+//  No per-OS selectors here: everything reads the theme's tokens
+//  (--sn-row-*, --sn-list-item-*), so each skin decides the look.
+// ============================================================================
+
+// Everything sits in the `spartan-native.helm` layer, after the theme's layers.
+@use 'selectable';

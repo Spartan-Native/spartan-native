@@ -1,0 +1,69 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 2500,
+      "is_interactive": true,
+      "title": "Light vs dark per platform",
+      "w": 1440,
+      "x": -80,
+      "y": 0
+    },
+    "Patterns.dc.html": {
+      "expand": "fill",
+      "h": 2450,
+      "is_interactive": true,
+      "title": "OS patterns & counterparts",
+      "w": 1382,
+      "x": 1471,
+      "y": 0
+    },
+    "Project.dc.html": {
+      "expand": "fill",
+      "h": 7514,
+      "is_interactive": true,
+      "page": "project-page",
+      "title": "Spartan Native — project page",
+      "w": 1438,
+      "x": 0,
+      "y": 0
+    },
+    "SampleApp.dc.html": {
+      "expand": "fill",
+      "h": 1350,
+      "is_interactive": true,
+      "title": "Sample app — Harbor Backup",
+      "w": 1360,
+      "x": 2964,
+      "y": 0
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-11-08T12:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {},
+  "order": [
+    "Main.dc.html",
+    "SampleApp.dc.html",
+    "Patterns.dc.html",
+    "Project.dc.html"
+  ],
+  "pages": [
+    {
+      "id": "previews",
+      "name": "Previews"
+    },
+    {
+      "id": "project-page",
+      "name": "Project page"
+    }
+  ],
+  "title": "Spartan Native Theme — Wails"
+}

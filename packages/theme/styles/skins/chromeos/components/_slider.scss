@@ -1,0 +1,32 @@
+// ============================================================================
+//  ChromeOS · Slider: tonal track, round primary handle with a hover halo
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$slider-track} {
+      height: var(--sn-slider-track-height);
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-secondary);
+    }
+
+    #{h.$slider-range} {
+      background: var(--sn-color-primary);
+    }
+
+    #{h.$slider-thumb} {
+      width: var(--sn-slider-thumb-width);
+      height: var(--sn-slider-thumb-height);
+      border: 0;
+      border-radius: 50%;
+      background: var(--sn-color-primary);
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+      transition: box-shadow var(--sn-duration-fast) var(--sn-easing);
+
+      &:hover {
+        box-shadow: 0 0 0 10px color-mix(in srgb, var(--sn-color-primary) 12%, transparent);
+      }
+    }
+  }
+}

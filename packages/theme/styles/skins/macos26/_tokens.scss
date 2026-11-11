@@ -1,0 +1,92 @@
+// ============================================================================
+//  macOS 26 · Liquid Glass: tokens
+//  Only what differs from contract/_tokens.scss.
+// ============================================================================
+@use '../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    // Typography: SF Pro, 13px body
+    --sn-font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Inter, sans-serif;
+    --sn-font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+    --sn-font-size: #{px(13)};
+    --sn-font-size-small: #{px(11)};
+    --sn-font-size-title: #{px(22)};
+    --sn-line-height: 1.38;
+    --sn-font-weight-control: 500;
+    --sn-font-weight-strong: 600;
+
+    // Shape: capsule controls, large rounded glass surfaces
+    --sn-radius-control: var(--sn-radius-pill);
+    --sn-radius-input: #{px(8)};
+    --sn-radius-surface: #{px(20)};
+    --sn-radius-overlay: #{px(26)};
+    --sn-radius-window: #{px(18)};
+
+    // Density: 28px controls (regular size)
+    --sn-control-height: #{px(28)};
+    --sn-control-height-small: #{px(22)};
+    --sn-control-padding-x: #{px(14)};
+    --sn-input-height: #{px(28)};
+    --sn-input-padding-x: #{px(10)};
+    --sn-check-size: #{px(16)};
+    --sn-check-radius: #{px(5)};
+    --sn-switch-width: #{px(44)};
+    --sn-switch-height: #{px(24)};
+    --sn-switch-thumb-width: #{px(26)};
+    --sn-switch-thumb-height: #{px(20)};
+    --sn-switch-inset: #{px(2)};
+    --sn-switch-border: 0px;
+    --sn-progress-height: #{px(6)};
+    --sn-tab-height: #{px(24)};
+    --sn-card-padding: #{px(18)};
+    --sn-list-item-height: #{px(30)};
+    --sn-list-item-radius: #{px(8)};
+    --sn-slider-track-height: #{px(5)};
+    --sn-slider-thumb-width: #{px(26)};
+    --sn-slider-thumb-height: #{px(18)};
+
+    // Overlays: menus, dialogs, tooltips
+    --sn-menu-padding: #{px(5)};
+    --sn-menu-item-height: #{px(24)};
+    --sn-menu-item-padding-x: #{px(8)};
+    --sn-menu-item-radius: #{px(6)};
+    --sn-dialog-padding: #{px(20)};
+    --sn-dialog-width: #{px(340)};
+    --sn-tooltip-radius: #{px(6)};
+
+    // Selection: accent-tinted row, accent icon
+    --sn-selection-bg: var(--sn-color-secondary);
+    --sn-selection-fg: var(--sn-color-secondary-fg);
+    --sn-selection-indicator: transparent;
+    --sn-row-height: #{px(24)};
+    --sn-row-selected-bg: var(--sn-color-primary);                    // accent fill while the list has focus
+    --sn-row-selected-fg: var(--sn-color-primary-fg);
+    --sn-row-selected-bg-unfocused: color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
+    --sn-row-selected-fg-unfocused: var(--sn-color-fg);
+    --sn-row-selected-indicator: transparent;
+    --sn-row-focus-ring: 2px solid var(--sn-color-ring);
+
+    // Materials: wallpaper-tinted window, floating glass sidebar
+    --sn-material-blur: 22px;
+    --sn-material-saturate: 180%;
+    --sn-window-bg: var(--sn-color-wall);
+    --sn-sidebar-bg: var(--sn-color-glass);
+    --sn-content-bg: transparent;
+    --sn-content-border: transparent;
+
+    // Elevation: soft, large shadows
+    --sn-shadow-card: 0 6px 20px rgb(0 0 0 / 0.1);
+    --sn-shadow-overlay: 0 20px 50px rgb(0 0 0 / 0.25);
+    --sn-shadow-window: 0 22px 50px rgb(0 0 0 / 0.28), 0 0 0 1px rgb(0 0 0 / 0.1);
+
+    // Focus: the 3.5px accent halo
+    --sn-focus-outline: none;
+    --sn-focus-offset: 0px;
+    --sn-focus-shadow: 0 0 0 3.5px var(--sn-color-ring);
+
+    // Motion: AppKit-like ease
+    --sn-duration-fast: 200ms;
+    --sn-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+}

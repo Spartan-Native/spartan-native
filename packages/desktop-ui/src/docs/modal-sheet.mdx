@@ -1,0 +1,107 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/modal-sheet.stories';
+
+<Meta of={Stories} />
+
+# Modal sheet
+
+`<sn-modal-sheet>` is a modal form: a title, some fields and a Cancel / primary button pair. The content is the
+same on every OS, but the layout follows the platform: a sheet hanging from the title bar on macOS, a
+ContentDialog on Windows, an AdwDialog with the buttons in its header bar on GNOME. Use it for short tasks that
+block the window until they are done or cancelled, such as "New destination" or "Remove this destination?".
+For long or multi-step flows, use a page or a separate window instead.
+
+| OS | Renders as | Native control |
+| --- | --- | --- |
+| Windows 11 | Centered over a smoke backdrop, title top-left, buttons in a footer band, primary first, buttons share the width | ContentDialog |
+| Windows 10 | As Windows 11, square corners, no footer band | ContentDialog |
+| macOS 26 | Slides down from just under the window's title bar, no title bar of its own, buttons bottom-right with the default button rightmost; the window is not dimmed | NSWindow sheet |
+| macOS 13–15 | As macOS 26, flush with the title bar (square top corners) | NSWindow sheet |
+| GNOME | Header bar with Cancel at the start, the primary button at the end and the title centered; no footer | AdwDialog |
+| KDE | Framed window with a title strip, buttons bottom-right in KDE order (primary, then Cancel) | Window-modal QDialog |
+| ChromeOS | Large corners, headline, text-button actions at the bottom end | Material 3 dialog |
+
+An unknown OS (`web`) gets the GNOME layout.
+
+## Examples
+
+Open on load, inside a demo window. On macOS the sheet hangs from this window's title bar.
+
+<Canvas of={Stories.OpenOnLoad} />
+
+Opened by a button. Focus moves into the sheet and returns to the button when it closes.
+
+<Canvas of={Stories.OpenedByButton} />
+
+A destructive confirmation, with `role="alertdialog"` and a destructive primary button.
+
+<Canvas of={Stories.DestructiveConfirmation} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnModalSheet } from '@spartan-native/desktop-ui';
+import { HlmButtonImports } from '@spartan-ng/helm/button';`}
+/>
+
+<Source
+  language="html"
+  code={`<div class="sn-window" snSheetHost>
+  <sn-title-bar title="Harbor Backup" />
+  …
+  <sn-modal-sheet [(open)]="adding" title="New destination">
+    <label hlmLabel for="name">Name</label>
+    <input hlmInput id="name" />
+    <button hlmBtn variant="outline" snSheetCancel>Cancel</button>
+    <button hlmBtn snSheetPrimary (click)="create()">Create</button>
+  </sn-modal-sheet>
+</div>`}
+/>
+
+The sheet itself renders in a CDK overlay, so it can sit anywhere in the template. The primary button does
+not close the sheet: do your work, then set `open` to `false`.
+
+## API
+
+### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | `boolean` (model, two-way) | `false` | Whether the sheet is shown. Set back to `false` by Esc and the Cancel button. |
+| `title` | `string` | required | The heading; also the dialog's accessible name. |
+| `role` | `'dialog' \| 'alertdialog'` | `'dialog'` | Use `alertdialog` for confirmations. |
+
+### Outputs
+
+| Name | Payload | Description |
+| --- | --- | --- |
+| `openChange` | `boolean` | Emitted when the sheet closes itself (Esc, Cancel). Part of `[(open)]`. |
+
+### Content
+
+| Selector | Description |
+| --- | --- |
+| (default) | The form. Laid out as a column with a gap. |
+| `[snSheetCancel]` | The Cancel button. A click closes the sheet. |
+| `[snSheetPrimary]` | The primary (default) button. Placed rightmost on macOS, GNOME and ChromeOS, first on Windows and KDE. |
+| `[snSheetHost]` on an ancestor | The window frame the macOS sheet hangs from (below its `sn-title-bar`, or its top edge). Without one, the sheet hangs from the top of the viewport. Plain attribute, nothing to import. |
+
+### CSS hooks
+
+| Hook | Where |
+| --- | --- |
+| `data-slot="sn-modal-sheet"` | The host element (renders nothing itself). |
+| `data-slot="sn-modal-sheet-panel"` | The visible panel, inside the overlay. Carries `data-family` and `data-skin`. |
+| `data-family` | `windows`, `macos`, `linux`, `chromeos`, `web`, on the host and the panel. |
+| `data-skin` | `win`, `w10`, `mac`, `macc`, `gtk`, `qt`, `cros`, `web`, on the host and the panel. |
+| `.sn-modal-sheet-pane` | The CDK overlay pane. |
+
+## Accessibility
+
+- The panel has `role="dialog"` (or `alertdialog`), `aria-modal="true"` and `aria-labelledby` pointing at the title.
+- Opening moves focus to the first focusable element in the sheet; focus is trapped inside while it is open and
+  returns to the element that opened it when it closes.
+- Esc and the Cancel button close the sheet. A click outside does nothing, as with the native dialogs.
+- The rest of the page is hidden from assistive technology while the sheet is open (CDK dialog).
+- On GNOME the buttons come after the form in tab order, although they are drawn in the header bar.

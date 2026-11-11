@@ -1,0 +1,4 @@
+// The Spartan Native theme, resolved by package name like any consumer would,
+// then this package's own styles.
+@use '@spartan-native/theme/styles/spartan-native';
+@use '../styles/spartan-native-helm';

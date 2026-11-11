@@ -1,0 +1,17 @@
+// ============================================================================
+//  GNOME · Badge (hlmBadge): pill, bold
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$badge} {
+      height: px(22);
+      padding-inline: px(9);
+      border-radius: var(--sn-radius-pill);
+      font-size: var(--sn-font-size-small);
+      font-weight: var(--sn-font-weight-strong);
+    }
+  }
+}

@@ -1,0 +1,19 @@
+// ============================================================================
+//  ChromeOS · Progress: M3 linear indicator
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$progress} {
+      height: var(--sn-progress-height);
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-secondary);
+    }
+
+    #{h.$progress-bar} {
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-primary);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+import { applicationConfig, type Preview } from '@storybook/angular';
+import { spartanNativePreview } from '@spartan-native/theme/storybook';
+import { provideSpartanHlm } from '@spartan-ng/helm/utils';
+
+// The Spartan Native toolbar (OS, transparency, light/dark, accent) from the theme package.
+const spartanNative = spartanNativePreview({ windowFocus: true });
+
+export default {
+  ...spartanNative,
+  decorators: [applicationConfig({ providers: [provideSpartanHlm()] }), ...(spartanNative.decorators as [])],
+} satisfies Preview;

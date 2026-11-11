@@ -1,0 +1,61 @@
+// ============================================================================
+//  macOS 26 · Dialogs (hlm-dialog) and alerts (hlm-alert-dialog)
+//  A frosted panel with large corners. Alerts are narrow and centered,
+//  with full-width capsule buttons side by side.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$backdrop} {
+      background: var(--sn-color-scrim);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    :is(#{h.$dialog}) {
+      gap: #{px(14)};
+      padding: var(--sn-dialog-padding);
+      border: 1px solid var(--sn-color-glass-border);
+      border-radius: var(--sn-radius-overlay);
+      background: var(--sn-color-acrylic);
+      box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), var(--sn-shadow-overlay);
+      color: var(--sn-color-fg);
+      -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+      backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    }
+
+    :is(#{h.$dialog-title}) {
+      font-size: calc(var(--sn-font-size) * 1.08);
+      font-weight: 700;
+    }
+
+    :is(#{h.$dialog-description}) {
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size-small);
+    }
+
+    // --- Alerts: narrow, centered ------------------------------------------
+    #{h.$alert-dialog} {
+      width: min(var(--sn-dialog-width), calc(100vw - 2rem));
+      max-width: none;
+      text-align: center;
+
+      :is(#{h.$dialog-header}) {
+        place-items: center;
+        text-align: center;
+      }
+
+      :is(#{h.$dialog-footer}) {
+        display: flex;
+        flex-direction: row;
+        gap: #{px(8)};
+      }
+
+      #{h.$dialog-footer-button} {
+        flex: 1;
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+// ============================================================================
+//  KDE Plasma · Switch: a slim track with a framed knob
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$switch} {
+      width: var(--sn-switch-width);
+      height: var(--sn-switch-height);
+      padding-inline: var(--sn-switch-inset);
+      border: 0;
+      border-radius: var(--sn-radius-pill);
+      background: color-mix(in srgb, var(--sn-color-fg) 20%, var(--sn-color-surface-solid));
+      box-shadow: none;
+    }
+
+    #{h.$switch-on} {
+      background: var(--sn-color-primary);
+    }
+
+    #{h.$switch-thumb} {
+      box-sizing: border-box;
+      width: var(--sn-switch-thumb-width);
+      height: var(--sn-switch-thumb-height);
+      border: 1px solid var(--sn-color-control-strong);
+      background: var(--sn-color-control);
+      translate: 0 0;
+      transition: translate var(--sn-duration-fast) var(--sn-easing);
+    }
+
+    #{h.$switch-thumb-on} {
+      border-color: var(--sn-color-primary);
+      background: var(--sn-color-control);
+      translate: calc(var(--sn-switch-width) - var(--sn-switch-thumb-width) - 2 * var(--sn-switch-inset)) 0;
+    }
+
+    #{h.$switch}:hover #{h.$switch-thumb} {
+      border-color: var(--sn-color-primary);
+    }
+  }
+}

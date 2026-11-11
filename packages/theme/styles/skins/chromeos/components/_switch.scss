@@ -1,0 +1,44 @@
+// ============================================================================
+//  ChromeOS · Switch: M3. Outlined track with a 16px handle that grows to 24px when on.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$switch} {
+      width: var(--sn-switch-width);
+      height: var(--sn-switch-height);
+      padding-inline: var(--sn-switch-inset);
+      border: var(--sn-switch-border) solid var(--sn-color-border);
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-track);
+      box-shadow: none;
+    }
+
+    #{h.$switch-on} {
+      border-color: var(--sn-color-primary);
+      background: var(--sn-color-primary);
+    }
+
+    #{h.$switch-thumb} {
+      width: var(--sn-switch-thumb-width);
+      height: var(--sn-switch-thumb-height);
+      background: var(--sn-color-border);
+      translate: 0 0;
+      transition: translate var(--sn-duration-fast) var(--sn-easing), width var(--sn-duration-fast) var(--sn-easing),
+        height var(--sn-duration-fast) var(--sn-easing);
+    }
+
+    // On: 24px handle, 4px from the track's outer edge
+    #{h.$switch-thumb-on} {
+      width: px(24);
+      height: px(24);
+      background: var(--sn-color-primary-fg);
+      translate: calc(
+          var(--sn-switch-width) - #{px(24)} - #{px(4)} - var(--sn-switch-border) - var(--sn-switch-inset)
+        )
+        0;
+    }
+  }
+}

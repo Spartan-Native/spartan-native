@@ -1,0 +1,105 @@
+// ============================================================================
+//  macOS 13–15 · component overrides on top of macos26
+//  Opaque push buttons with a hairline, no glass on controls.
+// ============================================================================
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+$hairline: 0 0 0 0.5px color-mix(in srgb, var(--sn-color-fg) 18%, transparent), 0 1px 1px rgb(0 0 0 / 0.12);
+
+@layer spartan-native.skins {
+  .t-mac.t-macc {
+    // --- Buttons --------------------------------------------------------------
+    #{h.$button} {
+      font-weight: 400;
+    }
+
+    #{h.$button-outline},
+    #{h.$select-trigger} {
+      border-color: transparent;
+      background: var(--sn-color-surface-solid);
+      box-shadow: $hairline;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    &.dark :is(#{h.$button-outline}, #{h.$select-trigger}) {
+      background: color-mix(in srgb, var(--sn-color-fg) 16%, var(--sn-color-bg));
+    }
+
+    // Default button: no glow, just a faint top highlight
+    #{h.$button-primary} {
+      box-shadow: 0 1px 1px rgb(0 0 0 / 0.18), inset 0 0.5px 0 rgb(255 255 255 / 0.25);
+    }
+
+    #{h.$button-secondary} {
+      box-shadow: none;
+    }
+
+    // --- Text fields ------------------------------------------------------------------
+    #{h.$input},
+    #{h.$textarea} {
+      border-color: transparent;
+      box-shadow: 0 0 0 0.5px color-mix(in srgb, var(--sn-color-fg) 25%, transparent);
+
+      &:focus-visible,
+      &:focus {
+        border-color: transparent;
+        box-shadow: var(--sn-focus-shadow);
+      }
+    }
+
+    #{h.$select-trigger} {
+      padding-inline: #{px(8)} #{px(4)};
+      font-weight: 400;
+    }
+
+    // The outline is a shadow here, so the invalid state must be one too
+    #{h.$text-field-invalid} {
+      box-shadow: 0 0 0 1px var(--sn-color-danger);
+    }
+
+    // --- Checkbox and radio ---------------------------------------------------------
+    #{h.$checkbox},
+    #{h.$radio} {
+      border-color: transparent;
+      box-shadow: 0 0 0 0.5px color-mix(in srgb, var(--sn-color-fg) 30%, transparent);
+    }
+
+    #{h.$checkbox-on},
+    #{h.$radio-on} {
+      box-shadow: none;
+    }
+
+    // --- Slider: a round knob ---------------------------------------------------------
+    #{h.$slider-thumb} {
+      border-radius: 50%;
+    }
+
+    // --- Segmented control ----------------------------------------------------------
+    #{h.$tabs-list} {
+      padding: 2px;
+      border-radius: #{px(7)};
+    }
+
+    #{h.$tab} {
+      padding-inline: #{px(10)};
+      border-radius: #{px(5)};
+      font-weight: 400;
+    }
+
+    // --- Menus: tighter corners than the token-driven glass panel ---------------------
+    #{h.$menu} {
+      border-color: transparent;
+      border-radius: #{px(6)};
+      background: var(--sn-color-glass);
+      box-shadow: var(--sn-shadow-overlay);
+    }
+
+    // --- Alerts and tables ------------------------------------------------------------
+    #{h.$alert} {
+      border-radius: #{px(10)};
+      box-shadow: var(--sn-shadow-card);
+    }
+  }
+}

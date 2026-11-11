@@ -1,0 +1,49 @@
+// ============================================================================
+//  ChromeOS · Text fields: M3 outlined text field and select
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$input},
+    #{h.$textarea},
+    #{h.$select-trigger} {
+      height: var(--sn-input-height);
+      padding-inline: var(--sn-input-padding-x);
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-input);
+      background: transparent;
+      box-shadow: none;
+      font-size: var(--sn-font-size);
+
+      &::placeholder {
+        color: var(--sn-color-fg-muted);
+      }
+
+      &:hover {
+        border-color: var(--sn-color-fg);
+      }
+    }
+
+    // Focus: a 2px primary outline, drawn inside so the text doesn't move
+    #{h.$input},
+    #{h.$textarea} {
+      &:focus-visible,
+      &:focus {
+        outline: none;
+        border-color: var(--sn-color-primary);
+        box-shadow: inset 0 0 0 1px var(--sn-color-primary);
+      }
+    }
+
+    #{h.$textarea} {
+      height: auto;
+      padding-block: 0.6em;
+    }
+
+    #{h.$label} {
+      font-size: var(--sn-font-size);
+      font-weight: 500;
+    }
+  }
+}

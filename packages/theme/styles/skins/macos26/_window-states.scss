@@ -1,0 +1,40 @@
+// ============================================================================
+//  macOS 26 · Focus and window states
+// ============================================================================
+@use '../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-mac {
+    // Focus: the accent halo
+    :is(#{h.$focusable}):focus-visible {
+      outline: none;
+      box-shadow: var(--sn-focus-shadow);
+    }
+  }
+
+  // Inactive window: controls lose the accent and turn grey, like AppKit
+  .t-mac.inactive {
+    --sn-selection-bg: color-mix(in srgb, var(--sn-color-fg) 14%, transparent);
+    --sn-selection-fg: var(--sn-color-fg);
+    --sn-row-selected-bg: var(--sn-row-selected-bg-unfocused);
+    --sn-row-selected-fg: var(--sn-row-selected-fg-unfocused);
+
+    #{h.$button-primary} {
+      background: var(--sn-color-glass);
+      color: var(--sn-color-fg);
+      box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight);
+    }
+
+    #{h.$checkbox-on},
+    #{h.$radio-on},
+    #{h.$switch-on},
+    #{h.$progress-bar},
+    #{h.$slider-range} {
+      background: color-mix(in srgb, var(--sn-color-fg) 35%, var(--sn-color-bg));
+    }
+
+    .sn-chrome {
+      color: var(--sn-color-fg-muted);
+    }
+  }
+}

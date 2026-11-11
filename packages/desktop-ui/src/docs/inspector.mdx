@@ -1,0 +1,119 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/inspector.stories';
+
+<Meta of={Stories} />
+
+# Inspector
+
+`<sn-inspector>` is a detail side panel on the trailing side of a view: it shows the properties of the selected
+item (name, kind, size, modified date) and a few controls for it. `<sn-inspector-layout>` puts it beside the main
+content, and on narrow widths lets it float over the content instead of squeezing it. Use it when users pick
+items in a list and want to see or change their details without leaving the list. For a separate task, use a
+dialog or a page.
+
+| OS | Renders as | Look |
+| --- | --- | --- |
+| Windows 11 | SplitView pane | Solid pane with a stroke divider, large title, small labels above values |
+| Windows 10 | SplitView pane | As Windows 11, square |
+| macOS 26 | Inspector (native) | Floating Liquid Glass column, section headers with separators, right-aligned `Kind:` labels |
+| macOS 13–15 | Inspector (native) | Full-height vibrancy column with a hairline divider, otherwise as macOS 26 |
+| GNOME | AdwOverlaySplitView sidebar | Sidebar color, header-bar title centered, bold group titles; overlays the content on narrow widths |
+| KDE Plasma | Dolphin information panel | Big preview icon on top, the name centered, then `Label:` / value rows |
+| ChromeOS | Material 3 side sheet | Headline with a close button; becomes a modal sheet with rounded leading corners on narrow widths |
+
+<Canvas of={Stories.Default} />
+
+Click into the list and use ↑ ↓ Home End, or type the start of a name: the inspector follows the selection.
+The ⓘ button toggles the panel.
+
+<Canvas of={Stories.Narrow} />
+
+<Canvas of={Stories.InWindow} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnInspectorImports } from '@spartan-native/desktop-ui';
+import { SnSelectableImports } from '@spartan-native/helm';
+import { HlmButtonImports } from '@spartan-ng/helm/button';
+import { HlmSwitchImports } from '@spartan-ng/helm/switch';
+
+@Component({
+  imports: [SnInspectorImports, SnSelectableImports, HlmButtonImports, HlmSwitchImports],
+  …
+})`}
+/>
+
+<Source
+  language="html"
+  code={`<sn-inspector-layout>
+  <div snSelectable [multiple]="false" [(selection)]="selection" aria-label="Files">
+    @for (f of files; track f.id) {
+      <div snSelectableItem [value]="f.id">{{ f.name }}</div>
+    }
+  </div>
+
+  <sn-inspector [(open)]="infoOpen" [title]="file().name" icon="lucideFileText">
+    <sn-inspector-section title="General">
+      <sn-inspector-property label="Kind">PDF document</sn-inspector-property>
+      <sn-inspector-property label="Size">2.4 MB</sn-inspector-property>
+      <sn-inspector-property label="Modified">Today, 09:12</sn-inspector-property>
+    </sn-inspector-section>
+    <sn-inspector-section title="Backup">
+      <hlm-switch aria-label="Keep offline" [checked]="true" />
+      <button hlmBtn variant="outline" size="sm">Show versions</button>
+    </sn-inspector-section>
+  </sn-inspector>
+</sn-inspector-layout>`}
+/>
+
+Give the layout a height (it fills its flex parent). The panel goes in the layout's trailing slot;
+everything else is the main content, which scrolls on its own.
+
+## API
+
+### `sn-inspector-layout`
+
+No inputs. Content: the main view, plus one `sn-inspector` (selected by element name). It is an inline-size
+container named `sn-inspector-layout`; below 40rem the inspector overlays the content.
+
+### `sn-inspector` inputs and outputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` (required) | | Heading, usually the selected item's name; also the panel's accessible name. |
+| `icon` | `string` | `''` | Preview icon (an @ng-icons name registered with `provideIcons()`): large on top on KDE, beside the title elsewhere. |
+| `open` | `boolean` (model) | `true` | Shown or hidden; two-way bindable as `[(open)]`. The ChromeOS close button sets it to `false` (`openChange`). |
+
+Content: `sn-inspector-section`s, or anything.
+
+### `sn-inspector-section` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | `''` | Section header; also the group's accessible name. |
+
+### `sn-inspector-property` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` (required) | | The property name; the content is the value. |
+
+### CSS hooks
+
+| Hook | Where |
+| --- | --- |
+| `data-slot="sn-inspector-layout"`, `"sn-inspector"`, `"sn-inspector-section"`, `"sn-inspector-property"` | The hosts |
+| `data-family`, `data-skin` | Every host: the OS family and skin being drawn |
+| `hidden` | The panel while `open` is false |
+| `.main` (layout), `header`, `.preview`, `.body`, `.close` (panel), `.label`, `.value` (property) | Parts |
+
+## Accessibility
+
+- The panel is a `complementary` landmark labelled by its heading (`h2`); sections are `role="group"` labelled
+  by their `h3`.
+- While closed it is `hidden`, so it leaves the tab order and the accessibility tree.
+- The ChromeOS close button is a real button labelled "Close". Focus is not moved: a docked panel is part of the
+  page, not a dialog. Toggle it from a button with `aria-pressed`, as the demo does.
+- Keyboard navigation in the list comes from `snSelectable`: ↑ ↓ Home End PageUp PageDown, type-ahead, Esc clears.

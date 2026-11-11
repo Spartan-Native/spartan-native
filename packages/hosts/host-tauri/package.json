@@ -1,0 +1,21 @@
+{
+  "name": "@spartan-native/host-tauri",
+  "version": "0.0.0",
+  "description": "NativeHost adapter for Rust + Tauri v2 (TS side; Rust plugin crate lives in native/).",
+  "keywords": [
+    "angular",
+    "spartan-ng",
+    "native",
+    "desktop",
+    "theme"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^22.2.0",
+    "@angular/core": "^22.2.0",
+    "@spartan-native/theme": "0.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

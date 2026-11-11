@@ -1,0 +1,16 @@
+// ============================================================================
+//  GNOME · Card (hlm-card): the Adwaita `.card` / boxed list surface
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$card} {
+      --card-spacing: var(--sn-card-padding);
+      background: var(--sn-color-surface-solid);
+      border: 0;
+      border-radius: var(--sn-radius-surface);
+      box-shadow: var(--sn-shadow-card);
+    }
+  }
+}

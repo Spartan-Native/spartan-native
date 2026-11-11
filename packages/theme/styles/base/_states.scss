@@ -1,0 +1,53 @@
+// ============================================================================
+//  Cross-skin states, toggled by classes on the skin root:
+//    .rt             reduce transparency (OS accessibility setting)
+//    .hc             more / forced contrast
+//    .reduce-motion  reduce motion
+//  The inactive-window look is per skin (skins/*/_window-states.scss).
+// ============================================================================
+
+@use '../hooks' as h;
+
+@layer spartan-native.states {
+  // Reduce transparency: no blur anywhere. The palette is already solid
+  // (derivePalette() with reduceTransparency); this removes the filters.
+  .rt {
+    --sn-material-blur: 0px;
+    --sn-material-saturate: 100%;
+  }
+
+  .rt,
+  .rt * {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  // More contrast: hairlines become real borders.
+  // (Element rules, not color tokens: the runtime writes --sn-color-* inline on the root.)
+  .hc {
+    --sn-content-border: var(--sn-color-border);
+  }
+
+  // An inset outline, not border-color: it also frames borderless controls
+  // (Adwaita buttons and entries), follows the radius, and doesn't move layout.
+  // Focused controls keep their platform focus ring instead.
+  // Hooks, not raw data-slots: trigger buttons (hlmDialogTrigger, …) have no data-slot="button".
+  .hc :is(#{h.$button}, #{h.$text-field}, #{h.$select-trigger}, #{h.$card}, #{h.$checkbox}, #{h.$radio}, #{h.$switch}, #{h.$table-container}, #{h.$alert}):not(#{h.$button-link}, #{h.$text-field-invalid}, :focus-visible) {
+    outline: 1px solid var(--sn-color-fg-muted);
+    outline-offset: -1px;
+  }
+
+  // Windows contrast themes: system colors take over.
+  @media (forced-colors: active) {
+    [data-sn-skin] :is(#{h.$button}, #{h.$checkbox}, #{h.$switch}, #{h.$text-field}, #{h.$select-trigger}) {
+      border: 1px solid ButtonText;
+      forced-color-adjust: auto;
+    }
+  }
+
+  .reduce-motion,
+  .reduce-motion * {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+}

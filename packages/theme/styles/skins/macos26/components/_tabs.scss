@@ -1,0 +1,46 @@
+// ============================================================================
+//  macOS 26 · Tabs (hlm-tabs) as a segmented control: a capsule with a raised segment
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$tabs-list} {
+      height: auto;
+      padding: #{px(3)};
+      gap: 2px;
+      border-radius: var(--sn-radius-pill);
+      background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+    }
+
+    #{h.$tab} {
+      height: var(--sn-tab-height);
+      padding-inline: #{px(14)};
+      border: 0;
+      border-radius: var(--sn-radius-pill);
+      background: transparent;
+      box-shadow: none;
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-control);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+
+    #{h.$tab-active} {
+      background: var(--sn-color-segment-on);
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.14);
+
+      &:hover {
+        background: var(--sn-color-segment-on);
+      }
+    }
+  }
+}

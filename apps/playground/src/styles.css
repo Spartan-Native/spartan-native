@@ -1,0 +1,5 @@
+/* Global styles: Tailwind 4 + the spartan/ui preset.
+   The Spartan Native theme is the next entry in angular.json "styles" (theme.scss). */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@spartan-ng/brain/hlm-tailwind-preset.css';

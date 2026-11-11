@@ -1,0 +1,18 @@
+// ============================================================================
+//  macOS 26 · Card (hlm-card): a Liquid Glass panel
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$card} {
+      --card-spacing: var(--sn-card-padding);
+      background: var(--sn-color-glass);
+      border: 1px solid var(--sn-color-glass-border);
+      border-radius: var(--sn-radius-surface);
+      box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), var(--sn-shadow-card);
+      -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+      backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    }
+  }
+}

@@ -1,0 +1,16 @@
+// ============================================================================
+//  Windows 11 · Card (hlm-card): a SettingsCard-style surface with a hairline stroke
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$card} {
+      --card-spacing: var(--sn-card-padding);
+      background: var(--sn-color-surface);
+      border: 1px solid var(--sn-color-stroke);
+      border-radius: var(--sn-radius-surface);
+      box-shadow: var(--sn-shadow-card);
+    }
+  }
+}

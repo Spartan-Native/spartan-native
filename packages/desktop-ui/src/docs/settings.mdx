@@ -1,0 +1,112 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/settings.stories';
+
+<Meta of={Stories} />
+
+# Settings list
+
+`<sn-settings-group>` and `<sn-settings-row>` build a settings page: a group has a title and an optional
+description, each row has a title, an optional subtitle, an optional icon and its control (a switch, a select, a
+button). Use them for preferences pages and for any list of named options with one control each. The same markup
+becomes each OS's own settings layout.
+
+| OS | Renders as | Native control |
+| --- | --- | --- |
+| Windows 11 | Section title, then each row as its own card with the icon, text and control | SettingsCard |
+| Windows 10 | A light, larger section heading; each row is plain text with the control below it, no icons | Windows 10 Settings page |
+| macOS 26 | Small header, rows in an inset rounded glass list with inset hairlines | Grouped Form section |
+| macOS 13–15 | As macOS 26 with the classic corner radius and vibrancy, no glass highlight | Grouped Form section |
+| GNOME | Bold title, rows in one boxed list with separators | AdwPreferencesGroup + AdwActionRow |
+| KDE | Section title centered over a two-column form: "Label:" right-aligned on the left, control on the right, subtitle under the control as help text; no icons | Kirigami FormLayout |
+| ChromeOS | Header above a tonal card; rows are Material list items with separators | ChromeOS Settings list |
+
+An unknown OS (`web`) gets the GNOME look.
+
+## Examples
+
+The Harbor "Backups" group: a switch row, a select row and a navigation row.
+
+<Canvas of={Stories.Default} />
+
+Switch rows.
+
+<Canvas of={Stories.SwitchRows} />
+
+A select row.
+
+<Canvas of={Stories.SelectRow} />
+
+A navigation row, which opens a sub-page.
+
+<Canvas of={Stories.NavigationRow} />
+
+Several groups.
+
+<Canvas of={Stories.MultipleGroups} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnSettingsGroup, SnSettingsRow } from '@spartan-native/desktop-ui';
+// or SnSettingsImports = [SnSettingsGroup, SnSettingsRow]
+import { HlmSwitchImports } from '@spartan-ng/helm/switch';`}
+/>
+
+<Source
+  language="html"
+  code={`<sn-settings-group title="Backups" description="Choose when and how backups run.">
+  <sn-settings-row title="Automatic backups" subtitle="Run in the background">
+    <ng-icon snSettingsIcon name="lucideClock" />
+    <hlm-switch [checked]="true" aria-label="Automatic backups" />
+  </sn-settings-row>
+  <sn-settings-row title="Excluded folders" subtitle="3 folders">
+    <button hlmBtn variant="ghost" size="icon-sm" aria-label="Edit excluded folders">
+      <ng-icon name="lucideChevronRight" />
+    </button>
+  </sn-settings-row>
+</sn-settings-group>`}
+/>
+
+## API
+
+### `<sn-settings-group>` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | `''` | The group heading. Labels the group. Leave empty for a group without a header. |
+| `description` | `string` | `''` | A line of explanation under the heading. |
+
+### `<sn-settings-row>` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | required | The setting's name (KDE: the FormLayout label, with a colon). |
+| `subtitle` | `string` | `''` | A second line (KDE: help text under the control). |
+
+Neither has outputs: the controls you put in the rows have their own.
+
+### Content slots
+
+| Component | Selector | Content |
+| --- | --- | --- |
+| `<sn-settings-group>` | (default) | `<sn-settings-row>` elements. |
+| `<sn-settings-row>` | `[snSettingsIcon]` | An icon before the text. Hidden on Windows 10 and KDE. |
+| `<sn-settings-row>` | (default) | The control(s), on the trailing side (Windows 10: below the text; KDE: in the control column). |
+
+### CSS hooks
+
+| Hook | Meaning |
+| --- | --- |
+| `data-slot="sn-settings-group"`, `data-slot="sn-settings-row"` | The hosts. |
+| `data-family`, `data-skin` | The OS family and skin they are drawn for. |
+
+On KDE the group's row container is a two-column grid and each row joins it as a CSS subgrid.
+
+## Accessibility
+
+- The group has `role="group"`, labelled by its heading (an `<h2>`) when it has a title.
+- Rows add no roles of their own; the control carries the semantics. Give each control an accessible name that
+  matches the row title (`aria-label="Automatic backups"`), since the row text is not linked to it.
+- For navigation rows use a real button or link with a label saying where it goes.
+- Keyboard and focus are those of the controls; rows are not focusable themselves.

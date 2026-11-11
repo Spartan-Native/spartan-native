@@ -1,0 +1,57 @@
+// ============================================================================
+//  GNOME · Check button (hlm-checkbox) and radio (hlm-radio): 20px, 2px inner ring
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    // --- Check button ---------------------------------------------------------------
+    #{h.$checkbox} {
+      width: var(--sn-check-size);
+      height: var(--sn-check-size);
+      border: 0;
+      border-radius: var(--sn-check-radius);
+      background: transparent;
+      box-shadow: inset 0 0 0 2px var(--sn-color-control-strong);
+
+      &:hover {
+        box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--sn-color-control-strong), var(--sn-color-fg) 20%);
+      }
+
+      ng-icon {
+        font-size: calc(var(--sn-check-size) * 0.7);
+      }
+    }
+
+    #{h.$checkbox-on} {
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+      box-shadow: none;
+
+      &:hover {
+        box-shadow: none;
+        background: color-mix(in srgb, var(--sn-color-primary), #fff 10%);
+      }
+    }
+
+    // --- Radio -------------------------------------------------------------------------
+    #{h.$radio} {
+      width: var(--sn-check-size);
+      height: var(--sn-check-size);
+      border: 0;
+      background: transparent;
+      box-shadow: inset 0 0 0 2px var(--sn-color-control-strong);
+    }
+
+    #{h.$radio-on} {
+      background: var(--sn-color-primary);
+      box-shadow: none;
+    }
+
+    #{h.$radio-dot-on} {
+      width: 40%;
+      height: 40%;
+      background: var(--sn-color-primary-fg);
+    }
+  }
+}

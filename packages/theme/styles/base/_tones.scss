@@ -1,0 +1,43 @@
+// ============================================================================
+//  Tones: semantic colors spartan has no variant for.
+//
+//    <span hlmBadge class="sn-tone-success">Completed</span>
+//    <span hlmBadge class="sn-tone-warning">Warning</span>
+//    <span hlmBadge class="sn-tone-danger">Failed</span>
+// ============================================================================
+
+@use '../hooks' as h;
+
+@layer spartan-native.base {
+  .sn-tone-success {
+    background: var(--sn-color-success);
+    color: var(--sn-color-success-fg);
+    border-color: transparent;
+  }
+
+  .sn-tone-warning {
+    background: var(--sn-color-warning);
+    color: var(--sn-color-warning-fg);
+    border-color: transparent;
+  }
+
+  .sn-tone-danger {
+    background: var(--sn-color-danger);
+    color: var(--sn-color-danger-fg);
+    border-color: transparent;
+  }
+
+  .sn-tone-accent {
+    background: var(--sn-color-secondary);
+    color: var(--sn-color-secondary-fg);
+    border-color: transparent;
+  }
+
+  // Alerts take a tone as a tint, not a fill: each skin mixes --sn-alert-tone
+  // into its own surface (<div hlmAlert class="sn-tone-warning">).
+  #{h.$alert-destructive},
+  #{h.$alert}.sn-tone-danger { --sn-alert-tone: var(--sn-color-danger); }
+  #{h.$alert}.sn-tone-success { --sn-alert-tone: var(--sn-color-success); }
+  #{h.$alert}.sn-tone-warning { --sn-alert-tone: var(--sn-color-warning); }
+  #{h.$alert}.sn-tone-accent { --sn-alert-tone: var(--sn-color-primary); }
+}

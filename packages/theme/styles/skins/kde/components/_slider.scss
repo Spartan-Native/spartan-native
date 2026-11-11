@@ -1,0 +1,31 @@
+// ============================================================================
+//  KDE Plasma · Slider: 6px groove, round framed handle
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$slider-track} {
+      height: var(--sn-slider-track-height);
+      border-radius: var(--sn-radius-pill);
+      background: color-mix(in srgb, var(--sn-color-fg) 18%, var(--sn-color-surface-solid));
+    }
+
+    #{h.$slider-range} {
+      background: var(--sn-color-primary);
+    }
+
+    #{h.$slider-thumb} {
+      width: var(--sn-slider-thumb-width);
+      height: var(--sn-slider-thumb-height);
+      border: 1px solid var(--sn-color-control-strong);
+      border-radius: 50%;
+      background: var(--sn-color-control);
+      box-shadow: none;
+
+      &:hover {
+        border-color: var(--sn-color-primary);
+      }
+    }
+  }
+}

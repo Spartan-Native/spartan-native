@@ -1,0 +1,386 @@
+// Coach mark per OS family. The host itself is moved into the overlay pane while open.
+//
+// Local knobs, set per OS below:
+//   --bg, --border (color), --radius, --shadow, --material (backdrop-filter), --pad,
+//   --beak (square side), --gap (to the anchor)
+
+:host {
+  --bg: var(--sn-color-surface-solid);
+  --border: var(--sn-color-border);
+  --radius: var(--sn-radius-overlay);
+  --shadow: var(--sn-shadow-overlay);
+  --material: none;
+  --pad: 0.75rem;
+  --beak: 0.75rem;
+  --gap: 0.25rem;
+  // The beak stays clear of the rounded corners.
+  --beak-min: calc(var(--radius) + var(--beak) * 0.75);
+
+  display: none; // until attached to the overlay
+  position: relative;
+  box-sizing: border-box;
+  inline-size: 20rem;
+  max-inline-size: calc(100vw - 1rem);
+  color: var(--sn-color-fg);
+  font-family: var(--sn-font-sans);
+  font-size: var(--sn-font-size);
+  line-height: var(--sn-line-height);
+}
+
+:host([data-side]) {
+  display: block;
+  animation: sn-coach-mark-in var(--sn-duration-fast) var(--sn-easing);
+}
+
+// Hidden for the one frame between attaching and the first position.
+:host([data-side]:not([data-placed])) {
+  visibility: hidden;
+}
+
+// Distance to the anchor: the gap plus the part of the rotated beak that sticks out of the card
+// (half its diagonal, ≈ 0.71 × its side). Skins without a beak (--beak: 0) keep only the gap.
+:host {
+  --offset: calc(var(--gap) + var(--beak) * 0.71);
+}
+
+:host([data-side='top']),
+:host([data-side='bottom']) {
+  margin-block: var(--offset);
+}
+
+:host([data-side='left']),
+:host([data-side='right']) {
+  margin-inline: var(--offset);
+}
+
+@keyframes sn-coach-mark-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host([data-side]) {
+    animation: none;
+  }
+}
+
+// --- Card and beak: siblings, so each samples the page behind it for the glass/acrylic blur --------------
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  box-shadow: var(--shadow);
+  -webkit-backdrop-filter: var(--material);
+  backdrop-filter: var(--material);
+}
+
+// A rotated square clipped to its outer half
+.beak {
+  position: absolute;
+  inline-size: var(--beak);
+  block-size: var(--beak);
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  -webkit-backdrop-filter: var(--material);
+  backdrop-filter: var(--material);
+  pointer-events: none;
+}
+
+:host([data-side='bottom']) .beak,
+:host([data-side='top']) .beak {
+  left: clamp(var(--beak-min), var(--sn-coach-mark-beak-at, 50%), calc(100% - var(--beak-min)));
+}
+
+:host([data-side='left']) .beak,
+:host([data-side='right']) .beak {
+  top: clamp(var(--beak-min), var(--sn-coach-mark-beak-at, 50%), calc(100% - var(--beak-min)));
+}
+
+// The center sits on the padding edge, so the beak's base covers the card's border line.
+:host([data-side='bottom']) .beak {
+  top: calc(var(--beak) / -2);
+  transform: translateX(-50%) rotate(45deg);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+:host([data-side='top']) .beak {
+  bottom: calc(var(--beak) / -2);
+  transform: translateX(-50%) rotate(45deg);
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+:host([data-side='right']) .beak {
+  left: calc(var(--beak) / -2);
+  transform: translateY(-50%) rotate(45deg);
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+:host([data-side='left']) .beak {
+  right: calc(var(--beak) / -2);
+  transform: translateY(-50%) rotate(45deg);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+// --- Content -------------------------------------------------------------------------------------
+.hero {
+  overflow: hidden;
+  border-start-start-radius: calc(var(--radius) - 1px);
+  border-start-end-radius: calc(var(--radius) - 1px);
+
+  &:empty {
+    display: none;
+  }
+
+  ::ng-deep > * {
+    display: block;
+    inline-size: 100%;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: var(--pad);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.icon {
+  flex: none;
+  font-size: 1.25rem;
+  color: var(--sn-color-accent-text);
+}
+
+.title {
+  flex: 1;
+  margin: 0;
+  font-size: var(--sn-font-size);
+  font-weight: var(--sn-font-weight-strong);
+  line-height: inherit;
+}
+
+.body {
+  color: var(--sn-color-fg);
+}
+
+.close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  inline-size: 1.75rem;
+  block-size: 1.75rem;
+  margin: -0.25rem -0.25rem 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--sn-radius-control);
+  background: transparent;
+  color: var(--sn-color-fg-muted);
+  cursor: default;
+
+  svg {
+    inline-size: 1rem;
+    block-size: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  &:hover {
+    background: var(--sn-color-hover);
+    color: var(--sn-color-fg);
+  }
+
+  &:focus-visible {
+    outline: var(--sn-focus-outline);
+    outline-offset: calc(var(--sn-focus-offset) * -1);
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.375rem;
+
+  &:empty {
+    display: none;
+  }
+}
+
+// --- GNOME: GtkPopover (also the unknown-OS look) ------------------------------------------------------
+:host([data-skin='gtk']),
+:host([data-family='web']) {
+  --pad: 0.75rem;
+  --beak: 0.75rem;
+
+  .title {
+    font-weight: 700;
+  }
+
+  // Flat circular image button
+  .close {
+    border-radius: var(--sn-radius-pill);
+  }
+}
+
+// --- Windows 11: TeachingTip (acrylic, tail, stretched buttons, primary first) --------------------------
+:host([data-family='windows']) {
+  --bg: var(--sn-color-acrylic);
+  --border: var(--sn-color-stroke);
+  --pad: 0.75rem;
+  --beak: 0.875rem;
+  --gap: 0.125rem;
+  --material: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+
+  .content {
+    gap: 0.25rem;
+  }
+
+  .close {
+    inline-size: 2rem;
+    block-size: 2rem;
+    margin: -0.375rem -0.375rem 0 0;
+    border-radius: var(--sn-radius-control);
+  }
+
+  .actions {
+    flex-direction: row-reverse;
+    margin-top: 0.75rem;
+
+    ::ng-deep > * {
+      flex: 1 1 0;
+    }
+  }
+}
+
+// Windows 10: square, no acrylic (the skin's tokens do the rest)
+:host([data-skin='w10']) {
+  --bg: var(--sn-color-surface-solid);
+  --border: var(--sn-color-border);
+  --material: none;
+}
+
+// --- macOS: NSPopover (glass, arrow, buttons trailing) -----------------------------------------------------
+:host([data-family='macos']) {
+  --bg: var(--sn-color-acrylic);
+  --border: var(--sn-color-glass-border);
+  --pad: 1rem;
+  --beak: 0.8125rem;
+  --gap: 0.125rem;
+  --shadow: inset 0 1px 0 var(--sn-color-glass-highlight), var(--sn-shadow-overlay);
+  --material: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+
+  .beak {
+    border-radius: 0.1875rem;
+  }
+
+  .title {
+    font-weight: 700;
+  }
+
+  .body {
+    color: var(--sn-color-fg-muted);
+  }
+
+  // TipKit-style small round close button
+  .close {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    margin: 0;
+    border-radius: var(--sn-radius-pill);
+    background: var(--sn-color-hover);
+
+    svg {
+      inline-size: 0.625rem;
+      block-size: 0.625rem;
+      stroke-width: 2.25;
+    }
+  }
+
+  .actions {
+    margin-top: 0.5rem;
+  }
+}
+
+// macOS 13–15: smaller radius from the skin, no glass highlight
+:host([data-skin='macc']) {
+  --shadow: var(--sn-shadow-overlay);
+}
+
+// --- KDE Plasma: Kirigami popup (Breeze frame, no arrow, primary first) -------------------------------------
+:host([data-skin='qt']) {
+  --bg: var(--sn-color-surface-solid);
+  --border: var(--sn-color-border);
+  --beak: 0;
+  --gap: 0.375rem;
+
+  .beak {
+    display: none;
+  }
+
+  .actions {
+    flex-direction: row-reverse;
+    justify-content: flex-start; // reversed: this is the trailing edge
+    margin-top: 0.5rem;
+  }
+
+  .close {
+    border-radius: var(--sn-radius-control);
+  }
+}
+
+// --- ChromeOS: Material 3 rich tooltip (tonal container, no arrow, text buttons at the start) -------------------
+:host([data-skin='cros']) {
+  --bg: var(--sn-color-glass);
+  --border: transparent;
+  --radius: var(--sn-radius-surface);
+  --beak: 0;
+  --gap: 0.25rem;
+
+  .beak {
+    display: none;
+  }
+
+  .content {
+    gap: 0.25rem;
+    padding: 0.75rem 1rem 0.5rem;
+  }
+
+  .title {
+    font-weight: 500;
+  }
+
+  .body {
+    color: var(--sn-color-fg-muted);
+  }
+
+  .close {
+    border-radius: var(--sn-radius-pill);
+  }
+
+  .actions {
+    justify-content: flex-start;
+    gap: 0;
+    margin: 0.25rem 0 0 -0.75rem;
+
+    // M3 text buttons
+    ::ng-deep > * {
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+      color: var(--sn-color-accent-text);
+    }
+
+    ::ng-deep > *:hover {
+      background: var(--sn-color-hover);
+    }
+  }
+}

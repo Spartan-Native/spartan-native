@@ -1,0 +1,61 @@
+// ============================================================================
+//  ChromeOS · Table: an M3 data table on an outlined 12px surface
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$table-container} {
+      border: 1px solid var(--sn-color-stroke);
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-surface);
+    }
+
+    #{h.$table} {
+      font-size: var(--sn-font-size);
+      color: var(--sn-color-fg);
+    }
+
+    #{h.$table-row} {
+      border-color: var(--sn-color-stroke);
+    }
+
+    :is(#{h.$table-head}, #{h.$table-cell}) {
+      height: var(--sn-row-height);
+      padding-block: 0;
+      padding-inline: px(16);
+    }
+
+    #{h.$table-head} {
+      color: var(--sn-color-fg-muted);
+      font-weight: 500;
+    }
+
+    #{h.$table-header-row},
+    #{h.$table-header-row}:hover {
+      background: transparent;
+    }
+
+    #{h.$table-body-row}:hover {
+      background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+    }
+
+    #{h.$table-row-selected} {
+      background: var(--sn-row-selected-bg);
+      color: var(--sn-row-selected-fg);
+    }
+
+    #{h.$table-footer} {
+      background: transparent;
+      border-color: var(--sn-color-stroke);
+      font-weight: 500;
+    }
+
+    #{h.$table-caption} {
+      margin-block: px(12);
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+  }
+}

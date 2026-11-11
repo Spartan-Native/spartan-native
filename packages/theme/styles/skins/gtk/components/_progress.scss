@@ -1,0 +1,19 @@
+// ============================================================================
+//  GNOME · Progress bar (hlm-progress): 8px, rounded
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$progress} {
+      height: var(--sn-progress-height);
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-track);
+    }
+
+    #{h.$progress-bar} {
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-primary);
+    }
+  }
+}

@@ -1,0 +1,77 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/platform-if.stories';
+
+<Meta of={Stories} />
+
+# Platform if
+
+`*snPlatformIf` is a structural directive that renders its template only on the given operating systems, and
+an optional `else` template everywhere else. It follows the active skin live. Use it for content that only makes
+sense on some platforms: an Exit button on Windows and Linux, a note about the macOS menu bar, a link into KDE
+System Settings. For styling differences use the `data-family` / `data-skin` attributes in CSS instead.
+
+It accepts a skin, a family, or a list mixing both:
+
+| OS | Skin | Family |
+| --- | --- | --- |
+| Windows 11 | `'win'` | `'windows'` |
+| Windows 10 | `'w10'` | `'windows'` |
+| macOS 26 | `'mac'` | `'macos'` |
+| macOS 13–15 | `'macc'` | `'macos'` |
+| GNOME | `'gtk'` | `'linux'` |
+| KDE | `'qt'` | `'linux'` |
+| ChromeOS | `'cros'` | `'chromeos'` |
+| Unknown OS | `'web'` | `'web'` |
+
+## Examples
+
+A family with `else`.
+
+<Canvas of={Stories.Family} />
+
+A skin with `else`.
+
+<Canvas of={Stories.Skin} />
+
+A list of families and skins.
+
+<Canvas of={Stories.List} />
+
+One line per skin; exactly one shows.
+
+<Canvas of={Stories.EverySkin} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnPlatformIf, type PlatformMatch } from '@spartan-native/desktop-ui';
+// or SnPlatformImports = [SnPlatformIf, SnShortcut]`}
+/>
+
+<Source
+  language="html"
+  code={`<p *snPlatformIf="'macos'; else other">Settings are in the app menu.</p>
+<ng-template #other><p>Settings are in the ☰ menu.</p></ng-template>
+
+<button hlmBtn *snPlatformIf="['windows', 'gtk', 'qt']">Exit</button>`}
+/>
+
+## API
+
+### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `snPlatformIf` | `PlatformMatch \| readonly PlatformMatch[]` | required | Where to render: a skin, a family, or a list. |
+| `snPlatformIfElse` | `TemplateRef<unknown> \| null` | `null` | Rendered on every other platform (the `; else tpl` part). |
+
+`PlatformMatch` is `Skin | PlatformFamily`. The template is created once and kept while the platform keeps
+matching; it is destroyed and the other template created when the skin changes.
+
+No outputs, slots or CSS hooks: it renders your template and nothing else.
+
+## Accessibility
+
+The directive adds no markup. Content that is not rendered is not in the DOM, so it is hidden from assistive tech
+too; make sure every platform still gets a way to do the task (use `else`).

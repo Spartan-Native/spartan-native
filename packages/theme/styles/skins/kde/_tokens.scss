@@ -1,0 +1,92 @@
+// ============================================================================
+//  KDE Plasma · Breeze (Qt): tokens
+//  Only what differs from contract/_tokens.scss.
+// ============================================================================
+@use '../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    // Typography: Noto Sans 10pt (13px)
+    --sn-font-sans: 'Noto Sans', 'Oxygen', system-ui, sans-serif;
+    --sn-font-mono: 'Hack', 'Noto Sans Mono', monospace;
+    --sn-font-size: #{px(13)};
+    --sn-font-size-small: #{px(11)};
+    --sn-font-size-title: #{px(20)};
+    --sn-line-height: 1.38;
+    --sn-font-weight-control: 400;
+    --sn-font-weight-strong: 600;
+
+    // Shape: 5px everywhere, 6px dialogs
+    --sn-radius-control: #{px(5)};
+    --sn-radius-input: #{px(5)};
+    --sn-radius-surface: #{px(5)};
+    --sn-radius-overlay: #{px(6)};
+    --sn-radius-window: #{px(6)};
+
+    // Density
+    --sn-control-height: #{px(32)};
+    --sn-control-height-small: #{px(26)};
+    --sn-control-padding-x: #{px(12)};
+    --sn-input-height: #{px(32)};
+    --sn-input-padding-x: #{px(8)};
+    --sn-check-size: #{px(18)};
+    --sn-check-radius: #{px(3)};
+    --sn-switch-width: #{px(36)};
+    --sn-switch-height: #{px(18)};
+    --sn-switch-thumb-width: #{px(16)};
+    --sn-switch-thumb-height: #{px(16)};
+    --sn-switch-inset: #{px(1)};
+    --sn-switch-border: 0px;
+    --sn-progress-height: #{px(6)};
+    --sn-tab-height: #{px(34)};
+    --sn-card-padding: #{px(16)};
+    --sn-list-item-height: #{px(32)};
+    --sn-list-item-radius: #{px(4)};
+    --sn-slider-track-height: #{px(6)};
+    --sn-slider-thumb-width: #{px(20)};
+    --sn-slider-thumb-height: #{px(20)};
+
+    // Overlays
+    --sn-menu-padding: #{px(3)};
+    --sn-menu-item-height: #{px(30)};
+    --sn-menu-item-padding-x: #{px(8)};
+    --sn-menu-item-radius: #{px(4)};
+    --sn-dialog-padding: #{px(18)};
+    --sn-dialog-width: #{px(420)};
+    --sn-tooltip-radius: #{px(5)};
+
+    // Selection: accent tint for items; rows fill with the accent while focused
+    --sn-selection-bg: var(--sn-color-hover);
+    --sn-selection-fg: var(--sn-color-fg);
+    --sn-selection-indicator: transparent;
+    --sn-row-height: #{px(30)};
+    --sn-row-selected-bg: var(--sn-color-primary);
+    --sn-row-selected-fg: var(--sn-color-primary-fg);
+    --sn-row-selected-bg-unfocused: color-mix(in srgb, var(--sn-color-primary) 30%, var(--sn-color-surface-solid));
+    --sn-row-selected-fg-unfocused: var(--sn-color-fg);
+    --sn-row-selected-indicator: transparent;
+    --sn-row-focus-ring: 1px solid var(--sn-color-primary);
+
+    // Materials: flat and opaque
+    --sn-material-blur: 0px;
+    --sn-material-saturate: 100%;
+    --sn-window-bg: var(--sn-color-bg);
+    --sn-sidebar-bg: var(--sn-color-sidebar);
+    --sn-content-bg: var(--sn-color-bg);
+    --sn-content-border: transparent;
+
+    // Elevation: frames, not shadows, except for floating things
+    --sn-shadow-card: none;
+    --sn-shadow-overlay: 0 4px 14px rgb(0 0 0 / 0.18);
+    --sn-shadow-window: 0 8px 30px rgb(0 0 0 / 0.25);
+
+    // Focus: a 1px accent line plus a soft 3px accent glow
+    --sn-focus-outline: 1px solid var(--sn-color-primary);
+    --sn-focus-offset: 0px;
+    --sn-focus-shadow: 0 0 0 3px color-mix(in srgb, var(--sn-color-primary) 30%, transparent);
+
+    // Motion: Kirigami short duration, OutCubic
+    --sn-duration-fast: 150ms;
+    --sn-easing: cubic-bezier(0.33, 1, 0.68, 1);
+  }
+}

@@ -1,0 +1,234 @@
+<!-- Snapshot picker and file search -->
+<div class="toolbar">
+  <label hlmLabel id="restore-snapshot">Snapshot</label>
+  <hlm-select [value]="snapshotId()" [itemToString]="snapshotLabel" (valueChange)="pickSnapshot($event)">
+    <hlm-select-trigger class="snapshot" aria-labelledby="restore-snapshot">
+      <hlm-select-value />
+    </hlm-select-trigger>
+    <hlm-select-content *hlmSelectPortal>
+      @for (s of store.snapshots(); track s.id) {
+        <hlm-select-item [value]="s.id">{{ s.label }}</hlm-select-item>
+      }
+    </hlm-select-content>
+  </hlm-select>
+  <span hlmBadge variant="outline">{{ destinationName(snapshot()) }}</span>
+  <button hlmBtn variant="outline" size="sm" [disabled]="isLatest()" (click)="pickSnapshot(store.snapshots()[0].id)">Latest</button>
+
+  <label class="sr-only" for="restore-find">Find a file in this snapshot</label>
+  <hlm-autocomplete class="find" [(search)]="search" [itemToString]="fileName" (valueChange)="findFile($event)">
+    <hlm-autocomplete-input inputId="restore-find" placeholder="Find a file" />
+    <hlm-autocomplete-content *hlmAutocompletePortal>
+      <hlm-autocomplete-empty>No files match.</hlm-autocomplete-empty>
+      <div hlmAutocompleteList aria-label="Matching files">
+        @for (f of matches(); track f.id) {
+          <hlm-autocomplete-item [value]="f">
+            <ng-icon [name]="iconFor(f)" aria-hidden="true" />
+            <span class="match-name">{{ f.name }}</span>
+            <span class="sn-text-muted match-folder">{{ f.folder }}</span>
+          </hlm-autocomplete-item>
+        }
+      </div>
+    </hlm-autocomplete-content>
+  </hlm-autocomplete>
+
+  <button hlmBtn variant="ghost" size="icon-sm" aria-label="Show details" [attr.aria-pressed]="infoOpen()" (click)="infoOpen.set(!infoOpen())">
+    <ng-icon name="lucideInfo" />
+  </button>
+</div>
+
+<nav hlmBreadcrumb aria-label="Folder">
+  <ol hlmBreadcrumbList>
+    @for (c of crumbs(); track c.path; let last = $last) {
+      <li hlmBreadcrumbItem>
+        @if (last) {
+          <span hlmBreadcrumbPage>{{ c.name }}</span>
+        } @else {
+          <button type="button" class="crumb" (click)="openFolder(c.path)">{{ c.name }}</button>
+        }
+      </li>
+      @if (!last) {
+        <li hlmBreadcrumbSeparator></li>
+      }
+    }
+  </ol>
+</nav>
+
+@if (restoring(); as r) {
+  <div hlmAlert class="restoring" role="status">
+    <ng-icon name="lucideRotateCcw" />
+    <h2 hlmAlertTitle>{{ r.title }}</h2>
+    <div hlmAlertDescription class="restoring-body">
+      <hlm-progress [value]="r.progress" aria-label="Restore progress"><hlm-progress-indicator /></hlm-progress>
+      <span>{{ r.progress }}%</span>
+    </div>
+  </div>
+}
+
+<!-- Folders | files, and the inspector for the selection -->
+<sn-inspector-layout class="browser">
+  <hlm-resizable-group direction="horizontal">
+    <hlm-resizable-panel [defaultSize]="30" [minSize]="18" [maxSize]="45">
+      <div class="folders" snSelectable [multiple]="false" [selection]="folderSelection()" (selectionChange)="openFolder($event[0])" aria-label="Folders">
+        @for (n of tree(); track n.path) {
+          <div snSelectableItem [value]="n.path" [snSelectableLabel]="n.name" [style.padding-inline-start.rem]="0.75 + n.depth * 1">
+            <ng-icon [name]="n.path === folder() ? 'lucideFolderOpen' : 'lucideFolder'" aria-hidden="true" />
+            <span class="name">{{ n.name }}</span>
+            <span class="count">{{ n.count }}</span>
+          </div>
+        }
+      </div>
+    </hlm-resizable-panel>
+    <hlm-resizable-handle withHandle />
+    <hlm-resizable-panel [defaultSize]="70" [minSize]="40">
+      <div class="files">
+        @if (loading()) {
+          <div class="skeleton" aria-busy="true" aria-label="Loading snapshot">
+            @for (i of [1, 2, 3, 4]; track i) {
+              <div class="skeleton-row">
+                <div hlmSkeleton class="skeleton-icon"></div>
+                <div hlmSkeleton class="skeleton-text"></div>
+                <div hlmSkeleton class="skeleton-meta"></div>
+              </div>
+            }
+          </div>
+        } @else if (files().length) {
+          <ng-scrollbar hlm class="scroll">
+            <table
+              hlmTable
+              class="file-table"
+              snSelectable="grid"
+              [(selection)]="selection"
+              (activated)="infoOpen.set(true)"
+              (keydown)="onListKeydown($event)"
+              aria-label="Files"
+            >
+              <thead hlmTHead>
+                <tr hlmTr><th hlmTh>Name</th><th hlmTh class="modified">Modified</th><th hlmTh class="size">Size</th></tr>
+              </thead>
+              <tbody hlmTBody>
+                @for (f of files(); track f.id) {
+                  <tr
+                    hlmTr
+                    snSelectableItem
+                    [value]="f.id"
+                    [snSelectableLabel]="f.name"
+                    [hlmContextMenuTrigger]="fileMenu"
+                    [hlmContextMenuTriggerData]="{ $implicit: f }"
+                    (contextmenu)="onContextMenu(f)"
+                  >
+                    <td hlmTd>
+                      <span class="file-name"><ng-icon [name]="iconFor(f)" aria-hidden="true" /><span>{{ f.name }}</span></span>
+                    </td>
+                    <td hlmTd class="muted modified">{{ f.modified }}</td>
+                    <td hlmTd class="muted size">{{ formatSize(f.sizeKb) }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </ng-scrollbar>
+          <p class="status sn-text-muted">{{ files().length }} items · {{ filesSize() }} · {{ selected().length }} selected</p>
+        } @else {
+          <div hlmEmpty>
+            <div hlmEmptyHeader>
+              <div hlmEmptyMedia variant="icon"><ng-icon name="lucideFolderX" /></div>
+              <h2 hlmEmptyTitle>Nothing in {{ crumbs().at(-1)?.name }}</h2>
+              <p hlmEmptyDescription>This folder was empty on {{ snapshot().label }}. Pick a newer snapshot to see later files.</p>
+            </div>
+            <div hlmEmptyContent>
+              <button hlmBtn variant="outline" size="sm" (click)="pickSnapshot(store.snapshots()[0].id)">Show latest snapshot</button>
+            </div>
+          </div>
+        }
+      </div>
+    </hlm-resizable-panel>
+  </hlm-resizable-group>
+
+  <sn-inspector
+    [(open)]="infoOpen"
+    [title]="file()?.name ?? (selected().length ? selected().length + ' files' : 'No selection')"
+    [icon]="file() ? iconFor(file()!) : selected().length ? 'lucideFiles' : ''"
+  >
+    @if (file(); as f) {
+      <sn-inspector-section title="General">
+        <sn-inspector-property label="Kind">{{ f.kind }}</sn-inspector-property>
+        <sn-inspector-property label="Size">{{ formatSize(f.sizeKb) }}</sn-inspector-property>
+        <sn-inspector-property label="Modified">{{ f.modified }}</sn-inspector-property>
+        <sn-inspector-property label="Where">{{ f.folder }}</sn-inspector-property>
+        <sn-inspector-property label="Versions">{{ f.versions }} kept</sn-inspector-property>
+      </sn-inspector-section>
+      <sn-inspector-section title="In these snapshots">
+        <div hlmItemGroup class="versions">
+          @for (v of versions(); track v.id; let first = $first) {
+            <div hlmItem size="sm">
+              <div hlmItemMedia variant="icon"><ng-icon name="lucideHistory" /></div>
+              <div hlmItemContent>
+                <div hlmItemTitle>{{ v.label }}</div>
+                <p hlmItemDescription>{{ destinationName(v) }}{{ first ? ' · this snapshot' : '' }}</p>
+              </div>
+              <div hlmItemActions>
+                <button hlmBtn variant="ghost" size="icon-sm" [attr.aria-label]="'Restore the version from ' + v.label" (click)="restore([f.id], v)">
+                  <ng-icon name="lucideRotateCcw" />
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </sn-inspector-section>
+    } @else if (selected().length) {
+      <sn-inspector-section title="General">
+        <sn-inspector-property label="Items">{{ selected().length }} files</sn-inspector-property>
+        <sn-inspector-property label="Snapshot">{{ snapshot().label }}</sn-inspector-property>
+      </sn-inspector-section>
+    } @else {
+      <p class="hint">Select a file to see its versions.</p>
+    }
+    @if (selected().length) {
+      <div class="actions">
+        <button hlmBtn size="sm" [disabled]="!!restoring()" (click)="restore(selection())">Restore</button>
+        <button hlmBtn variant="outline" size="sm" [disabled]="!!restoring()" (click)="openRestoreTo()">Restore to…</button>
+      </div>
+    }
+  </sn-inspector>
+</sn-inspector-layout>
+
+<ng-template #fileMenu let-f>
+  <hlm-dropdown-menu class="menu">
+    <button hlmDropdownMenuItem [disabled]="!!restoring()" (triggered)="restore(selection())">
+      <ng-icon name="lucideRotateCcw" /> Restore
+      <kbd hlmDropdownMenuShortcut snShortcut="mod+r"></kbd>
+    </button>
+    <button hlmDropdownMenuItem [disabled]="!!restoring()" (triggered)="openRestoreTo()">
+      <ng-icon name="lucideFolderInput" /> Restore to…
+      <kbd hlmDropdownMenuShortcut snShortcut="mod+shift+r"></kbd>
+    </button>
+    <hlm-dropdown-menu-separator />
+    <button hlmDropdownMenuItem (triggered)="selection.set([f.id]); infoOpen.set(true)">
+      <ng-icon name="lucideHistory" /> Show versions
+    </button>
+    <button hlmDropdownMenuItem (triggered)="copyPath(f)">
+      <ng-icon name="lucideCopy" /> Copy path
+    </button>
+  </hlm-dropdown-menu>
+</ng-template>
+
+<sn-modal-sheet [(open)]="sheetOpen" title="Restore to…">
+  <div class="sheet-body">
+    <div class="field">
+      <label hlmLabel for="restore-target">Destination folder</label>
+      <hlm-input-group>
+        <hlm-input-group-addon><ng-icon name="lucideFolder" /></hlm-input-group-addon>
+        <input hlmInputGroupInput id="restore-target" [value]="target()" (input)="target.set($any($event.target).value)" />
+      </hlm-input-group>
+    </div>
+    <div class="field">
+      <span hlmLabel id="restore-conflict">When a file exists</span>
+      <hlm-radio-group [value]="conflict()" (valueChange)="conflict.set($any($event))" aria-labelledby="restore-conflict">
+        <hlm-radio value="keep" inputId="restore-keep"><hlm-radio-indicator indicator />Keep both</hlm-radio>
+        <hlm-radio value="replace" inputId="restore-replace"><hlm-radio-indicator indicator />Replace</hlm-radio>
+        <hlm-radio value="skip" inputId="restore-skip"><hlm-radio-indicator indicator />Skip</hlm-radio>
+      </hlm-radio-group>
+    </div>
+  </div>
+  <button hlmBtn variant="outline" snSheetCancel>Cancel</button>
+  <button hlmBtn snSheetPrimary [disabled]="!target().trim()" (click)="confirmRestoreTo()">Restore</button>
+</sn-modal-sheet>

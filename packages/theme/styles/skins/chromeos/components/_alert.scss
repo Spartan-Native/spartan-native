@@ -1,0 +1,45 @@
+// ============================================================================
+//  ChromeOS · Alert: the primary container; tones (sn-tone-*, destructive)
+//  tint the surface instead.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$alert} {
+      padding: px(12) px(16);
+      border: 0;
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-glass-border); // primary container
+      color: var(--sn-color-glass-highlight); // on primary container
+      font-size: var(--sn-font-size);
+    }
+
+    #{h.$alert-icon} {
+      --ng-icon__color: currentColor;
+    }
+
+    #{h.$alert-title} {
+      font-weight: 500;
+    }
+
+    #{h.$alert-description} {
+      color: inherit;
+      font-size: var(--sn-font-size);
+    }
+
+    #{h.$alert-toned} {
+      background: color-mix(in srgb, var(--sn-alert-tone) 16%, var(--sn-color-surface));
+      color: var(--sn-color-fg);
+
+      > ng-icon {
+        --ng-icon__color: var(--sn-alert-tone);
+      }
+
+      #{h.$alert-description} {
+        color: var(--sn-color-fg-muted);
+      }
+    }
+  }
+}

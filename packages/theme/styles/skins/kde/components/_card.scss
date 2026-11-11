@@ -1,0 +1,16 @@
+// ============================================================================
+//  KDE Plasma · Card: a framed Kirigami card
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$card} {
+      --card-spacing: var(--sn-card-padding);
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-surface-solid);
+      box-shadow: var(--sn-shadow-card);
+    }
+  }
+}

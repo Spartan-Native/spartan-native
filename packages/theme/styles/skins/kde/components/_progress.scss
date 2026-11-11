@@ -1,0 +1,19 @@
+// ============================================================================
+//  KDE Plasma · Progress bar
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$progress} {
+      height: var(--sn-progress-height);
+      border-radius: var(--sn-radius-pill);
+      background: color-mix(in srgb, var(--sn-color-fg) 18%, var(--sn-color-surface-solid));
+    }
+
+    #{h.$progress-bar} {
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-primary);
+    }
+  }
+}

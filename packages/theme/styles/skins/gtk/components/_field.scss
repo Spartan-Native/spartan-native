@@ -1,0 +1,34 @@
+// ============================================================================
+//  GNOME · Field (hlmField) and Separator (hlmSeparator)
+//  AdwPreferencesGroup-style headings, dim-label captions.
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$field-legend} {
+      font-size: var(--sn-font-size);
+      font-weight: 700;
+    }
+
+    #{h.$field-description} {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+
+    #{h.$field-error} {
+      color: var(--sn-color-danger);
+      font-size: var(--sn-font-size-small);
+    }
+
+    // Adwaita `entry.error`: entries have no border, so ring them and tint the text
+    #{h.$text-field-invalid} {
+      box-shadow: inset 0 0 0 1px var(--sn-color-danger);
+      color: var(--sn-color-danger);
+    }
+
+    #{h.$separator} {
+      background: color-mix(in srgb, var(--sn-color-fg) 15%, transparent);
+    }
+  }
+}

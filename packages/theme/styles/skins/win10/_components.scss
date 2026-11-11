@@ -1,0 +1,223 @@
+// ============================================================================
+//  Windows 10 · component overrides on top of win11
+//  Source: docs/04-platform-skins.md "Windows 10 specifics".
+// ============================================================================
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+$edge: color-mix(in srgb, var(--sn-color-fg) 45%, transparent);
+
+@layer spartan-native.skins {
+  .t-win.t-w10 {
+    // --- Buttons: 2px border that appears on hover ----------------------------
+    #{h.$button} {
+      border: 2px solid transparent;
+
+      &:hover {
+        border-color: $edge;
+      }
+    }
+
+    #{h.$button-outline} {
+      background: color-mix(in srgb, var(--sn-color-fg) 20%, var(--sn-color-bg));
+      color: var(--sn-color-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 20%, var(--sn-color-bg));
+        border-color: $edge;
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-fg) 40%, var(--sn-color-bg));
+        color: var(--sn-color-fg);
+        border-color: $edge;
+      }
+    }
+
+    #{h.$button-primary} {
+      border-color: transparent;
+
+      &:hover {
+        background: var(--sn-color-primary);
+        border-color: $edge;
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-primary) 80%, var(--sn-color-fg));
+        color: var(--sn-color-primary-fg);
+        border-color: $edge;
+      }
+    }
+
+    #{h.$button-ghost} {
+      &:hover {
+        background: transparent;
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-fg) 20%, transparent);
+        color: var(--sn-color-fg);
+      }
+    }
+
+    #{h.$button-destructive} {
+      border-color: transparent;
+    }
+
+    #{h.$button-disabled} {
+      background: color-mix(in srgb, var(--sn-color-fg) 20%, var(--sn-color-bg));
+      border-color: transparent;
+    }
+
+    // --- Text fields: 2px frame, accent when focused ----------------------------
+    #{h.$input},
+    #{h.$textarea},
+    #{h.$select-trigger} {
+      border: 2px solid $edge;
+      background: var(--sn-color-surface-solid);
+
+      &:hover {
+        border-color: color-mix(in srgb, var(--sn-color-fg) 70%, transparent);
+        background: var(--sn-color-surface-solid);
+      }
+    }
+
+    #{h.$input},
+    #{h.$textarea} {
+      &:focus-visible,
+      &:focus {
+        border-color: var(--sn-color-primary);
+        box-shadow: none;
+      }
+    }
+
+    #{h.$select-trigger} {
+      border-radius: 0;
+    }
+
+    // --- Checkbox and radio: 2px foreground outline ------------------------------
+    #{h.$checkbox},
+    #{h.$radio} {
+      border: 2px solid var(--sn-color-fg);
+      background: transparent;
+
+      &:hover {
+        background: transparent;
+      }
+    }
+
+    #{h.$checkbox-on} {
+      border-color: var(--sn-color-primary);
+      background: var(--sn-color-primary);
+
+      &:hover {
+        background: var(--sn-color-primary);
+      }
+    }
+
+    #{h.$radio-on} {
+      border-color: var(--sn-color-primary);
+      background: transparent;
+    }
+
+    #{h.$radio-dot-on} {
+      background: var(--sn-color-fg);
+    }
+
+    // --- Toggle switch: outlined track, small solid knob -------------------------
+    #{h.$switch} {
+      border-color: var(--sn-color-fg);
+      background: transparent;
+
+      &:hover {
+        background: transparent;
+      }
+    }
+
+    #{h.$switch-on} {
+      border-color: var(--sn-color-primary);
+      background: var(--sn-color-primary);
+
+      &:hover {
+        background: var(--sn-color-primary);
+      }
+    }
+
+    #{h.$switch-thumb} {
+      background: var(--sn-color-fg);
+    }
+
+    #{h.$switch-thumb-on} {
+      background: #fff;
+    }
+
+    #{h.$switch}:hover #{h.$switch-thumb} {
+      scale: none;
+    }
+
+    // --- Slider: 2px track, an 8×24 accent bar for the thumb ---------------------
+    #{h.$slider-track} {
+      border-radius: 0;
+    }
+
+    #{h.$slider-thumb} {
+      border: 0;
+      border-radius: #{px(4)};
+      background: var(--sn-color-primary);
+      box-shadow: none;
+
+      &::before {
+        display: none;
+      }
+
+      &:hover {
+        background: var(--sn-color-fg);
+      }
+    }
+
+    // --- Progress: square ends ------------------------------------------------------
+    #{h.$progress},
+    #{h.$progress-bar} {
+      border-radius: 0;
+    }
+
+    // --- Pivot tabs: a full-width 2px underline ------------------------------------
+    #{h.$tab} {
+      &:hover {
+        background: transparent;
+      }
+
+      &::after {
+        inset: auto #{px(12)} 0 #{px(12)};
+        width: auto;
+        height: 2px;
+        translate: none;
+        border-radius: 0;
+      }
+    }
+
+    // --- Menus: solid, square, full-width rows ----------------------------------------
+    #{h.$menu} {
+      padding-block: #{px(4)};
+      background: var(--sn-color-surface-solid);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    #{h.$menu-item-highlighted} {
+      background: color-mix(in srgb, var(--sn-color-fg) 10%, transparent);
+    }
+
+    // --- ContentDialog: square, the footer band without a divider ---------------------
+    :is(#{h.$dialog-footer}) {
+      border-top: 0;
+      border-radius: 0;
+      background: var(--sn-color-surface-solid);
+    }
+
+    // --- InfoBar ------------------------------------------------------------------------
+    #{h.$alert} {
+      border-radius: 0;
+    }
+  }
+}

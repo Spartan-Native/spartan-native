@@ -1,0 +1,172 @@
+// Title bar per skin. Sizes are rem so the bar grows with the OS text size
+// (1rem = 16px at 100 %).
+
+:host {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  flex: none;
+  -webkit-user-select: none;
+  user-select: none;
+  // the whole bar drags the window (Electron/Chromium, Wails); buttons opt out
+  -webkit-app-region: drag;
+  app-region: drag;
+  --wails-draggable: drag;
+}
+
+.start,
+.end {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+
+  ::ng-deep > :is(button, a, input, [role='button']) {
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
+    --wails-draggable: no-drag;
+  }
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.text,
+.subtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subtitle {
+  font-size: var(--sn-font-size-small);
+  font-weight: 400;
+  color: var(--sn-color-fg-muted);
+}
+
+.start ::ng-deep [snTitleBarIcon] {
+  width: 1rem;
+  height: 1rem;
+}
+
+// a centered title (macOS, GNOME, KDE)
+%centered-title {
+  .title {
+    position: absolute;
+    left: 50%;
+    translate: -50% 0;
+    align-items: center;
+    max-width: 50%;
+  }
+
+  .end {
+    margin-inline-start: auto;
+  }
+}
+
+// --- Windows 11 / 10: [icon] Title ……… [end][– □ ×] ------------------------------------
+:host([data-family='windows']) {
+  height: 2rem;
+  padding-inline-start: 1rem;
+  font-size: var(--sn-font-size-small);
+
+  .title {
+    margin-inline-end: auto;
+  }
+
+  // The OS draws the caption buttons: use the Window Controls Overlay rectangle
+  // (fallback: room for three 46px caption buttons)
+  &[data-controls='native'] {
+    height: env(titlebar-area-height, 2rem);
+    padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 8.625rem)));
+  }
+}
+
+// Windows 10: the title starts closer to the edge
+:host([data-skin='w10']) {
+  padding-inline-start: 0.5rem;
+}
+
+// --- macOS: (● ● ●) [start] …… Title …… [end] --------------------------------------
+:host([data-family='macos']) {
+  @extend %centered-title;
+  height: 2.375rem; // 38px unified title bar (macOS 26)
+  padding-inline: 0.875rem;
+  font-size: var(--sn-font-size);
+
+  .title {
+    font-weight: var(--sn-font-weight-strong);
+  }
+
+  // The OS draws the traffic lights at the start of the overlay rectangle
+  &[data-controls='native'] {
+    height: env(titlebar-area-height, 2.375rem);
+    padding-inline-start: env(titlebar-area-x, 4.875rem);
+  }
+}
+
+// macOS 13–15: the classic 28px title bar, lights 8px from the edge
+:host([data-skin='macc']) {
+  height: 1.75rem;
+  padding-inline: 0.5rem;
+
+  &[data-controls='native'] {
+    height: env(titlebar-area-height, 1.75rem);
+    padding-inline-start: env(titlebar-area-x, 4.375rem);
+  }
+}
+
+// --- GNOME (and the web fallback): [start] …… Title …… [end] (×) ----------------------
+:host([data-family='linux']),
+:host([data-family='web']) {
+  @extend %centered-title;
+  min-height: 2.875rem;
+  padding-inline: 0.375rem 0.625rem;
+  font-size: var(--sn-font-size);
+
+  .title {
+    font-weight: 700;
+  }
+
+  &[data-controls='native'] {
+    min-height: env(titlebar-area-height, 2.875rem);
+    padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 6rem)));
+  }
+}
+
+// --- KDE Plasma (Breeze, family linux: inherits the centered title above): [icon][start] …… Title …… [end][⌄ ⌃ ×] -----------------------
+:host([data-skin='qt']) {
+  min-height: 2.125rem;
+  padding-inline: 0.75rem 0.375rem;
+  background: var(--sn-color-bg);
+
+  .title {
+    font-weight: 400;
+  }
+
+  &[data-controls='native'] {
+    min-height: env(titlebar-area-height, 2.125rem);
+    padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 5.5rem)));
+  }
+}
+
+// --- ChromeOS: [icon] Title ……… [end][○ ○ ○] ------------------------------------------
+:host([data-skin='cros']) {
+  min-height: 2.25rem;
+  padding-inline: 0.875rem 0.25rem;
+  font-size: 0.8125rem;
+
+  .title {
+    margin-inline-end: auto;
+    font-weight: var(--sn-font-weight-strong);
+  }
+
+  &[data-controls='native'] {
+    min-height: env(titlebar-area-height, 2.25rem);
+    padding-inline-end: calc(100vw - env(titlebar-area-x, 0px) - env(titlebar-area-width, calc(100vw - 6.75rem)));
+  }
+}

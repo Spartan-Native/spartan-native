@@ -1,0 +1,56 @@
+// ============================================================================
+//  macOS 26 · Text fields (hlmInput, hlmTextarea) and pop-up button (hlm-select)
+//  Rounded field with a hairline border; focus is the accent halo.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$input},
+    #{h.$textarea} {
+      height: var(--sn-input-height);
+      padding-inline: var(--sn-input-padding-x);
+      border: 1px solid color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
+      border-radius: var(--sn-radius-input);
+      background: var(--sn-color-surface-solid);
+      box-shadow: inset 0 0.5px 1px rgb(0 0 0 / 0.06);
+      font-size: var(--sn-font-size);
+
+      &::placeholder {
+        color: var(--sn-color-fg-muted);
+      }
+
+      &:focus-visible,
+      &:focus {
+        outline: none;
+        border-color: var(--sn-color-accent);
+        box-shadow: var(--sn-focus-shadow);
+      }
+    }
+
+    #{h.$textarea} {
+      height: auto;
+      padding-block: 0.4em;
+    }
+
+    // Pop-up button: a glass capsule with the chevron
+    #{h.$select-trigger} {
+      height: var(--sn-control-height);
+      padding-inline: #{px(12)} #{px(8)};
+      border: 1px solid var(--sn-color-glass-border);
+      border-radius: var(--sn-radius-control);
+      background: var(--sn-color-glass);
+      box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), 0 1px 3px rgb(0 0 0 / 0.08);
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-control);
+      -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+      backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    }
+
+    #{h.$label} {
+      font-size: var(--sn-font-size);
+      font-weight: 400;
+    }
+  }
+}

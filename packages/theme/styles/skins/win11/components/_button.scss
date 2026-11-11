@@ -1,0 +1,121 @@
+// ============================================================================
+//  Windows 11 · Button (hlmBtn)
+//  Standard (outline) · Accent (default) · Subtle (ghost) · secondary · destructive
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    // --- Every variant: shape and size -------------------------------------
+    #{h.$button} {
+      height: var(--sn-control-height);
+      padding-inline: var(--sn-control-padding-x);
+      border: 1px solid transparent;
+      border-radius: var(--sn-radius-control);
+      box-shadow: none;
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-control);
+      translate: none; // spartan nudges buttons down on press; Fluent doesn't
+      transition: background-color var(--sn-duration-fast) var(--sn-easing);
+    }
+
+    #{h.$button-small} {
+      height: var(--sn-control-height-small);
+      padding-inline: calc(var(--sn-control-padding-x) * 0.75);
+    }
+
+    #{h.$button-icon} {
+      width: var(--sn-control-height);
+      padding: 0;
+    }
+
+    // --- Standard button (variant="outline") ---------------------------------
+    #{h.$button-outline} {
+      background: var(--sn-color-surface);
+      color: var(--sn-color-fg);
+      border-color: var(--sn-color-stroke);
+      border-bottom-color: var(--sn-color-stroke-bottom);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-surface-solid), var(--sn-color-fg) 5%);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-surface-solid), var(--sn-color-fg) 2%);
+        color: color-mix(in srgb, var(--sn-color-fg) 62%, transparent);
+        border-bottom-color: var(--sn-color-stroke);
+      }
+    }
+
+    // --- Accent button (variant="default") -----------------------------------
+    #{h.$button-primary} {
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+      border-color: var(--sn-color-primary);
+      border-bottom-color: var(--sn-color-primary-edge);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary) 90%, var(--sn-color-bg));
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-primary) 80%, var(--sn-color-bg));
+        color: color-mix(in srgb, var(--sn-color-primary-fg) 78%, var(--sn-color-primary));
+        border-bottom-color: var(--sn-color-primary);
+      }
+    }
+
+    // --- Secondary (accent-tinted) -------------------------------------------
+    #{h.$button-secondary} {
+      background: var(--sn-color-secondary);
+      color: var(--sn-color-secondary-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-secondary), var(--sn-color-fg) 5%);
+      }
+    }
+
+    // --- Subtle button (variant="ghost") -------------------------------------
+    #{h.$button-ghost} {
+      background: transparent;
+      color: var(--sn-color-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 6%, transparent);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-fg) 3%, transparent);
+        color: color-mix(in srgb, var(--sn-color-fg) 62%, transparent);
+      }
+    }
+
+    // --- Destructive ----------------------------------------------------------
+    #{h.$button-destructive} {
+      background: var(--sn-color-danger);
+      color: var(--sn-color-danger-fg);
+      border-color: var(--sn-color-danger);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-danger) 90%, var(--sn-color-bg));
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-danger) 80%, var(--sn-color-bg));
+      }
+    }
+
+    // --- Link ----------------------------------------------------------------
+    #{h.$button-link} {
+      color: var(--sn-color-accent-text);
+    }
+
+    // --- Disabled: Fluent greys out instead of fading ------------------------
+    #{h.$button-disabled} {
+      background: var(--sn-color-surface);
+      color: color-mix(in srgb, var(--sn-color-fg) 36%, transparent);
+      border-color: var(--sn-color-stroke);
+      opacity: 1;
+    }
+  }
+}

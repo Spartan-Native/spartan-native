@@ -1,0 +1,140 @@
+// ============================================================================
+//  Hooks: the only place that knows spartan's markup.
+//
+//  Skins never write raw selectors; they use these names. When spartan/ui
+//  changes its markup, only this file changes.
+//
+//  Most parts carry a `data-slot` attribute. Button variants have no attribute,
+//  so they are recognised by the one class each variant adds.
+//
+//  Variant mapping (spartan → platform):
+//    outline     → the platform's STANDARD button   (Fluent Standard, macOS push button, GTK button)
+//    default     → the ACCENT / suggested action    (Fluent Accent, macOS default button, GTK suggested-action)
+//    secondary   → an accent-tinted button
+//    ghost       → a flat button                     (Fluent Subtle, macOS borderless, GTK flat)
+//    destructive → the destructive action
+//    link        → a text link
+// ============================================================================
+
+// --- Button (hlmBtn) ---
+// Trigger directives (hlmDialogTrigger, hlmDropdownMenuTrigger, …) replace
+// data-slot="button", but every hlmBtn keeps its `group/button` class.
+$button: ':is([data-slot="button"], .group\\/button)';
+$button-primary: '#{$button}.bg-primary';
+$button-secondary: '#{$button}.bg-secondary';
+$button-outline: '#{$button}.border-border';
+$button-destructive: '#{$button}.text-destructive';
+$button-link: '#{$button}.underline-offset-4';
+$button-ghost: '#{$button}:not(.bg-primary, .bg-secondary, .border-border, .text-destructive, .underline-offset-4)';
+$button-small: '#{$button}.h-8, #{$button}.h-6';
+$button-icon: '#{$button}[class*="size-"]';
+$button-disabled: '#{$button}:is(:disabled, [data-disabled="true"])';
+
+// --- Text fields ---
+$input: '[data-slot="input"]';
+$textarea: '[data-slot="textarea"]';
+$select-trigger: '[data-slot="select-trigger"]';
+$label: '[data-slot="label"], [data-slot="field-label"]';
+
+// --- Checkbox (hlm-checkbox) ---
+$checkbox: '[data-slot="checkbox"] [role="checkbox"]';
+$checkbox-on: '[data-slot="checkbox"] [role="checkbox"]:is([data-state="checked"], [data-state="indeterminate"])';
+
+// --- Radio (hlm-radio) ---
+$radio-item: '[data-slot="radio-group-item"]';
+$radio: '[data-slot="radio-group-indicator"]';
+$radio-dot: '[data-slot="radio-group-indicator"] > div';
+$radio-on: '[data-checked="true"] [data-slot="radio-group-indicator"]';
+$radio-dot-on: '[data-checked="true"] [data-slot="radio-group-indicator"] > div';
+
+// --- Switch (hlm-switch) ---
+$switch: '[data-slot="switch"] [role="switch"]';
+$switch-on: '[data-slot="switch"] [role="switch"][data-state="checked"]';
+$switch-thumb: '[data-slot="switch-thumb"]';
+$switch-thumb-on: '[data-slot="switch-thumb"][data-state="checked"]';
+
+// --- Progress (hlm-progress) ---
+$progress: '[data-slot="progress"]';
+$progress-bar: '[data-slot="progress-indicator"]';
+
+// --- Tabs (hlm-tabs) ---
+$tabs-list: '[data-slot="tabs-list"]:not([data-variant="line"])';
+$tab: '[data-slot="tabs-list"]:not([data-variant="line"]) [data-slot="tabs-trigger"]';
+$tab-active: '[data-slot="tabs-list"]:not([data-variant="line"]) [data-slot="tabs-trigger"][data-state="active"]';
+
+// --- Card (hlm-card) ---
+$card: '[data-slot="card"]';
+$card-title: '[data-slot="card-title"]';
+$card-description: '[data-slot="card-description"]';
+
+// --- Badge (hlm-badge) ---
+$badge: '[data-slot="badge"]';
+
+// --- Alert (hlmAlert): tones come from base/_tones.scss as --sn-alert-tone ---
+$alert: '[data-slot="alert"]';
+$alert-destructive: '[data-slot="alert"].text-destructive';
+$alert-toned: '[data-slot="alert"]:is(.text-destructive, [class*="sn-tone-"])';
+// ng-icon sets its color in its own later @layer: skins set --ng-icon__color, not color
+$alert-icon: '[data-slot="alert"] > ng-icon';
+$alert-title: '[data-slot="alert-title"]';
+$alert-description: '[data-slot="alert-description"]';
+
+// --- Table (hlmTable) ---
+$table-container: '[data-slot="table-container"]';
+$table: '[data-slot="table"]';
+$table-head: '[data-slot="table-head"]';
+$table-cell: '[data-slot="table-cell"]';
+$table-row: '[data-slot="table-row"]';
+$table-header-row: '[data-slot="table-header"] > [data-slot="table-row"]';
+$table-body-row: '[data-slot="table-body"] > [data-slot="table-row"]';
+$table-row-selected: '[data-slot="table-row"][data-state="selected"]';
+$table-footer: '[data-slot="table-footer"]';
+$table-caption: '[data-slot="table-caption"]';
+
+// --- Separator (hlmSeparator) ---
+$separator: '[data-slot="separator"]';
+
+// --- Field (hlmField): legend, description and error text ---
+$field-legend: '[data-slot="field-legend"]';
+$field-description: '[data-slot="field-description"]';
+$field-error: '[data-slot="field-error"]';
+$text-field-invalid: ':is([data-slot="input"], [data-slot="textarea"], [data-slot="select-trigger"]):is([data-matches-spartan-invalid="true"], [aria-invalid="true"])';
+
+// --- Slider (hlm-slider): brain's attribute directives are the stable hooks ---
+$slider-track: '[brnSliderTrack]';
+$slider-range: '[brnSliderRange]';
+$slider-thumb: '[brnSliderThumb]';
+
+// ============================================================================
+//  Overlays. They render in the CDK overlay container, which is still inside
+//  <html>, so `.t-win …` selectors reach them.
+// ============================================================================
+
+// --- Menus: dropdown menu panel and the select list share one look ---
+$menu: '[data-slot="dropdown-menu"], hlm-select-content';
+$menu-item: '[data-slot="dropdown-menu-item"], [data-slot="dropdown-menu-checkbox-item"], [data-slot="dropdown-menu-radio-item"], [data-slot="dropdown-menu-sub-trigger"], [data-slot="select-item"]';
+$menu-item-highlighted: ':is(#{$menu-item}):is(:hover, :focus, [data-highlighted])';
+$menu-item-destructive: '[data-slot="dropdown-menu-item"][data-variant="destructive"]';
+$menu-separator: '[data-slot="dropdown-menu-separator"], [data-slot="select-separator"]';
+$menu-label: '[data-slot="dropdown-menu-label"], [data-slot="select-label"]';
+$menu-shortcut: '[data-slot="dropdown-menu-shortcut"]';
+
+// --- Dialogs: hlm-dialog and hlm-alert-dialog ---
+$dialog: '[data-slot="dialog-content"], [data-slot="alert-dialog-content"]';
+$alert-dialog: '[data-slot="alert-dialog-content"]';
+$dialog-header: '[data-slot="dialog-header"], [data-slot="alert-dialog-header"]';
+$dialog-title: '[data-slot="dialog-title"], [data-slot="alert-dialog-title"]';
+$dialog-description: '[data-slot="dialog-description"], [data-slot="alert-dialog-description"]';
+$dialog-footer: '[data-slot="dialog-footer"], [data-slot="alert-dialog-footer"]';
+$dialog-footer-button: ':is([data-slot="dialog-footer"], [data-slot="alert-dialog-footer"]) > :is(button, [data-slot="button"])';
+// The dimmed backdrop behind modal dialogs (CDK; menus use a transparent one)
+$backdrop: '.cdk-overlay-backdrop:not(.cdk-overlay-transparent-backdrop)';
+
+// --- Tooltip (hlmTooltip): brain renders the bubble as <ng-component>;
+//     its transform-origin class is the only stable mark.
+$tooltip: '[class*="tooltip-content-transform-origin"]';
+$tooltip-arrow: '[class*="tooltip-content-transform-origin"] > span:has(> svg)';
+
+// --- Focus: everything that shows the platform focus ring ---
+$focusable: '#{$button}, [role="checkbox"], [role="switch"], [role="tab"], #{$select-trigger}, #{$slider-thumb}';
+$text-field: '#{$input}, #{$textarea}';

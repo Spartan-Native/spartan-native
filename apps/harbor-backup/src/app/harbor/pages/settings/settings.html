@@ -1,0 +1,263 @@
+<hlm-tabs tab="general" class="settings">
+  <hlm-tabs-list aria-label="Settings sections">
+    <button hlmTabsTrigger="general">General</button>
+    <button hlmTabsTrigger="backups">Backups</button>
+    <button hlmTabsTrigger="notifications">Notifications</button>
+    <button hlmTabsTrigger="advanced">Advanced</button>
+    <button hlmTabsTrigger="about">About</button>
+  </hlm-tabs-list>
+
+  <!-- General ------------------------------------------------------------------------ -->
+  <div hlmTabsContent="general" class="panel">
+    <sn-settings-group title="Startup">
+      <sn-settings-row title="Launch at login" subtitle="Start Harbor in the background when you sign in">
+        <ng-icon snSettingsIcon name="lucidePower" />
+        <hlm-switch aria-label="Launch at login" [checked]="s().launchAtLogin" (checkedChange)="store.updateSettings({ launchAtLogin: $event })" />
+      </sn-settings-row>
+      <sn-settings-row *snPlatformIf="'macos'; else trayRow" title="Show in menu bar" subtitle="Backup status and Back up now, one click away">
+        <ng-icon snSettingsIcon name="lucideAppWindow" />
+        <hlm-switch aria-label="Show in menu bar" [checked]="s().showInMenuBar" (checkedChange)="store.updateSettings({ showInMenuBar: $event })" />
+      </sn-settings-row>
+      <ng-template #trayRow>
+        <sn-settings-row title="Show in system tray" subtitle="Backup status and Back up now, one click away">
+          <ng-icon snSettingsIcon name="lucideAppWindow" />
+          <hlm-switch aria-label="Show in system tray" [checked]="s().showInMenuBar" (checkedChange)="store.updateSettings({ showInMenuBar: $event })" />
+        </sn-settings-row>
+      </ng-template>
+    </sn-settings-group>
+
+    <sn-settings-group title="Appearance" description="System follows your device's light or dark setting.">
+      <sn-settings-row title="Theme">
+        <ng-icon snSettingsIcon name="lucideSunMoon" />
+        <hlm-radio-group class="radios" aria-label="Theme" [value]="s().appearance" (valueChange)="setAppearance($event)">
+          @for (option of ['System', 'Light', 'Dark']; track option) {
+            <hlm-radio [value]="option" [inputId]="'appearance-' + option"><hlm-radio-indicator indicator />{{ option }}</hlm-radio>
+          }
+        </hlm-radio-group>
+      </sn-settings-row>
+      <sn-settings-row title="Language">
+        <ng-icon snSettingsIcon name="lucideLanguages" />
+        <hlm-native-select selectId="settings-language" aria-label="Language" [value]="s().language" (valueChange)="store.updateSettings({ language: $event ?? 'en' })">
+          @for (l of languages; track l.value) {
+            <option hlmNativeSelectOption [value]="l.value">{{ l.label }}</option>
+          }
+        </hlm-native-select>
+      </sn-settings-row>
+    </sn-settings-group>
+  </div>
+
+  <!-- Backups ------------------------------------------------------------------------ -->
+  <div hlmTabsContent="backups" class="panel">
+    <sn-settings-group title="Backups" description="Choose when and how backups run.">
+      <sn-settings-row title="Automatic backups" subtitle="Run your schedules in the background">
+        <ng-icon snSettingsIcon name="lucideClock" />
+        <hlm-switch aria-label="Automatic backups" [checked]="s().automaticBackups" (checkedChange)="store.updateSettings({ automaticBackups: $event })" />
+      </sn-settings-row>
+      <sn-settings-row title="Back up on battery" subtitle="Otherwise backups wait until the device is plugged in">
+        <ng-icon snSettingsIcon name="lucideBatteryCharging" />
+        <hlm-switch aria-label="Back up on battery" [checked]="s().backUpOnBattery" (checkedChange)="store.updateSettings({ backUpOnBattery: $event })" />
+      </sn-settings-row>
+      <sn-settings-row title="Encrypt backups" subtitle="AES-256, with a key stored in the system keychain">
+        <ng-icon snSettingsIcon name="lucideShieldCheck" />
+        <hlm-switch aria-label="Encrypt backups" [checked]="s().encrypt" (checkedChange)="store.updateSettings({ encrypt: $event })" />
+      </sn-settings-row>
+      <sn-settings-row title="Compression" subtitle="Higher levels save space but take longer">
+        <ng-icon snSettingsIcon name="lucideArchive" />
+        <hlm-toggle-group type="single" variant="outline" size="sm" [nullable]="false" aria-label="Compression" [value]="s().compression" (valueChange)="setCompression($event)">
+          @for (level of compressionLevels; track level) {
+            <button hlmToggleGroupItem [value]="level">{{ level }}</button>
+          }
+        </hlm-toggle-group>
+      </sn-settings-row>
+      <sn-settings-row title="Bandwidth limit" subtitle="For uploads to network and cloud destinations">
+        <ng-icon snSettingsIcon name="lucideGauge" />
+        <div class="slider">
+          <hlm-slider aria-label="Bandwidth limit" [min]="0" [max]="100" [step]="5" [value]="[s().bandwidthLimitMbps]" (valueChange)="setBandwidth($event)" />
+          <output class="readout" aria-live="polite">{{ bandwidthLabel() }}</output>
+        </div>
+      </sn-settings-row>
+    </sn-settings-group>
+
+    <sn-settings-group title="Excluded folders" description="These folders and patterns are never backed up.">
+      @for (entry of s().excluded; track entry) {
+        <sn-settings-row [title]="entry">
+          <ng-icon snSettingsIcon name="lucideFolder" />
+          <span hlmBadge variant="outline">{{ isPattern(entry) ? 'Pattern' : 'Folder' }}</span>
+          <button hlmBtn variant="ghost" size="icon-sm" [attr.aria-label]="'Remove ' + entry" (click)="removeExclusion(entry)">
+            <ng-icon name="lucideX" />
+          </button>
+        </sn-settings-row>
+      } @empty {
+        <sn-settings-row title="Nothing is excluded" />
+      }
+      <sn-settings-row title="Add exclusion" subtitle="A folder name or a pattern such as *.log">
+        <hlm-input-group class="add">
+          <input hlmInputGroupInput #add aria-label="Folder or pattern to exclude" placeholder="e.g. Downloads"
+            [value]="newExclusion()" (input)="newExclusion.set(add.value)" (keydown.enter)="addExclusion()" />
+          <hlm-input-group-addon align="inline-end">
+            <button hlmInputGroupButton [disabled]="!newExclusion().trim()" (click)="addExclusion()"><ng-icon name="lucidePlus" />Add</button>
+          </hlm-input-group-addon>
+        </hlm-input-group>
+      </sn-settings-row>
+    </sn-settings-group>
+
+    <hlm-collapsible class="exclusions">
+      <button hlmCollapsibleTrigger hlmBtn variant="ghost" size="sm" class="disclosure">
+        Advanced exclusions <ng-icon name="lucideChevronDown" />
+      </button>
+      <hlm-collapsible-content class="exclusions-content">
+        <label hlmLabel for="settings-patterns">Exclusion patterns, one per line</label>
+        <textarea hlmTextarea id="settings-patterns" rows="4" #patterns class="mono"
+          [value]="s().excludedPatterns" (input)="store.updateSettings({ excludedPatterns: patterns.value })"></textarea>
+      </hlm-collapsible-content>
+    </hlm-collapsible>
+  </div>
+
+  <!-- Notifications ------------------------------------------------------------------- -->
+  <div hlmTabsContent="notifications" class="panel">
+    <sn-settings-group title="Notify me when" description="Harbor uses your system's notifications.">
+      <sn-settings-row title="A backup completes">
+        <hlm-checkbox aria-label="Notify when a backup completes" [checked]="s().notifyOnSuccess" (checkedChange)="store.updateSettings({ notifyOnSuccess: $event })" />
+      </sn-settings-row>
+      <sn-settings-row title="A backup finishes with warnings" subtitle="For example, skipped files">
+        <hlm-checkbox aria-label="Notify when a backup finishes with warnings" [checked]="s().notifyOnWarning" (checkedChange)="store.updateSettings({ notifyOnWarning: $event })" />
+      </sn-settings-row>
+      <sn-settings-row title="A backup fails">
+        <hlm-checkbox aria-label="Notify when a backup fails" [checked]="s().notifyOnFailure" (checkedChange)="store.updateSettings({ notifyOnFailure: $event })" />
+      </sn-settings-row>
+    </sn-settings-group>
+    <div class="actions">
+      <button hlmBtn variant="outline" (click)="sendTestNotification()">Send a test notification</button>
+    </div>
+  </div>
+
+  <!-- Advanced ----------------------------------------------------------------------- -->
+  <div hlmTabsContent="advanced" class="panel">
+    <div hlmAlert class="sn-tone-warning">
+      <ng-icon name="lucideTriangleAlert" />
+      <h2 hlmAlertTitle>Change these only if you need to</h2>
+      <p hlmAlertDescription>The defaults suit most setups. Support may ask you to change them.</p>
+    </div>
+
+    <hlm-accordion>
+      <hlm-accordion-item [isOpened]="true">
+        <hlm-accordion-trigger>Logs</hlm-accordion-trigger>
+        <hlm-accordion-content>
+          <sn-settings-group>
+            <sn-settings-row title="Log level" subtitle="Debug logs grow quickly">
+              <hlm-select [value]="s().logLevel" (valueChange)="setLogLevel($event)">
+                <hlm-select-trigger class="select" aria-label="Log level"><hlm-select-value /></hlm-select-trigger>
+                <hlm-select-content *hlmSelectPortal>
+                  @for (level of logLevels; track level) {
+                    <hlm-select-item [value]="level">{{ level }}</hlm-select-item>
+                  }
+                </hlm-select-content>
+              </hlm-select>
+            </sn-settings-row>
+            <sn-settings-row title="Logs folder">
+              <button hlmBtn variant="outline" size="sm" (click)="openLogsFolder()"><ng-icon name="lucideFolderOpen" />Show</button>
+            </sn-settings-row>
+          </sn-settings-group>
+        </hlm-accordion-content>
+      </hlm-accordion-item>
+
+      <hlm-accordion-item>
+        <hlm-accordion-trigger>Network</hlm-accordion-trigger>
+        <hlm-accordion-content>
+          <sn-settings-group>
+            <sn-settings-row title="Use system proxy">
+              <hlm-switch aria-label="Use system proxy" [checked]="s().useSystemProxy" (checkedChange)="store.updateSettings({ useSystemProxy: $event })" />
+            </sn-settings-row>
+            <sn-settings-row title="Back up on metered connections" subtitle="Mobile hotspots and capped Wi-Fi">
+              <hlm-switch aria-label="Back up on metered connections" [checked]="s().allowMetered" (checkedChange)="store.updateSettings({ allowMetered: $event })" />
+            </sn-settings-row>
+          </sn-settings-group>
+        </hlm-accordion-content>
+      </hlm-accordion-item>
+
+      <hlm-accordion-item>
+        <hlm-accordion-trigger>Danger zone</hlm-accordion-trigger>
+        <hlm-accordion-content>
+          <sn-settings-group>
+            <sn-settings-row title="Reset all settings" subtitle="Your schedules and destinations are kept">
+              <hlm-alert-dialog>
+                <button hlmBtn variant="outline" size="sm" hlmAlertDialogTrigger>Reset…</button>
+                <hlm-alert-dialog-content *hlmAlertDialogPortal="let ctx">
+                  <hlm-alert-dialog-header>
+                    <h2 hlmAlertDialogTitle>Reset all settings?</h2>
+                    <p hlmAlertDialogDescription>Every preference goes back to its default. Schedules and destinations are not changed.</p>
+                  </hlm-alert-dialog-header>
+                  <hlm-alert-dialog-footer>
+                    <button hlmAlertDialogCancel>Cancel</button>
+                    <button hlmAlertDialogAction variant="destructive" (click)="resetSettings(); ctx.close()">Reset</button>
+                  </hlm-alert-dialog-footer>
+                </hlm-alert-dialog-content>
+              </hlm-alert-dialog>
+            </sn-settings-row>
+            <sn-settings-row title="Erase local cache" [subtitle]="cacheLabel()">
+              <hlm-alert-dialog>
+                <button hlmBtn variant="destructive" size="sm" hlmAlertDialogTrigger [disabled]="store.localCacheMb() === 0">Erase…</button>
+                <hlm-alert-dialog-content *hlmAlertDialogPortal="let ctx">
+                  <hlm-alert-dialog-header>
+                    <h2 hlmAlertDialogTitle>Erase the local cache?</h2>
+                    <p hlmAlertDialogDescription>Your backups are not affected. Browsing and restoring are slower until the cache is rebuilt.</p>
+                  </hlm-alert-dialog-header>
+                  <hlm-alert-dialog-footer>
+                    <button hlmAlertDialogCancel>Cancel</button>
+                    <button hlmAlertDialogAction variant="destructive" (click)="eraseCache(); ctx.close()">Erase</button>
+                  </hlm-alert-dialog-footer>
+                </hlm-alert-dialog-content>
+              </hlm-alert-dialog>
+            </sn-settings-row>
+          </sn-settings-group>
+        </hlm-accordion-content>
+      </hlm-accordion-item>
+    </hlm-accordion>
+  </div>
+
+  <!-- About -------------------------------------------------------------------------- -->
+  <div hlmTabsContent="about" class="panel">
+    <div hlmItem variant="outline">
+      <div hlmItemMedia><img class="app-icon" src="icons/icon.svg" alt="" /></div>
+      <div hlmItemContent>
+        <h2 hlmLarge>Harbor Backup</h2>
+        <p hlmMuted>Version 2.4.0 (build 2611) · Spartan Native sample app</p>
+      </div>
+      <div hlmItemActions>
+        <button hlmBtn variant="outline" size="sm" (click)="checkForUpdates()">Check for updates</button>
+      </div>
+    </div>
+
+    <sn-settings-group title="Project">
+      <sn-settings-row title="Maintainers">
+        <div hlmAvatarGroup role="list" aria-label="Maintainers">
+          @for (m of maintainers; track m.initials) {
+            <span hlmAvatar size="sm" role="listitem" [attr.aria-label]="m.name" [attr.title]="m.name">
+              <span hlmAvatarFallback aria-hidden="true">{{ m.initials }}</span>
+            </span>
+          }
+        </div>
+      </sn-settings-row>
+      <sn-settings-row title="Licenses" subtitle="Open-source software in Harbor">
+        <hlm-hover-card>
+          <button hlmBtn variant="link" size="sm" hlmHoverCardTrigger>Third-party licenses</button>
+          <hlm-hover-card-content *hlmHoverCardPortal>
+            <ul hlmUl class="licenses">
+              @for (l of licenses; track l) {
+                <li>{{ l }}</li>
+              }
+            </ul>
+          </hlm-hover-card-content>
+        </hlm-hover-card>
+      </sn-settings-row>
+    </sn-settings-group>
+
+    <sn-settings-group title="Keyboard shortcuts">
+      @for (sc of shortcuts; track sc.keys) {
+        <sn-settings-row [title]="sc.label">
+          <kbd hlmKbd [snShortcut]="sc.keys"></kbd>
+        </sn-settings-row>
+      }
+    </sn-settings-group>
+  </div>
+</hlm-tabs>

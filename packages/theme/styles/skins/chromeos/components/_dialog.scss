@@ -1,0 +1,55 @@
+// ============================================================================
+//  ChromeOS · Dialog and alert dialog: M3 basic dialog. 28px corners,
+//  24px headline in regular weight, actions at the end.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$backdrop} {
+      background: var(--sn-color-scrim);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    :is(#{h.$dialog}) {
+      width: min(var(--sn-dialog-width), calc(100vw - 2rem));
+      max-width: none;
+      gap: #{px(16)};
+      padding: var(--sn-dialog-padding);
+      border: 0;
+      border-radius: var(--sn-radius-overlay);
+      background: var(--sn-color-acrylic);
+      box-shadow: var(--sn-shadow-window);
+      color: var(--sn-color-fg);
+      text-align: start;
+    }
+
+    :is(#{h.$dialog-header}) {
+      place-items: start;
+      text-align: start;
+    }
+
+    :is(#{h.$dialog-title}) {
+      font-size: px(24);
+      font-weight: 400;
+    }
+
+    :is(#{h.$dialog-description}) {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size);
+    }
+
+    :is(#{h.$dialog-footer}) {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: #{px(8)};
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+  }
+}

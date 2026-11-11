@@ -1,0 +1,32 @@
+// ============================================================================
+//  KDE Plasma · Alert: Kirigami InlineMessage. A tinted box with a colored
+//  frame; the accent by default, the tone when there is one.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$alert} {
+      padding: px(10) px(12);
+      border: 1px solid var(--sn-alert-tone, var(--sn-color-primary));
+      border-radius: var(--sn-radius-surface);
+      background: color-mix(in srgb, var(--sn-alert-tone, var(--sn-color-primary)) 12%, var(--sn-color-surface-solid));
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size);
+    }
+
+    #{h.$alert-icon} {
+      --ng-icon__color: var(--sn-alert-tone, var(--sn-color-primary));
+    }
+
+    #{h.$alert-title} {
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    #{h.$alert-description} {
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size);
+    }
+  }
+}

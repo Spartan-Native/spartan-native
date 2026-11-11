@@ -1,0 +1,58 @@
+// ============================================================================
+//  GNOME · AdwDialog (hlm-dialog) and AdwAlertDialog (hlm-alert-dialog)
+//  Opaque card with 14px corners; alerts are centered with equal-width buttons.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$backdrop} {
+      background: var(--sn-color-scrim);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    :is(#{h.$dialog}) {
+      gap: #{px(14)};
+      padding: var(--sn-dialog-padding);
+      border: 0;
+      border-radius: var(--sn-radius-overlay);
+      background: var(--sn-color-surface-solid);
+      box-shadow: var(--sn-shadow-overlay);
+      color: var(--sn-color-fg);
+    }
+
+    :is(#{h.$dialog-title}) {
+      font-size: calc(var(--sn-font-size) * 1.15);
+      font-weight: 700;
+    }
+
+    :is(#{h.$dialog-description}) {
+      color: var(--sn-color-fg);
+    }
+
+    // --- AdwAlertDialog: centered, equal buttons -----------------------------
+    #{h.$alert-dialog} {
+      width: min(var(--sn-dialog-width), calc(100vw - 2rem));
+      max-width: none;
+      text-align: center;
+
+      :is(#{h.$dialog-header}) {
+        place-items: center;
+        text-align: center;
+      }
+
+      :is(#{h.$dialog-footer}) {
+        display: flex;
+        flex-direction: row;
+        gap: #{px(12)};
+        margin-top: #{px(8)};
+      }
+
+      #{h.$dialog-footer-button} {
+        flex: 1;
+      }
+    }
+  }
+}

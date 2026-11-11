@@ -1,0 +1,45 @@
+// ============================================================================
+//  Windows 11 · Slider (hlm-slider)
+//  4px track; a white thumb with an accent dot that grows on hover, shrinks on press.
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$slider-track} {
+      height: var(--sn-slider-track-height);
+      border-radius: var(--sn-radius-pill);
+      background: color-mix(in srgb, var(--sn-color-control-strong) 70%, transparent);
+    }
+
+    #{h.$slider-range} {
+      background: var(--sn-color-primary);
+    }
+
+    #{h.$slider-thumb} {
+      width: var(--sn-slider-thumb-width);
+      height: var(--sn-slider-thumb-height);
+      border: 1px solid var(--sn-color-stroke);
+      background: var(--sn-color-surface-solid);
+      box-shadow: 0 1px 2px rgb(0 0 0 / 0.16);
+
+      // the accent dot
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 22%;
+        border-radius: 50%;
+        background: var(--sn-color-primary);
+        transition: inset var(--sn-duration-fast) var(--sn-easing);
+      }
+
+      &:hover::before {
+        inset: 16%;
+      }
+
+      &:active::before {
+        inset: 27%;
+      }
+    }
+  }
+}

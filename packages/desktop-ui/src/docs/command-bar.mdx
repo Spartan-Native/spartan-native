@@ -1,0 +1,112 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/command-bar.stories';
+
+<Meta of={Stories} />
+
+# Command bar
+
+`<sn-command-bar>` is the command surface of a window or page: a title, the primary commands for the current
+view, and an overflow menu for secondary commands. You write it once; it is laid out as the command surface of
+the current OS. Use it at the top of a content view whose commands act on that view (New, Share, Delete over a
+file list). For app-wide menus use a menu bar; for commands on one item use a context menu.
+
+| OS | Renders as | Layout |
+| --- | --- | --- |
+| Windows 11 | **CommandBar** (native) | Title left, commands right, icon + label beside, `…` overflow |
+| Windows 10 | UWP CommandBar | As Windows 11, labels under the icons, square buttons |
+| macOS 26 | Unified NSToolbar | Bold title left, icon-only commands in one Liquid Glass capsule, `…` overflow |
+| macOS 13–15 | Unified NSToolbar | Bold title left, icon-only toolbar buttons with a hover bezel |
+| GNOME | AdwHeaderBar | Icon-only flat buttons at the start, bold title centered, menu button (☰) at the end |
+| KDE Plasma | KToolBar | Title, separator, tool buttons with text beside the icon, ☰ at the end; Breeze accent frame on hover |
+| ChromeOS | M3 top app bar (small) | Large title left, round icon buttons right, `⋮` overflow |
+
+On icon-only skins the label stays as the button's accessible name and becomes its tooltip.
+
+<Canvas of={Stories.InAWindow} />
+
+On macOS and GNOME the toolbar and header bar are the title bar, so the demo puts `<sn-window-controls>` in the
+bar's start or end slot there; on the other OSes an `<sn-title-bar>` sits above it.
+
+<Canvas of={Stories.WithOverflow} />
+
+<Canvas of={Stories.DisabledCommands} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnCommandBarImports } from '@spartan-native/desktop-ui';
+import { HlmDropdownMenuImports } from '@spartan-ng/helm/dropdown-menu';
+import { provideIcons } from '@ng-icons/core';
+import { lucidePlus, lucideShare2, lucideTrash2 } from '@ng-icons/lucide';
+
+@Component({
+  imports: [SnCommandBarImports, HlmDropdownMenuImports],
+  providers: [provideIcons({ lucidePlus, lucideShare2, lucideTrash2 })],
+  …
+})`}
+/>
+
+<Source
+  language="html"
+  code={`<sn-command-bar title="Documents">
+  <button snCommand icon="lucidePlus" label="New" (click)="create()"></button>
+  <button snCommand icon="lucideShare2" label="Share" [disabled]="!selection()"></button>
+  <button snCommand icon="lucideTrash2" label="Delete" [disabled]="!selection()"></button>
+
+  <ng-template snCommandOverflow>
+    <div hlmDropdownMenu>
+      <button hlmDropdownMenuItem (triggered)="rename()">Rename</button>
+      <button hlmDropdownMenuItem (triggered)="copyLink()">Copy link</button>
+    </div>
+  </ng-template>
+</sn-command-bar>`}
+/>
+
+## API
+
+### `sn-command-bar` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | `''` | Title of the view. Also the toolbar's accessible name. |
+| `ariaLabel` | `string` | `''` | Accessible name of the toolbar when it should differ from `title`. |
+| `overflowLabel` | `string` | `'More options'` | Accessible name and tooltip of the overflow button. |
+
+No outputs: each command is a plain `<button>`, listen to its `(click)`.
+
+### `button[snCommand]` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` | required | The command's text. Visible on Windows and KDE; accessible name and tooltip elsewhere. |
+| `icon` | `string` | `''` | An `@ng-icons` name the app registered with `provideIcons()`. Or project your own `<svg>` / `<ng-icon>`. Without any icon the label always shows. |
+| `disabled` | `boolean` | `false` | Disables the command; arrow keys skip it. |
+| `hideLabel` | `boolean` | `false` | Icon-only on every OS (like an AppBarButton with a collapsed label). |
+
+### Content slots
+
+| Selector | Where it goes |
+| --- | --- |
+| `button[snCommand]` (default slot) | The primary commands, inside the toolbar. |
+| `ng-template[snCommandOverflow]` | The overflow menu's content. Put an `hlmDropdownMenu` (or any `cdkMenu`) inside. The overflow button only appears when this is present. |
+| `[snCommandBarStart]` | Before the title, outside the toolbar: back button, sidebar toggle, macOS window controls. |
+| `[snCommandBarEnd]` | After the commands, outside the toolbar: search field, GNOME window controls. |
+
+### CSS hooks
+
+| Hook | On | Values |
+| --- | --- | --- |
+| `data-slot` | host, each command | `sn-command-bar`, `sn-command` |
+| `data-family` | host | `windows`, `macos`, `linux`, `chromeos`, `web` |
+| `data-skin` | host | `win`, `w10`, `mac`, `macc`, `gtk`, `qt`, `cros`, `web` |
+| `data-icon-only` | command | present when the label is hidden |
+| `.sn-chrome` | host | the theme dims the bar when the window is inactive |
+
+## Accessibility
+
+- The commands and the overflow button form one `role="toolbar"`, named by `title` (or `ariaLabel`).
+- Roving tabindex: Tab enters the toolbar once, on the last focused command (or the first enabled one).
+- ← → move between commands and wrap; Home and End jump to the first and last. Disabled commands are skipped. The arrow direction follows RTL.
+- The overflow button has `aria-haspopup="menu"` and `aria-expanded`. Enter, Space or ↓ open the menu and focus its first item, ↑ its last; Esc closes it and returns focus to the button.
+- Icon-only commands keep their label as visually hidden text, so screen readers announce it, and show it as a tooltip.

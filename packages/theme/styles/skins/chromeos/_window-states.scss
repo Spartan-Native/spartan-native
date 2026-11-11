@@ -1,0 +1,19 @@
+// ============================================================================
+//  ChromeOS · Focus and window states
+// ============================================================================
+@use '../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-cros {
+    :is(#{h.$focusable}):focus-visible {
+      outline: var(--sn-focus-outline);
+      outline-offset: var(--sn-focus-offset);
+      box-shadow: var(--sn-focus-shadow);
+    }
+  }
+
+  // Inactive window: only the title bar text dims
+  .t-cros.inactive .sn-chrome {
+    color: var(--sn-color-fg-muted);
+  }
+}

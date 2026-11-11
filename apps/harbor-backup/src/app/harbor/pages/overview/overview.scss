@@ -1,0 +1,112 @@
+// Overview page layout. Visuals come from the theme tokens and stock components.
+
+:host {
+  display: block;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 16px;
+  padding: 8px 24px 24px;
+
+  .wide {
+    grid-column: 1 / -1;
+  }
+}
+
+h2 {
+  font-size: var(--sn-font-size);
+  font-weight: var(--sn-font-weight-strong);
+}
+
+p {
+  margin: 0;
+}
+
+.backup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.backup-name {
+  font-size: calc(var(--sn-font-size) * 1.45);
+  font-weight: var(--sn-font-weight-strong);
+}
+
+.backup-size {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--sn-font-size-small);
+}
+
+.actions {
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.frequency {
+  min-width: 150px;
+}
+
+.activity {
+  margin: 0;
+  padding-block: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-block: 10px;
+    border-top: 1px solid var(--sn-color-border);
+  }
+}
+
+.activity-detail {
+  font-size: var(--sn-font-size-small);
+}
+
+.storage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+}
+
+.storage-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.storage-name {
+  font-weight: var(--sn-font-weight-strong);
+}
+
+.storage-size {
+  font-size: var(--sn-font-size-small);
+}

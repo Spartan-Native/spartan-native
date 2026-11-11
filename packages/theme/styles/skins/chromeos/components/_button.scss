@@ -1,0 +1,118 @@
+// ============================================================================
+//  ChromeOS · Button (hlmBtn): Material 3 common buttons
+//  outline → outlined, default → filled, secondary → tonal, ghost → text.
+//  States are M3 state layers: 8 % on hover, 12 % on press.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$button} {
+      height: var(--sn-control-height);
+      padding-inline: var(--sn-control-padding-x);
+      border: 1px solid transparent;
+      border-radius: var(--sn-radius-control);
+      box-shadow: none;
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-control);
+      letter-spacing: 0.01em;
+      translate: none;
+      transition: background-color var(--sn-duration-fast) var(--sn-easing), box-shadow var(--sn-duration-fast);
+    }
+
+    #{h.$button-small} {
+      height: var(--sn-control-height-small);
+      padding-inline: calc(var(--sn-control-padding-x) * 0.75);
+    }
+
+    #{h.$button-icon} {
+      width: var(--sn-control-height);
+      padding: 0;
+    }
+
+    // --- Outlined ---------------------------------------------------------------
+    #{h.$button-outline} {
+      border-color: var(--sn-color-border);
+      background: transparent;
+      color: var(--sn-color-primary);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary) 8%, transparent);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-primary) 12%, transparent);
+      }
+    }
+
+    // --- Filled ---------------------------------------------------------------------
+    #{h.$button-primary} {
+      border-color: var(--sn-color-primary);
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary), var(--sn-color-primary-fg) 8%);
+        box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-primary), var(--sn-color-primary-fg) 12%);
+        box-shadow: none;
+      }
+    }
+
+    // --- Tonal ---------------------------------------------------------------------------
+    #{h.$button-secondary} {
+      background: var(--sn-color-secondary);
+      color: var(--sn-color-secondary-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-secondary), var(--sn-color-secondary-fg) 8%);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-secondary), var(--sn-color-secondary-fg) 12%);
+      }
+    }
+
+    // --- Text button ---------------------------------------------------------------------
+    #{h.$button-ghost} {
+      padding-inline: #{px(12)};
+      background: transparent;
+      color: var(--sn-color-primary);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary) 8%, transparent);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-primary) 12%, transparent);
+      }
+    }
+
+    #{h.$button-destructive} {
+      border-color: var(--sn-color-danger);
+      background: var(--sn-color-danger);
+      color: var(--sn-color-danger-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-danger), var(--sn-color-danger-fg) 8%);
+      }
+    }
+
+    #{h.$button-link} {
+      color: var(--sn-color-accent-text);
+    }
+
+    // --- Disabled: 12 % container, 38 % label ----------------------------------------------
+    #{h.$button-disabled} {
+      border-color: transparent;
+      background: color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
+      color: color-mix(in srgb, var(--sn-color-fg) 38%, transparent);
+      box-shadow: none;
+      opacity: 1;
+    }
+  }
+}

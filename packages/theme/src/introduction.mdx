@@ -1,0 +1,24 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Theme/Introduction" />
+
+# @spartan-native/theme
+
+The **stock spartan/ui components**, unchanged, themed by Spartan Native.
+
+| Control | Where | What it sets |
+| --- | --- | --- |
+| **OS** | toolbar | Windows 11 · macOS 26 · GNOME |
+| **Transparency** | toolbar | the OS "reduce transparency" setting |
+| **Light / dark** | toolbar (theme switcher) | the OS color scheme |
+| **System accent** | Controls panel | the accent color every theme color is derived from |
+
+Every change goes through the real `applySpartanNative()`, the same call `provideSpartanNative()` makes in an app.
+
+Use the same toolbar in your own Storybook:
+
+```ts
+// .storybook/preview.ts
+import { spartanNativePreview } from '@spartan-native/theme/storybook';
+export default spartanNativePreview();
+```

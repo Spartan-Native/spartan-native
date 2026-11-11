@@ -1,0 +1,236 @@
+// Modal sheet per OS. The panel lives in a CDK overlay (outside :host), so the per-OS rules key off
+// the panel's own data-family / data-skin instead of :host(...).
+
+:host {
+  display: none; // everything renders in the overlay
+}
+
+.sheet {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    'title title title'
+    'body body body'
+    'actions actions actions';
+  width: min(var(--sn-dialog-width), calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+
+  // A macOS sheet hangs from the window (--sn-sheet-top, set when it opens): only the space below it counts.
+  &[data-family='macos'] {
+    max-height: calc(100vh - var(--sn-sheet-top, 0px) - 1rem);
+  }
+  box-sizing: border-box;
+  color: var(--sn-color-fg);
+  font-family: var(--sn-font-sans);
+  font-size: var(--sn-font-size);
+  line-height: var(--sn-line-height);
+  background: var(--sn-color-surface-solid);
+  border-radius: var(--sn-radius-overlay);
+  box-shadow: var(--sn-shadow-overlay);
+  animation: sn-sheet-in calc(var(--sn-duration-fast) * 2) var(--sn-easing);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.title {
+  grid-area: title;
+  margin: 0;
+  font-size: calc(var(--sn-font-size) * 1.08);
+  font-weight: var(--sn-font-weight-strong);
+}
+
+.body {
+  grid-area: body;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.actions {
+  grid-area: actions;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.cancel,
+.primary {
+  display: grid;
+
+  &:empty {
+    display: none;
+  }
+}
+
+@keyframes sn-sheet-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes sn-sheet-down {
+  from {
+    transform: translateY(-100%);
+  }
+}
+
+// --- macOS: a sheet hanging from the title bar ---------------------------------------------------
+.sheet[data-family='macos'] {
+  width: min(28rem, calc(100vw - 2rem));
+  gap: 1rem;
+  padding: var(--sn-dialog-padding);
+  margin-top: 0.375rem; // macOS 26 sheets float just below the title bar
+  border: 1px solid var(--sn-color-glass-border);
+  background: var(--sn-color-acrylic);
+  -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+  backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+  animation-name: sn-sheet-down;
+
+  .title {
+    font-weight: 700;
+  }
+}
+
+// macOS 13–15: flush with the title bar, square top corners
+.sheet[data-skin='macc'] {
+  margin-top: 0;
+  border-top: 0;
+  border-radius: 0 0 var(--sn-radius-overlay) var(--sn-radius-overlay);
+}
+
+// --- Windows: ContentDialog ------------------------------------------------------------------------
+.sheet[data-family='windows'] {
+  border: 1px solid var(--sn-color-stroke);
+
+  .title {
+    padding: var(--sn-dialog-padding) var(--sn-dialog-padding) 0.75rem;
+    font-size: var(--sn-font-size-title);
+  }
+
+  .body {
+    padding: 0 var(--sn-dialog-padding) var(--sn-dialog-padding);
+  }
+
+  // Footer band; buttons share the width, primary first
+  .actions {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    padding: var(--sn-dialog-padding);
+    background: var(--sn-color-bg);
+    border-top: 1px solid var(--sn-color-stroke);
+  }
+
+  .primary {
+    order: -1;
+  }
+}
+
+// Windows 10: no footer band
+.sheet[data-skin='w10'] .actions {
+  padding-top: 0;
+  background: none;
+  border-top: 0;
+}
+
+// --- GNOME (and unknown OS): AdwDialog with the buttons in the header bar --------------------------
+.sheet[data-skin='gtk'],
+.sheet[data-skin='web'] {
+  grid-template-areas:
+    'cancel title primary'
+    'body body body';
+
+  .title {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.875rem;
+    padding: 0 6rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .body {
+    padding: 0.75rem var(--sn-dialog-padding) var(--sn-dialog-padding);
+  }
+
+  .actions {
+    display: contents;
+  }
+
+  .cancel,
+  .primary {
+    grid-row: 1;
+    align-self: center;
+    margin: 0 0.375rem;
+  }
+
+  .cancel {
+    grid-column: 1;
+  }
+
+  .primary {
+    grid-column: 3;
+  }
+}
+
+// --- KDE: window-modal QDialog with a frame -----------------------------------------------------------
+.sheet[data-skin='qt'] {
+  border: 1px solid var(--sn-color-border);
+
+  .title {
+    padding: 0.375rem 0.75rem;
+    font-size: var(--sn-font-size);
+    text-align: center;
+    background: var(--sn-color-surface);
+    border-bottom: 1px solid var(--sn-color-border);
+  }
+
+  .body {
+    padding: var(--sn-dialog-padding);
+  }
+
+  .actions {
+    padding: 0 var(--sn-dialog-padding) var(--sn-dialog-padding);
+  }
+
+  // KDE button order: OK before Cancel
+  .primary {
+    order: -1;
+  }
+}
+
+// --- ChromeOS: Material 3 dialog --------------------------------------------------------------------
+.sheet[data-skin='cros'] {
+  gap: 1rem;
+  padding: var(--sn-dialog-padding);
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  // M3 dialog actions are text buttons
+  .actions ::ng-deep [data-slot='button'] {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    color: var(--sn-color-accent-text);
+  }
+
+  // …but a destructive action stays red (spartan's destructive variant carries text-destructive)
+  .actions ::ng-deep [data-slot='button'].text-destructive {
+    color: var(--sn-color-danger);
+  }
+
+  .actions {
+    gap: 0.25rem;
+  }
+}

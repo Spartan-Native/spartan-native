@@ -1,0 +1,18 @@
+{
+  "name": "@spartan-native/host-conformance",
+  "version": "0.0.0",
+  "description": "The conformance suite every @spartan-native/host-* adapter must pass: contract shape, capability flags, live appearance and focus events, graceful fallbacks.",
+  "keywords": [
+    "spartan-native",
+    "native-host",
+    "conformance",
+    "testing"
+  ],
+  "peerDependencies": {
+    "@spartan-native/theme": "0.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

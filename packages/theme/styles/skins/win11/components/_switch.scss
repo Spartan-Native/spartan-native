@@ -1,0 +1,53 @@
+// ============================================================================
+//  Windows 11 · ToggleSwitch (hlm-switch)
+//  Off: outlined track, small grey knob. On: accent track, white knob.
+//  The knob grows on hover, like WinUI.
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$switch} {
+      width: var(--sn-switch-width);
+      height: var(--sn-switch-height);
+      padding-inline: var(--sn-switch-inset);
+      border: var(--sn-switch-border) solid var(--sn-color-control-strong);
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-surface);
+      box-shadow: none;
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-fg) 5%, var(--sn-color-surface));
+      }
+    }
+
+    #{h.$switch-on} {
+      background: var(--sn-color-primary);
+      border-color: var(--sn-color-primary);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary) 90%, var(--sn-color-bg));
+      }
+    }
+
+    #{h.$switch-thumb} {
+      width: var(--sn-switch-thumb-width);
+      height: var(--sn-switch-thumb-height);
+      background: var(--sn-color-control-strong);
+      translate: 0 0;
+      transition: translate var(--sn-duration-fast) var(--sn-easing), width var(--sn-duration-fast), height var(--sn-duration-fast);
+    }
+
+    #{h.$switch-thumb-on} {
+      background: var(--sn-color-primary-fg);
+      translate: calc(
+          var(--sn-switch-width) - var(--sn-switch-thumb-width) - 2 * var(--sn-switch-inset) - 2 * var(--sn-switch-border)
+        )
+        0;
+    }
+
+    #{h.$switch}:hover #{h.$switch-thumb} {
+      scale: 1.17;
+    }
+  }
+}

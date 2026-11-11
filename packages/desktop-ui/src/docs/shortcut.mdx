@@ -1,0 +1,80 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/shortcut.stories';
+
+<Meta of={Stories} />
+
+# Shortcut
+
+`snShortcut` shows a keyboard shortcut in the OS's own notation. Write the shortcut once in a portable form
+(`mod+shift+s`) and it shows ⇧⌘S on macOS and Ctrl+Shift+S elsewhere. `formatShortcut()` is the same thing as a
+function, for menus, tooltips and anything that isn't a template. Use them wherever a shortcut is shown to the user.
+
+| OS | Shows `mod+shift+s` as | Notation |
+| --- | --- | --- |
+| Windows 11 | Ctrl+Shift+S | Words joined with `+`, Ctrl before Alt before Shift |
+| Windows 10 | Ctrl+Shift+S | As Windows 11 |
+| macOS 26 | ⇧⌘S | Symbols, no separators, in Apple's order ⌃ ⌥ ⇧ ⌘ |
+| macOS 13–15 | ⇧⌘S | As macOS 26 |
+| GNOME | Ctrl+Shift+S | As Windows |
+| KDE | Ctrl+Shift+S | As Windows |
+| ChromeOS | Ctrl+Shift+S | As Windows |
+
+`mod` is ⌘ on macOS and Ctrl everywhere else; on Windows and Linux `mod+ctrl` collapses to a single Ctrl.
+Delete and rename differ by OS: write `mod+backspace` (⌘⌫) and `enter` (↩) for macOS, `delete` (Del) and `f2` (F2)
+elsewhere, for example with [`*snPlatformIf`](?path=/docs/desktop-ui-platform-platform-if--docs).
+
+## Examples
+
+<Canvas of={Stories.Table} />
+
+Inline in text.
+
+<Canvas of={Stories.Inline} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnShortcut, formatShortcut } from '@spartan-native/desktop-ui';
+import { HlmKbdImports } from '@spartan-ng/helm/kbd';
+
+formatShortcut('mod+shift+s', 'macos');   // '⇧⌘S'
+formatShortcut('mod+shift+s', 'windows'); // 'Ctrl+Shift+S'`}
+/>
+
+<Source
+  language="html"
+  code={`<kbd hlmKbd snShortcut="mod+shift+s"></kbd>
+<kbd hlmKbd [snShortcut]="command.shortcut"></kbd>`}
+/>
+
+## API
+
+### `[snShortcut]` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `snShortcut` | `string` | required | The shortcut in portable notation. |
+
+### `formatShortcut(shortcut, family)`
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `shortcut` | `string` | Key names joined with `+`, any case. |
+| `family` | `PlatformFamily` | `'macos'` gives symbols; any other family gives Ctrl+ words. |
+
+Key names: `mod`, `ctrl`, `alt` (⌥ / Alt), `shift`, `enter`, `backspace`, `delete`, `escape`, `tab`, `space`,
+`up`, `down`, `left`, `right`, any single character and any F-key. Unknown names are shown upper-cased.
+
+### CSS hooks
+
+| Hook | Meaning |
+| --- | --- |
+| `data-slot="sn-shortcut"` | The element. |
+| `data-family`, `data-skin` | The OS family and skin it is formatted for. |
+
+## Accessibility
+
+- The directive sets the element's text and its `aria-label` to the formatted shortcut, and updates both when the
+  OS changes.
+- Use it on a `<kbd>` element so the shortcut is marked up as keyboard input.

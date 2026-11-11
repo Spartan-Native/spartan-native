@@ -1,0 +1,17 @@
+// ============================================================================
+//  macOS 26 · Badge (hlmBadge): capsule
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$badge} {
+      height: px(20);
+      padding-inline: px(8);
+      border-radius: var(--sn-radius-pill);
+      font-size: var(--sn-font-size-small);
+      font-weight: var(--sn-font-weight-strong);
+    }
+  }
+}

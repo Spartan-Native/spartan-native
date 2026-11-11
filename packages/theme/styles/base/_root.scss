@@ -1,0 +1,56 @@
+@use '../hooks' as h;
+
+// ============================================================================
+//  Root: text scale, typography and desktop behaviors shared by every skin.
+// ============================================================================
+
+@layer spartan-native.base {
+  // rem follows the OS text size: 16px × --sn-text-scale.
+  // Every px() size in the skins, and Tailwind's spacing, grows with it.
+  :root {
+    font-size: calc(16px * var(--sn-text-scale, 1));
+  }
+
+  // Any element with a skin (usually <html>) gets the platform's text.
+  // The text size goes on <body> when the skin is on <html>: on the root it
+  // would also change rem, and shrink every px() size by 13/16 on macOS.
+  [data-sn-skin] {
+    font-family: var(--sn-font-sans);
+    line-height: var(--sn-line-height);
+    color: var(--sn-color-fg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  [data-sn-skin]:not(:root),
+  :root[data-sn-skin] body {
+    font-size: var(--sn-font-size);
+  }
+
+  // Text that spartan sizes with fixed Tailwind steps (text-sm, text-base)
+  // follows the platform scale instead.
+  :is(#{h.$card}, #{h.$card-description}, #{h.$radio-item}) {
+    font-size: var(--sn-font-size);
+  }
+
+  #{h.$card-title} {
+    font-size: var(--sn-font-size);
+    font-weight: var(--sn-font-weight-strong);
+  }
+
+  // Native menus never wrap an item; the menu grows instead.
+  :is(#{h.$menu-item}) {
+    white-space: nowrap;
+  }
+
+  // Desktop apps use the arrow cursor on controls, not the web's hand pointer…
+  [data-sn-skin] :is(button, [role='button'], [role='tab'], [role='switch'], [role='checkbox'], [role='radio'], label, summary) {
+    cursor: default;
+  }
+
+  // …and the text of controls and window chrome cannot be selected.
+  [data-sn-skin] :is(button, [role='tab'], label, [data-slot='badge'], .sn-chrome) {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}

@@ -1,0 +1,50 @@
+// ============================================================================
+//  KDE Plasma · Dialog and alert dialog: a framed window, buttons at the end
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$backdrop} {
+      background: var(--sn-color-scrim);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    :is(#{h.$dialog}) {
+      width: min(var(--sn-dialog-width), calc(100vw - 2rem));
+      max-width: none;
+      gap: #{px(12)};
+      padding: var(--sn-dialog-padding);
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-overlay);
+      background: var(--sn-color-bg);
+      box-shadow: var(--sn-shadow-window);
+      color: var(--sn-color-fg);
+      text-align: start;
+    }
+
+    :is(#{h.$dialog-header}) {
+      place-items: start;
+      text-align: start;
+    }
+
+    :is(#{h.$dialog-title}) {
+      font-size: calc(var(--sn-font-size) * 1.15);
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    :is(#{h.$dialog-description}) {
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size);
+    }
+
+    :is(#{h.$dialog-footer}) {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: #{px(6)};
+    }
+  }
+}

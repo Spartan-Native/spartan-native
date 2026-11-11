@@ -1,0 +1,24 @@
+// ============================================================================
+//  GNOME · Tooltip (hlmTooltip): the dark, translucent Adwaita bubble in both schemes
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$tooltip} {
+      padding: #{px(6)} #{px(10)};
+      border: 0;
+      border-radius: var(--sn-tooltip-radius);
+      background: rgb(0 0 0 / 0.8);
+      box-shadow: none;
+      color: #fff;
+      font-size: var(--sn-font-size-small);
+    }
+
+    // Adwaita tooltips have no arrow
+    #{h.$tooltip-arrow} {
+      display: none;
+    }
+  }
+}

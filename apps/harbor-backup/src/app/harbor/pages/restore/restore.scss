@@ -1,0 +1,246 @@
+// Restore page layout. Visuals come from the theme tokens and stock components.
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding: 0.5rem 1.5rem 1.5rem;
+}
+
+p,
+h2 {
+  margin: 0;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.snapshot {
+  min-width: 11rem;
+}
+
+.find {
+  flex: 1;
+  min-width: 10rem;
+  margin-inline-start: auto;
+  max-width: 16rem;
+}
+
+.match-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.match-folder {
+  font-size: var(--sn-font-size-small);
+}
+
+.crumb {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--sn-color-fg);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--sn-color-accent);
+    outline-offset: 2px;
+    border-radius: var(--sn-radius-control);
+  }
+}
+
+.restoring h2 {
+  font-size: var(--sn-font-size);
+  font-weight: var(--sn-font-weight-strong);
+}
+
+.restoring-body {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  hlm-progress {
+    flex: 1;
+  }
+}
+
+// --- The browser: folders | files, inspector on the trailing side ----------------------
+.browser {
+  flex: 1;
+  min-height: 16rem;
+  overflow: hidden;
+  border: 1px solid var(--sn-color-stroke);
+  border-radius: var(--sn-radius-surface);
+  background: var(--sn-color-surface-solid);
+}
+
+.folders {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  overflow: auto;
+
+  ng-icon {
+    flex: none;
+  }
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.count {
+  font-size: var(--sn-font-size-small);
+  color: var(--sn-color-fg-muted);
+}
+
+[data-selected] .count {
+  color: inherit;
+}
+
+.files {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+}
+
+.file-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  ng-icon {
+    flex: none;
+  }
+}
+
+.muted {
+  color: color-mix(in srgb, currentColor 62%, transparent);
+}
+
+.size {
+  text-align: end;
+}
+
+.status {
+  padding: 0.375rem 0.75rem;
+  border-top: 1px solid var(--sn-color-border);
+  font-size: var(--sn-font-size-small);
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding: 1rem 0.75rem;
+}
+
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.skeleton-icon {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+.skeleton-text {
+  flex: 1;
+  height: 0.875rem;
+}
+
+.skeleton-meta {
+  width: 3.5rem;
+  height: 0.875rem;
+}
+
+// --- Inspector content --------------------------------------------------------------------
+.versions {
+  gap: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.hint {
+  padding: 0.5rem 1rem;
+  color: var(--sn-color-fg-muted);
+}
+
+.menu {
+  min-width: 13rem;
+}
+
+// --- Restore to… sheet ------------------------------------------------------------------------
+.sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: min(22rem, 80vw);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+// Fixed columns: the name takes what is left and ellipsizes, so Modified and Size stay
+// visible next to the inspector (the cells don't wrap).
+.file-table {
+  table-layout: fixed;
+
+  .modified {
+    inline-size: 9rem;
+  }
+
+  .size {
+    inline-size: 5.5rem;
+  }
+
+  td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .file-name {
+    min-width: 0;
+
+    > span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

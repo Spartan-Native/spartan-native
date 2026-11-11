@@ -1,0 +1,4 @@
+// Windows 10 · Fluent (pre-Windows 11): `.t-win.t-w10`
+// A variant of win11: it inherits every .t-win rule and overrides only what differs.
+@use 'tokens';
+@use 'components';

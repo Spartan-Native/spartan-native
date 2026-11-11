@@ -1,0 +1,24 @@
+// ============================================================================
+//  Windows 11 · ToolTip (hlmTooltip): a light acrylic card, not an inverted bubble
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$tooltip} {
+      padding: #{px(5)} #{px(9)} #{px(7)};
+      border: 1px solid var(--sn-color-stroke);
+      border-radius: var(--sn-tooltip-radius);
+      background: var(--sn-color-surface-solid);
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.14);
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size-small);
+    }
+
+    // Fluent tooltips have no arrow
+    #{h.$tooltip-arrow} {
+      display: none;
+    }
+  }
+}

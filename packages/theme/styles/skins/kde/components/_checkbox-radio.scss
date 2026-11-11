@@ -1,0 +1,54 @@
+// ============================================================================
+//  KDE Plasma · Checkbox and radio: framed, accent frame on hover;
+//  a checked radio is a thick accent ring
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$checkbox} {
+      width: var(--sn-check-size);
+      height: var(--sn-check-size);
+      border: 1px solid var(--sn-color-control-strong);
+      border-radius: var(--sn-check-radius);
+      background: var(--sn-color-surface-solid);
+      box-shadow: none;
+
+      &:hover {
+        border-color: var(--sn-color-primary);
+      }
+
+      ng-icon {
+        font-size: calc(var(--sn-check-size) * 0.75);
+      }
+    }
+
+    #{h.$checkbox-on} {
+      border-color: var(--sn-color-primary);
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+    }
+
+    #{h.$radio} {
+      width: var(--sn-check-size);
+      height: var(--sn-check-size);
+      border: 1px solid var(--sn-color-control-strong);
+      background: var(--sn-color-surface-solid);
+      box-shadow: none;
+    }
+
+    #{h.$radio-item}:hover #{h.$radio} {
+      border-color: var(--sn-color-primary);
+    }
+
+    #{h.$radio-on} {
+      border: #{px(5)} solid var(--sn-color-primary);
+    }
+
+    #{h.$radio-dot-on} {
+      width: 0;
+      height: 0;
+    }
+  }
+}

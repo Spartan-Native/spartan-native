@@ -1,0 +1,55 @@
+// ============================================================================
+//  Windows 11 · Table (hlmTable): DataGrid-like, hairline rows, subtle hover
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$table} {
+      font-size: var(--sn-font-size);
+      color: var(--sn-color-fg);
+    }
+
+    #{h.$table-row} {
+      border-color: var(--sn-color-stroke);
+    }
+
+    :is(#{h.$table-head}, #{h.$table-cell}) {
+      height: var(--sn-row-height);
+      padding-block: 0;
+      padding-inline: px(12);
+    }
+
+    #{h.$table-head} {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    #{h.$table-header-row},
+    #{h.$table-header-row}:hover {
+      border-color: var(--sn-color-stroke-bottom);
+      background: transparent;
+    }
+
+    #{h.$table-body-row}:hover {
+      background: color-mix(in srgb, var(--sn-color-fg) 4%, transparent);
+    }
+
+    #{h.$table-row-selected} {
+      background: var(--sn-row-selected-bg);
+      color: var(--sn-row-selected-fg);
+    }
+
+    #{h.$table-footer} {
+      background: color-mix(in srgb, var(--sn-color-fg) 3%, transparent);
+      border-color: var(--sn-color-stroke-bottom);
+    }
+
+    #{h.$table-caption} {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+  }
+}

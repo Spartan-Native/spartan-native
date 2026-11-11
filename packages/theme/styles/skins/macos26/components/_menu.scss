@@ -1,0 +1,60 @@
+// ============================================================================
+//  macOS 26 · Menu (hlm-dropdown-menu) and pop-up list (hlm-select-content)
+//  Frosted panel, rounded rows; the highlighted row fills with the accent.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$menu} {
+      padding: var(--sn-menu-padding);
+      border: 1px solid var(--sn-color-glass-border);
+      border-radius: calc(var(--sn-menu-item-radius) + var(--sn-menu-padding) + #{px(3)});
+      background: var(--sn-color-acrylic);
+      box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), var(--sn-shadow-overlay);
+      color: var(--sn-color-fg);
+      -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+      backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    }
+
+    :is(#{h.$menu-item}) {
+      min-height: var(--sn-menu-item-height);
+      padding-block: 0;
+      padding-inline: var(--sn-menu-item-padding-x);
+      border-radius: var(--sn-menu-item-radius);
+      font-size: var(--sn-font-size);
+      color: var(--sn-color-fg);
+    }
+
+    // The accent highlight, with everything inside it turning white
+    #{h.$menu-item-highlighted} {
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+
+      * {
+        color: inherit;
+      }
+    }
+
+    #{h.$menu-item-destructive} {
+      color: var(--sn-color-danger);
+    }
+
+    :is(#{h.$menu-separator}) {
+      margin: #{px(5)} var(--sn-menu-item-padding-x);
+      background: color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
+    }
+
+    :is(#{h.$menu-label}) {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    #{h.$menu-shortcut} {
+      color: var(--sn-color-fg-muted);
+      letter-spacing: 0.08em;
+    }
+  }
+}

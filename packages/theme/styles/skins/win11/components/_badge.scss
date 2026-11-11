@@ -1,0 +1,17 @@
+// ============================================================================
+//  Windows 11 · Badge (hlmBadge): InfoBadge-style, small radius
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$badge} {
+      height: px(20);
+      padding-inline: px(6);
+      border-radius: var(--sn-radius-control);
+      font-size: var(--sn-font-size-small);
+      font-weight: var(--sn-font-weight-strong);
+    }
+  }
+}

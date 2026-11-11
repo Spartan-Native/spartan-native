@@ -1,0 +1,32 @@
+// ============================================================================
+//  KDE Plasma · Field (hlmField) and Separator (hlmSeparator)
+//  Kirigami FormLayout section titles, muted help text.
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$field-legend} {
+      font-size: calc(var(--sn-font-size) * 1.15);
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    #{h.$field-description} {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+
+    #{h.$field-error} {
+      color: var(--sn-color-danger);
+      font-size: var(--sn-font-size-small);
+    }
+
+    #{h.$text-field-invalid} {
+      border-color: var(--sn-color-danger);
+    }
+
+    #{h.$separator} {
+      background: var(--sn-color-border);
+    }
+  }
+}

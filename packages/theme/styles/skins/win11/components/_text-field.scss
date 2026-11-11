@@ -1,0 +1,63 @@
+// ============================================================================
+//  Windows 11 · Text fields: TextBox (hlmInput, hlmTextarea) and ComboBox (hlm-select)
+//  The accent shows as a 2px bottom line on focus, not as a ring.
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-win {
+    #{h.$input},
+    #{h.$textarea} {
+      height: var(--sn-input-height);
+      padding-inline: var(--sn-input-padding-x);
+      border: 1px solid var(--sn-color-stroke);
+      border-bottom-color: var(--sn-color-input-stroke);
+      border-radius: var(--sn-radius-input);
+      background: var(--sn-color-surface);
+      box-shadow: none;
+      font-size: var(--sn-font-size);
+
+      &::placeholder {
+        color: var(--sn-color-fg-muted);
+      }
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-surface-solid), var(--sn-color-fg) 3%);
+      }
+
+      &:focus-visible,
+      &:focus {
+        outline: none;
+        background: var(--sn-color-surface-solid);
+        border-bottom-color: var(--sn-color-primary);
+        box-shadow: inset 0 -1px 0 var(--sn-color-primary); // 2px line without layout shift
+      }
+    }
+
+    #{h.$textarea} {
+      height: auto;
+      padding-block: 0.4em;
+    }
+
+    // ComboBox looks like a Standard button with a chevron
+    #{h.$select-trigger} {
+      height: var(--sn-control-height);
+      padding-inline: var(--sn-input-padding-x);
+      border: 1px solid var(--sn-color-stroke);
+      border-bottom-color: var(--sn-color-stroke-bottom);
+      border-radius: var(--sn-radius-control);
+      background: var(--sn-color-surface);
+      box-shadow: none;
+      font-size: var(--sn-font-size);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-surface-solid), var(--sn-color-fg) 5%);
+      }
+    }
+
+    #{h.$label} {
+      font-weight: 400;
+      font-size: var(--sn-font-size);
+    }
+  }
+}

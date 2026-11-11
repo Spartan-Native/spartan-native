@@ -1,0 +1,48 @@
+// ============================================================================
+//  macOS 26 · Checkbox (hlm-checkbox) and radio button (hlm-radio): 16px, AppKit-style
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-mac {
+    // --- Checkbox -----------------------------------------------------------------
+    #{h.$checkbox} {
+      width: var(--sn-check-size);
+      height: var(--sn-check-size);
+      border: 1px solid color-mix(in srgb, var(--sn-color-fg) 22%, transparent);
+      border-radius: var(--sn-check-radius);
+      background: var(--sn-color-surface-solid);
+      box-shadow: 0 0.5px 1px rgb(0 0 0 / 0.08);
+
+      ng-icon {
+        font-size: calc(var(--sn-check-size) * 0.75);
+      }
+    }
+
+    #{h.$checkbox-on} {
+      background: var(--sn-color-primary);
+      border-color: transparent;
+      color: var(--sn-color-primary-fg);
+    }
+
+    // --- Radio --------------------------------------------------------------------
+    #{h.$radio} {
+      width: var(--sn-check-size);
+      height: var(--sn-check-size);
+      border: 1px solid color-mix(in srgb, var(--sn-color-fg) 22%, transparent);
+      background: var(--sn-color-surface-solid);
+      box-shadow: 0 0.5px 1px rgb(0 0 0 / 0.08);
+    }
+
+    #{h.$radio-on} {
+      background: var(--sn-color-primary);
+      border-color: transparent;
+    }
+
+    #{h.$radio-dot-on} {
+      width: 38%;
+      height: 38%;
+      background: var(--sn-color-primary-fg);
+    }
+  }
+}

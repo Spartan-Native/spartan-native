@@ -1,0 +1,53 @@
+// ============================================================================
+//  ChromeOS · Menu (hlm-dropdown-menu) and select list: M3 menu.
+//  Tonal container, 4px corners, full-width 40px rows.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$menu} {
+      padding: var(--sn-menu-padding) 0;
+      border: 0;
+      border-radius: #{px(4)};
+      background: var(--sn-color-glass);
+      box-shadow: var(--sn-shadow-overlay);
+      color: var(--sn-color-fg);
+    }
+
+    :is(#{h.$menu-item}) {
+      min-height: var(--sn-menu-item-height);
+      padding-inline: var(--sn-menu-item-padding-x);
+      border-radius: var(--sn-menu-item-radius);
+      font-size: var(--sn-font-size);
+      color: var(--sn-color-fg);
+    }
+
+    #{h.$menu-item-highlighted} {
+      background: color-mix(in srgb, var(--sn-color-fg) 8%, transparent);
+      color: var(--sn-color-fg);
+    }
+
+    #{h.$menu-item-destructive} {
+      color: var(--sn-color-danger);
+    }
+
+    :is(#{h.$menu-separator}) {
+      margin-block: #{px(8)};
+      margin-inline: 0;
+      background: var(--sn-color-stroke);
+    }
+
+    :is(#{h.$menu-label}) {
+      padding-inline: var(--sn-menu-item-padding-x);
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+      font-weight: 500;
+    }
+
+    #{h.$menu-shortcut} {
+      color: var(--sn-color-fg-muted);
+    }
+  }
+}

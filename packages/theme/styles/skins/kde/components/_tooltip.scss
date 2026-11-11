@@ -1,0 +1,23 @@
+// ============================================================================
+//  KDE Plasma · Tooltip: a framed surface, no arrow
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$tooltip} {
+      padding: #{px(4)} #{px(8)};
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-tooltip-radius);
+      background: var(--sn-color-surface-solid);
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size-small);
+    }
+
+    #{h.$tooltip-arrow} {
+      display: none;
+    }
+  }
+}

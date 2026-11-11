@@ -1,0 +1,22 @@
+// ============================================================================
+//  GNOME · Focus and window states
+// ============================================================================
+@use '../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    // Focus: an inner 2px accent outline
+    :is(#{h.$focusable}):focus-visible {
+      outline: var(--sn-focus-outline);
+      outline-offset: var(--sn-focus-offset);
+      box-shadow: var(--sn-focus-shadow);
+    }
+  }
+
+  // Inactive window: header bar contents fade
+  .t-gtk.inactive {
+    .sn-chrome > * {
+      opacity: 0.55;
+    }
+  }
+}

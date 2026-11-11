@@ -1,0 +1,110 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/sidebar-nav.stories';
+
+<Meta of={Stories} />
+
+# Sidebar navigation
+
+`<sn-sidebar-nav>` is the app's main navigation down the leading side of the window: optional titled sections
+of items, each with an icon, a label and an optional badge. The current item is drawn with the platform's
+selection idiom. Use it for the top-level places of an app (Overview, Schedules, Destinations…). For a list
+of documents or records the user selects and acts on, use a selectable list (`snSelectable`) instead.
+
+| OS | Renders as | Selected item |
+| --- | --- | --- |
+| Windows 11 | NavigationView (left) | Subtle fill with the accent pill at the leading edge; InfoBadge (accent pill) for badges |
+| Windows 10 | NavigationView (left) | Square item, `primary 30%` fill, 4px full-height accent bar |
+| macOS 26 | Source list in a floating Liquid Glass sidebar | Accent-tinted rounded fill, accent icons; grey when the window is inactive |
+| macOS 13–15 | Source list on the vibrancy sidebar | As macOS 26, full-height sidebar |
+| GNOME | AdwNavigationSplitView sidebar | Neutral rounded fill, bold section headings |
+| KDE Plasma | Breeze places panel (Dolphin) | Accent outline on hover, accent-filled selection; muted when the window is inactive |
+| ChromeOS | Material 3 navigation drawer | Tonal pill (secondary container), 48px items |
+
+The host has the theme's `sn-sidebar` material class, so the background is Mica, glass or the sidebar color
+of the current skin, and turns solid with reduced transparency.
+
+<Canvas of={Stories.WithSections} />
+
+<Canvas of={Stories.Flat} />
+
+The [Inspector](?path=/docs/desktop-ui-patterns-inspector--docs) page shows the sidebar together with a file
+list and an inspector in one window.
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnSidebarNavImports } from '@spartan-native/desktop-ui';
+import { provideIcons } from '@ng-icons/core';
+import { lucideHouse, lucideHistory, lucideServer } from '@ng-icons/lucide';
+
+@Component({
+  imports: [SnSidebarNavImports],
+  providers: [provideIcons({ lucideHouse, lucideHistory, lucideServer })],
+  …
+})`}
+/>
+
+<Source
+  language="html"
+  code={`<sn-sidebar-nav aria-label="Sections">
+  <sn-sidebar-section title="Backups">
+    <button snSidebarItem icon="lucideHouse" [active]="page() === 'overview'" (click)="page.set('overview')">Overview</button>
+    <button snSidebarItem icon="lucideHistory" badge="3" [active]="page() === 'restore'" (click)="page.set('restore')">Restore files</button>
+  </sn-sidebar-section>
+  <sn-sidebar-section title="Destinations">
+    <a snSidebarItem href="/nas" icon="lucideServer" [active]="page() === 'nas'">Office NAS</a>
+  </sn-sidebar-section>
+</sn-sidebar-nav>`}
+/>
+
+No Router is needed. With the Router, feed `routerLinkActive` into `active`:
+
+<Source
+  language="html"
+  code={`<a snSidebarItem routerLink="/overview" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">Overview</a>`}
+/>
+
+Set the width from outside (`sn-sidebar-nav { inline-size: 16rem }`); the default is 14.5rem.
+
+## API
+
+### `sn-sidebar-nav`
+
+No inputs. Give it an `aria-label` (e.g. "Sections"). Content: `sn-sidebar-section`s and/or items, plus anything
+else you want at the top (on macOS, `<sn-window-controls>`).
+
+### `sn-sidebar-section` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | `string` | `''` | Section heading; also the group's accessible name. Empty: no heading. |
+
+### `a[snSidebarItem]`, `button[snSidebarItem]` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `active` | `boolean` | `false` | The current page: selected look and `aria-current="page"`. |
+| `icon` | `string` | `''` | An @ng-icons name registered with `provideIcons()`. |
+| `badge` | `string \| number` | `''` | Short count or label on the trailing side. |
+
+The label is the content. Outputs: none; use the element's own `click` or `href`.
+
+### CSS hooks
+
+| Hook | Where |
+| --- | --- |
+| `data-slot="sn-sidebar-nav"`, `"sn-sidebar-section"`, `"sn-sidebar-item"` | The hosts |
+| `data-family`, `data-skin` | Every host: the OS family and skin being drawn |
+| `data-active` | The active item |
+| `.icon`, `.label`, `.badge` | Parts of an item |
+| `--sn-selection-bg`, `--sn-selection-fg`, `--sn-selection-indicator`, `--sn-list-item-height`, `--sn-list-item-radius` | Theme tokens it reads |
+
+## Accessibility
+
+- The host is a `navigation` landmark; name it with `aria-label`.
+- Sections are `role="group"` labelled by their heading.
+- The active item has `aria-current="page"`. Buttons get `type="button"`.
+- The whole sidebar is one Tab stop (roving tabindex): Tab lands on the last focused item, else the active one.
+  ↑ ↓ move between items across sections, Home and End jump to the first and last. Enter or Space activates
+  (native link and button behaviour).

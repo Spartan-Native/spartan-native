@@ -1,0 +1,90 @@
+// ============================================================================
+//  GNOME · GTK 4 / Adwaita: tokens
+//  Only what differs from contract/_tokens.scss.
+// ============================================================================
+@use '../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    // Typography: Adwaita Sans (Cantarell on older GNOME), bold buttons
+    --sn-font-sans: 'Adwaita Sans', Cantarell, Inter, system-ui, sans-serif;
+    --sn-font-mono: 'Adwaita Mono', 'Source Code Pro', monospace;
+    --sn-font-size: #{px(14)};
+    --sn-font-size-small: #{px(12)};
+    --sn-font-size-title: #{px(20)};
+    --sn-line-height: 1.43;
+    --sn-font-weight-control: 700;
+    --sn-font-weight-strong: 700;
+
+    // Shape: 6px controls, 12px boxed lists and cards
+    --sn-radius-control: #{px(6)};
+    --sn-radius-input: #{px(6)};
+    --sn-radius-surface: #{px(12)};
+    --sn-radius-overlay: #{px(14)};
+    --sn-radius-window: #{px(12)};
+
+    // Density: 34px controls
+    --sn-control-height: #{px(34)};
+    --sn-control-height-small: #{px(24)};
+    --sn-control-padding-x: #{px(14)};
+    --sn-input-height: #{px(34)};
+    --sn-input-padding-x: #{px(10)};
+    --sn-check-size: #{px(20)};
+    --sn-check-radius: #{px(6)};
+    --sn-switch-width: #{px(48)};
+    --sn-switch-height: #{px(26)};
+    --sn-switch-thumb-width: #{px(20)};
+    --sn-switch-thumb-height: #{px(20)};
+    --sn-switch-inset: #{px(3)};
+    --sn-switch-border: 0px;
+    --sn-progress-height: #{px(8)};
+    --sn-tab-height: #{px(30)};
+    --sn-card-padding: #{px(16)};
+    --sn-list-item-height: #{px(38)};
+    --sn-list-item-radius: #{px(6)};
+    --sn-slider-track-height: #{px(6)};
+    --sn-slider-thumb-width: #{px(20)};
+    --sn-slider-thumb-height: #{px(20)};
+
+    // Overlays: menus, dialogs, tooltips
+    --sn-menu-padding: #{px(6)};
+    --sn-menu-item-height: #{px(32)};
+    --sn-menu-item-padding-x: #{px(10)};
+    --sn-menu-item-radius: #{px(6)};
+    --sn-dialog-padding: #{px(24)};
+    --sn-dialog-width: #{px(400)};
+    --sn-tooltip-radius: #{px(6)};
+
+    // Selection: a neutral pill, no accent
+    --sn-selection-bg: var(--sn-color-control);
+    --sn-selection-fg: var(--sn-color-fg);
+    --sn-selection-indicator: transparent;
+    --sn-row-height: #{px(36)};
+    --sn-row-selected-bg: color-mix(in srgb, var(--sn-color-primary) 18%, transparent);
+    --sn-row-selected-fg: var(--sn-color-fg);
+    --sn-row-selected-indicator: transparent;
+    --sn-row-focus-ring: 2px solid var(--sn-color-ring);
+
+    // Materials: flat and opaque, Adwaita sidebar color
+    --sn-material-blur: 0px;
+    --sn-material-saturate: 100%;
+    --sn-window-bg: var(--sn-color-bg);
+    --sn-sidebar-bg: var(--sn-color-sidebar);
+    --sn-content-bg: var(--sn-color-bg);
+    --sn-content-border: transparent;
+
+    // Elevation: the Adwaita card shadow stack
+    --sn-shadow-card: 0 0 0 1px rgb(0 0 6 / 0.04), 0 1px 3px 1px rgb(0 0 6 / 0.08), 0 2px 6px 2px rgb(0 0 6 / 0.03);
+    --sn-shadow-overlay: 0 4px 24px rgb(0 0 0 / 0.25), 0 0 0 1px rgb(0 0 0 / 0.05);
+    --sn-shadow-window: 0 2px 14px rgb(0 0 0 / 0.25), 0 0 0 1px rgb(0 0 0 / 0.08);
+
+    // Focus: a 2px accent outline drawn inside the control
+    --sn-focus-outline: 2px solid var(--sn-color-ring);
+    --sn-focus-offset: -2px;
+    --sn-focus-shadow: none;
+
+    // Motion
+    --sn-duration-fast: 200ms;
+    --sn-easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}

@@ -1,0 +1,34 @@
+// ============================================================================
+//  macOS 26 · Alert (hlmAlert): an inline glass panel; tones tint the glass
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$alert} {
+      padding: px(10) px(14);
+      border: 1px solid var(--sn-color-glass-border);
+      border-radius: px(14);
+      background: color-mix(in srgb, var(--sn-alert-tone, var(--sn-color-glass)) 14%, var(--sn-color-glass));
+      box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight);
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size);
+      -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+      backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
+    }
+
+    #{h.$alert-icon} {
+      --ng-icon__color: var(--sn-alert-tone, var(--sn-color-primary));
+    }
+
+    #{h.$alert-title} {
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    #{h.$alert-description} {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size);
+    }
+  }
+}

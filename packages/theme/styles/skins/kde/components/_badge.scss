@@ -1,0 +1,17 @@
+// ============================================================================
+//  KDE Plasma · Badge: a small 3px-radius chip
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$badge} {
+      height: px(20);
+      padding-inline: px(6);
+      border-radius: px(3);
+      font-size: var(--sn-font-size-small);
+      font-weight: var(--sn-font-weight-strong);
+    }
+  }
+}

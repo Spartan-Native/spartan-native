@@ -1,0 +1,65 @@
+// ============================================================================
+//  macOS 26 · Table (hlmTable): NSTableView. Alternating rows, no row lines,
+//  no hover; the selection is accent while the table has focus, grey otherwise.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-mac {
+    #{h.$table} {
+      font-size: var(--sn-font-size);
+      color: var(--sn-color-fg);
+    }
+
+    #{h.$table-row} {
+      border: 0;
+    }
+
+    :is(#{h.$table-head}, #{h.$table-cell}) {
+      height: var(--sn-row-height);
+      padding-block: 0;
+      padding-inline: px(8);
+    }
+
+    #{h.$table-head} {
+      height: px(28);
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+      font-weight: var(--sn-font-weight-control);
+    }
+
+    #{h.$table-header-row} {
+      border-bottom: 1px solid color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
+    }
+
+    #{h.$table-header-row},
+    #{h.$table-body-row}:hover {
+      background: transparent;
+    }
+
+    #{h.$table-body-row}:nth-child(even) {
+      background: color-mix(in srgb, var(--sn-color-fg) 4%, transparent);
+    }
+
+    #{h.$table-row-selected} {
+      background: var(--sn-row-selected-bg-unfocused);
+      color: var(--sn-row-selected-fg-unfocused);
+    }
+
+    #{h.$table}:focus-within #{h.$table-row-selected} {
+      background: var(--sn-row-selected-bg);
+      color: var(--sn-row-selected-fg);
+    }
+
+    #{h.$table-footer} {
+      background: transparent;
+      border-top: 1px solid color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
+    }
+
+    #{h.$table-caption} {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+  }
+}

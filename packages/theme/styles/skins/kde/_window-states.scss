@@ -1,0 +1,25 @@
+// ============================================================================
+//  KDE Plasma · Focus and window states
+// ============================================================================
+@use '../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-qt {
+    :is(#{h.$focusable}):focus-visible {
+      outline: var(--sn-focus-outline);
+      outline-offset: var(--sn-focus-offset);
+      box-shadow: var(--sn-focus-shadow);
+    }
+  }
+
+  // Inactive window: the title dims and the selection loses its accent fill
+  .t-qt.inactive {
+    --sn-selection-bg: color-mix(in srgb, var(--sn-color-primary) 30%, var(--sn-color-surface-solid));
+    --sn-row-selected-bg: var(--sn-row-selected-bg-unfocused);
+    --sn-row-selected-fg: var(--sn-row-selected-fg-unfocused);
+
+    .sn-chrome {
+      color: var(--sn-color-fg-muted);
+    }
+  }
+}

@@ -1,0 +1,30 @@
+// ============================================================================
+//  GNOME · GtkScale (hlm-slider): 6px track, round white knob
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-gtk {
+    #{h.$slider-track} {
+      height: var(--sn-slider-track-height);
+      border-radius: var(--sn-radius-pill);
+      background: var(--sn-color-track);
+    }
+
+    #{h.$slider-range} {
+      background: var(--sn-color-primary);
+    }
+
+    #{h.$slider-thumb} {
+      width: var(--sn-slider-thumb-width);
+      height: var(--sn-slider-thumb-height);
+      border: 0;
+      background: #fff;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+
+      &:hover {
+        box-shadow: 0 1px 5px rgb(0 0 0 / 0.45);
+      }
+    }
+  }
+}

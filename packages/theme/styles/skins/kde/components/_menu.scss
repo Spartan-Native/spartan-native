@@ -1,0 +1,53 @@
+// ============================================================================
+//  KDE Plasma · Menu and combo box list: framed popup, the highlighted row
+//  gets an accent tint and an accent frame.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$menu} {
+      padding: var(--sn-menu-padding);
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-control);
+      background: var(--sn-color-surface-solid);
+      box-shadow: var(--sn-shadow-overlay);
+      color: var(--sn-color-fg);
+    }
+
+    :is(#{h.$menu-item}) {
+      min-height: var(--sn-menu-item-height);
+      padding-inline: var(--sn-menu-item-padding-x);
+      border: 1px solid transparent;
+      border-radius: var(--sn-menu-item-radius);
+      font-size: var(--sn-font-size);
+      color: var(--sn-color-fg);
+    }
+
+    #{h.$menu-item-highlighted} {
+      border-color: var(--sn-color-primary);
+      background: color-mix(in srgb, var(--sn-color-primary) 18%, transparent);
+      color: var(--sn-color-fg);
+    }
+
+    #{h.$menu-item-destructive} {
+      color: var(--sn-color-danger);
+    }
+
+    :is(#{h.$menu-separator}) {
+      margin-block: #{px(3)};
+      background: var(--sn-color-border);
+    }
+
+    :is(#{h.$menu-label}) {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    #{h.$menu-shortcut} {
+      color: var(--sn-color-fg-muted);
+    }
+  }
+}

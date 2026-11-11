@@ -1,0 +1,16 @@
+// ============================================================================
+//  ChromeOS · Card: M3 elevated card
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$card} {
+      --card-spacing: var(--sn-card-padding);
+      border: 0;
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-surface);
+      box-shadow: var(--sn-shadow-card);
+    }
+  }
+}

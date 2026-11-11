@@ -1,0 +1,48 @@
+// ============================================================================
+//  Windows 10: tokens
+//  Only what differs from win11. Square corners, 2px borders, no Mica or acrylic.
+// ============================================================================
+@use '../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-win.t-w10 {
+    --sn-font-sans: 'Segoe UI', system-ui, sans-serif;
+
+    // Shape: square everything; buttons keep a 2px hint of a corner
+    --sn-radius-control: #{px(2)};
+    --sn-radius-input: 0px;
+    --sn-radius-surface: 0px;
+    --sn-radius-overlay: 0px;
+    --sn-radius-window: 0px;
+    --sn-check-radius: 0px;
+    --sn-list-item-radius: 0px;
+    --sn-menu-item-radius: 0px;
+    --sn-tooltip-radius: 0px;
+
+    // Density
+    --sn-switch-width: #{px(44)};
+    --sn-switch-height: #{px(20)};
+    --sn-switch-thumb-width: #{px(10)};
+    --sn-switch-thumb-height: #{px(10)};
+    --sn-switch-inset: #{px(3)};
+    --sn-switch-border: 2px;
+    --sn-progress-height: #{px(4)};
+    --sn-slider-track-height: 2px;
+    --sn-slider-thumb-width: #{px(8)};
+    --sn-slider-thumb-height: #{px(24)};
+    --sn-menu-padding: 0px;
+
+    // Selection: an accent tint, no pill
+    --sn-selection-bg: color-mix(in srgb, var(--sn-color-primary) 30%, var(--sn-color-surface-solid));
+    --sn-selection-indicator: transparent;
+    --sn-row-selected-bg: var(--sn-selection-bg);
+    --sn-row-selected-indicator: transparent;
+
+    // Materials: flat
+    --sn-material-blur: 0px;
+    --sn-window-bg: var(--sn-color-bg);
+    --sn-content-bg: var(--sn-color-bg);
+
+    --sn-shadow-overlay: 0 4px 12px rgb(0 0 0 / 0.2);
+  }
+}

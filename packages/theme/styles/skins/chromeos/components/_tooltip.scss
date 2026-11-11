@@ -1,0 +1,23 @@
+// ============================================================================
+//  ChromeOS · Tooltip: M3 plain tooltip on the inverse surface
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-cros {
+    #{h.$tooltip} {
+      padding: #{px(4)} #{px(8)};
+      border: 0;
+      border-radius: var(--sn-tooltip-radius);
+      background: var(--sn-color-toast);
+      box-shadow: none;
+      color: var(--sn-color-bg);
+      font-size: var(--sn-font-size-small);
+    }
+
+    #{h.$tooltip-arrow} {
+      display: none;
+    }
+  }
+}

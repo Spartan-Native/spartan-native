@@ -1,0 +1,67 @@
+// ============================================================================
+//  KDE Plasma · Table: a framed item view. Header row on the control color;
+//  the selection is accent while the table has focus, a tint otherwise.
+// ============================================================================
+@use '../../../hooks' as h;
+@use '../../../functions' as *;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$table-container} {
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-surface-solid);
+    }
+
+    #{h.$table} {
+      font-size: var(--sn-font-size);
+      color: var(--sn-color-fg);
+    }
+
+    #{h.$table-row} {
+      border-color: var(--sn-color-stroke);
+    }
+
+    :is(#{h.$table-head}, #{h.$table-cell}) {
+      height: var(--sn-row-height);
+      padding-block: 0;
+      padding-inline: px(8);
+    }
+
+    #{h.$table-head} {
+      font-weight: 400;
+    }
+
+    #{h.$table-header-row},
+    #{h.$table-header-row}:hover {
+      border-color: var(--sn-color-border);
+      background: var(--sn-color-control);
+    }
+
+    #{h.$table-body-row}:hover {
+      background: var(--sn-color-hover);
+    }
+
+    #{h.$table-row-selected} {
+      background: var(--sn-row-selected-bg-unfocused);
+      color: var(--sn-row-selected-fg-unfocused);
+    }
+
+    #{h.$table}:focus-within #{h.$table-row-selected} {
+      background: var(--sn-row-selected-bg);
+      color: var(--sn-row-selected-fg);
+    }
+
+    #{h.$table-footer} {
+      background: transparent;
+      border-color: var(--sn-color-border);
+      font-weight: var(--sn-font-weight-strong);
+    }
+
+    #{h.$table-caption} {
+      margin-block: px(8);
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+  }
+}

@@ -1,0 +1,103 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/window-controls.stories';
+
+<Meta of={Stories} />
+
+# Window controls
+
+`<sn-window-controls>` draws the window's own minimize, maximize and close buttons the way the OS draws them.
+`<sn-title-bar>` uses it; use it on its own when your layout puts the buttons somewhere else, for example the
+macOS traffic lights at the top of a sidebar. With a host that owns a window (Wails, Tauri, Electron, …) the
+buttons act on the real window and the maximize glyph follows its state; the outputs fire either way.
+
+| OS | Renders as | Native control |
+| --- | --- | --- |
+| Windows 11 | 46px-wide caption buttons that fill the bar's height: – □ ×; grey hover, red close | Caption buttons |
+| Windows 10 | The same, with a square maximize glyph, a stronger grey hover and the Windows 10 red (#e81123) | Windows 10 caption buttons |
+| macOS 26 | Traffic lights (close, minimize, zoom), 13px, glyphs on hover, grey when inactive | NSWindow standard buttons |
+| macOS 13–15 | Traffic lights, 12px, 8px apart | NSWindow standard buttons |
+| GNOME | A round grey close button (minimize and maximize with `linuxAll`) | AdwHeaderBar window controls |
+| KDE | 24px Breeze buttons: ⌄ minimize, ⌃ maximize (◇ restore), × close; a grey circle on hover, red for close | Breeze decoration buttons |
+| ChromeOS | 32px round Material caption buttons: –, □, ×, with M3 hover and press layers | ChromeOS frame caption buttons |
+
+An unknown OS (`web`) gets the GNOME look.
+
+## Examples
+
+<Canvas of={Stories.Default} />
+
+`maximized`: the restore glyph.
+
+<Canvas of={Stories.Maximized} />
+
+`buttons`: only close.
+
+<Canvas of={Stories.CloseOnly} />
+
+`linuxAll` on GNOME.
+
+<Canvas of={Stories.LinuxAll} />
+
+The outputs, with `[nativeActions]="false"`.
+
+<Canvas of={Stories.Events} />
+
+Inactive window.
+
+<Canvas of={Stories.Inactive} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnWindowControls } from '@spartan-native/desktop-ui';`}
+/>
+
+<Source
+  language="html"
+  code={`<!-- acts on the real window when the host has one -->
+<sn-window-controls />
+
+<!-- handle close yourself -->
+<sn-window-controls [nativeActions]="false" (close)="confirmAndClose()" />`}
+/>
+
+## API
+
+### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `buttons` | `readonly WindowButton[]` | `['minimize', 'maximize', 'close']` | Which buttons to show. Close is always shown. macOS always shows all three lights. |
+| `maximized` | `boolean` | `false` | Show the restore glyph instead of maximize (all but macOS). Also turned on by the host when the real window is maximized. |
+| `linuxAll` | `boolean` | `false` | GNOME shows only close by default; set this to show minimize and maximize too. No effect elsewhere. |
+| `nativeActions` | `boolean` | `true` | Minimize, maximize and close the host's real window, when it has one. |
+
+`WindowButton` is `'minimize' | 'maximize' | 'close'`.
+
+### Outputs
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `minimize` | `void` | Minimize was clicked. |
+| `maximize` | `void` | Maximize, restore or zoom was clicked. |
+| `close` | `void` | Close was clicked. |
+
+### CSS hooks
+
+| Hook | Meaning |
+| --- | --- |
+| `data-slot="sn-window-controls"` | The host. |
+| `data-family`, `data-skin` | The OS family and skin it is drawn for. |
+| `.sn-chrome` | Always set; the theme dims it when the window is inactive. |
+| `.caption`, `.light`, `.round` | The buttons on Windows / KDE / ChromeOS, macOS, and GNOME. |
+
+The host is never a drag region (`app-region: no-drag`, `--wails-draggable: no-drag`), even inside one.
+
+## Accessibility
+
+- The host has `role="group"` and `aria-label="Window"`.
+- Each button is a native `<button>` with a label: Minimize, Maximize or Restore (Zoom on macOS), Close.
+  The glyphs are `aria-hidden`.
+- They are in the Tab order and show the theme's focus ring. On macOS the glyphs appear while a light has focus,
+  as they do on hover.

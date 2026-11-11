@@ -1,0 +1,4 @@
+// Cascade layer order. Declared first, so it holds even if this file is loaded
+// before Tailwind: spartan-native always comes after Tailwind's `utilities`.
+@layer theme, base, components, utilities, spartan-native;
+@layer spartan-native.tokens, spartan-native.base, spartan-native.skins, spartan-native.states;

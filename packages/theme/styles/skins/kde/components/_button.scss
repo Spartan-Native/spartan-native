@@ -1,0 +1,94 @@
+// ============================================================================
+//  KDE Plasma · Button (hlmBtn): Breeze push buttons
+//  A framed control-colored button; hover lights the frame with the accent.
+//  The default button keeps the frame in accent with a faint accent fill.
+// ============================================================================
+@use '../../../hooks' as h;
+
+@layer spartan-native.skins {
+  .t-qt {
+    #{h.$button} {
+      height: var(--sn-control-height);
+      padding-inline: var(--sn-control-padding-x);
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-control);
+      background: var(--sn-color-control);
+      box-shadow: none;
+      color: var(--sn-color-fg);
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-control);
+      translate: none;
+      transition: border-color var(--sn-duration-fast) var(--sn-easing), background-color var(--sn-duration-fast);
+
+      &:hover {
+        border-color: var(--sn-color-primary);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-primary) 20%, var(--sn-color-control));
+      }
+    }
+
+    #{h.$button-small} {
+      height: var(--sn-control-height-small);
+      padding-inline: calc(var(--sn-control-padding-x) * 0.75);
+    }
+
+    #{h.$button-icon} {
+      width: var(--sn-control-height);
+      padding: 0;
+    }
+
+    #{h.$button-outline} {
+      background: var(--sn-color-control);
+      color: var(--sn-color-fg);
+    }
+
+    #{h.$button-primary} {
+      border-color: var(--sn-color-primary);
+      background: color-mix(in srgb, var(--sn-color-primary) 16%, var(--sn-color-control));
+      color: var(--sn-color-fg);
+
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary) 24%, var(--sn-color-control));
+      }
+    }
+
+    #{h.$button-secondary} {
+      border-color: transparent;
+      background: var(--sn-color-secondary);
+      color: var(--sn-color-secondary-fg);
+    }
+
+    // Flat tool button: no frame until hovered
+    #{h.$button-ghost} {
+      border-color: transparent;
+      background: transparent;
+
+      &:hover {
+        border-color: var(--sn-color-primary);
+        background: color-mix(in srgb, var(--sn-color-primary) 12%, transparent);
+      }
+    }
+
+    #{h.$button-destructive} {
+      border-color: var(--sn-color-danger);
+      background: var(--sn-color-danger);
+      color: var(--sn-color-danger-fg);
+
+      &:active {
+        background: color-mix(in srgb, var(--sn-color-danger) 80%, #000);
+      }
+    }
+
+    #{h.$button-link} {
+      border-color: transparent;
+      background: transparent;
+      color: var(--sn-color-accent-text);
+    }
+
+    #{h.$button-disabled} {
+      opacity: 0.5;
+    }
+  }
+}

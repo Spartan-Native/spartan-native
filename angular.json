@@ -1,0 +1,473 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "npm"
+  },
+  "newProjectRoot": "packages",
+  "projects": {
+    "theme": {
+      "projectType": "library",
+      "root": "packages/theme",
+      "sourceRoot": "packages/theme/src",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/theme/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/theme/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "packages/theme/tsconfig.spec.json"
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "packages/theme/.storybook",
+            "browserTarget": "theme:build",
+            "compodoc": false,
+            "styles": [
+              "packages/theme/.storybook/tailwind.css",
+              "packages/theme/styles/spartan-native.scss"
+            ],
+            "port": 6006,
+            "tsConfig": "packages/theme/.storybook/tsconfig.json"
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "packages/theme/.storybook",
+            "browserTarget": "theme:build",
+            "compodoc": false,
+            "styles": [
+              "packages/theme/.storybook/tailwind.css",
+              "packages/theme/styles/spartan-native.scss"
+            ],
+            "outputDir": "dist/storybook/theme",
+            "tsConfig": "packages/theme/.storybook/tsconfig.json"
+          }
+        }
+      }
+    },
+    "helm": {
+      "projectType": "library",
+      "root": "packages/helm",
+      "sourceRoot": "packages/helm/src",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/helm/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/helm/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "packages/helm/tsconfig.spec.json"
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "packages/helm/.storybook",
+            "browserTarget": "helm:build",
+            "compodoc": false,
+            "styles": [
+              "packages/helm/.storybook/tailwind.css",
+              "packages/helm/.storybook/theme.scss"
+            ],
+            "port": 6007,
+            "tsConfig": "packages/helm/.storybook/tsconfig.json"
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "packages/helm/.storybook",
+            "browserTarget": "helm:build",
+            "compodoc": false,
+            "styles": [
+              "packages/helm/.storybook/tailwind.css",
+              "packages/helm/.storybook/theme.scss"
+            ],
+            "outputDir": "dist/storybook/helm",
+            "tsConfig": "packages/helm/.storybook/tsconfig.json"
+          }
+        }
+      }
+    },
+    "desktop-ui": {
+      "projectType": "library",
+      "root": "packages/desktop-ui",
+      "sourceRoot": "packages/desktop-ui/src",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/desktop-ui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/desktop-ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "packages/desktop-ui/tsconfig.spec.json"
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "packages/desktop-ui/.storybook",
+            "browserTarget": "desktop-ui:build",
+            "compodoc": false,
+            "styles": [
+              "packages/desktop-ui/.storybook/tailwind.css",
+              "packages/desktop-ui/.storybook/theme.scss"
+            ],
+            "port": 6008,
+            "tsConfig": "packages/desktop-ui/.storybook/tsconfig.json"
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "packages/desktop-ui/.storybook",
+            "browserTarget": "desktop-ui:build",
+            "compodoc": false,
+            "styles": [
+              "packages/desktop-ui/.storybook/tailwind.css",
+              "packages/desktop-ui/.storybook/theme.scss"
+            ],
+            "outputDir": "dist/storybook/desktop-ui",
+            "tsConfig": "packages/desktop-ui/.storybook/tsconfig.json"
+          }
+        }
+      }
+    },
+    "host-web": {
+      "projectType": "library",
+      "root": "packages/hosts/host-web",
+      "sourceRoot": "packages/hosts/host-web/src",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/hosts/host-web/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/hosts/host-web/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "packages/hosts/host-web/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "host-wails": {
+      "projectType": "library",
+      "root": "packages/hosts/host-wails",
+      "sourceRoot": "packages/hosts/host-wails/src",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/hosts/host-wails/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/hosts/host-wails/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "packages/hosts/host-wails/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "host-tauri": {
+      "projectType": "library",
+      "root": "packages/hosts/host-tauri",
+      "sourceRoot": "packages/hosts/host-tauri/src",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/hosts/host-tauri/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/hosts/host-tauri/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "packages/hosts/host-tauri/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "host-electron": {
+      "projectType": "library",
+      "root": "packages/hosts/host-electron",
+      "sourceRoot": "packages/hosts/host-electron/src",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/hosts/host-electron/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/hosts/host-electron/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "packages/hosts/host-electron/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "host-dotnet": {
+      "projectType": "library",
+      "root": "packages/hosts/host-dotnet",
+      "sourceRoot": "packages/hosts/host-dotnet/src",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/hosts/host-dotnet/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/hosts/host-dotnet/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "packages/hosts/host-dotnet/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "host-conformance": {
+      "projectType": "library",
+      "root": "packages/hosts/host-conformance",
+      "sourceRoot": "packages/hosts/host-conformance/src",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "packages/hosts/host-conformance/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "packages/hosts/host-conformance/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "packages/hosts/host-conformance/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "playground": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "apps/playground",
+      "sourceRoot": "apps/playground/src",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "apps/playground/src/main.ts",
+            "tsConfig": "apps/playground/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "apps/playground/public"
+              }
+            ],
+            "styles": ["apps/playground/src/styles.css", "apps/playground/src/theme.scss"]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "750kB",
+                  "maximumError": "1.5MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "8kB",
+                  "maximumError": "16kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "playground:build:production"
+            },
+            "development": {
+              "buildTarget": "playground:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        }
+      }
+    },
+    "harbor-backup": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "apps/harbor-backup",
+      "sourceRoot": "apps/harbor-backup/src",
+      "prefix": "sn",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "apps/harbor-backup/src/main.ts",
+            "tsConfig": "apps/harbor-backup/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "apps/harbor-backup/public"
+              }
+            ],
+            "styles": ["apps/harbor-backup/src/styles.css", "apps/harbor-backup/src/theme.scss"]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "750kB",
+                  "maximumError": "1.5MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "8kB",
+                  "maximumError": "16kB"
+                }
+              ],
+              "outputHashing": "all",
+              "serviceWorker": "apps/harbor-backup/ngsw-config.json"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "harbor-backup:build:production"
+            },
+            "development": {
+              "buildTarget": "harbor-backup:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "apps/harbor-backup/.storybook",
+            "browserTarget": "harbor-backup:build",
+            "tsConfig": "apps/harbor-backup/.storybook/tsconfig.json",
+            "compodoc": false,
+            "styles": ["apps/harbor-backup/src/styles.css", "apps/harbor-backup/src/theme.scss"],
+            "port": 6010
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "apps/harbor-backup/.storybook",
+            "browserTarget": "harbor-backup:build",
+            "tsConfig": "apps/harbor-backup/.storybook/tsconfig.json",
+            "compodoc": false,
+            "styles": ["apps/harbor-backup/src/styles.css", "apps/harbor-backup/src/theme.scss"],
+            "outputDir": "dist/storybook/harbor-backup"
+          }
+        }
+      }
+    }
+  }
+}

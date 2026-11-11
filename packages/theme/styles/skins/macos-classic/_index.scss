@@ -1,0 +1,4 @@
+// macOS 13–15 · Aqua before Liquid Glass: `.t-mac.t-macc`
+// A variant of macos26: it inherits every .t-mac rule and overrides only what differs.
+@use 'tokens';
+@use 'components';

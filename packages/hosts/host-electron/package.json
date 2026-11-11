@@ -1,0 +1,21 @@
+{
+  "name": "@spartan-native/host-electron",
+  "version": "0.0.0",
+  "description": "NativeHost adapter for TypeScript + Electron (renderer side; main-process module + preload live in native/).",
+  "keywords": [
+    "angular",
+    "spartan-ng",
+    "native",
+    "desktop",
+    "theme"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^22.2.0",
+    "@angular/core": "^22.2.0",
+    "@spartan-native/theme": "0.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
