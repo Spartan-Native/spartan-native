@@ -6,6 +6,15 @@ Requirements: Angular 22+, Tailwind CSS 4, spartan/ui (`@spartan-ng/brain` 1.9+)
 
 ## 1. Install
 
+The `@spartan-native/*` packages are published privately to GitHub Packages, not npmjs.com. Point the scope at that registry in the app's `.npmrc`, with a GitHub token that has `read:packages` and access to the Spartan-Native organization:
+
+```ini
+@spartan-native:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+
+Stable releases are on the `latest` dist-tag; betas are on `beta` (`npm install @spartan-native/theme@beta`). Install every `@spartan-native/*` package at the same version.
+
 ```bash
 # spartan/ui + Tailwind (skip what the app already has)
 npm install @spartan-ng/brain @angular/cdk tailwindcss @tailwindcss/postcss tw-animate-css \

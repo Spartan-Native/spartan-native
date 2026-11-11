@@ -1,0 +1,93 @@
+# Publishes every @spartan-native/* package to the GitHub Packages npm registry when a
+# release tag is pushed. The packages inherit the repository's visibility (private repo =
+# private packages).
+#
+# Release tags (a leading "v" is optional):
+#   1.2.3 / v1.2.3                 -> published as 1.2.3 with dist-tag "latest"
+#   1.2.3-beta / v1.2.3-beta.4     -> published as 1.2.3-beta.4 with dist-tag "beta"
+#
+# Any other tag (or a branch push) does not publish anything.
+#
+#   git tag v1.2.3 && git push origin v1.2.3
+
+name: Release packages
+
+on:
+  push:
+    tags:
+      - 'v[0-9]*'
+      - '[0-9]*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  version:
+    name: Check tag
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.parse.outputs.version }}
+      dist-tag: ${{ steps.parse.outputs.dist-tag }}
+    steps:
+      - id: parse
+        name: Parse semantic version from tag
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          if [[ "$TAG" =~ ^v?([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            echo "version=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+            echo "dist-tag=latest" >> "$GITHUB_OUTPUT"
+            echo "Stable release ${BASH_REMATCH[1]}"
+          elif [[ "$TAG" =~ ^v?([0-9]+\.[0-9]+\.[0-9]+-beta(\.[0-9]+)?)$ ]]; then
+            echo "version=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+            echo "dist-tag=beta" >> "$GITHUB_OUTPUT"
+            echo "Beta release ${BASH_REMATCH[1]}"
+          else
+            echo "::notice::Tag '$TAG' is not major.minor.patch or major.minor.patch-beta[.n]; nothing to publish."
+          fi
+
+  publish:
+    name: Build and publish
+    needs: version
+    if: needs.version.outputs.version != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+      DIST_TAG: ${{ needs.version.outputs.dist-tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+          scope: '@spartan-native'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test -- --watch=false
+
+      - name: Build packages
+        run: npm run build:libs
+
+      - name: Stamp version ${{ env.VERSION }}
+        run: node scripts/stamp-release.mjs "$VERSION"
+
+      - name: Publish to GitHub Packages (${{ env.DIST_TAG }})
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Dependencies first, same order as build:libs.
+          for lib in theme helm desktop-ui host-web host-wails host-tauri host-electron host-dotnet host-conformance; do
+            npm publish "dist/$lib" --tag "$DIST_TAG"
+          done
