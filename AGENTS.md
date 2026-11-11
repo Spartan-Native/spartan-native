@@ -6,7 +6,7 @@ Instructions for AI coding agents working in this repository.
 
 **Never run `npm run test:visual`** (or `playwright test` / `npx playwright test` directly) unless the user explicitly asks for it.
 
-It builds three Storybooks (theme, desktop-ui, harbor-backup) and then takes Playwright screenshots for every skin × scheme. It is very heavy and takes a long time. Don't run it to "verify" a change, and don't run it as part of a general test pass.
+It builds two Storybooks (theme, desktop-ui) and then takes Playwright screenshots for every skin × scheme. It is very heavy and takes a long time. Don't run it to "verify" a change, and don't run it as part of a general test pass.
 
 To check a change, use the lighter commands instead:
 

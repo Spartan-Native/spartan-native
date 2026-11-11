@@ -20,9 +20,6 @@
       "@spartan-native/host-tauri": [
         "./dist/host-tauri"
       ],
-      "@spartan-native/host-wails": [
-        "./dist/host-wails"
-      ],
       "@spartan-native/host-web": [
         "./dist/host-web"
       ],

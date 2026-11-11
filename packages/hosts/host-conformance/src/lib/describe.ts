@@ -21,7 +21,7 @@ export interface HostUnderTest {
  * failure names exactly what is wrong. Skipped checks pass and say why.
  *
  * ```ts
- * // host-wails/src/lib/wails-host.spec.ts
+ * // wails-host.spec.ts in the host-wails repository (npm/projects/host-wails/src/lib/)
  * describeHostConformance('wailsHost', () => ({ host: wailsHost({ runtime: fakeWailsRuntime() }), driver }));
  * ```
  */

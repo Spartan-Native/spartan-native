@@ -6,7 +6,6 @@ import { defineConfig, devices } from '@playwright/test';
 //   npm run test:visual -- --update-snapshots        accept the new look
 const THEME_PORT = 6106;
 const DESKTOP_UI_PORT = 6110;
-const HARBOR_PORT = 6112;
 
 export default defineConfig({
   // Baselines are per OS: fonts and anti-aliasing differ between machines.
@@ -28,7 +27,6 @@ export default defineConfig({
   projects: [
     { name: 'theme', testDir: 'packages/theme/e2e', use: { baseURL: `http://localhost:${THEME_PORT}` } },
     { name: 'desktop-ui', testDir: 'packages/desktop-ui/e2e', use: { baseURL: `http://localhost:${DESKTOP_UI_PORT}` } },
-    { name: 'harbor', testDir: 'apps/harbor-backup/e2e', use: { baseURL: `http://localhost:${HARBOR_PORT}` } },
   ],
   webServer: [
     {
@@ -39,11 +37,6 @@ export default defineConfig({
     {
       command: `python3 -m http.server ${DESKTOP_UI_PORT} -d dist/storybook/desktop-ui`,
       url: `http://localhost:${DESKTOP_UI_PORT}/iframe.html`,
-      reuseExistingServer: true,
-    },
-    {
-      command: `python3 -m http.server ${HARBOR_PORT} -d dist/storybook/harbor-backup`,
-      url: `http://localhost:${HARBOR_PORT}/iframe.html`,
       reuseExistingServer: true,
     },
   ],

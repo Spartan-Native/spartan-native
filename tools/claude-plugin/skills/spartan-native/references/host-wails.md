@@ -6,8 +6,10 @@ Read `node_modules/@spartan-native/host-wails/AGENTS.md` after this. It has the 
 
 | Half | Where | Does |
 | --- | --- | --- |
-| Go service | module `github.com/spartan-native/host-wails/native`, shipped in the npm package's `native/` | Reads the real OS accent, scheme, contrast, transparency, motion, text size; pushes changes; shows native menus and file/message dialogs |
+| Go service | Go module `github.com/spartan-native/host-wails` | Reads the real OS accent, scheme, contrast, transparency, motion, text size; pushes changes; shows native menus and file/message dialogs |
 | TS adapter | npm `@spartan-native/host-wails` | `wailsHost()`: implements the host contract over the Wails runtime |
+
+Both halves are released together from one tag, so **use the same version of each**: `@spartan-native/host-wails@1.2.3` with `github.com/spartan-native/host-wails@v1.2.3`. They talk through bound-method names and events, which change between versions; a mismatched pair fails at runtime, not at build time.
 
 ## Layout of a Wails project
 
@@ -31,18 +33,17 @@ npm install @spartan-native/host-wails @spartan-native/host-web @wailsio/runtime
 
 ## 2. Go service
 
-The Go module isn't on the Go module proxy, so `go get` can't fetch it. It ships inside `@spartan-native/host-wails`, so install the frontend packages first (step 1). Then point `go.mod` at that copy:
-
-```
-// go.mod
-require github.com/spartan-native/host-wails/native v0.0.0
-replace github.com/spartan-native/host-wails/native => ./frontend/node_modules/@spartan-native/host-wails/native
-```
+The Go module lives in a private GitHub repository. Tell Go not to use the public module proxy for it, and give git a token that can read it (the same token as for the npm package works):
 
 ```bash
+go env -w GOPRIVATE=github.com/spartan-native/*
+git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+go get github.com/spartan-native/host-wails@v1.2.3    # same version as the npm package in frontend/
 go get github.com/wailsapp/wails/v3
 go mod tidy
 ```
+
+Don't add a `replace` for it in `go.mod`. When you update one half, update the other to the same version.
 
 Start `main.go` from `templates/wails/main.go`. The important lines:
 

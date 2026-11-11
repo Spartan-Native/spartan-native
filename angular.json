@@ -194,32 +194,6 @@
         }
       }
     },
-    "host-wails": {
-      "projectType": "library",
-      "root": "packages/hosts/host-wails",
-      "sourceRoot": "packages/hosts/host-wails/src",
-      "prefix": "sn",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "configurations": {
-            "production": {
-              "tsConfig": "packages/hosts/host-wails/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "packages/hosts/host-wails/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test",
-          "options": {
-            "tsConfig": "packages/hosts/host-wails/tsconfig.spec.json"
-          }
-        }
-      }
-    },
     "host-tauri": {
       "projectType": "library",
       "root": "packages/hosts/host-tauri",
@@ -382,90 +356,6 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
-        }
-      }
-    },
-    "harbor-backup": {
-      "projectType": "application",
-      "schematics": {},
-      "root": "apps/harbor-backup",
-      "sourceRoot": "apps/harbor-backup/src",
-      "prefix": "sn",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:application",
-          "options": {
-            "browser": "apps/harbor-backup/src/main.ts",
-            "tsConfig": "apps/harbor-backup/tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "apps/harbor-backup/public"
-              }
-            ],
-            "styles": ["apps/harbor-backup/src/styles.css", "apps/harbor-backup/src/theme.scss"]
-          },
-          "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "750kB",
-                  "maximumError": "1.5MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "8kB",
-                  "maximumError": "16kB"
-                }
-              ],
-              "outputHashing": "all",
-              "serviceWorker": "apps/harbor-backup/ngsw-config.json"
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve": {
-          "builder": "@angular/build:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "harbor-backup:build:production"
-            },
-            "development": {
-              "buildTarget": "harbor-backup:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test"
-        },
-        "storybook": {
-          "builder": "@storybook/angular:start-storybook",
-          "options": {
-            "configDir": "apps/harbor-backup/.storybook",
-            "browserTarget": "harbor-backup:build",
-            "tsConfig": "apps/harbor-backup/.storybook/tsconfig.json",
-            "compodoc": false,
-            "styles": ["apps/harbor-backup/src/styles.css", "apps/harbor-backup/src/theme.scss"],
-            "port": 6010
-          }
-        },
-        "build-storybook": {
-          "builder": "@storybook/angular:build-storybook",
-          "options": {
-            "configDir": "apps/harbor-backup/.storybook",
-            "browserTarget": "harbor-backup:build",
-            "tsConfig": "apps/harbor-backup/.storybook/tsconfig.json",
-            "compodoc": false,
-            "styles": ["apps/harbor-backup/src/styles.css", "apps/harbor-backup/src/theme.scss"],
-            "outputDir": "dist/storybook/harbor-backup"
-          }
         }
       }
     }

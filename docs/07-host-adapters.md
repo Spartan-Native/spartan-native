@@ -86,7 +86,7 @@ N = native · P = partial or fallback · X = not available (components fall back
 
 ## Adapter order and conformance
 
-> **Implemented:** `@spartan-native/host-wails` (Go service per OS; passes the suite; verified on macOS), `@spartan-native/host-web` (passes the suite) and `@spartan-native/host-conformance` (12 checks; the live ones run when the adapter's test supplies a driver). The web column of the matrix above is now measured, not planned. One finding: Chromium returns a fixed `AccentColor` (`#0075ff`), so the web accent is real only on Firefox and Safari.
+> **Implemented:** `@spartan-native/host-wails` (Go service per OS; passes the suite; verified on macOS; in its own repository, [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails)), `@spartan-native/host-web` (passes the suite) and `@spartan-native/host-conformance` (12 checks; the live ones run when the adapter's test supplies a driver). The web column of the matrix above is now measured, not planned. One finding: Chromium returns a fixed `AccentColor` (`#0075ff`), so the web accent is real only on Firefox and Safari.
 
 - **Order:** Web/PWA from day one, then Electron → Tauri → Wails → Photino.NET.
 - **Conformance:** every adapter must pass the same suite. It should check contract shape, capability flags that match real behavior, live change events (scheme, accent, focus), skin resolution, and graceful fallback when a capability is `none`.

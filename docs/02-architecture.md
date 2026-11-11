@@ -66,7 +66,7 @@ The pieces stock spartan does not have: window chrome and the larger patterns ea
 Adapters that read the real system settings and expose window and OS services. Each one passes the same conformance tests.
 
 - `host-web`: browser APIs for web and PWA.
-- `host-wails` (Go module) and `host-tauri` (Rust plugin crate, Tauri v2).
+- `host-wails` (Go module; its own repository, [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails)) and `host-tauri` (Rust plugin crate, Tauri v2).
 - `host-electron` (main-process module + preload) and `host-dotnet` (C# library for Photino.NET).
 - Capability flags, so components degrade gracefully. See [07](07-host-adapters.md).
 
@@ -96,7 +96,7 @@ export const appConfig = {
 | Runtime | Package | Factory | Native side | Renders in |
 | --- | --- | --- | --- | --- |
 | Web + PWA | `@spartan-native/host-web` | `webHost()` | none (browser APIs only) | any modern browser |
-| Go + Wails | `@spartan-native/host-wails` | `wailsHost()` | Go module | WebView2 · WKWebView · WebKitGTK |
+| Go + Wails | `@spartan-native/host-wails` | `wailsHost()` | Go module `github.com/spartan-native/host-wails` (repository [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails)) | WebView2 · WKWebView · WebKitGTK |
 | Rust + Tauri | `@spartan-native/host-tauri` | `tauriHost()` | Rust plugin crate (Tauri v2) | WebView2 · WKWebView · WebKitGTK |
 | TS + Electron | `@spartan-native/host-electron` | `electronHost()` | main-process module + preload | bundled Chromium |
 | .NET + Photino | `@spartan-native/host-dotnet` | `dotnetHost()` | C# library for Photino.NET | WebView2 · WKWebView · WebKitGTK |
@@ -121,11 +121,12 @@ spartan-native/
     desktop-ui/       @spartan-native/desktop-ui
     hosts/
       host-web/  host-electron/  host-tauri/ (+ Rust crate)
-      host-wails/ (+ Go module)  host-dotnet/ (+ C# project)
+      host-dotnet/ (+ C# project)
       host-conformance/ shared conformance test suite
   apps/
     playground/       docs playground (replaces the design canvas)
-    harbor-backup/    sample app (see 08)
   tools/plugin/       spartan-native-plugin
   docs/               this folder
 ```
+
+In its own repositories: [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails) (the Wails adapter, npm package and Go module) and [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor) (the sample app, see [08](08-sample-app.md)).
