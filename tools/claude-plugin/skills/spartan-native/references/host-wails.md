@@ -6,7 +6,7 @@ Read `node_modules/@spartan-native/host-wails/AGENTS.md` after this. It has the 
 
 | Half | Where | Does |
 | --- | --- | --- |
-| Go service | module `github.com/spartan-native/host-wails/native` | Reads the real OS accent, scheme, contrast, transparency, motion, text size; pushes changes; shows native menus and file/message dialogs |
+| Go service | module `github.com/spartan-native/host-wails/native`, shipped in the npm package's `native/` | Reads the real OS accent, scheme, contrast, transparency, motion, text size; pushes changes; shows native menus and file/message dialogs |
 | TS adapter | npm `@spartan-native/host-wails` | `wailsHost()`: implements the host contract over the Wails runtime |
 
 ## Layout of a Wails project
@@ -31,9 +31,17 @@ npm install @spartan-native/host-wails @spartan-native/host-web @wailsio/runtime
 
 ## 2. Go service
 
+The Go module isn't on the Go module proxy, so `go get` can't fetch it. It ships inside `@spartan-native/host-wails`, so install the frontend packages first (step 1). Then point `go.mod` at that copy:
+
+```
+// go.mod
+require github.com/spartan-native/host-wails/native v0.0.0
+replace github.com/spartan-native/host-wails/native => ./frontend/node_modules/@spartan-native/host-wails/native
+```
+
 ```bash
-go get github.com/spartan-native/host-wails/native
 go get github.com/wailsapp/wails/v3
+go mod tidy
 ```
 
 Start `main.go` from `templates/wails/main.go`. The important lines:

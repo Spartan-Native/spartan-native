@@ -34,14 +34,14 @@ let nextId = 0;
   },
   template: `
     @if (title() || description()) {
-      <header>
+      <div class="header">
         @if (title()) {
           <h2 [id]="headingId">{{ title() }}</h2>
         }
         @if (description()) {
           <p>{{ description() }}</p>
         }
-      </header>
+      </div>
     }
     <div class="rows"><ng-content /></div>
   `,

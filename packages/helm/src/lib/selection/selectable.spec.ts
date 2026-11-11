@@ -96,6 +96,19 @@ describe('snSelectable', () => {
     expect(host.opened()).toBe('Roadmap.png');
   });
 
+  it('leaves keys typed into an input inside a row alone', async () => {
+    const { rows, host, fixture } = await setup();
+    const input = document.createElement('input');
+    rows()[1].appendChild(input);
+    for (const k of ['r', ' ', 'ArrowDown', 'Home', 'a']) {
+      const event = new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true, ctrlKey: k === 'a' });
+      input.dispatchEvent(event);
+      await fixture.whenStable();
+      expect(event.defaultPrevented).toBe(false);
+    }
+    expect(host.selection()).toEqual([]);
+  });
+
   it('drops rows that disappear', async () => {
     const { click, host, fixture } = await setup();
     await click(3);

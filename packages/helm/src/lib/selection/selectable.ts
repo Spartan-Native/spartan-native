@@ -201,6 +201,8 @@ export class SnSelectable<K = unknown> implements SelectableParent<K> {
   }
 
   protected onKeydown(event: KeyboardEvent): void {
+    // Keys typed into an input, textarea, select or contenteditable inside a row belong to that field
+    if (isEditable(event.target, event.currentTarget)) return;
     const keys = this.keys();
     const mods = this.modifiers(event);
     const multiple = this.multiple();
@@ -293,4 +295,15 @@ export class SnSelectable<K = unknown> implements SelectableParent<K> {
   }
 }
 
-export const SnSelectableImports = [SnSelectable, SnSelectableItem] as const;
+/** True when `target` is an input, textarea, select or contenteditable other than the list itself. */
+function isEditable(target: EventTarget | null, host: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement) || target === host) return false;
+  return (
+    target.isContentEditable ||
+    target instanceof HTMLInputElement ||
+    target instanceof HTMLTextAreaElement ||
+    target instanceof HTMLSelectElement
+  );
+}
+
+export const SnSelectableImports =[SnSelectable, SnSelectableItem] as const;

@@ -106,4 +106,5 @@ State classes on `<html>`: `dark`, `rt` (reduce transparency), `inactive` (windo
 ## Other entry points
 
 - `@spartan-native/theme/storybook`: the Storybook toolbar (skin, accent, scheme, transparency) and the decorator for a project's `.storybook/preview.ts`.
+- `@spartan-native/theme/storybook/manager`: the toolbar addon's UI (OS select with icons, transparency, contrast and window switches, accent swatches). Import it for its side effect in `.storybook/manager.ts`: `import '@spartan-native/theme/storybook/manager';`. Without it, those globals have no toolbar controls (only the text size uses Storybook's own dropdown).
 - `@spartan-native/theme/styles/*`: the SCSS. `spartan-native.scss` is the entry; `_hooks.scss` holds spartan's `data-slot` selectors.

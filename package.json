@@ -6,7 +6,7 @@
     "start": "ng serve playground",
     "start:harbor": "ng serve harbor-backup",
     "build": "npm run build:libs && ng build playground && ng build harbor-backup",
-    "build:libs": "ng build theme && ng build helm && ng build desktop-ui && ng build host-web && ng build host-wails && ng build host-tauri && ng build host-electron && ng build host-dotnet && ng build host-conformance",
+    "build:libs": "ng build theme && node packages/theme/scripts/build-storybook-manager.mjs && ng build helm && ng build desktop-ui && ng build host-web && ng build host-wails && ng build host-tauri && ng build host-electron && ng build host-dotnet && ng build host-conformance",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "storybook:theme": "ng run theme:storybook",
@@ -21,7 +21,8 @@
     "build:harbor-desktop": "node apps/harbor-desktop/scripts/build.mjs",
     "start:harbor-desktop": "node apps/harbor-desktop/scripts/build.mjs --run",
     "test:visual": "ng run theme:build-storybook && ng run desktop-ui:build-storybook && ng run harbor-backup:build-storybook && playwright test",
-    "test:report": "npx playwright show-report dist/playwright-report"
+    "test:report": "npx playwright show-report dist/playwright-report",
+    "pack:libs": "node scripts/pack-libs.mjs"
   },
   "private": true,
   "packageManager": "npm@11.20.0",
@@ -65,6 +66,7 @@
     "@tailwindcss/postcss": "^4.3.5",
     "@types/luxon": "^3.7.1",
     "@wailsio/runtime": "^3.1.0",
+    "esbuild": "^0.28.2",
     "jsdom": "^30.0.0",
     "ng-packagr": "^22.2.6",
     "postcss": "^8.5.32",

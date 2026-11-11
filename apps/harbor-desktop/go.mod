@@ -16,5 +16,6 @@ require (
 	golang.org/x/term v0.46.0 // indirect
 )
 
-// Workspace glue: use the adapter from this repository. In a separate repo, depend on its tag instead.
+// Workspace glue: use the adapter from this repository. In a separate app, point this at
+// ./frontend/node_modules/@spartan-native/host-wails/native (the npm package ships the Go module).
 replace github.com/spartan-native/host-wails/native => ../../packages/hosts/host-wails/native

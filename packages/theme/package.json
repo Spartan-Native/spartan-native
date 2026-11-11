@@ -26,6 +26,9 @@
     "./styles/*": {
       "sass": "./styles/*.scss",
       "default": "./styles/*"
+    },
+    "./storybook/manager": {
+      "default": "./storybook/manager.mjs"
     }
   },
   "peerDependenciesMeta": {
