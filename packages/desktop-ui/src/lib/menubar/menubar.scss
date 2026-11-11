@@ -1,0 +1,57 @@
+// The in-window menu bar. The theme's menubar hooks give the triggers each skin's look; a window's
+// menu bar is a flat strip on every OS, so the card spartan's menubar draws is taken away.
+
+:host {
+  display: block;
+  flex: none;
+}
+
+:host([data-native]) {
+  display: none;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+  min-block-size: 0;
+  padding: 0.125rem 0.25rem;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+// In the theme's base layer: the skin's trigger rules (padding, radius, hover) win over these.
+@layer spartan-native.base {
+  .trigger {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    white-space: nowrap;
+    cursor: default;
+  }
+}
+
+// ChromeOS has no menu bars; the in-page one is a row of text buttons
+:host([data-family='chromeos']) .bar {
+  padding-inline: 0.5rem;
+}
+
+@media (forced-colors: active) {
+  .bar {
+    border-bottom: 1px solid CanvasText;
+  }
+
+  .trigger:is(:hover, :focus-visible, [aria-expanded='true']) {
+    background: Highlight !important;
+    color: HighlightText !important;
+    forced-color-adjust: none;
+  }
+}

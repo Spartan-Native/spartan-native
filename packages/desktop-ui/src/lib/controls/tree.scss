@@ -1,0 +1,206 @@
+// Tree view per OS. One sheet for the tree and its items, scoped by data-slot. The tree sets the
+// per-skin geometry as custom properties; every item (at any depth) reads them. Selection colors
+// come from the skin's row tokens (--sn-row-selected-*), including the unfocused look.
+
+$tree: "[data-slot='sn-tree']";
+$item: "[data-slot='sn-tree-item']";
+
+// --- Tree --------------------------------------------------------------------------------
+:host(#{$tree}) {
+  --sn-tree-indent: 1rem;
+  --sn-tree-row-height: var(--sn-row-height);
+  --sn-tree-row-inset: 0.25rem;
+  --sn-tree-radius: var(--sn-list-item-radius);
+  --sn-tree-expander: 1.25rem;
+  --sn-tree-glyph: 0.75rem;
+  --sn-tree-icon: 1rem;
+  --sn-tree-selected-bg: var(--sn-row-selected-bg);
+  --sn-tree-selected-fg: var(--sn-row-selected-fg);
+
+  display: block;
+  padding-block: 0.25rem;
+  color: var(--sn-color-fg);
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+// The selection turns to its unfocused colors when the focus is elsewhere (macOS grey, KDE muted)
+:host(#{$tree}:not(:focus-within)) {
+  --sn-tree-selected-bg: var(--sn-row-selected-bg-unfocused);
+  --sn-tree-selected-fg: var(--sn-row-selected-fg-unfocused);
+}
+
+// Windows 11: WinUI TreeView, rows inset with the accent pill
+:host(#{$tree}[data-skin='win']) {
+  --sn-tree-row-inset: 0.25rem;
+}
+
+// Windows 10: full-width square rows
+:host(#{$tree}[data-skin='w10']) {
+  --sn-tree-row-inset: 0px;
+  --sn-tree-row-height: 2rem;
+}
+
+// macOS: NSOutlineView, compact rows, disclosure triangles
+:host(#{$tree}[data-family='macos']) {
+  --sn-tree-row-inset: 0.625rem;
+  --sn-tree-expander: 1rem;
+  --sn-tree-glyph: 0.8125rem;
+}
+
+// GNOME: GtkTreeExpander, wider indent, triangles
+:host(#{$tree}[data-skin='gtk']),
+:host(#{$tree}[data-skin='web']) {
+  --sn-tree-indent: 1.125rem;
+  --sn-tree-row-height: 2.125rem;
+  --sn-tree-row-inset: 0.375rem;
+  --sn-tree-glyph: 0.875rem;
+}
+
+// KDE: Breeze QTreeView
+:host(#{$tree}[data-skin='qt']) {
+  --sn-tree-indent: 1.25rem;
+  --sn-tree-row-height: 1.875rem;
+  --sn-tree-row-inset: 0.25rem;
+  --sn-tree-icon: 1.375rem;
+}
+
+// ChromeOS: Files app tree, tonal pills
+:host(#{$tree}[data-family='chromeos']) {
+  --sn-tree-row-height: 2.5rem;
+  --sn-tree-row-inset: 0.5rem;
+  --sn-tree-expander: 1.5rem;
+  --sn-tree-glyph: 1rem;
+  --sn-tree-icon: 1.25rem;
+}
+
+// --- Item --------------------------------------------------------------------------------
+:host(#{$item}) {
+  display: block;
+  outline: none; // the ring is drawn on the row, not around the children
+}
+
+.row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  box-sizing: border-box;
+  min-block-size: var(--sn-tree-row-height);
+  margin-inline: var(--sn-tree-row-inset);
+  padding-inline: calc(0.25rem + var(--sn-tree-level, 0) * var(--sn-tree-indent)) 0.5rem;
+  border-radius: var(--sn-tree-radius);
+  white-space: nowrap;
+  transition: background-color var(--sn-duration-fast) var(--sn-easing);
+
+  &:hover {
+    background: var(--sn-color-hover);
+  }
+}
+
+.expander {
+  display: grid;
+  place-items: center;
+  flex: none;
+  inline-size: var(--sn-tree-expander);
+  block-size: var(--sn-tree-expander);
+  color: var(--sn-color-fg-muted);
+
+  svg {
+    width: var(--sn-tree-glyph);
+    height: var(--sn-tree-glyph);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: rotate var(--sn-duration-fast) var(--sn-easing);
+  }
+
+  .fill {
+    fill: currentColor;
+    stroke: none;
+  }
+}
+
+// Right to left: the closed glyph points left, and turns the other way to open
+:host(#{$item}:dir(rtl)) .expander svg {
+  scale: -1 1;
+}
+
+:host(#{$item}[data-expanded]) > .row .expander svg {
+  rotate: 90deg;
+}
+
+:host(#{$item}[data-expanded]:dir(rtl)) > .row .expander svg {
+  rotate: -90deg;
+}
+
+.icon {
+  flex: none;
+  font-size: var(--sn-tree-icon);
+  color: var(--sn-color-fg-muted);
+}
+
+.label {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.children[hidden] {
+  display: none;
+}
+
+// Selected
+:host(#{$item}[data-selected]) > .row {
+  background: var(--sn-tree-selected-bg);
+  color: var(--sn-tree-selected-fg);
+
+  .expander,
+  .icon {
+    color: inherit;
+  }
+}
+
+// Windows 11's accent pill (the token is transparent on every other skin)
+:host(#{$item}[data-selected]) > .row::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 50%;
+  inline-size: 3px;
+  block-size: 1em;
+  translate: 0 -50%;
+  border-radius: 2px;
+  background: var(--sn-row-selected-indicator);
+}
+
+// Focus: the ring around the row only
+:host(#{$item}:focus-visible) > .row {
+  outline: var(--sn-row-focus-ring);
+  outline-offset: -2px;
+}
+
+// --- Windows contrast themes --------------------------------------------------------------
+@media (forced-colors: active) {
+  :host(#{$item}[data-selected]) > .row {
+    background: Highlight !important;
+    color: HighlightText !important;
+    forced-color-adjust: none;
+  }
+
+  :host(#{$item}[data-selected]) > .row::before {
+    background: HighlightText !important;
+  }
+
+  :host(#{$item}:focus-visible) > .row {
+    outline: 2px solid CanvasText;
+  }
+
+  .expander {
+    color: CanvasText;
+  }
+}

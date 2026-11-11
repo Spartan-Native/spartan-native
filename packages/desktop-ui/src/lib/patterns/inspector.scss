@@ -326,3 +326,10 @@ h3 {
     outline-offset: -2px;
   }
 }
+
+// --- Windows contrast themes ---------------------------------------------------------------
+@media (forced-colors: active) {
+  :host(#{$panel}) {
+    border-inline-start: 1px solid CanvasText;
+  }
+}

@@ -1,0 +1,98 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/split-button.stories';
+
+<Meta of={Stories} />
+
+# Split button
+
+`<sn-split-button>` runs one action and offers the alternatives in a menu: "Back up now", with "Documents only"
+and "Verify last backup" behind the arrow. Use it when one choice is clearly the usual one. When no choice
+is the default, use a plain menu button instead.
+
+The two parts carry the theme's button hook (`data-slot="button"` plus the variant class), so each skin draws
+them as its own standard or accent button, with every state. The component only joins them.
+
+| OS | Renders as | Native control |
+| --- | --- | --- |
+| Windows 11 | One control, a divider before the chevron | Fluent SplitButton |
+| Windows 10 | The same, square | Fluent SplitButton |
+| macOS 26 | A Liquid Glass capsule with a divider and a narrow chevron area | NSComboButton (split) |
+| macOS 13–15 | A push-button bezel with a divider | NSComboButton (split) |
+| GNOME | Two linked buttons, a narrow arrow button | AdwSplitButton |
+| KDE | A tool button with a small arrow area | QToolButton, MenuButtonPopup |
+| ChromeOS | Two segments, 2px apart, with tight inner corners | Material 3 split button |
+
+## Examples
+
+<Canvas of={Stories.Default} />
+
+<Canvas of={Stories.Small} />
+
+<Canvas of={Stories.Disabled} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnSplitButtonImports } from '@spartan-native/desktop-ui';
+import { HlmDropdownMenuImports } from '@spartan-ng/helm/dropdown-menu';`}
+/>
+
+<Source
+  language="html"
+  code={`<sn-split-button label="Back up now" icon="lucideCloudUpload" variant="accent" (triggered)="backUp()">
+  <ng-template snSplitButtonMenu>
+    <div hlmDropdownMenu>
+      <button hlmDropdownMenuItem (triggered)="backUp('documents')">Documents only</button>
+      <button hlmDropdownMenuItem (triggered)="verify()">Verify last backup</button>
+    </div>
+  </ng-template>
+</sn-split-button>`}
+/>
+
+## API
+
+### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `label` | `string` | required | The action's text, and the group's accessible name. |
+| `icon` | `string` | `''` | An @ng-icons name registered with `provideIcons()`, shown before the label. |
+| `variant` | `'standard' \| 'accent'` | `'standard'` | The skin's standard button, or its accent (suggested) button. |
+| `small` | `boolean` | `false` | The skin's small button height. |
+| `disabled` | `boolean` | `false` | Disables both parts. |
+| `menuLabel` | `string` | `'More options'` | Accessible name and tooltip of the arrow. |
+
+### Outputs
+
+| Name | Payload | Description |
+| --- | --- | --- |
+| `triggered` | `void` | The action part was clicked or activated with Enter or Space. |
+
+### Methods
+
+| Name | Description |
+| --- | --- |
+| `open()` | Opens the menu and focuses its first item. |
+
+### Content
+
+| Selector | Content |
+| --- | --- |
+| `ng-template[snSplitButtonMenu]` | The menu. Use any CDK menu, such as `hlmDropdownMenu`. Without it, the arrow is disabled. |
+
+### CSS hooks
+
+| Hook | Meaning |
+| --- | --- |
+| `data-slot="sn-split-button"` | The host. |
+| `data-family`, `data-skin`, `data-variant`, `data-disabled` | The OS, the variant and the state. |
+| `.action`, `.arrow` | The two parts, both `data-slot="button"`. |
+
+## Accessibility
+
+- The host is a `role="group"` named by `label`. The action and the arrow are two real buttons and two Tab
+  stops. The arrow has `aria-haspopup="menu"` and `aria-expanded`.
+- On the action, ↓ opens the menu (Alt+↓ on Windows, as in Fluent). The menu takes the focus and returns it
+  when it closes.
+- In Windows contrast themes both parts and the divider use `ButtonText`.

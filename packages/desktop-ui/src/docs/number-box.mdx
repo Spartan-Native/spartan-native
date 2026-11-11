@@ -1,0 +1,114 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/number-box.stories';
+
+<Meta of={Stories} />
+
+# Number box
+
+`<sn-number-box>` is a number field with step buttons, laid out the way each OS lays out its spin box. The
+field itself carries the theme's text-field hook (`data-slot="input"`), so it has the skin's border, hover
+and focus line. The component places the step buttons and handles the keys.
+
+| OS | Renders as | Native control |
+| --- | --- | --- |
+| Windows 11 / 10 | ∧ ∨ buttons side by side inside the field's end | Fluent NumberBox, inline spin buttons |
+| macOS 26 | The field with a capsule stepper beside it | NSTextField + NSStepper |
+| macOS 13–15 | The field with a bezeled stepper beside it | NSTextField + NSStepper |
+| GNOME | − and + buttons inside the entry's end, divided by lines | GtkSpinButton |
+| KDE | Small stacked arrows inside the field | QSpinBox (Breeze) |
+| ChromeOS | Round − / + icon buttons at the field's end | Material 3 text field |
+
+An unknown OS (`web`) gets the GNOME look.
+
+## Examples
+
+<Canvas of={Stories.Default} />
+
+In settings rows, with a decimal step.
+
+<Canvas of={Stories.InSettings} />
+
+At a bound, empty, without step buttons, disabled.
+
+<Canvas of={Stories.States} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnNumberBox } from '@spartan-native/desktop-ui';`}
+/>
+
+<Source
+  language="html"
+  code={`<label hlmLabel for="keep">Keep versions</label>
+<sn-number-box inputId="keep" [(value)]="versions" [min]="1" [max]="100" />
+
+<!-- or as a form control -->
+<sn-number-box ariaLabel="Upload limit" formControlName="limit" [min]="0" [step]="0.5" [decimals]="1" />`}
+/>
+
+## Behavior
+
+- **Keys:** ↑ ↓ add or subtract `step`; PgUp PgDn a `largeStep` (10 steps by default); Home End go to `min` / `max`
+  when they're set; Enter commits (and still reaches a dialog's default button); Esc reverts what was typed, and
+  when there's nothing to revert it lets a dialog close.
+- **Typing:** the value is committed on Enter and on blur. Arithmetic works, as in Fluent's NumberBox: `4*12`,
+  `100/4`, `(2+3)*2`. A comma works as the decimal point. Text that doesn't parse is reverted.
+- **Bounds:** the value is clamped to `min` / `max` and rounded to `decimals`. The step button at a bound is
+  disabled.
+- **Step buttons** repeat while held. They aren't Tab stops, because the arrow keys do the same thing.
+- **Mouse wheel** steps only while the field has focus, so scrolling the page past it changes nothing.
+
+## API
+
+### Inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `number \| null` | `null` | The number; `null` when empty. Two-way bindable (`[(value)]`). |
+| `min`, `max` | `number \| null` | `null` | The bounds. |
+| `step` | `number` | `1` | What ↑ ↓ and the buttons add. |
+| `largeStep` | `number \| null` | `null` | What PgUp / PgDn add; `null` means 10 × `step`. |
+| `decimals` | `number \| null` | `null` | Round to and always show this many decimal places. `null` keeps the number as typed. |
+| `spinButtons` | `boolean` | `true` | Show the step buttons. |
+| `acceptsExpression` | `boolean` | `true` | Accept arithmetic. |
+| `disabled` | `boolean` | `false` | Also set by a form control's disabled state. |
+| `placeholder` | `string` | `''` | Shown when empty. |
+| `inputId` | `string` | generated | The input's id, for `<label for>`. |
+| `ariaLabel` | `string` | `''` | Accessible name when there's no label. |
+
+### Outputs
+
+| Name | Payload | Description |
+| --- | --- | --- |
+| `valueChange` | `number \| null` | The committed value changed. |
+
+Also a `ControlValueAccessor`: use `formControlName`, `[formControl]` or `[(ngModel)]`.
+
+### Methods and helpers
+
+| Name | Description |
+| --- | --- |
+| `stepBy(steps, size?)` | Adds `steps` × `size` (default `step`). |
+| `commit()` | Parses the text in the field now. |
+| `focus()` | Focuses the field. |
+| `evaluateNumberExpression(text)` | The arithmetic parser, exported. It only reads numbers, `+ - * /` and parentheses, and never executes code. |
+
+### CSS hooks
+
+| Hook | Meaning |
+| --- | --- |
+| `data-slot="sn-number-box"` | The host. Its width is `9rem` (`10rem` on GNOME and ChromeOS); set `inline-size` to change it. |
+| `data-family`, `data-skin`, `data-disabled` | The OS and the state. |
+| `data-spin="chevrons" \| "plus-minus"` | Which glyphs the step buttons use; absent without step buttons. |
+| `input`, `.spin`, `.up`, `.down` | The parts. |
+
+## Accessibility
+
+- The input has `role="spinbutton"` with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`. Text that
+  doesn't parse sets `aria-invalid` until it is committed or reverted.
+- The step buttons are `aria-hidden` and not focusable; the arrow keys do the same.
+- Name it with `<label for>` (`inputId`) or `ariaLabel`.
+- In Windows contrast themes the step buttons use `ButtonText`, with `Highlight` on hover and `GrayText` when
+  disabled.

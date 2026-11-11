@@ -26,6 +26,11 @@ The design takes two signature patterns from each OS family and rebuilds each on
 | --- | --- |
 | Title bar | Three modes: a custom drawn bar, the native caption overlay (Electron `titleBarOverlay`, Tauri overlay, Wails frameless + drag regions), or Window Controls Overlay for PWAs. Includes Windows caption buttons, macOS traffic lights and the GTK header bar. |
 | Sidebar navigation | As in the sample app; the selected item uses the platform selection idiom. |
-| Menubar adapter | macOS uses the global menu bar via the host when available; elsewhere it renders the in-window `hlm-menubar`. |
+| Menubar adapter | `<sn-menubar>`: macOS uses the global menu bar through the host when it has native menus; elsewhere an in-window menu bar drawn with the skin's menubar and menu styles. One `SnMenuItem[]` definition; roles become the OS's items natively and Edit / Window menus in the page. |
+| Context menus | `[snContextMenu]`: the OS's own context menu through the host, otherwise an in-page menu at the pointer. |
 | Shortcut formatter | ⌘ vs Ctrl, plus the delete and rename glyphs (see [04](04-platform-skins.md#shortcut-glyphs)). |
 | `*platformIf` | Structural directive, e.g. `*platformIf="'mac'"` or `*platformIf="['win','w10']"`. |
+| Status bar | Explorer's status bar · classic ruled bar (Windows 10) · Finder's centered text · GtkActionBar · Dolphin's bar · M3 footer. Items opt in to being announced (`live`). |
+| Split button | Fluent SplitButton · NSComboButton · AdwSplitButton · QToolButton MenuButtonPopup · M3 split button. The parts use the skin's own button styles. |
+| Number box | Fluent NumberBox (inline ∧ ∨, math input) · field + NSStepper · GtkSpinButton · Breeze QSpinBox · M3 field with − / +. |
+| Tree view | WinUI TreeView · NSOutlineView · GtkTreeExpander · Breeze QTreeView · Files app tree; helm's selection model over the visible items. |

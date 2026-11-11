@@ -1,0 +1,130 @@
+// Split button per OS. The two parts carry the theme's button hook (data-slot="button" plus the
+// variant class), so each skin draws them as its own standard / accent button with every state.
+// This sheet only lays them out and joins them; it never sets their colors, borders or height.
+// The joins below are unlayered on purpose: they must win over the skin's corner radius.
+
+:host {
+  display: inline-flex;
+  align-items: stretch;
+  vertical-align: middle;
+  flex: none;
+}
+
+// Layout, in the theme's base layer: the skin's button rules (font, weight, colors) win over it.
+@layer spartan-native.base {
+  button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    margin: 0;
+    font: inherit;
+    white-space: nowrap;
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
+
+    &:focus-visible {
+      z-index: 1; // the ring sits above the neighbouring part
+    }
+
+    > ng-icon {
+      flex: none;
+      font-size: 1.125em;
+    }
+  }
+}
+
+.arrow {
+  padding-inline: 0.5em;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+// --- Joined (Windows, macOS, GNOME, KDE): one control, a divider before the arrow ---------------
+:host(:not([data-family='chromeos'])) {
+  .action {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  .arrow {
+    margin-inline-start: -1px; // share the border between the parts
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+
+  // the hovered part's border draws over its neighbour's
+  :is(.action, .arrow):hover {
+    z-index: 1;
+  }
+}
+
+// The divider: standard buttons show it through their shared border; the accent fill needs a line.
+:host([data-variant='accent']:not([data-family='chromeos'])) .arrow::before {
+  content: '';
+  position: absolute;
+  inset-block: 0.375em;
+  inset-inline-start: 0;
+  width: 1px;
+  background: currentColor;
+  opacity: 0.35;
+}
+
+// macOS: the chevron area is narrow
+:host([data-family='macos']) .arrow {
+  padding-inline: 0.375em;
+}
+
+// GNOME: AdwSplitButton's arrow is a narrow linked button
+:host([data-family='linux']:not([data-skin='qt'])) .arrow,
+:host([data-family='web']) .arrow {
+  padding-inline: 0.4375em;
+}
+
+// KDE: QToolButton MenuButtonPopup, a small arrow area
+:host([data-skin='qt']) .arrow {
+  padding-inline: 0.25em;
+
+  svg {
+    width: 0.75em;
+    height: 0.75em;
+  }
+}
+
+// --- ChromeOS: Material 3 split button, two segments, 2px apart, tight inner corners ------------
+:host([data-family='chromeos']) {
+  gap: 2px;
+
+  .action {
+    border-start-end-radius: 0.25rem;
+    border-end-end-radius: 0.25rem;
+    padding-inline-end: 0.75rem;
+  }
+
+  .arrow {
+    border-start-start-radius: 0.25rem;
+    border-end-start-radius: 0.25rem;
+    padding-inline: 0.75rem 0.875rem;
+  }
+}
+
+// --- Windows contrast themes ------------------------------------------------------------------
+@media (forced-colors: active) {
+  button {
+    border: 1px solid ButtonText;
+  }
+
+  .arrow::before {
+    background: ButtonText;
+  }
+}

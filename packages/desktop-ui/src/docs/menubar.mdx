@@ -1,0 +1,137 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/menubar.stories';
+
+<Meta of={Stories} />
+
+# Menubar and context menus
+
+`<sn-menubar>` and `[snContextMenu]` take one menu definition, plain data (`SnMenuItem[]`), and show it the
+way the platform does. When the host has native menus (`NativeHost.menus`, e.g. `wailsHost()`), the OS draws
+them. Otherwise desktop-ui draws them in the page with the skin's own menu styles.
+
+| | With native menus (Wails) | In the page (browser, PWA, Storybook) |
+| --- | --- | --- |
+| Menubar on macOS | The **global menu bar** at the top of the screen; nothing in the window; the OS binds the shortcuts | An in-window menu bar |
+| Menubar elsewhere | An in-window menu bar (`native="always"` hands it to the host; see the note below) | An in-window menu bar; F10 focuses it |
+| Context menu | The OS's own context menu | A menu at the pointer, drawn by the skin |
+| Roles (`editMenu`, `quit`, `copy`, …) | The OS's items, labels and shortcuts | Edit and Window menus that act on the focused field and the host's window; macOS-only roles are left out |
+
+The in-page menus carry the theme's dropdown-menu and menubar hooks, so they look like each skin's menus
+(Fluent's acrylic flyout, the macOS menu, Adwaita's popover menu, Breeze, Material 3).
+
+> **Windows and Linux:** Wails 3.1 gives an application menu only to windows created after it is set, and a
+> frameless window (a custom title bar) doesn't show one, so `auto` keeps the in-window bar there.
+
+## Examples
+
+<Canvas of={Stories.InAWindow} />
+
+<Canvas of={Stories.OpenMenu} />
+
+Right-click a file (or focus it and press Shift+F10).
+
+<Canvas of={Stories.ContextMenu} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnMenuImports, type SnMenuItem } from '@spartan-native/desktop-ui';
+
+readonly menu = computed<SnMenuItem[]>(() => [
+  { role: 'appMenu' },                                  // macOS only: About, Hide, Quit…
+  { label: 'File', submenu: [
+    { label: 'New backup…', accelerator: 'mod+n', action: () => this.create() },
+    { label: 'Pause backups', type: 'checkbox', checked: this.paused(), action: () => this.togglePause() },
+    { type: 'separator' },
+    { role: 'close' },
+  ]},
+  { role: 'editMenu' },
+  { role: 'windowMenu' },
+]);
+
+fileMenu(file: BackupFile): SnMenuItem[] {
+  return [
+    { label: 'Restore', action: () => this.restore(file) },
+    { type: 'separator' },
+    { label: 'Delete', accelerator: 'delete', action: () => this.remove(file) },
+  ];
+}`}
+/>
+
+<Source
+  language="html"
+  code={`<sn-menubar [menu]="menu()" />
+
+<li [snContextMenu]="fileMenu(file)">{{ file.name }}</li>`}
+/>
+
+Build the menu in a `computed`: when `checked`, `enabled` or a label changes, the new array is sent to the
+native menu again.
+
+## The menu item
+
+`SnMenuItem` is the host contract's `MenuItem` (from `@spartan-native/theme`) plus `action`:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `label` | `string` | The text. |
+| `action` | `() => void` | Runs when the item is chosen. |
+| `type` | `'normal' \| 'checkbox' \| 'radio' \| 'separator'` | Radio items between two separators form one group. |
+| `checked` | `boolean` | For checkbox and radio items. |
+| `enabled` | `boolean` | Default `true`. |
+| `accelerator` | `string` | A shortcut in the `formatShortcut()` notation: `mod+shift+s`, `delete`, `f2`. Shown as `⇧⌘S` or `Ctrl+Shift+S`. |
+| `role` | `MenuRole` | A standard item the OS builds: `appMenu`, `editMenu`, `windowMenu`, `about`, `hide`, `hideOthers`, `showAll`, `quit`, `undo`, `redo`, `cut`, `copy`, `paste`, `selectAll`, `minimize`, `zoom`, `close`, `toggleFullscreen`. A `label` overrides its text; an `action` turns it into an ordinary item. |
+| `submenu` | `SnMenuItem[]` | Opens a submenu. |
+| `id` | `string` | Optional; generated for items with an `action`. |
+
+## API
+
+### `sn-menubar`
+
+| Input | Type | Default | Description |
+| --- | --- | --- | --- |
+| `menu` | `SnMenuItem[]` | required | Top-level menus: items with a `submenu`, or menu roles. |
+| `native` | `'auto' \| 'always' \| 'never'` | `'auto'` | `auto`: the host's menu bar on macOS. `always`: whenever the host has one. `never`: always in the page. |
+| `ariaLabel` | `string` | `'Application menu'` | Accessible name of the in-page bar. |
+
+In the page, the bar binds the accelerators of items with an `action` (not the Edit roles, which the browser
+already handles in fields). With the native bar the OS binds them.
+
+### `[snContextMenu]`
+
+| Input | Type | Default | Description |
+| --- | --- | --- | --- |
+| `snContextMenu` | `SnMenuItem[]` | required | The menu. |
+| `snContextMenuNative` | `'auto' \| 'never'` | `'auto'` | `never` keeps the in-page menu with a native host. |
+| `snContextMenuDisabled` | `boolean` | `false` | Leaves the browser's own context menu. |
+
+A context menu shows accelerators but doesn't bind them: bind them where the selection lives.
+
+### `SnNativeMenus` (service)
+
+For menus built in code: `canSetApplicationMenu`, `canShowContextMenu`, `setApplicationMenu(items)` and
+`showContextMenu(items, { x, y })`. It runs an item's `action` when the host reports it was chosen.
+
+### Helpers
+
+`toHostMenu(items)` (to the host's plain data, with ids), `inPageMenu(items, family, windowActions)` (roles
+replaced for the page), `matchesAccelerator(event, accelerator, family)`.
+
+### CSS hooks
+
+| Hook | Meaning |
+| --- | --- |
+| `data-slot="sn-menubar"`, `data-native` | The host; `data-native` when the OS shows the menu (the host is then hidden). |
+| `data-slot="menubar"`, `data-slot="menubar-trigger"` | The in-page bar and its menus (the theme's menubar hooks). |
+| `data-slot="dropdown-menu"`, `…-item`, `…-checkbox-item`, `…-radio-item`, `…-sub-trigger`, `…-separator`, `…-shortcut` | The in-page menus (the theme's menu hooks). |
+
+## Accessibility
+
+- In the page: a CDK `role="menubar"` and `role="menu"`s with `menuitem`, `menuitemcheckbox` and
+  `menuitemradio`. ← → move between menus, ↑ ↓ within one, → and ← open and close submenus, Esc closes,
+  typing jumps to an item. F10 focuses the bar on Windows and Linux.
+- The context menu opens from right-click, the Menu key and Shift+F10, and gives the focus back to the element
+  when it closes.
+- Native menus are the OS's, with its own screen-reader support.
+- In Windows contrast themes the highlighted item uses `Highlight` / `HighlightText`.

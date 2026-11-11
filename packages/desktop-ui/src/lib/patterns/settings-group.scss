@@ -139,3 +139,15 @@ p {
     background: var(--sn-color-surface);
   }
 }
+
+// --- Windows contrast themes ---------------------------------------------------------------
+// Cards and boxed lists are drawn with fills and shadows; give the list a CanvasText edge.
+@media (forced-colors: active) {
+  .rows {
+    border: 1px solid CanvasText;
+  }
+
+  :host([data-skin='qt']) .rows {
+    border: 0;
+  }
+}

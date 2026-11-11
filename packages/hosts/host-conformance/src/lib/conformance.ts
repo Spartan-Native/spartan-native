@@ -130,6 +130,25 @@ export const CHECKS: readonly Check[] = [
     run: async (h) => expect(typeof (await h.window.isFocused()) === 'boolean', 'isFocused() must resolve a boolean'),
   },
   {
+    id: 'menus-match-capability',
+    title: 'menus are present exactly when nativeMenus is not none',
+    run: (h) => {
+      const level = h.capabilities.nativeMenus;
+      const m = h.menus;
+      if (level === 'none') {
+        expect(!m, 'nativeMenus is "none" but the host has menus');
+        return;
+      }
+      expect(m, `nativeMenus is "${level}" but the host has no menus`);
+      expect(typeof m!.onAction === 'function', 'menus.onAction must be a function');
+      expect(m!.setApplicationMenu || m!.showContextMenu, 'menus must offer setApplicationMenu() or showContextMenu()');
+      const off = m!.onAction(() => undefined);
+      expect(typeof off === 'function', 'menus.onAction must return an unsubscribe function');
+      off();
+      off();
+    },
+  },
+  {
     id: 'unsubscribe',
     title: 'subscriptions return an unsubscribe function that can be called twice',
     run: (h) => {

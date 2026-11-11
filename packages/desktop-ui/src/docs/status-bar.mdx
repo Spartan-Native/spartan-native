@@ -1,0 +1,89 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/status-bar.stories';
+
+<Meta of={Stories} />
+
+# Status bar
+
+`<sn-status-bar>` runs along the bottom of a window or pane and shows short facts about what's on screen:
+the item count, the selection and its size, free space, the state of a background job. Each fact is an
+`[snStatusItem]`, and the bar separates the items the way the OS does.
+
+| OS | Renders as | Native control |
+| --- | --- | --- |
+| Windows 11 | Small muted text, items spaced apart, no rules | File Explorer status bar |
+| Windows 10 | Items divided by vertical rules, a top border | Win32 status bar |
+| macOS 26 / 13–15 | Small text centered in the bar, items joined by commas ("4 items, 1 selected, 1.2 TB free") | Finder status bar |
+| GNOME | A 46px bar at the bottom of the view, start and end groups, body-size text | GtkActionBar in an AdwToolbarView |
+| KDE | Items divided by rules, extra controls (zoom, free space) at the end | Dolphin status bar |
+| ChromeOS | A slim footer with muted text | Material 3 footer |
+
+An unknown OS (`web`) gets the GNOME look.
+
+## Examples
+
+<Canvas of={Stories.Default} />
+
+A running job: a `live` item that screen readers announce, and a progress bar at the end.
+
+<Canvas of={Stories.WithProgress} />
+
+<Canvas of={Stories.NothingSelected} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnStatusBarImports } from '@spartan-native/desktop-ui';`}
+/>
+
+<Source
+  language="html"
+  code={`<sn-status-bar>
+  <span snStatusItem>{{ files().length }} items</span>
+  @if (selection().length) {
+    <span snStatusItem>{{ selection().length }} selected · {{ selectedSize() }}</span>
+  }
+  <span snStatusItem live>{{ jobStatus() }}</span>
+  <span snStatusItem snStatusBarEnd>{{ freeSpace() }} free</span>
+</sn-status-bar>`}
+/>
+
+Put the bar last in the window (or the pane it describes); it doesn't position itself.
+
+## API
+
+### `sn-status-bar` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ariaLabel` | `string` | `'Status'` | Accessible name of the bar. |
+
+### `[snStatusItem]` inputs
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `live` | `boolean` | `false` | Gives the item `role="status"`, so changes are announced. Use it for job progress, not for selection counts. |
+
+### Content slots
+
+| Selector | Content |
+| --- | --- |
+| (default) | Items at the start. |
+| `[snStatusBarEnd]` | Items at the trailing edge. On macOS they join the centered text. |
+
+### CSS hooks
+
+| Hook | Meaning |
+| --- | --- |
+| `data-slot="sn-status-bar"`, `data-slot="sn-status-item"` | The bar and its items. |
+| `data-family`, `data-skin` | The OS family and skin it is drawn for. |
+| `.start`, `.end` | The two groups. |
+| `sn-chrome` | The theme dims the bar when the window is inactive. |
+
+## Accessibility
+
+- The bar is a labelled `role="group"`. It isn't a live region as a whole: a selection count that changes on
+  every click would interrupt the user. Mark the items that should be announced with `live`.
+- Items aren't focusable. Don't put the only copy of important information in the status bar.
+- In Windows contrast themes the bar gets a `CanvasText` top border.

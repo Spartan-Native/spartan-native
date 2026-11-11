@@ -52,6 +52,10 @@ export class SpartanNativeTheme {
   readonly runtime = this.host.runtime;
   /** The host's window services (focus, and minimize / maximize / close where the host owns a window). */
   readonly window = this.host.window;
+  /** The host's native menus, when its runtime has them. */
+  readonly menus = this.host.menus;
+  /** What the host's runtime can do natively. */
+  readonly capabilities = this.host.capabilities;
 
   constructor() {
     effect(() => {

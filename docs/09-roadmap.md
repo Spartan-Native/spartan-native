@@ -37,12 +37,12 @@ The project is at phase 01. The phases and their one-line descriptions come from
 
 ## Phase 05: Desktop UI & integration
 
-- Title bar in three modes; the six OS patterns with their counterparts; the menubar adapter; native context menus; window effects; Snap Layouts.
-- High-contrast / `forced-colors` support (currently "Planned").
+- Title bar in three modes; the six OS patterns with their counterparts; the menubar adapter; native context menus; window effects; Snap Layouts. (Done: title bar, the six patterns, the menubar adapter and context menus, with Wails as the first native host. Open: window effects, Snap Layouts.)
+- High-contrast / `forced-colors` support (currently "Planned"). desktop-ui follows `forced-colors` (done); the derived palette for `contrast: more` is still open (Q6).
 - Harbor Backup complete on web + Wails.
 
 ## Phase 06: Gaps & tooling
 
-- New components: tree view, number box, split button, status bar.
+- New components: tree view, number box, split button, status bar (done, in `desktop-ui`).
 - `spartan-native-plugin`: skill, commands `new-app`, `add-screen` and `audit`, the `native-ui-reviewer` agent, and a hook against hard-coded colors.
 - Public docs playground that replaces the design canvas.

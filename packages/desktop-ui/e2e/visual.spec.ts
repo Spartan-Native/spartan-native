@@ -9,6 +9,8 @@ test.use({ reducedMotion: 'reduce', viewport: { width: 1000, height: 700 } });
 const STORIES: Record<string, string[]> = {
   'window-title-bar': ['default', 'with-subtitle', 'with-start-content', 'maximized', 'close-only', 'native-controls', 'inactive'],
   'window-window-controls': ['default', 'maximized', 'close-only', 'linux-all', 'events', 'inactive'],
+  'window-status-bar': ['default', 'with-progress', 'nothing-selected'],
+  'window-menubar': ['in-a-window', 'open-menu', 'context-menu'],
   'patterns-command-bar': ['in-a-window', 'with-overflow', 'disabled-commands'],
   'patterns-coach-mark': ['open-on-load', 'toggle', 'placement'],
   'patterns-modal-sheet': ['open-on-load', 'opened-by-button', 'destructive-confirmation'],
@@ -16,6 +18,9 @@ const STORIES: Record<string, string[]> = {
   'patterns-sidebar-navigation': ['with-sections', 'flat'],
   'patterns-settings-list': ['default', 'switch-rows', 'select-row', 'navigation-row', 'multiple-groups'],
   'patterns-status-page': ['default', 'two-actions', 'without-actions', 'title-only'],
+  'controls-split-button': ['default', 'small', 'disabled'],
+  'controls-number-box': ['default', 'in-settings', 'states'],
+  'controls-tree-view': ['default', 'multiple-selection', 'trailing-content'],
   'platform-shortcut': ['table', 'inline'],
   'platform-platform-if': ['family', 'skin', 'list', 'every-skin'],
 };
@@ -27,6 +32,9 @@ async function settle(page: Page, id: string): Promise<void> {
   }
   if (id === 'patterns-modal-sheet--open-on-load') {
     await page.locator('[data-slot="sn-modal-sheet-panel"]').waitFor();
+  }
+  if (id === 'window-menubar--open-menu' || id === 'window-menubar--context-menu') {
+    await page.locator('.cdk-overlay-container [data-slot="dropdown-menu"]').waitFor();
   }
   await frames(page);
 }

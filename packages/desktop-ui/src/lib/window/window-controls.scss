@@ -225,3 +225,28 @@ svg {
     }
   }
 }
+
+// --- Windows contrast themes ---------------------------------------------------------------
+// System colors replace the fills: hover uses Highlight, the macOS lights keep a visible ring.
+@media (forced-colors: active) {
+  button {
+    color: ButtonText !important;
+  }
+
+  .caption:hover,
+  .caption.close:hover,
+  .round:hover {
+    background: Highlight !important;
+    color: HighlightText !important;
+    forced-color-adjust: none;
+  }
+
+  :host([data-family='macos']) .light {
+    border: 1px solid ButtonText;
+    box-sizing: border-box;
+  }
+
+  button:focus-visible {
+    outline: 2px solid CanvasText;
+  }
+}

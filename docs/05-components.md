@@ -58,4 +58,4 @@ The component comparison artboard (`Main.dc.html`, "Light vs dark per platform")
 
 ## Gaps (roadmap phase 06)
 
-spartan has no tree view, number box, split button or status bar yet. These are planned as additions.
+spartan has no tree view, number box, split button or status bar. `@spartan-native/desktop-ui` adds them: `<sn-tree>`, `<sn-number-box>`, `<sn-split-button>` and `<sn-status-bar>`, each drawn the way its OS draws it (see [06](06-os-patterns.md#other-desktop-ui-pieces)).

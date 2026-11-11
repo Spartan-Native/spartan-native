@@ -234,3 +234,11 @@
     gap: 0.25rem;
   }
 }
+
+// --- Windows contrast themes ---------------------------------------------------------------
+// The panel is outlined by its shadow, which contrast themes remove.
+@media (forced-colors: active) {
+  .sheet {
+    border: 1px solid CanvasText;
+  }
+}

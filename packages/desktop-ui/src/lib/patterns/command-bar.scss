@@ -310,3 +310,31 @@
     }
   }
 }
+
+// --- Windows contrast themes ---------------------------------------------------------------
+@media (forced-colors: active) {
+  :host {
+    border-bottom: 1px solid CanvasText;
+  }
+
+  :host ::ng-deep [data-slot='sn-command'] {
+    color: ButtonText !important;
+
+    &:hover:not(:disabled),
+    &[aria-expanded='true'] {
+      background: Highlight !important;
+      color: HighlightText !important;
+      forced-color-adjust: none;
+    }
+
+    &:disabled {
+      color: GrayText !important;
+      opacity: 1;
+    }
+  }
+
+  // the macOS 26 capsule is drawn with a shadow, which contrast themes remove
+  :host([data-skin='mac']) .commands {
+    border-color: CanvasText;
+  }
+}

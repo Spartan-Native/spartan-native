@@ -215,3 +215,21 @@ $item: "[data-slot='sn-sidebar-item']";
     color: inherit;
   }
 }
+
+// --- Windows contrast themes ---------------------------------------------------------------
+// The selection is a fill (and on KDE an inset shadow): both are replaced, so use Highlight.
+@media (forced-colors: active) {
+  :host(#{$item}[data-active]) {
+    background: Highlight !important;
+    color: HighlightText !important;
+    forced-color-adjust: none;
+  }
+
+  :host(#{$item}[data-active])::before {
+    background: HighlightText !important;
+  }
+
+  :host(#{$item}:focus-visible) {
+    outline: 2px solid CanvasText;
+  }
+}

@@ -42,6 +42,7 @@ report.results;  // [{ id, title, status: 'pass' | 'fail' | 'skip', detail? }]
 | `appearance` | `appearance()` resolves a valid `AppearanceState` (`#rrggbb` accent, enums, booleans, text scale) |
 | `skin-agrees` | `appearance().skin` equals `platform().skin` |
 | `focus` | `window.isFocused()` resolves a boolean |
+| `menus-match-capability` | `menus` is present exactly when `nativeMenus` isn't `none`; it has `onAction` and at least one of `setApplicationMenu` / `showContextMenu` |
 | `unsubscribe` | subscriptions return an unsubscribe function, safe to call twice |
 | `graceful` | nothing throws for capabilities reported as `none` |
 | `live-appearance` | *(driver)* an OS change is notified, with the new values |

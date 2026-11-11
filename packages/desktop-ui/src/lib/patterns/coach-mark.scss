@@ -384,3 +384,18 @@
     }
   }
 }
+
+// --- Windows contrast themes ---------------------------------------------------------------
+// The shadow is removed in contrast themes: the card and its beak get a CanvasText edge.
+@media (forced-colors: active) {
+  .card,
+  .beak {
+    border-color: CanvasText;
+  }
+
+  .close:hover {
+    background: Highlight !important;
+    color: HighlightText !important;
+    forced-color-adjust: none;
+  }
+}

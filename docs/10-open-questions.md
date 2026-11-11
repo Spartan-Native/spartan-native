@@ -5,7 +5,7 @@ The mockups leave these open. Resolve them in phase 02 and record each answer he
 | # | Question | Context / suggestion |
 | --- | --- | --- |
 | Q1 | ~~Final token names~~ **Decided:** every token is `--sn-*` (colors `--sn-color-*`); `contract/_spartan-bridge.scss` maps them onto spartan's names (`--background`, `--primary`, `--radius`, …). | See `packages/theme/src/styles/contract/`. |
-| Q2 | Exact shape of `WindowHost`, `MenuHost`, `NotificationHost`, `Capability` and `Unsubscribe`. | Named in the contract but not specified. Derive `Capability` keys from the 14 matrix rows ([07](07-host-adapters.md)). |
+| Q2 | Exact shape of `WindowHost`, `MenuHost`, `NotificationHost`, `Capability` and `Unsubscribe`. **Mostly decided:** `WindowHost`, `MenuHost` (plain `MenuItem` data, actions reported by id), `Capability` and `Unsubscribe` are in `contract/native-host.ts`; `NotificationHost` is still open. | Named in the contract but not specified. Derive `Capability` keys from the 14 matrix rows ([07](07-host-adapters.md)). |
 | Q3 | Is Wails the primary target? | The canvas is titled "… — Wails" and Wails is the default adapter on the project page, but the build order puts it fourth. Confirm the priority. |
 | Q4 | What is the `web` skin? | It is in the `Skin` type but has no mockup. Is it a neutral skin, or just stock spartan? |
 | Q5 | Dialog button order per OS. | Listed as a convention; the mockup shows Don't save / Cancel / Save. Define it per skin (e.g. Windows: primary on the left of Cancel; macOS/GNOME: primary on the right). |

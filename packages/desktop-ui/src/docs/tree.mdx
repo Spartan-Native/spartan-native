@@ -1,0 +1,124 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/tree.stories';
+
+<Meta of={Stories} />
+
+# Tree view
+
+`<sn-tree>` shows a hierarchy, such as folders, the contents of a backup or a document outline, with the
+desktop selection model. Items nest in markup. The selection works like helm's `snSelectable` (the same
+pure functions) over the items that are currently visible.
+
+| OS | Expander | Selection | Native control |
+| --- | --- | --- | --- |
+| Windows 11 | Chevron | Hover fill plus the accent pill | WinUI TreeView |
+| Windows 10 | Chevron | Square, accent-tinted rows | TreeView |
+| macOS 26 / 13–15 | Disclosure triangle | Accent fill; grey while the tree doesn't have focus | NSOutlineView |
+| GNOME | Triangle | Neutral rounded rows | GtkListView + GtkTreeExpander |
+| KDE | Chevron | Accent fill; muted without focus | QTreeView (Breeze) |
+| ChromeOS | Chevron | Tonal pill | Files app tree |
+
+The colors come from the skin's row tokens (`--sn-row-selected-*`), so the tree matches the skin's lists and tables.
+
+## Examples
+
+Single selection, which follows the focus as in Explorer and Finder.
+
+<Canvas of={Stories.Default} />
+
+Multiple selection: Ctrl/⌘-click, Shift-click, Shift+arrows, Ctrl/⌘+A.
+
+<Canvas of={Stories.MultipleSelection} />
+
+Counts in the trailing slot. Music loads its children only when it first opens.
+
+<Canvas of={Stories.TrailingContent} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnTreeImports } from '@spartan-native/desktop-ui';`}
+/>
+
+<Source
+  language="html"
+  code={`<sn-tree aria-label="Folders" [(selection)]="folder" (activated)="open($event)">
+  @for (node of roots(); track node.id) {
+    <sn-tree-item [value]="node.id" [label]="node.name" icon="lucideFolder">
+      @for (child of node.children; track child.id) {
+        <sn-tree-item [value]="child.id" [label]="child.name" icon="lucideFolder" />
+      }
+    </sn-tree-item>
+  }
+</sn-tree>`}
+/>
+
+For data of any depth, render the items from a recursive component. The items find their parent through
+injection, and their order through the document, so a component boundary in between is fine.
+
+## Keyboard and mouse
+
+| Input | Action |
+| --- | --- |
+| ↑ ↓, Home End, PgUp PgDn | Move through the visible items; the selection follows (single) or extends with Shift (multiple) |
+| → (← in RTL) | Opens a closed item; on an open one, goes to its first child |
+| ← (→ in RTL) | Closes an open item; otherwise goes to the parent |
+| `*` | Opens every sibling of the focused item |
+| Enter | Emits `activated` |
+| Space, Ctrl/⌘+Space | Selects; with `multiple`, toggles |
+| Ctrl/⌘+A | Selects every visible item (`multiple`) |
+| Typing | Jumps to the next item whose label starts with the typed text |
+| Click the expander, double-click a parent | Opens or closes it |
+| Double-click a leaf | Emits `activated` |
+
+On macOS ⌘ takes the place of Ctrl, and ⌘↑ / ⌘↓ go to the first and last item. When an item closes over the
+selected item, the selection moves to that item, as in Explorer.
+
+## API
+
+### `sn-tree`
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `selection` | `readonly K[]` | `[]` | The selected values. Two-way bindable. |
+| `multiple` | `boolean` | `false` | Allow more than one selected item. |
+| `activated` (output) | `K` | | Enter, or a double-click on a leaf. |
+
+### `sn-tree-item`
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `K` | required | The key; unique in the tree. |
+| `label` | `string` | required | The text, accessible name and type-ahead text. |
+| `icon` | `string` | `''` | An @ng-icons name registered with `provideIcons()`. |
+| `expanded` | `boolean` | `false` | Open. Two-way bindable (`[(expanded)]`, `(expandedChange)`). |
+| `expandable` | `boolean` | `false` | Show the expander before the children exist (lazy loading). |
+
+Read-only: `level()`, `parent`, `children()`, `hasChildren()`, `descendants()`; method `setExpanded(open)`.
+
+### Content slots of an item
+
+| Selector | Content |
+| --- | --- |
+| `[snTreeItemEnd]` | Trailing content on the item's row: a count, a badge. |
+| (default) | Child `sn-tree-item`s. |
+
+### CSS hooks
+
+| Hook | Meaning |
+| --- | --- |
+| `data-slot="sn-tree"`, `data-slot="sn-tree-item"` | The tree and its items. |
+| `data-selected`, `data-expanded` | Item state. |
+| `--sn-tree-indent`, `--sn-tree-row-height`, `--sn-tree-row-inset`, `--sn-tree-icon` | Geometry, set per skin on the tree. Override them on `sn-tree`. |
+| `.row`, `.expander`, `.icon`, `.label`, `.children` | The parts of an item. |
+
+## Accessibility
+
+- `role="tree"` with `aria-multiselectable`; items are `role="treeitem"` with `aria-level`, `aria-expanded`
+  (parents only) and `aria-selected`. The children sit in a `role="group"`.
+- One Tab stop: the focused item, otherwise the first selected one, otherwise the first item. The focus moves
+  between items (roving tabindex), and the focus ring is drawn around the row only.
+- Each item is named by its `label`, so a child's text doesn't become part of the parent's name. Give the
+  tree an `aria-label` or `aria-labelledby`.
+- In Windows contrast themes the selected row uses `Highlight` / `HighlightText` and the focus ring `CanvasText`.

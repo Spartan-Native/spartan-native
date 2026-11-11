@@ -148,3 +148,14 @@
 :host([data-skin='cros']:not(:first-child)) {
   border-top: 1px solid var(--sn-color-stroke);
 }
+
+// --- Windows contrast themes ---------------------------------------------------------------
+@media (forced-colors: active) {
+  :host([data-family='windows']) {
+    border: 1px solid CanvasText;
+  }
+
+  :host([data-family='macos']:not(:first-child))::before {
+    background: CanvasText;
+  }
+}

@@ -4,7 +4,9 @@ Every adapter implements the same `NativeHost` interface and shares the same typ
 
 ## Shared contract (`@spartan-native/theme`)
 
-The contract below is as designed. `WindowHost`, `MenuHost`, `NotificationHost`, `Capability` and `Unsubscribe` are named but not yet specified (see Q2).
+The contract below is as designed. `WindowHost`, `MenuHost`, `Capability` and `Unsubscribe` are now specified in `packages/theme/src/lib/contract/native-host.ts`; `NotificationHost` is still open (see Q2).
+
+**Menus** (`MenuHost`, optional): `setApplicationMenu(menu)`, `showContextMenu(menu, { x, y })` and `onAction(cb)`. A menu is plain `MenuItem` data (label, `type` normal/checkbox/radio/separator, `accelerator` in the portable `mod+shift+s` notation, `enabled`, `checked`, `role`, `submenu`, `id`), so it crosses into Go, Rust, Node or .NET. A chosen item is reported by its `id`; roles are handled by the OS. A host offers `menus` exactly when `nativeMenus` isn't `none` (a conformance check).
 
 ```ts
 // Implemented by every adapter, consumed by every component.
@@ -72,7 +74,7 @@ N = native · P = partial or fallback · X = not available (components fall back
 | Window focus | Window | N: focus / blur events | N: window events | N: window events | N: BrowserWindow events | N: window events |
 | Mica · acrylic · vibrancy | Window | X: glass blurs page content only | N: Mica, translucent macOS | N: window effects | N: `backgroundMaterial`, vibrancy | P: limited by Photino |
 | Custom title bar | Window | P: Window Controls Overlay (Chromium) | N: frameless + drag regions | N: overlay or frameless | N: `titleBarOverlay` | P: frameless only |
-| Native menus & context menus | OS services | X: HTML menus | P: app menu; context menus vary by version | N: Menu API | N: Menu API | P: limited |
+| Native menus & context menus | OS services | X: HTML menus | N on macOS (global menu bar + context menus); P on Windows/Linux (context menus; the app menu reaches only new, framed windows) | N: Menu API | N: Menu API | P: limited |
 | Notifications | OS services | P: Notification API, needs permission | P: varies by version | N: notification plugin | N: built in | P: via OS APIs |
 | Taskbar / dock progress | OS services | P: app badge only | P: custom native code | N: `setProgressBar` | N: `setProgressBar` | P: custom native code |
 | File dialogs | OS services | P: File System Access (Chromium) | N: runtime dialogs | N: dialog plugin | N: dialog module | N: Photino dialogs |
@@ -81,7 +83,7 @@ N = native · P = partial or fallback · X = not available (components fall back
 
 ## Adapter order and conformance
 
-> **Implemented:** `@spartan-native/host-wails` (Go service per OS; passes the suite; verified on macOS), `@spartan-native/host-web` (passes the suite) and `@spartan-native/host-conformance` (11 checks; the live ones run when the adapter's test supplies a driver). The web column of the matrix above is now measured, not planned. One finding: Chromium returns a fixed `AccentColor` (`#0075ff`), so the web accent is real only on Firefox and Safari.
+> **Implemented:** `@spartan-native/host-wails` (Go service per OS; passes the suite; verified on macOS), `@spartan-native/host-web` (passes the suite) and `@spartan-native/host-conformance` (12 checks; the live ones run when the adapter's test supplies a driver). The web column of the matrix above is now measured, not planned. One finding: Chromium returns a fixed `AccentColor` (`#0075ff`), so the web accent is real only on Firefox and Safari.
 
 - **Order:** Web/PWA from day one, then Electron → Tauri → Wails → Photino.NET.
 - **Conformance:** every adapter must pass the same suite. It should check contract shape, capability flags that match real behavior, live change events (scheme, accent, focus), skin resolution, and graceful fallback when a capability is `none`.
