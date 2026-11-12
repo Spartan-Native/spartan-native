@@ -1,6 +1,6 @@
 {
   "name": "@spartan-native/host-web",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "NativeHost for browsers and installed PWAs: system accent, light/dark, contrast, transparency, motion, text size and window focus from browser APIs, live.",
   "license": "MIT",
   "author": "Roland Molnár",
@@ -21,14 +21,14 @@
     "accent-color"
   ],
   "peerDependencies": {
-    "@spartan-native/theme": "0.1.0"
+    "@spartan-native/theme": "0.2.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
   "sideEffects": false,
   "devDependencies": {
-    "@spartan-native/host-conformance": "0.1.0"
+    "@spartan-native/host-conformance": "0.2.0"
   },
   "publishConfig": {
     "access": "public"

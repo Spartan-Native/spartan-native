@@ -1,6 +1,6 @@
 # 09 — Roadmap
 
-> **Describes:** what is built and what is left, as of `0.1.0`. Released changes are in the [changelog](../CHANGELOG.md).
+> **Describes:** what is built and what is left, as of `0.2.0`. Released changes are in the [changelog](../CHANGELOG.md).
 
 The project was planned in six phases. Phases 01 to 03 are done; 04 to 06 are mostly done.
 

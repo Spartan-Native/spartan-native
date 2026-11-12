@@ -1,6 +1,6 @@
 {
   "name": "@spartan-native/host-conformance",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The conformance suite every @spartan-native/host-* adapter must pass: contract shape, capability flags, live appearance and focus events, graceful fallbacks.",
   "license": "MIT",
   "author": "Roland Molnár",
@@ -20,7 +20,7 @@
     "testing"
   ],
   "peerDependencies": {
-    "@spartan-native/theme": "0.1.0"
+    "@spartan-native/theme": "0.2.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

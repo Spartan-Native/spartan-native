@@ -1,6 +1,6 @@
 {
   "name": "@spartan-native/theme",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Token contract, accent-to-palette derivation, NativeHost interface and provideSpartanNative(). Plain CSS + TS; the only required layer.",
   "license": "MIT",
   "author": "Roland Molnár",

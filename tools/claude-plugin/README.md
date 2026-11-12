@@ -31,7 +31,7 @@ tools/claude-plugin/
 
 ## Versions
 
-The skill matches the `@spartan-native/*` packages of the same version from this repository (`0.1.0`). The host references and templates for Wails, Tauri and Photino.NET were checked against the `main` branch of `Spartan-Native/host-wails`, `Spartan-Native/host-tauri` and `Spartan-Native/host-dotnet` on 2026-11-12, before any of them had a release. When an adapter's setup changes there, update its `references/host-*.md` and template here.
+The skill matches the `@spartan-native/*` packages of the same version from this repository (`0.2.0`). The host references and templates for Wails, Tauri and Photino.NET were checked against the `main` branch of `Spartan-Native/host-wails`, `Spartan-Native/host-tauri` and `Spartan-Native/host-dotnet` on 2026-11-12, before any of them had a release. When an adapter's setup changes there, update its `references/host-*.md` and template here.
 
 The skill points agents at the `AGENTS.md` that ships in every installed package (`node_modules/@spartan-native/<package>/AGENTS.md`) for the full API, and only adds how the pieces fit together.
 

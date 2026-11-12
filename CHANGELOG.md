@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-12
+
 ### Added
 
 - `@spartan-native/helm`: the constants `SELECTION_PAGE_SIZE` and `TYPEAHEAD_RESET_MS`, the values the selection model uses for Page Up/Down and type-ahead.
@@ -33,5 +35,6 @@ First release.
 - `@spartan-native/host-web`: OS settings from browser APIs, live, for browsers and installed PWAs.
 - `@spartan-native/host-conformance`: the test suite every host adapter must pass.
 
-[Unreleased]: https://github.com/Spartan-Native/spartan-native/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Spartan-Native/spartan-native/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/Spartan-Native/spartan-native/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Spartan-Native/spartan-native/releases/tag/v0.1.0
