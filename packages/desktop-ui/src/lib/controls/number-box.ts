@@ -19,8 +19,17 @@ import { injectSkin, skinFamily, type Skin } from '@spartan-native/theme';
 
 let nextId = 0;
 
-/** Skins whose steppers read − / + (the others draw chevrons). */
-const PLUS_MINUS: readonly Skin[] = ['gtk', 'cros', 'web'];
+/** What each skin's stepper buttons show: − / + or up/down chevrons. */
+const STEPPER_GLYPHS: Record<Skin, 'plus-minus' | 'chevrons'> = {
+  win: 'chevrons',
+  w10: 'chevrons',
+  mac: 'chevrons',
+  macc: 'chevrons',
+  gtk: 'plus-minus',
+  qt: 'chevrons',
+  cros: 'plus-minus',
+  web: 'plus-minus',
+};
 
 const REPEAT_DELAY_MS = 400;
 const REPEAT_INTERVAL_MS = 60;
@@ -195,7 +204,7 @@ export class SnNumberBox implements ControlValueAccessor {
 
   protected readonly skin = injectSkin();
   protected readonly family = computed(() => skinFamily(this.skin()));
-  protected readonly glyphs = computed(() => (PLUS_MINUS.includes(this.skin()) ? 'plus-minus' : 'chevrons'));
+  protected readonly glyphs = computed(() => STEPPER_GLYPHS[this.skin()]);
 
   private readonly formDisabled = signal(false);
   protected readonly isDisabled = computed(() => this.disabled() || this.formDisabled());

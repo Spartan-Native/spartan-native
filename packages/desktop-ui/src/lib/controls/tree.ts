@@ -31,8 +31,17 @@ import { injectSkin, skinFamily, type Skin } from '@spartan-native/theme';
 const TYPEAHEAD_RESET_MS = 600;
 const PAGE = 10;
 
-/** Skins whose expander is a disclosure triangle (the others draw a chevron). */
-const TRIANGLE: readonly Skin[] = ['mac', 'macc', 'gtk', 'web'];
+/** What each skin draws to open and close a parent item. */
+const EXPANDER: Record<Skin, 'triangle' | 'chevron'> = {
+  win: 'chevron',
+  w10: 'chevron',
+  mac: 'triangle',
+  macc: 'triangle',
+  gtk: 'triangle',
+  qt: 'chevron',
+  cros: 'chevron',
+  web: 'triangle',
+};
 
 /** Document order of two elements, for Array.sort. */
 function domOrder(a: { element: Element }, b: { element: Element }): number {
@@ -94,7 +103,7 @@ export class SnTree<K = unknown> {
   protected readonly skin = injectSkin();
   protected readonly family = computed(() => skinFamily(this.skin()));
   /** @internal */
-  readonly triangle = computed(() => TRIANGLE.includes(this.skin()));
+  readonly triangle = computed(() => EXPANDER[this.skin()] === 'triangle');
   private readonly dir = inject(Directionality, { optional: true });
   private readonly injector = inject(Injector);
 

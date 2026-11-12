@@ -31,8 +31,28 @@ import { SnTooltip } from '../controls/tooltip';
 import type { SnMenuItem } from '../menubar/menu-model';
 import { SnMenuTemplates } from '../menubar/menu-templates';
 
-/** Skins whose command surface shows the label next to (or under) the icon. */
-const LABELLED: readonly Skin[] = ['win', 'w10', 'qt'];
+/** How each skin lays out its command surface. */
+interface CommandBarLayout {
+  /** The label shows next to (or under) the icon; otherwise commands are icon-only. */
+  readonly labels: boolean;
+  /** Where the title sits when `titlePosition` is `auto`. */
+  readonly title: 'start' | 'center';
+  /** The commands come before the title (GNOME's header bar). */
+  readonly commandsFirst: boolean;
+  /** The overflow button: `…` (Windows, macOS), a hamburger (GNOME, KDE) or `⋮` (ChromeOS). */
+  readonly overflowGlyph: 'dots' | 'menu' | 'vertical';
+}
+
+const LAYOUT: Record<Skin, CommandBarLayout> = {
+  win: { labels: true, title: 'start', commandsFirst: false, overflowGlyph: 'dots' },
+  w10: { labels: true, title: 'start', commandsFirst: false, overflowGlyph: 'dots' },
+  mac: { labels: false, title: 'start', commandsFirst: false, overflowGlyph: 'dots' },
+  macc: { labels: false, title: 'start', commandsFirst: false, overflowGlyph: 'dots' },
+  gtk: { labels: false, title: 'center', commandsFirst: true, overflowGlyph: 'menu' },
+  qt: { labels: true, title: 'start', commandsFirst: false, overflowGlyph: 'menu' },
+  cros: { labels: false, title: 'start', commandsFirst: false, overflowGlyph: 'vertical' },
+  web: { labels: false, title: 'center', commandsFirst: true, overflowGlyph: 'menu' },
+};
 
 /** Where the title sits: the skin's own place, or forced to the start or the center. */
 export type SnCommandBarTitlePosition = 'auto' | 'start' | 'center';
@@ -311,21 +331,18 @@ export class SnCommandBar {
   protected readonly family = computed(() => skinFamily(this.skin()));
   /** The real OS: how shortcuts in the overflow menu are written. */
   protected readonly platform = injectPlatformFamily();
+  private readonly layout = computed(() => LAYOUT[this.skin()]);
   /** macOS, GNOME, ChromeOS: commands show only their icon. */
-  readonly iconOnly = computed(() => !LABELLED.includes(this.skin()));
+  readonly iconOnly = computed(() => !this.layout().labels);
   /** The bar dropped the labels to make room. */
   readonly compact = signal(false);
   protected readonly resolvedTitlePosition = computed<'start' | 'center'>(() => {
     const position = this.titlePosition();
-    if (position !== 'auto') return position;
-    return this.skin() === 'gtk' || this.family() === 'web' ? 'center' : 'start';
+    return position === 'auto' ? this.layout().title : position;
   });
   /** GNOME puts the commands at the start of the header bar, before the title. */
-  protected readonly commandsLead = computed(() => this.skin() === 'gtk' || this.family() === 'web');
-  protected readonly moreGlyph = computed(() => {
-    const skin = this.skin();
-    return skin === 'cros' ? 'vertical' : skin === 'gtk' || skin === 'qt' || this.family() === 'web' ? 'menu' : 'dots';
-  });
+  protected readonly commandsLead = computed(() => this.layout().commandsFirst);
+  protected readonly moreGlyph = computed(() => this.layout().overflowGlyph);
 
   protected readonly overflow = contentChild(SnCommandOverflow);
   protected readonly menuPosition: ConnectedPosition[] = [

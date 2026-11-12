@@ -1,6 +1,18 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { injectNativeSkin, injectSkin, skinFamily } from '@spartan-native/theme';
+import { injectNativeSkin, injectSkin, skinFamily, type Skin } from '@spartan-native/theme';
 import { SnWindowControls, type WindowButton } from './window-controls';
+
+/** Windows, KDE and ChromeOS show the app icon in the title bar; macOS and GNOME don't. */
+const APP_ICON: Record<Skin, boolean> = {
+  win: true,
+  w10: true,
+  mac: false,
+  macc: false,
+  gtk: false,
+  qt: true,
+  cros: true,
+  web: false,
+};
 
 /**
  * A complete title bar, laid out the way each OS does it:
@@ -100,8 +112,5 @@ export class SnTitleBar {
   protected readonly family = computed(() => skinFamily(this.skin()));
   /** The real OS's skin: where and how big its own window buttons are. */
   protected readonly nativeSkin = injectNativeSkin();
-  /** Windows, KDE and ChromeOS show the app icon in the title bar; macOS and GNOME don't. */
-  protected readonly showIcon = computed(
-    () => this.family() === 'windows' || this.skin() === 'qt' || this.skin() === 'cros',
-  );
+  protected readonly showIcon = computed(() => APP_ICON[this.skin()]);
 }

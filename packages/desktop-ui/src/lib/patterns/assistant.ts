@@ -16,7 +16,7 @@ import {
   untracked,
   viewChild,
 } from '@angular/core';
-import { injectSkin, skinFamily, type PlatformFamily } from '@spartan-native/theme';
+import { injectSkin, skinFamily, type PlatformFamily, type Skin } from '@spartan-native/theme';
 
 let nextId = 0;
 
@@ -35,6 +35,18 @@ export class SnAssistantPage {
   /** False disables Next / Continue (e.g. while the page's form is invalid). Default: true. */
   readonly canContinue = input(true, { transform: booleanAttribute });
 }
+
+/** Skins that show page dots under a multi-page assistant (GNOME, ChromeOS and the web fallback). */
+const PAGE_DOTS: Record<Skin, boolean> = {
+  win: false,
+  w10: false,
+  mac: false,
+  macc: false,
+  gtk: true,
+  qt: false,
+  cros: true,
+  web: true,
+};
 
 /** The words each OS uses for an assistant's buttons. */
 const LABELS: Record<PlatformFamily, { back: string; next: string; finish: string; cancel: string }> = {
@@ -161,9 +173,7 @@ export class SnAssistant {
   protected readonly current = computed(() => Math.min(Math.max(this.step(), 0), Math.max(this.pages().length - 1, 0)));
   protected readonly page = computed(() => this.pages()[this.current()] ?? null);
   protected readonly last = computed(() => this.current() >= this.pages().length - 1);
-  protected readonly showDots = computed(
-    () => (this.skin() === 'gtk' || this.skin() === 'cros' || this.family() === 'web') && this.pages().length > 1,
-  );
+  protected readonly showDots = computed(() => PAGE_DOTS[this.skin()] && this.pages().length > 1);
   protected readonly progressText = computed(() =>
     this.progressLabel()
       .replace('{current}', String(this.current() + 1))
