@@ -1,10 +1,12 @@
 # 07 — Host contract & adapters
 
-Every adapter implements the same `NativeHost` interface and shares the same types. The adapters differ in how much each runtime can do natively. Components check capability flags and fall back gracefully. The support levels below are planned and will be confirmed in the adapter spike.
+> **Describes:** what is built. The types are in `@spartan-native/theme` (`src/lib/contract/native-host.ts`); every adapter's own README lists its exact capability flags.
+
+Every adapter implements the same `NativeHost` interface and shares the same types. The adapters differ in how much each runtime can do natively. Components check capability flags and fall back gracefully.
 
 ## Shared contract (`@spartan-native/theme`)
 
-The contract below is as designed. `WindowHost`, `MenuHost`, `DialogHost`, `Capability` and `Unsubscribe` are now specified in `packages/theme/src/lib/contract/native-host.ts`; `NotificationHost` is still open (see Q2).
+`NotificationHost` is still an empty placeholder (see [Q2](10-open-questions.md)). Everything else below is implemented.
 
 **Menus** (`MenuHost`, optional): `setApplicationMenu(menu)`, `showContextMenu(menu, { x, y })` and `onAction(cb)`. A menu is plain `MenuItem` data (label, `type` normal/checkbox/radio/separator, `accelerator` in the portable `mod+shift+s` notation, `enabled`, `checked`, `role`, `submenu`, `id`), so it crosses into Go, Rust, Node or .NET. A chosen item is reported by its `id`; roles are handled by the OS. A host offers `menus` exactly when `nativeMenus` isn't `none` (a conformance check).
 
@@ -13,12 +15,12 @@ The contract below is as designed. `WindowHost`, `MenuHost`, `DialogHost`, `Capa
 ```ts
 // Implemented by every adapter, consumed by every component.
 export interface NativeHost {
-  readonly runtime: 'web' | 'wails' | 'tauri' | 'electron' | 'dotnet';
+  readonly runtime: 'web' | 'wails' | 'tauri' | 'electron' | 'dotnet' | 'static';
   readonly capabilities: HostCapabilities;
   platform(): Promise<PlatformInfo>;          // OS, version, desktop → skin
   appearance(): Promise<AppearanceState>;
   onAppearanceChange(cb: (s: AppearanceState) => void): Unsubscribe;
-  readonly window: WindowHost;                // focus, effects, title bar
+  readonly window: WindowHost;                // focus; minimize, maximize, close where the host owns a window
   readonly menus?: MenuHost;                  // native app & context menus
   readonly dialogs?: DialogHost;              // file dialogs and alerts
   readonly notifications?: NotificationHost;
@@ -41,31 +43,31 @@ export interface PlatformInfo {
   version: string | null;                     // '10.0.22631', '26.1', '15.6' …
   build: number | null;                       // Windows: ≥ 22000 means Windows 11
   desktop: 'gnome' | 'kde' | 'cinnamon' | 'xfce' | 'other' | null;
-  skin: Skin;                                 // resolved via the fallback table
+  skin: Skin;                                 // resolveSkin(), below
   confidence: 'exact' | 'hint' | 'unknown';
 }
 
 export type HostCapabilities = Record<Capability, 'native' | 'partial' | 'none'>;
 ```
 
-## Skin resolution (fallback table, derived)
+## Skin resolution
 
-The design names a "fallback table" but does not spell it out. This table is a proposal to confirm.
+`resolveSkin()` in `@spartan-native/theme` maps the detected platform to a skin. Adapters use it, so every runtime picks the same skin for the same OS.
 
 | Detected | Skin |
 | --- | --- |
-| windows, build ≥ 22000 | `win` |
+| windows, build ≥ 22000 or unknown | `win` |
 | windows, build < 22000 | `w10` |
 | macos ≥ 26 | `mac` |
-| macos 13–15 (and older) | `macc` |
-| linux, desktop `gnome` (also cinnamon, xfce?) | `gtk` |
+| macos < 26 | `macc` |
+| linux, any desktop except KDE (GNOME, Cinnamon, XFCE, unknown) | `gtk` |
 | linux, desktop `kde` | `qt` |
 | chromeos | `cros` |
-| unknown (plain web, no hints) | `web` (or a user choice) |
+| unknown | `web` |
 
 ## Capability matrix
 
-N = native · P = partial or fallback · X = not available (components fall back).
+N = native · P = partial or fallback · X = not available (components fall back). The web column is measured; the others are what each adapter reports. Electron's column is the plan for an adapter that does not exist yet.
 
 | Capability | Group | Web + PWA | Go + Wails | Rust + Tauri | TS + Electron | .NET + Photino |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -84,13 +86,16 @@ N = native · P = partial or fallback · X = not available (components fall back
 | OS version & skin | Platform | P: UA Client Hints, Chromium only | N: `RtlGetVersion` · sysctl · env | N: native version APIs | N: `os.release()` · `getSystemVersion()` | N: `Environment.OSVersion` |
 | GTK vs Qt detection | Linux | X: not detectable | N: `XDG_CURRENT_DESKTOP` | N: `XDG_CURRENT_DESKTOP` | N: `XDG_CURRENT_DESKTOP` | N: `XDG_CURRENT_DESKTOP` |
 
-## Adapter order and conformance
+## Adapters and conformance
 
-> **Implemented:** `@spartan-native/host-wails` (Go service per OS; passes the suite; verified on macOS; in its own repository, [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails)), `@spartan-native/host-tauri` and `@spartan-native/host-dotnet` (ports of the Wails service to a Rust Tauri plugin and a .NET library for Photino; both pass the suite and read the OS live on macOS, but haven't run in an app window yet; repositories [`Spartan-Native/host-tauri`](https://github.com/Spartan-Native/host-tauri) and [`Spartan-Native/host-dotnet`](https://github.com/Spartan-Native/host-dotnet)), `@spartan-native/host-web` (passes the suite) and `@spartan-native/host-conformance` (12 checks; the live ones run when the adapter's test supplies a driver). The web column of the matrix above is now measured, not planned. One finding: Chromium returns a fixed `AccentColor` (`#0075ff`), so the web accent is real only on Firefox and Safari.
+| Adapter | State |
+| --- | --- |
+| `@spartan-native/host-web` | Implemented; passes the suite. Chromium answers CSS `AccentColor` with a fixed blue (`#0075ff`) to avoid fingerprinting, so the real system accent reaches the page only in Firefox and Safari; elsewhere `webHost()` uses the configured or the platform's stock accent. |
+| `@spartan-native/host-wails` | Implemented (a Go service per OS); passes the suite; runs the Harbor sample app on macOS. In [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails). |
+| `@spartan-native/host-tauri`, `@spartan-native/host-dotnet` | Ports of the Wails service to a Rust Tauri plugin and a .NET library for Photino. Both pass the suite and read the OS live on macOS, but have not run in an app window yet. In [`Spartan-Native/host-tauri`](https://github.com/Spartan-Native/host-tauri) and [`Spartan-Native/host-dotnet`](https://github.com/Spartan-Native/host-dotnet). |
+| `@spartan-native/host-electron` | Planned. A scaffold, not published. |
 
-- **Order:** planned as Web/PWA from day one, then Electron → Tauri → Wails → Photino.NET. Built: Web/PWA, Wails, then Tauri and Photino.NET as ports of the Wails service; Electron is next.
-- **Conformance:** every adapter must pass the same suite. It should check contract shape, capability flags that match real behavior, live change events (scheme, accent, focus), skin resolution, and graceful fallback when a capability is `none`.
-- **Wails note:** the canvas is titled "Spartan Native Theme — Wails" and Wails is the default adapter shown on the project page. Treat Wails as the primary desktop target for dogfooding, even though it comes fourth in the build order (see Q3).
+**Conformance:** `@spartan-native/host-conformance` runs 12 checks that every adapter must pass: a known runtime; every capability reported as `native`, `partial` or `none`; valid `PlatformInfo` and `AppearanceState`, agreeing on the skin; window focus; `menus` and `dialogs` present exactly when `nativeMenus` and `fileDialogs` aren't `none`; unsubscribe functions that are safe to call twice; and, when the adapter's test supplies a driver, live appearance and focus events that stop after unsubscribe.
 
 ## Native-side sources per OS (from the matrix)
 

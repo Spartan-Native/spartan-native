@@ -145,7 +145,7 @@ Setup, the workspace layout, commands and release steps are in [CONTRIBUTING.md]
 | [Host adapters](docs/07-host-adapters.md) | [Sample app](docs/08-sample-app.md) (in the harbor repository) |
 | [Roadmap](docs/09-roadmap.md) | [Open questions](docs/10-open-questions.md) |
 
-<sub>Images are rendered from the design canvas "Spartan Native Theme — Wails" (`docs/reference/design-source/`) with the scripts in `docs/reference/screenshot-tools/`. Platform names are trademarks of their respective owners.</sub>
+<sub>The images were rendered from the original design mockups, archived in [`docs/reference/`](docs/reference/). Platform names are trademarks of their respective owners.</sub>
 
 ## License
 

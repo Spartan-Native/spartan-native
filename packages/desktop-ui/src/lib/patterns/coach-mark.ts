@@ -80,7 +80,7 @@ let nextId = 0;
  *  - ChromeOS: Material 3 rich tooltip: tonal container, no arrow, text buttons at the start
  *
  * Anchor it with `[snCoachMarkFor]`. Write the actions secondary first, primary last
- * (the mockup order); Windows and KDE show them reversed. It doesn't take focus when it opens,
+ * (the order macOS, GNOME and ChromeOS use); Windows and KDE show them reversed. It doesn't take focus when it opens,
  * but it is placed right after the anchor in the tab order; Esc closes it and returns focus to the anchor.
  *
  * ```html

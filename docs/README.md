@@ -1,41 +1,28 @@
-# Spartan Native — implementation handover
+# Spartan Native: design documentation
 
 ![One app window sliced across the seven platform skins](images/hero-one-app-seven-skins.png)
 
-Spartan Native is a native-look theme for [spartan/ui](https://spartan.ng) (Angular). One Angular codebase follows the system accent, light/dark, contrast, transparency and text size, and looks at home on Windows 11/10, macOS 26 and earlier, GNOME, KDE and ChromeOS. It runs in the browser/PWA and in desktop shells (Wails, Tauri, Electron, Photino.NET).
+Spartan Native is a native-look theme for [spartan/ui](https://spartan.ng) (Angular). One Angular codebase follows the system accent, light/dark, contrast, transparency and text size, and looks at home on Windows 11 and 10, macOS 26 and 13–15, GNOME, KDE and ChromeOS. It runs in the browser or as a PWA, and in desktop shells (Wails, Tauri, Photino.NET; Electron is planned).
 
-**Status:** design only (interactive mockups). No package code exists yet. This folder is the spec for the next phase: the token contract and spike.
-
-## Source
-
-| Item | Where |
-| --- | --- |
-| Design canvas "Spartan Native Theme — Wails" (4 interactive artboards, last updated 2026-11-08) | https://claude.ai/artifact/U2b7sNrNTSv6Hf5XrXgW1a |
-| claude.ai project "Angular Native" | https://claude.ai/project/01a1bcd9-9719-7403-ab84-41b5fae11c75 |
-| Artboard sources (copied, version `1794212021-6beb`) | [`reference/design-source/`](reference/design-source/) |
-| All mockup CSS, extracted | [`reference/component-skins.mockup.css`](reference/component-skins.mockup.css) |
-
-> **Gap:** these docs were built from the canvas artifact alone. The project's chat conversations could not be read with the available tools, so decisions made only in chat are not captured. Before you start, skim the project chats and add anything missing to [`10-open-questions.md`](10-open-questions.md).
+These documents explain **why** the packages work the way they do: the design each package was built from, the rules behind the skins, and the contract between the UI and the runtimes. To **use** the packages, start with the [root README](../README.md) and each package's README. Each document says at the top whether it describes what is built or is a design specification for something still open.
 
 ## Reading order
 
 | # | Doc | What it answers |
 | --- | --- | --- |
 | 01 | [Overview & scope](01-overview.md) | Goals, platforms, the native behaviors, what is in or out of scope |
-| 02 | [Architecture & packages](02-architecture.md) | The five package layers, dependencies, Angular wiring |
-| 03 | [Theme tokens & accent derivation](03-theme-tokens.md) | The CSS variable contract and the algorithm that builds every color from one accent |
+| 02 | [Architecture & packages](02-architecture.md) | The five package layers, their dependencies, the Angular wiring |
+| 03 | [Theme tokens & accent derivation](03-theme-tokens.md) | The CSS variables and the algorithm that builds every color from one accent |
 | 04 | [Platform skins](04-platform-skins.md) | The seven skins: fonts, metrics, materials, inactive-window and reduced-transparency rules |
-| 05 | [Components](05-components.md) | The 28 spartan/helm components that get skins, plus the desktop interaction rules |
+| 05 | [Components](05-components.md) | The spartan/ui components the skins restyle, and the desktop interaction rules |
 | 06 | [OS patterns](06-os-patterns.md) | Six signature OS patterns and their counterparts on each platform (`desktop-ui`) |
-| 07 | [Host contract & adapters](07-host-adapters.md) | The `NativeHost` interface, the five adapters and the capability matrix |
-| 08 | [Sample app: Harbor Backup](08-sample-app.md) | The reference app used to validate everything end to end (lives in the harbor repository) |
-| 09 | [Roadmap & milestones](09-roadmap.md) | Phases with deliverables and exit criteria |
-| 10 | [Open questions](10-open-questions.md) | Decisions the mockups leave open |
+| 07 | [Host contract & adapters](07-host-adapters.md) | The `NativeHost` interface, the adapters and the capability matrix |
+| 08 | [Sample app: Harbor Backup](08-sample-app.md) | The reference app that tests everything end to end (in its own repository) |
+| 09 | [Roadmap](09-roadmap.md) | What is done and what is left |
+| 10 | [Open questions](10-open-questions.md) | Design decisions, made and still open |
 
-`images/` holds screenshots rendered from the design artboards, used by the READMEs. To regenerate them, run `reference/screenshot-tools/capture.mjs` and then `compose.mjs` (Playwright + local Chrome, loading `reference/design-source/` together with the design runtime from the canvas artifact as `support.js`).
+## Images and design sources
 
-`reference/palette.reference.ts` is a typed port of the mockups' color code. It is the starting point for `@spartan-native/theme`'s `derivePalette()`.
+`images/` holds the screenshots used by the READMEs. They were rendered from the original design mockups.
 
-## How to view the mockups
-
-Open the canvas link above. It has two pages. **Previews** holds the component comparison, the sample app and the OS patterns. **Project page** holds the marketing/overview page. Every artboard is interactive: pick the platform, accent, text size, reduced transparency and window focus, then drag the strip at the bottom of a panel to compare light and dark.
+[`reference/`](reference/) is an **archive** of those mockups: the exported artboards (`design-source/`), their extracted CSS and the first TypeScript port of their color code. The packages have replaced all of it, and nothing in the build or the tests reads it. It is kept for the history of the design decisions. The screenshot scripts in `reference/screenshot-tools/` need the mockups' design runtime, which is not in this repository, so they cannot be run from a clone.
