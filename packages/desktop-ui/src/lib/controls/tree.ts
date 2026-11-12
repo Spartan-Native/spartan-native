@@ -25,12 +25,11 @@ import {
   type SelectionModifiers,
   type SelectionState,
   typeaheadIndex,
+  SELECTION_PAGE_SIZE,
+  TYPEAHEAD_RESET_MS,
 } from '@spartan-native/helm';
 import { injectSkin, skinFamily, type Skin } from '@spartan-native/theme';
 import { byDocumentOrder } from '../internal/document-order';
-
-const TYPEAHEAD_RESET_MS = 600;
-const PAGE = 10;
 
 /** What each skin draws to open and close a parent item. */
 const EXPANDER: Record<Skin, 'triangle' | 'chevron'> = {
@@ -242,10 +241,10 @@ export class SnTree<K = unknown> {
         next = selectionMoveTo(state, keys, keys.length - 1, mods, multiple);
         break;
       case 'PageDown':
-        next = selectionMoveBy(state, keys, PAGE, mods, multiple);
+        next = selectionMoveBy(state, keys, SELECTION_PAGE_SIZE, mods, multiple);
         break;
       case 'PageUp':
-        next = selectionMoveBy(state, keys, -PAGE, mods, multiple);
+        next = selectionMoveBy(state, keys, -SELECTION_PAGE_SIZE, mods, multiple);
         break;
       case 'ArrowRight':
       case 'ArrowLeft': {

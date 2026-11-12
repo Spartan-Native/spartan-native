@@ -8,6 +8,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Added
 
+- `@spartan-native/helm`: the constants `SELECTION_PAGE_SIZE` and `TYPEAHEAD_RESET_MS`, the values the selection model uses for Page Up/Down and type-ahead.
 - MIT license, contributing guide, code of conduct and security policy.
 - CI on pull requests: unit tests, library builds and a check of every package's published contents.
 

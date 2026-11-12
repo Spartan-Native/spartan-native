@@ -12,6 +12,12 @@
  * No Angular and no DOM here: the directives in selectable.ts feed events in.
  */
 
+/** How many items Page Up and Page Down move the active item by. */
+export const SELECTION_PAGE_SIZE = 10;
+
+/** How long type-ahead keeps adding typed characters to one search before it starts over, in ms. */
+export const TYPEAHEAD_RESET_MS = 600;
+
 export interface SelectionState<K> {
   /** Selected keys, always in item order. */
   readonly selected: readonly K[];
