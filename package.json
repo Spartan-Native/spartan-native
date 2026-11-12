@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve playground",
     "build": "npm run build:libs && ng build playground",
+    "build:site": "node scripts/build-site.mjs",
     "build:libs": "ng build theme && node packages/theme/scripts/build-storybook-manager.mjs && ng build helm && ng build desktop-ui && ng build host-web && ng build host-electron && ng build host-conformance",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

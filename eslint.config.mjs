@@ -29,6 +29,7 @@ export default tseslint.config(
   },
   {
     files: ['**/*.html'],
+    ignores: ['site/**'], // the project website is plain HTML, not Angular templates
     extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
     rules: {
       // These attributes give a <button> its content: `label` is an input of snCommand, and
@@ -64,5 +65,9 @@ export default tseslint.config(
     files: ['**/*.mjs', '**/*.js'],
     extends: [js.configs.recommended],
     languageOptions: { globals: globals.node },
+  },
+  {
+    files: ['site/**/*.js'],
+    languageOptions: { globals: globals.browser },
   },
 );

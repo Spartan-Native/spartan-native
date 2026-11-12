@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@spartan-native/helm · Spartan Native</title>
+    <meta
+      name="description"
+      content="Desktop behaviors for stock spartan/ui: the desktop selection model, default and cancel buttons, and dialog buttons in each OS's order."
+    />
+    <meta name="theme-color" content="#08090d" />
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/site.css" />
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="nav">
+      <div class="wrap">
+        <a class="logo" href="./"><img src="assets/logo.svg" alt="" width="28" height="28" />Spartan Native</a>
+        <ul class="nav-links">
+          <li><a href="theme.html">Theme</a></li>
+          <li><a href="helm.html" aria-current="page">Helm</a></li>
+          <li><a href="desktop-ui.html">Desktop UI</a></li>
+          <li><a href="hosts.html">Hosts</a></li>
+          <li><a href="https://github.com/Spartan-Native/spartan-native/tree/main/docs">Docs</a></li>
+        </ul>
+        <div class="nav-end">
+          <a class="btn btn-ghost btn-sm" href="https://github.com/Spartan-Native/spartan-native">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.41-2.7 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"
+              />
+            </svg>
+            GitHub
+          </a>
+          <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="grid-bg" aria-hidden="true"></div>
+        <div class="wrap split">
+          <div>
+            <div class="eyebrow"><span class="num">02</span> Layer 02 · optional</div>
+            <h1><span class="gradient-text">Helm</span>. Behave like a desktop app.</h1>
+            <p class="lead">
+              The theme makes spartan/ui <em>look</em> native. Helm makes it <em>behave</em> native: the selection model
+              of a file manager, Enter and Esc that press the right button, and dialog buttons in the order each OS
+              expects.
+            </p>
+            <div class="meta">
+              <span class="tag ok">Selection model</span>
+              <span class="tag ok">Default / cancel</span>
+              <span class="tag ok">Dialog order</span>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="code">
+              <div class="code-head">
+                <span class="file">terminal</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="bash">npm install @spartan-native/helm</code></pre>
+            </div>
+            <div class="code">
+              <div class="code-head">
+                <span class="file">src/theme.scss</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="scss">// after the theme
+@use '@spartan-native/theme/styles/spartan-native';
+@use '@spartan-native/helm/styles/spartan-native-helm';</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <nav class="subnav" aria-label="On this page">
+        <div class="wrap">
+          <a href="#selection">Selection model</a>
+          <a href="#actions">Default &amp; cancel</a>
+          <a href="#dialog-order">Dialog order</a>
+          <a href="#styles">Styles</a>
+          <a href="#directives">Directives</a>
+        </div>
+      </nav>
+
+      <!-- Selection -->
+      <section id="selection" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">snSelectable</div>
+            <h2>The selection model your users already know.</h2>
+            <p class="lead">
+              Lists and tables that select like Finder, Explorer and Files. Try it: click, Shift-click,
+              <span data-mod>Ctrl</span>-click, use the arrow keys, or type a name.
+            </p>
+          </div>
+          <div class="split top">
+            <div class="demo reveal" id="selection-demo">
+              <div class="demo-head">
+                <span><b>Files</b> · a live re-creation of the model</span>
+                <span>Double-click or Enter to open</span>
+              </div>
+              <div class="demo-body">
+                <div class="sel-list" tabindex="0" role="listbox" aria-multiselectable="true" aria-label="Files">
+                  <div class="sel-item" role="option" id="f1" data-label="Budget 2026.xlsx" style="--c: #2ec27e">
+                    <i class="ic"></i>Budget 2026.xlsx<small>48 KB</small>
+                  </div>
+                  <div class="sel-item" role="option" id="f2" data-label="Contracts" style="--c: #f6d32d">
+                    <i class="ic"></i>Contracts<small>folder</small>
+                  </div>
+                  <div class="sel-item" role="option" id="f3" data-label="Meeting notes.md" style="--c: #9aa1b5">
+                    <i class="ic"></i>Meeting notes.md<small>6 KB</small>
+                  </div>
+                  <div class="sel-item" role="option" id="f4" data-label="Photos" style="--c: #f6d32d">
+                    <i class="ic"></i>Photos<small>folder</small>
+                  </div>
+                  <div class="sel-item" role="option" id="f5" data-label="Q4 Report.pdf" style="--c: #e5446d">
+                    <i class="ic"></i>Q4 Report.pdf<small>2.4 MB</small>
+                  </div>
+                  <div class="sel-item" role="option" id="f6" data-label="Roadmap.png" style="--c: #a77bff">
+                    <i class="ic"></i>Roadmap.png<small>1.1 MB</small>
+                  </div>
+                  <div class="sel-item" role="option" id="f7" data-label="Receipts" style="--c: #f6d32d">
+                    <i class="ic"></i>Receipts<small>folder</small>
+                  </div>
+                  <div class="sel-item" role="option" id="f8" data-label="Taxes 2025.pdf" style="--c: #e5446d">
+                    <i class="ic"></i>Taxes 2025.pdf<small>880 KB</small>
+                  </div>
+                </div>
+                <div class="sel-log" aria-live="polite"></div>
+              </div>
+            </div>
+            <div class="reveal">
+              <dl class="keys">
+                <dt>Click</dt>
+                <dd>Select one row</dd>
+                <dt><kbd data-mod>Ctrl</kbd>-click</dt>
+                <dd>Toggle a row</dd>
+                <dt><kbd>Shift</kbd>-click</dt>
+                <dd>Select the range from the anchor (with <span data-mod>Ctrl</span>: add it)</dd>
+                <dt><kbd>↑</kbd> <kbd>↓</kbd> <kbd>Home</kbd> <kbd>End</kbd></dt>
+                <dd>Move and select; Shift extends; Ctrl moves the focus only</dd>
+                <dt><kbd>Space</kbd></dt>
+                <dd>Select the focused row; with <span data-mod>Ctrl</span>, toggle it</dd>
+                <dt><kbd data-mod>Ctrl</kbd> <kbd>A</kbd></dt>
+                <dd>Select all</dd>
+                <dt><kbd>Esc</kbd></dt>
+                <dd>Clear the selection (then lets a dialog close)</dd>
+                <dt>Typing</dt>
+                <dd>Jump to the next row starting with the text; a repeated letter cycles</dd>
+                <dt><kbd>Enter</kbd>, double-click</dt>
+                <dd><code>activated</code> emits the row's key</dd>
+              </dl>
+              <p class="muted" style="margin-top: 22px; font-size: 14.5px">
+                On macOS, ⌘ replaces Ctrl and ⌘↑ / ⌘↓ jump to the ends. ARIA: <code>listbox</code>/<code>option</code>
+                or <code>grid</code>/<code>row</code>, <code>aria-selected</code>, <code>aria-activedescendant</code>.
+              </p>
+            </div>
+          </div>
+          <div class="grid grid-2" style="margin-top: 40px">
+            <div class="code reveal">
+              <div class="code-head">
+                <span class="file">files.component.html</span
+                ><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="html">&lt;div snSelectable [(selection)]="selected"
+     (activated)="open($event)" aria-label="Files"&gt;
+  &#64;for (f of files; track f.id) {
+    &lt;div snSelectableItem [value]="f.id"&gt;{{ f.name }}&lt;/div&gt;
+  }
+&lt;/div&gt;</code></pre>
+            </div>
+            <div class="code reveal">
+              <div class="code-head">
+                <span class="file">table.component.html</span
+                ><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="html">&lt;table hlmTable snSelectable="grid" [(selection)]="selected"&gt;
+  &lt;tbody hlmTBody&gt;
+    &#64;for (row of rows; track row.id) {
+      &lt;tr hlmTr snSelectableItem [value]="row.id"&gt;…&lt;/tr&gt;
+    }
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+            </div>
+          </div>
+          <p class="muted reveal" style="margin-top: 20px">
+            The logic is a set of pure functions in <code>selection-model.ts</code> (<code>selectionClick</code>,
+            <code>selectionMoveBy</code>, <code>typeaheadIndex</code>, …), usable without Angular.
+          </p>
+          <figure class="reveal" style="margin-top: 32px">
+            <div class="shot">
+              <img
+                src="../docs/images/helm-data-table.jpg"
+                alt="A data table with a multi-row selection drawn per platform"
+                loading="lazy"
+              />
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Default & cancel -->
+      <section id="actions" class="tight">
+        <div class="wrap split">
+          <div class="reveal">
+            <div class="eyebrow">snDefaultAction · snCancelAction</div>
+            <h2>Enter saves. Esc cancels.</h2>
+            <p class="lead">
+              Mark the default and cancel buttons once. In the surrounding dialog or form, Enter presses one and Esc
+              presses the other, the way every desktop dialog works.
+            </p>
+            <ul class="checks">
+              <li>Enter is left alone in multi-line text, on other buttons and links, and in lists and menus</li>
+              <li>A disabled button is skipped</li>
+              <li>Dialogs and forms are scopes already; <code>snActionScope</code> marks a custom area</li>
+            </ul>
+            <div class="code" style="margin-top: 24px">
+              <div class="code-head">
+                <span class="file">dialog.component.html</span
+                ><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="html">&lt;form&gt;
+  &lt;input hlmInput /&gt;
+  &lt;button hlmBtn variant="outline" snCancelAction (click)="close()"&gt;Cancel&lt;/button&gt;
+  &lt;button hlmBtn snDefaultAction (click)="save()"&gt;Save&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+            </div>
+          </div>
+          <div class="demo reveal" id="actions-demo">
+            <div class="demo-head">
+              <span><b>New destination</b> · press Enter or Esc in a field</span>
+            </div>
+            <div class="demo-body">
+              <form class="form-demo">
+                <input type="text" value="Office NAS" aria-label="Name" />
+                <textarea rows="3" aria-label="Notes">Multi-line text: Enter adds a line here.</textarea>
+                <div class="row">
+                  <button type="button" data-cancel>Cancel</button>
+                  <button type="button" class="def">Save</button>
+                </div>
+              </form>
+              <div class="sel-log" aria-live="polite">Waiting for a key…</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dialog order -->
+      <section id="dialog-order" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">snDialogButtons</div>
+            <h2>The right button order, everywhere.</h2>
+            <p class="lead">
+              Windows and KDE put the default button first. macOS, GNOME and ChromeOS put it last. The skin sets
+              <code>--sn-dialog-order-*</code>, and hlm dialog and alert-dialog footers follow it without the directive.
+            </p>
+          </div>
+          <div class="dlg-grid reveal">
+            <div class="dlg">
+              <h4>Windows</h4>
+              <p>Default · other · cancel</p>
+              <div class="dlg-btns">
+                <span class="d">Save</span><span class="o">Don't save</span><span>Cancel</span>
+              </div>
+            </div>
+            <div class="dlg">
+              <h4>KDE Plasma</h4>
+              <p>Default · other · cancel</p>
+              <div class="dlg-btns">
+                <span class="d">Save</span><span class="o">Don't save</span><span>Cancel</span>
+              </div>
+            </div>
+            <div class="dlg">
+              <h4>macOS · ChromeOS</h4>
+              <p>Other · cancel · default</p>
+              <div class="dlg-btns">
+                <span class="o">Don't save</span><span>Cancel</span><span class="d">Save</span>
+              </div>
+            </div>
+            <div class="dlg">
+              <h4>GNOME</h4>
+              <p>Cancel · other · default</p>
+              <div class="dlg-btns">
+                <span>Cancel</span><span class="o">Don't save</span><span class="d">Save</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Styles -->
+      <section id="styles" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Styles</div>
+            <h2>No per-OS rules. Just tokens.</h2>
+            <p class="lead">
+              Helm's styles read the theme's row tokens, so each skin decides how a selected row looks: a pill on
+              Windows, an accent fill on macOS, a tint on GNOME.
+            </p>
+          </div>
+          <div class="table-wrap reveal">
+            <table>
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Windows 11</th>
+                  <th>macOS 26</th>
+                  <th>GNOME</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>--sn-row-selected-bg</code></td>
+                  <td>neutral fill + accent pill</td>
+                  <td>accent fill, white text</td>
+                  <td>accent tint</td>
+                </tr>
+                <tr>
+                  <td><code>--sn-row-selected-bg-unfocused</code></td>
+                  <td>same</td>
+                  <td>grey (also when the window is inactive)</td>
+                  <td>same</td>
+                </tr>
+                <tr>
+                  <td><code>--sn-row-focus-ring</code></td>
+                  <td>2px foreground</td>
+                  <td>2px accent</td>
+                  <td>2px accent</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="muted reveal" style="margin-top: 18px">
+            Hooks: <code>[data-slot="sn-selectable"]</code>, <code>[data-slot="sn-selectable-item"]</code> with
+            <code>[data-selected]</code> and <code>[data-active]</code>. Tip: derive secondary text in rows from
+            <code>currentColor</code>, so it stays readable on the macOS accent fill.
+          </p>
+          <div class="grid grid-2" style="margin-top: 32px">
+            <figure class="reveal">
+              <div class="shot">
+                <img src="../docs/images/helm-button.jpg" alt="Buttons per platform" loading="lazy" />
+              </div>
+            </figure>
+            <figure class="reveal">
+              <div class="shot"><img src="../docs/images/helm-menu.jpg" alt="Menus per platform" loading="lazy" /></div>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- Directives -->
+      <section id="directives" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Reference</div>
+            <h2>Directives.</h2>
+          </div>
+          <div class="table-wrap reveal">
+            <table>
+              <thead>
+                <tr>
+                  <th>Directive</th>
+                  <th>What it does</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>snSelectable</code> + <code>snSelectableItem</code></td>
+                  <td>
+                    The desktop selection model for lists (<code>role="listbox"</code>) and tables
+                    (<code>snSelectable="grid"</code>). Inputs: <code>selection</code> (two-way), <code>multiple</code>,
+                    <code>snSelectableLabel</code> for type-ahead text
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>snDefaultAction</code></td>
+                  <td>Enter in the surrounding dialog or form presses this button</td>
+                </tr>
+                <tr>
+                  <td><code>snCancelAction</code></td>
+                  <td>Esc in the surrounding dialog or form presses this button</td>
+                </tr>
+                <tr>
+                  <td><code>snActionScope</code></td>
+                  <td>Marks a custom area for the two above (dialogs and forms are scopes already)</td>
+                </tr>
+                <tr>
+                  <td><code>snDialogButtons</code></td>
+                  <td>A row of dialog buttons in the OS's order</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="muted reveal" style="margin-top: 18px">
+            Peer dependency: <code>@spartan-native/theme</code>. Angular <code>^22.2.0</code>, spartan/ui
+            <code>^1.9.0</code>.
+          </p>
+        </div>
+      </section>
+
+      <section class="tight">
+        <div class="wrap pager">
+          <a href="theme.html"><small>← Previous · Layer 01</small><b>@spartan-native/theme</b></a>
+          <a class="next" href="desktop-ui.html"><small>Next · Layer 03</small><b>@spartan-native/desktop-ui →</b></a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot">
+        <div>
+          <a class="logo" href="./"><img src="assets/logo.svg" alt="" width="28" height="28" />Spartan Native</a>
+          <p class="fine">
+            MIT licensed. Platform names are trademarks of their respective owners; Spartan Native is not affiliated
+            with or endorsed by any of them.
+          </p>
+        </div>
+        <div>
+          <h5>Packages</h5>
+          <ul>
+            <li><a href="theme.html">theme</a></li>
+            <li><a href="helm.html">helm</a></li>
+            <li><a href="desktop-ui.html">desktop-ui</a></li>
+            <li><a href="hosts.html">host-*</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Docs</h5>
+          <ul>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/02-architecture.md"
+                >Architecture</a
+              >
+            </li>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/03-theme-tokens.md">Tokens</a>
+            </li>
+            <li><a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/09-roadmap.md">Roadmap</a></li>
+            <li><a href="https://github.com/Spartan-Native/spartan-native/blob/main/CHANGELOG.md">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Project</h5>
+          <ul>
+            <li><a href="https://github.com/Spartan-Native/spartan-native">GitHub</a></li>
+            <li><a href="https://github.com/Spartan-Native/harbor">Harbor sample app</a></li>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/CONTRIBUTING.md">Contributing</a>
+            </li>
+            <li><a href="https://spartan.ng">spartan/ui</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

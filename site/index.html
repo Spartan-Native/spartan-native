@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spartan Native: native on every desktop, one Angular codebase</title>
+    <meta
+      name="description"
+      content="A native-look theme for spartan/ui (Angular). Seven OS skins, one set of tokens, and host adapters that read the accent, light/dark, contrast and text size the user already chose."
+    />
+    <meta property="og:title" content="Spartan Native" />
+    <meta property="og:description" content="Native on every desktop. One Angular codebase." />
+    <meta property="og:image" content="../docs/images/hero-one-app-seven-skins.png" />
+    <meta name="theme-color" content="#08090d" />
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/site.css" />
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="nav">
+      <div class="wrap">
+        <a class="logo" href="./"><img src="assets/logo.svg" alt="" width="28" height="28" />Spartan Native</a>
+        <ul class="nav-links">
+          <li><a href="theme.html">Theme</a></li>
+          <li><a href="helm.html">Helm</a></li>
+          <li><a href="desktop-ui.html">Desktop UI</a></li>
+          <li><a href="hosts.html">Hosts</a></li>
+          <li><a href="https://github.com/Spartan-Native/spartan-native/tree/main/docs">Docs</a></li>
+        </ul>
+        <div class="nav-end">
+          <a class="btn btn-ghost btn-sm" href="https://github.com/Spartan-Native/spartan-native">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.41-2.7 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"
+              />
+            </svg>
+            GitHub
+          </a>
+          <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ============================================================ Hero -->
+      <section class="hero">
+        <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="grid-bg" aria-hidden="true"></div>
+        <div class="wrap">
+          <div class="hero-copy">
+            <a class="pill" href="https://github.com/Spartan-Native/spartan-native/blob/main/CHANGELOG.md">
+              <b>v0.1</b> Angular 22 · spartan/ui · MIT
+            </a>
+            <h1>Native on <span class="gradient-text">every desktop.</span><br />One Angular codebase.</h1>
+            <p class="lead">
+              A native-look theme for spartan/ui. Your components stay the same. A <strong>skin</strong> matches each
+              OS's geometry, materials and states, and a <strong>host adapter</strong> feeds in the accent, light/dark,
+              contrast and text size the user already chose.
+            </p>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#quick-start">Get started</a>
+              <div class="install">
+                <span class="dollar">$</span>
+                <span class="cmd" id="install-cmd">npm i @spartan-native/theme</span>
+                <button class="copy-btn" data-copy="install-cmd" aria-label="Copy install command"></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live demo -->
+          <div class="stage" id="demo">
+            <div class="controls">
+              <div class="seg" role="group" aria-label="Operating system">
+                <button data-skin-btn="win" aria-pressed="true">Windows 11</button>
+                <button data-skin-btn="w10" aria-pressed="false">Windows 10</button>
+                <button data-skin-btn="mac" aria-pressed="false">macOS 26</button>
+                <button data-skin-btn="macc" aria-pressed="false">macOS 13–15</button>
+                <button data-skin-btn="gtk" aria-pressed="false">GNOME</button>
+                <button data-skin-btn="qt" aria-pressed="false">KDE</button>
+                <button data-skin-btn="cros" aria-pressed="false">ChromeOS</button>
+              </div>
+            </div>
+            <div class="controls">
+              <div class="seg" role="group" aria-label="Appearance">
+                <button data-scheme="light" aria-pressed="true">Light</button>
+                <button data-scheme="dark" aria-pressed="false">Dark</button>
+              </div>
+              <div class="swatches" role="group" aria-label="System accent">
+                <button
+                  data-accent=""
+                  style="--c: conic-gradient(#0078d4 0 50%, #3584e4 0)"
+                  aria-label="Platform accent"
+                ></button>
+                <button data-accent="#9141ac" style="--c: #9141ac" aria-label="Purple"></button>
+                <button data-accent="#e5446d" style="--c: #e5446d" aria-label="Pink"></button>
+                <button data-accent="#e66100" style="--c: #e66100" aria-label="Orange"></button>
+                <button data-accent="#2ec27e" style="--c: #2ec27e" aria-label="Green"></button>
+                <button data-accent="#f6d32d" style="--c: #f6d32d" aria-label="Yellow"></button>
+                <label aria-label="Any color"><input type="color" value="#7c5cff" data-accent-picker /></label>
+              </div>
+              <label class="toggle"><input type="checkbox" data-toggle="inactive" /> Inactive window</label>
+              <label class="toggle"><input type="checkbox" data-toggle="rt" /> Reduce transparency</label>
+            </div>
+
+            <div class="stage-frame">
+              <div class="mw" data-skin="win" aria-label="Sample app window, drawn in the selected skin" role="img">
+                <div class="mw-title">
+                  <div class="lights"><i></i><i></i><i></i></div>
+                  <span class="app-icon"></span>
+                  <span class="t">Harbor Backup<small>Office NAS</small></span>
+                  <div class="caps"><i>─</i><i>☐</i><i>✕</i></div>
+                </div>
+                <div class="mw-body">
+                  <div class="mw-side">
+                    <div class="mw-search">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="m20 20-3.5-3.5" />
+                      </svg>
+                      Search backups
+                    </div>
+                    <div class="mw-nav">
+                      <div class="on">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z" />
+                        </svg>
+                        Overview
+                      </div>
+                      <div>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="12" cy="12" r="9" />
+                          <path d="M12 7v5l3 2" />
+                        </svg>
+                        Schedules
+                      </div>
+                      <div>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <rect x="3" y="4" width="18" height="7" rx="2" />
+                          <rect x="3" y="13" width="18" height="7" rx="2" />
+                        </svg>
+                        Destinations
+                      </div>
+                      <div>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M14 3H6v18h12V7z" />
+                          <path d="M14 3v4h4" />
+                        </svg>
+                        Restore files
+                      </div>
+                      <div>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="12" cy="12" r="3" />
+                          <path
+                            d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"
+                          />
+                        </svg>
+                        Settings
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mw-main">
+                    <h5>Overview</h5>
+                    <div class="mw-card hero-card">
+                      <div class="mw-split">
+                        <b>Documents → Office NAS</b>
+                        <span class="mw-badge">Running</span>
+                      </div>
+                      <div class="mw-progress"><i></i></div>
+                      <div class="mw-split">
+                        <span>12.4 GB of 18.2 GB</span>
+                        <div class="mw-actions">
+                          <span class="mw-btn cancel">Pause</span>
+                          <span class="mw-btn primary">Back up now</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mw-card">
+                      <div class="mw-row">
+                        <div class="lbl">Automatic backups<small>Run in the background</small></div>
+                        <span class="mw-switch"></span>
+                      </div>
+                      <div class="mw-row">
+                        <div class="lbl">Encrypt backups<small>AES-256, key kept in the OS keychain</small></div>
+                        <span class="mw-chk"
+                          ><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.6">
+                            <path d="M3.5 8.5 6.5 11.5 12.5 4.5" /></svg
+                        ></span>
+                      </div>
+                      <div class="mw-row">
+                        <div class="lbl">Frequency<small>How often to back up</small></div>
+                        <span class="mw-select">Every hour</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="stage-caption">
+              <span data-caption></span>
+              <span class="autoplay"><span class="dot"></span><span>Cycling through the skins</span></span>
+            </div>
+          </div>
+
+          <div class="platform-strip" aria-label="Supported platforms">
+            <span><i></i>Windows 11 &amp; 10</span>
+            <span><i></i>macOS 26 &amp; 13–15</span>
+            <span><i></i>GNOME</span>
+            <span><i></i>KDE Plasma</span>
+            <span><i></i>ChromeOS</span>
+            <span><i></i>Browser &amp; PWA</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- ============================================================ One app, seven skins -->
+      <section>
+        <div class="wrap">
+          <div class="section-head center reveal">
+            <div class="eyebrow">One app · seven skins</div>
+            <h2>The same window. <span class="gradient-text">Unchanged.</span></h2>
+            <p class="lead">
+              Spartan Native does not fork spartan. Stock components read one shared set of CSS variables. The skin
+              changes the rest, so the app looks at home on every OS without a single per-platform template.
+            </p>
+          </div>
+          <figure class="glow">
+            <div class="shot tilt">
+              <img
+                src="../docs/images/hero-one-app-seven-skins.png"
+                alt="The Harbor Backup window cut into seven vertical slices, one per skin: Windows 11 light, Windows 10 dark, macOS 26 light, macOS 13–15 dark, GNOME light, KDE dark, ChromeOS light"
+                width="2192"
+                height="1300"
+                loading="lazy"
+              />
+            </div>
+            <figcaption>Windows 11 · Windows 10 · macOS 26 · macOS 13–15 · GNOME · KDE · ChromeOS</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============================================================ How it works -->
+      <section class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">How it works</div>
+            <h2>One accent in. A native app out.</h2>
+          </div>
+          <div class="flow">
+            <div class="card reveal">
+              <h3>The OS gives you an accent</h3>
+              <div class="swatch-row">
+                <i style="--c: #0078d4"></i><i style="--c: #9141ac"></i><i style="--c: #e5446d"></i
+                ><i style="--c: #2ec27e"></i>
+              </div>
+              <p>
+                A host adapter reads the system accent, light or dark, contrast, transparency, text size and window
+                focus, and tells the theme every time one changes.
+              </p>
+            </div>
+            <div class="card reveal">
+              <h3><code>derivePalette()</code> makes every color</h3>
+              <div class="swatch-row">
+                <i style="--c: #0078d4"></i><i style="--c: #cfe3f6"></i><i style="--c: #f3f3f3"></i
+                ><i style="--c: #fbfbfb"></i><i style="--c: #1a1a1a"></i><i style="--c: #5d5d5d"></i>
+              </div>
+              <p>
+                The accent is mixed with each platform's own neutrals. Text colors are adjusted until they reach WCAG
+                4.5:1, and error, success and warning borrow the accent's saturation.
+              </p>
+            </div>
+            <div class="card reveal">
+              <h3>A skin draws the platform</h3>
+              <div class="swatch-row">
+                <i style="--c: linear-gradient(135deg, #0078d4, #6cb8f6)"></i
+                ><i style="--c: linear-gradient(135deg, #a3c9ff, #e8d6ff)"></i
+                ><i style="--c: linear-gradient(135deg, #3584e4, #99c1f1)"></i
+                ><i style="--c: linear-gradient(135deg, #3daee9, #232629)"></i>
+              </div>
+              <p>
+                A class on the root (<code>t-win</code>, <code>t-mac</code>, <code>t-gtk</code>…) sets the geometry,
+                materials and states: Mica, Liquid Glass, Adwaita, Breeze or Material 3.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ Packages -->
+      <section id="packages">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Packages</div>
+            <h2>Start with plain CSS. <br />Add only what you need.</h2>
+            <p class="lead">
+              Four layers, each built on the one below. Only the theme is required. An app can stop at plain CSS in a
+              browser, or go all the way to native menus and file dialogs.
+            </p>
+          </div>
+          <div class="grid grid-2">
+            <a class="card pkg reveal" href="theme.html">
+              <div class="pkg-visual">
+                <img src="../docs/images/theme-derived-palette.jpg" alt="" loading="lazy" />
+              </div>
+              <div class="pkg-body">
+                <div class="pkg-top"><span class="layer-num">Layer 01</span><span class="tag req">Required</span></div>
+                <div class="pkg-name">@spartan-native/theme</div>
+                <p>
+                  Tokens, <code>derivePalette()</code>, seven platform skins and <code>provideSpartanNative()</code>.
+                  Stock spartan/ui follows the OS with no template changes.
+                </p>
+                <span class="more">Explore the theme</span>
+              </div>
+            </a>
+            <a class="card pkg reveal" href="helm.html">
+              <div class="pkg-visual">
+                <img src="../docs/images/helm-data-table.jpg" alt="" loading="lazy" />
+              </div>
+              <div class="pkg-body">
+                <div class="pkg-top"><span class="layer-num">Layer 02</span><span class="tag">Optional</span></div>
+                <div class="pkg-name">@spartan-native/helm</div>
+                <p>
+                  Desktop behaviors: Shift/Ctrl/⌘-click selection, arrow keys and type-ahead, Enter and Esc buttons, and
+                  dialog buttons in each OS's order.
+                </p>
+                <span class="more">Explore helm</span>
+              </div>
+            </a>
+            <a class="card pkg reveal" href="desktop-ui.html">
+              <div class="pkg-visual">
+                <img src="../docs/images/desktop-ui-settings-list.jpg" alt="" loading="lazy" />
+              </div>
+              <div class="pkg-body">
+                <div class="pkg-top"><span class="layer-num">Layer 03</span><span class="tag">Optional</span></div>
+                <div class="pkg-name">@spartan-native/desktop-ui</div>
+                <p>
+                  Window chrome and the patterns each OS is known for: CommandBar, Sheet, Inspector, PreferencesGroup,
+                  StatusPage, tree view, menubar and more.
+                </p>
+                <span class="more">Explore desktop-ui</span>
+              </div>
+            </a>
+            <a class="card pkg reveal" href="hosts.html">
+              <div class="pkg-visual">
+                <img src="../docs/images/project-host-adapters.jpg" alt="" loading="lazy" />
+              </div>
+              <div class="pkg-body">
+                <div class="pkg-top"><span class="layer-num">Layer 04</span><span class="tag">Per runtime</span></div>
+                <div class="pkg-name">@spartan-native/host-*</div>
+                <p>
+                  One <code>NativeHost</code> contract, five runtimes: browser and PWA, Wails, Tauri, Photino.NET, and
+                  Electron next. Swap one line to change runtime.
+                </p>
+                <span class="more">Explore the hosts</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ Behaviors -->
+      <section class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Feels native, too</div>
+            <h2>Settings users already chose, respected everywhere.</h2>
+            <p class="lead">
+              Theming makes an app look native. These behaviors make it feel native, and they work the same in every
+              runtime.
+            </p>
+          </div>
+          <div class="behaviors reveal">
+            <div>
+              <span class="ico">🌗</span>
+              <h4>Live light / dark</h4>
+              <p>Switch the OS and the app follows instantly, no reload.</p>
+            </div>
+            <div>
+              <span class="ico">🎨</span>
+              <h4>System accent</h4>
+              <p>Every color is derived from the accent, with contrast checks.</p>
+            </div>
+            <div>
+              <span class="ico">🔠</span>
+              <h4>Text size 100–200 %</h4>
+              <p>Sizes are in rem, so controls grow with the text.</p>
+            </div>
+            <div>
+              <span class="ico">🪟</span>
+              <h4>Inactive window</h4>
+              <p>Selections and chrome dim when the window loses focus.</p>
+            </div>
+            <div>
+              <span class="ico">🧊</span>
+              <h4>Reduce transparency</h4>
+              <p>Glass, acrylic and vibrancy become solid surfaces.</p>
+            </div>
+            <div>
+              <span class="ico">◐</span>
+              <h4>Contrast themes</h4>
+              <p><code>forced-colors</code> and Increase contrast are honored.</p>
+            </div>
+            <div>
+              <span class="ico">⌘</span>
+              <h4>⌘ or Ctrl</h4>
+              <p>Shortcuts, key bindings and glyphs follow the real OS.</p>
+            </div>
+            <div>
+              <span class="ico">↹</span>
+              <h4>Desktop selection</h4>
+              <p>Shift-click ranges, arrow keys, type-ahead, Enter and Esc.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ Runtimes -->
+      <section>
+        <div class="wrap split">
+          <div class="reveal">
+            <div class="eyebrow">One contract · five runtimes</div>
+            <h2>Change runtime by changing one line.</h2>
+            <p class="lead">
+              Every adapter implements the same <code>NativeHost</code> interface and reports what its runtime can do as
+              <code>native</code>, <code>partial</code> or <code>none</code>. Components check the flags and fall back
+              gracefully, so the theme never knows where it runs.
+            </p>
+            <ul class="checks">
+              <li><strong>Browser &amp; PWA</strong>: implemented, live media queries and Window Controls Overlay</li>
+              <li><strong>Wails (Go)</strong>: implemented, runs the Harbor sample app as a desktop app</li>
+              <li>
+                <strong>Tauri (Rust)</strong> and <strong>Photino.NET</strong>: implemented, pass the conformance suite
+              </li>
+              <li><strong>Electron</strong>: planned</li>
+            </ul>
+            <p style="margin-top: 24px"><a href="hosts.html">See the capability matrix →</a></p>
+          </div>
+          <div class="code reveal">
+            <div class="tabs" role="tablist" aria-label="Runtime">
+              <button role="tab" aria-selected="true" aria-controls="rt-web" id="t-web">Browser / PWA</button>
+              <button role="tab" aria-selected="false" aria-controls="rt-wails" id="t-wails" tabindex="-1">
+                Wails
+              </button>
+              <button role="tab" aria-selected="false" aria-controls="rt-tauri" id="t-tauri" tabindex="-1">
+                Tauri
+              </button>
+              <button role="tab" aria-selected="false" aria-controls="rt-dotnet" id="t-dotnet" tabindex="-1">
+                Photino.NET
+              </button>
+            </div>
+            <div class="code-head">
+              <span class="file">app.config.ts</span>
+              <button class="copy-btn" data-copy aria-label="Copy code"></button>
+            </div>
+            <pre
+              id="rt-web"
+              role="tabpanel"
+              aria-labelledby="t-web"
+            ><code data-lang="ts">import { provideSpartanNative } from '@spartan-native/theme';
+import { webHost } from '@spartan-native/host-web';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideSpartanNative({ host: webHost() })],
+};</code></pre>
+            <pre
+              id="rt-wails"
+              role="tabpanel"
+              aria-labelledby="t-wails"
+              hidden
+            ><code data-lang="ts">import { provideSpartanNative } from '@spartan-native/theme';
+import { wailsHost } from '@spartan-native/host-wails';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideSpartanNative({ host: wailsHost() })],
+};</code></pre>
+            <pre
+              id="rt-tauri"
+              role="tabpanel"
+              aria-labelledby="t-tauri"
+              hidden
+            ><code data-lang="ts">import { provideSpartanNative } from '@spartan-native/theme';
+import { tauriHost } from '@spartan-native/host-tauri';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideSpartanNative({ host: tauriHost() })],
+};</code></pre>
+            <pre
+              id="rt-dotnet"
+              role="tabpanel"
+              aria-labelledby="t-dotnet"
+              hidden
+            ><code data-lang="ts">import { provideSpartanNative } from '@spartan-native/theme';
+import { dotnetHost } from '@spartan-native/host-dotnet';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideSpartanNative({ host: dotnetHost() })],
+};</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ Quick start -->
+      <section id="quick-start" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Quick start</div>
+            <h2>Three steps. Your spartan/ui app follows the OS.</h2>
+            <p class="lead">
+              Requires Angular 22+, Tailwind CSS 4 and spartan/ui (<code>@spartan-ng/brain</code> 1.9+).
+            </p>
+          </div>
+          <div class="grid grid-3">
+            <div class="stack reveal">
+              <h4>1 · Install</h4>
+              <div class="code">
+                <div class="code-head">
+                  <span class="file">terminal</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+                </div>
+                <pre><code data-lang="bash">npm install @spartan-native/theme \
+  @spartan-native/helm \
+  @spartan-native/desktop-ui \
+  @spartan-native/host-web</code></pre>
+              </div>
+            </div>
+            <div class="stack reveal">
+              <h4>2 · Provide</h4>
+              <div class="code">
+                <div class="code-head">
+                  <span class="file">app.config.ts</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+                </div>
+                <pre><code data-lang="ts">import { provideSpartanNative } from '@spartan-native/theme';
+import { webHost } from '@spartan-native/host-web';
+
+export const appConfig = {
+  providers: [
+    provideSpartanNative({ host: webHost() }),
+  ],
+};</code></pre>
+              </div>
+            </div>
+            <div class="stack reveal">
+              <h4>3 · Style</h4>
+              <div class="code">
+                <div class="code-head">
+                  <span class="file">src/theme.scss</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+                </div>
+                <pre><code data-lang="scss">// after Tailwind + the spartan preset
+@use '@spartan-native/theme/styles/spartan-native';
+@use '@spartan-native/helm/styles/spartan-native-helm';</code></pre>
+              </div>
+            </div>
+          </div>
+          <p class="muted reveal" style="margin-top: 28px">
+            Building with an AI agent? The
+            <a href="https://github.com/Spartan-Native/spartan-native/tree/main/tools/claude-plugin"
+              >Claude Code plugin</a
+            >
+            ships the setup for every runtime, ready templates, and the rules for which component to use.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================ Roadmap -->
+      <section class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Roadmap</div>
+            <h2>Where it stands at 0.1.</h2>
+          </div>
+          <div class="roadmap reveal">
+            <div class="phase">
+              <small>01</small><b>Design mockups</b>
+              <div class="bar"><i style="--w: 100%"></i></div>
+              <span>Done</span>
+            </div>
+            <div class="phase">
+              <small>02</small><b>Token contract &amp; spike</b>
+              <div class="bar"><i style="--w: 100%"></i></div>
+              <span>Done</span>
+            </div>
+            <div class="phase">
+              <small>03</small><b>Theme + helm</b>
+              <div class="bar"><i style="--w: 100%"></i></div>
+              <span>Done</span>
+            </div>
+            <div class="phase">
+              <small>04</small><b>Host adapters</b>
+              <div class="bar"><i style="--w: 82%"></i></div>
+              <span>Mostly done</span>
+            </div>
+            <div class="phase">
+              <small>05</small><b>Desktop UI &amp; integration</b>
+              <div class="bar"><i style="--w: 82%"></i></div>
+              <span>Mostly done</span>
+            </div>
+            <div class="phase">
+              <small>06</small><b>Gaps &amp; tooling</b>
+              <div class="bar"><i style="--w: 55%"></i></div>
+              <span>Partly done</span>
+            </div>
+          </div>
+          <p class="muted" style="margin-top: 20px">
+            Before <code>1.0</code>, a minor version may contain breaking changes.
+            <a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/09-roadmap.md"
+              >Read the roadmap →</a
+            >
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================================ CTA -->
+      <section class="tight">
+        <div class="wrap">
+          <div class="cta-band reveal">
+            <h2>Ship one app. <span class="gradient-text">Belong on every desktop.</span></h2>
+            <p class="lead">Stock spartan/ui components, seven native skins, and the user's own settings, live.</p>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="theme.html">Start with the theme</a>
+              <a class="btn btn-ghost" href="https://github.com/Spartan-Native/harbor">See the sample app</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot">
+        <div>
+          <a class="logo" href="./"><img src="assets/logo.svg" alt="" width="28" height="28" />Spartan Native</a>
+          <p class="fine">
+            MIT licensed. Platform names are trademarks of their respective owners; Spartan Native is not affiliated
+            with or endorsed by any of them.
+          </p>
+        </div>
+        <div>
+          <h5>Packages</h5>
+          <ul>
+            <li><a href="theme.html">theme</a></li>
+            <li><a href="helm.html">helm</a></li>
+            <li><a href="desktop-ui.html">desktop-ui</a></li>
+            <li><a href="hosts.html">host-*</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Docs</h5>
+          <ul>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/02-architecture.md"
+                >Architecture</a
+              >
+            </li>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/03-theme-tokens.md">Tokens</a>
+            </li>
+            <li><a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/09-roadmap.md">Roadmap</a></li>
+            <li><a href="https://github.com/Spartan-Native/spartan-native/blob/main/CHANGELOG.md">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Project</h5>
+          <ul>
+            <li><a href="https://github.com/Spartan-Native/spartan-native">GitHub</a></li>
+            <li><a href="https://github.com/Spartan-Native/harbor">Harbor sample app</a></li>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/CONTRIBUTING.md">Contributing</a>
+            </li>
+            <li><a href="https://spartan.ng">spartan/ui</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

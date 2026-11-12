@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Host adapters · Spartan Native</title>
+    <meta
+      name="description"
+      content="One NativeHost contract, five runtimes: browser and PWA, Wails, Tauri, Photino.NET and Electron."
+    />
+    <meta name="theme-color" content="#08090d" />
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/site.css" />
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="nav">
+      <div class="wrap">
+        <a class="logo" href="./"><img src="assets/logo.svg" alt="" width="28" height="28" />Spartan Native</a>
+        <ul class="nav-links">
+          <li><a href="theme.html">Theme</a></li>
+          <li><a href="helm.html">Helm</a></li>
+          <li><a href="desktop-ui.html">Desktop UI</a></li>
+          <li><a href="hosts.html" aria-current="page">Hosts</a></li>
+          <li><a href="https://github.com/Spartan-Native/spartan-native/tree/main/docs">Docs</a></li>
+        </ul>
+        <div class="nav-end">
+          <a class="btn btn-ghost btn-sm" href="https://github.com/Spartan-Native/spartan-native">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.41-2.7 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"
+              />
+            </svg>
+            GitHub
+          </a>
+          <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="grid-bg" aria-hidden="true"></div>
+        <div class="wrap split">
+          <div>
+            <div class="eyebrow"><span class="num">04</span> Layer 04 · per runtime</div>
+            <h1>Host <span class="gradient-text">adapters</span>.</h1>
+            <p class="lead">
+              Bridges to the real OS settings, one per runtime. Every adapter implements the same
+              <code>NativeHost</code> contract, so the theme and components never know where they run. Only one line of
+              <code>app.config.ts</code> changes.
+            </p>
+            <div class="meta">
+              <span class="tag ok">web · wails · tauri · dotnet</span>
+              <span class="tag plan">electron planned</span>
+              <span class="tag">conformance suite</span>
+            </div>
+          </div>
+          <div class="code">
+            <div class="code-head">
+              <span class="file">app.config.ts</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+            </div>
+            <pre><code data-lang="ts">// the only line that changes per runtime
+import { provideSpartanNative } from '@spartan-native/theme';
+import { wailsHost } from '@spartan-native/host-wails';
+// or webHost, tauriHost, dotnetHost, electronHost
+
+export const appConfig = {
+  providers: [provideSpartanNative({ host: wailsHost() })],
+};</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <nav class="subnav" aria-label="On this page">
+        <div class="wrap">
+          <a href="#runtimes">Runtimes</a>
+          <a href="#matrix">Capabilities</a>
+          <a href="#contract">Contract</a>
+          <a href="#skin-resolution">Skin resolution</a>
+          <a href="#web">host-web</a>
+          <a href="#conformance">Conformance</a>
+        </div>
+      </nav>
+
+      <!-- Runtimes -->
+      <section id="runtimes" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Runtimes</div>
+            <h2>Five runtimes. One contract.</h2>
+            <p class="lead">
+              The desktop adapters ship their native side (a Go module, a Rust crate, a NuGet package) from the same
+              repository, at the same version as the npm package.
+            </p>
+          </div>
+          <div class="grid grid-3">
+            <div class="card runtime reveal">
+              <div class="rt-top">
+                <span class="rt-logo" style="--c: linear-gradient(135deg, #5b9dff, #a77bff)">Web</span>
+                <span class="tag ok">Implemented</span>
+              </div>
+              <h3>Browser &amp; PWA</h3>
+              <p>Browser APIs only, live: media queries, Client Hints, focus, Window Controls Overlay.</p>
+              <code class="fn">webHost()</code>
+              <dl>
+                <dt>Package</dt>
+                <dd>@spartan-native/host-web</dd>
+                <dt>Native side</dt>
+                <dd>none</dd>
+              </dl>
+            </div>
+            <div class="card runtime reveal">
+              <div class="rt-top">
+                <span class="rt-logo" style="--c: linear-gradient(135deg, #ff6b81, #ffc15e)">Go</span>
+                <span class="tag ok">Implemented</span>
+              </div>
+              <h3>Go + Wails</h3>
+              <p>A Go service per OS. Runs the Harbor sample app as a Wails desktop app on macOS.</p>
+              <code class="fn">wailsHost()</code>
+              <dl>
+                <dt>Repository</dt>
+                <dd><a href="https://github.com/Spartan-Native/host-wails">Spartan-Native/host-wails</a></dd>
+                <dt>Native side</dt>
+                <dd>Go module</dd>
+              </dl>
+            </div>
+            <div class="card runtime reveal">
+              <div class="rt-top">
+                <span class="rt-logo" style="--c: linear-gradient(135deg, #ffc15e, #ff8a4c)">Rs</span>
+                <span class="tag ok">Implemented</span>
+              </div>
+              <h3>Rust + Tauri v2</h3>
+              <p>Passes the conformance suite and reads the OS live on macOS; not yet tried in a real app window.</p>
+              <code class="fn">tauriHost()</code>
+              <dl>
+                <dt>Repository</dt>
+                <dd><a href="https://github.com/Spartan-Native/host-tauri">Spartan-Native/host-tauri</a></dd>
+                <dt>Native side</dt>
+                <dd>crate tauri-plugin-spartan-native</dd>
+              </dl>
+            </div>
+            <div class="card runtime reveal">
+              <div class="rt-top">
+                <span class="rt-logo" style="--c: linear-gradient(135deg, #a77bff, #ff6fb5)">.NET</span>
+                <span class="tag ok">Implemented</span>
+              </div>
+              <h3>.NET + Photino</h3>
+              <p>Passes the conformance suite and reads the OS live on macOS; not yet tried in a real app window.</p>
+              <code class="fn">dotnetHost()</code>
+              <dl>
+                <dt>Repository</dt>
+                <dd><a href="https://github.com/Spartan-Native/host-dotnet">Spartan-Native/host-dotnet</a></dd>
+                <dt>Native side</dt>
+                <dd>NuGet SpartanNative.Photino</dd>
+              </dl>
+            </div>
+            <div class="card runtime reveal">
+              <div class="rt-top">
+                <span class="rt-logo" style="--c: linear-gradient(135deg, #3ddc97, #5b9dff)">TS</span>
+                <span class="tag plan">Planned</span>
+              </div>
+              <h3>TypeScript + Electron</h3>
+              <p>A scaffold today, and not published until there is an implementation.</p>
+              <code class="fn">electronHost()</code>
+              <dl>
+                <dt>Package</dt>
+                <dd>@spartan-native/host-electron</dd>
+                <dt>Native side</dt>
+                <dd>main process + preload</dd>
+              </dl>
+            </div>
+            <div class="card runtime reveal">
+              <div class="rt-top">
+                <span class="rt-logo" style="--c: linear-gradient(135deg, #eceef4, #9aa1b5)">✓</span>
+                <span class="tag ok">Implemented</span>
+              </div>
+              <h3>Conformance suite</h3>
+              <p>The test suite every adapter must pass. Framework-free: Vitest, Jest, Jasmine, or a plain report.</p>
+              <code class="fn">describeHostConformance()</code>
+              <dl>
+                <dt>Package</dt>
+                <dd>@spartan-native/host-conformance</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Matrix -->
+      <section id="matrix" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Capability matrix</div>
+            <h2>Honest about what each runtime can do.</h2>
+            <p class="lead">
+              Each adapter reports every capability as <code>native</code>, <code>partial</code> or <code>none</code>.
+              Components check the flags and fall back, never throw. Hover a cell for the detail.
+            </p>
+          </div>
+          <div class="table-wrap matrix reveal">
+            <table>
+              <thead>
+                <tr>
+                  <th>Capability</th>
+                  <th>Web + PWA</th>
+                  <th>Go + Wails</th>
+                  <th>Rust + Tauri</th>
+                  <th>TS + Electron</th>
+                  <th>.NET + Photino</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>System accent<span class="grp">Appearance</span></td>
+                  <td><span class="cap p" title="Configured; CSS AccentColor where supported">P</span></td>
+                  <td><span class="cap n" title="Per-OS Go code + portal">N</span></td>
+                  <td><span class="cap n" title="Plugin per OS + portal">N</span></td>
+                  <td><span class="cap n" title="systemPreferences; portal on Linux">N</span></td>
+                  <td><span class="cap n" title="WinRT · AppKit · D-Bus">N</span></td>
+                </tr>
+                <tr>
+                  <td>Light / dark<span class="grp">Appearance</span></td>
+                  <td><span class="cap n" title="prefers-color-scheme">N</span></td>
+                  <td><span class="cap n" title="Runtime events">N</span></td>
+                  <td><span class="cap n" title="Theme events">N</span></td>
+                  <td><span class="cap n" title="nativeTheme">N</span></td>
+                  <td><span class="cap n" title="OS events">N</span></td>
+                </tr>
+                <tr>
+                  <td>High contrast<span class="grp">Appearance</span></td>
+                  <td><span class="cap n" title="forced-colors, prefers-contrast">N</span></td>
+                  <td><span class="cap p" title="Via CSS media queries">P</span></td>
+                  <td><span class="cap n" title="Read from the OS">N</span></td>
+                  <td><span class="cap n" title="nativeTheme">N</span></td>
+                  <td><span class="cap n" title="Read from the OS">N</span></td>
+                </tr>
+                <tr>
+                  <td>Reduce transparency<span class="grp">Appearance</span></td>
+                  <td><span class="cap p" title="Media query where supported">P</span></td>
+                  <td><span class="cap n" title="Read from the OS">N</span></td>
+                  <td><span class="cap n" title="Read from the OS">N</span></td>
+                  <td><span class="cap n" title="nativeTheme">N</span></td>
+                  <td><span class="cap n" title="Read from the OS">N</span></td>
+                </tr>
+                <tr>
+                  <td>Text size<span class="grp">Appearance</span></td>
+                  <td><span class="cap p" title="Browser font size">P</span></td>
+                  <td><span class="cap n" title="Windows and GNOME; in-app on macOS">N</span></td>
+                  <td><span class="cap n" title="Windows and GNOME; in-app on macOS">N</span></td>
+                  <td><span class="cap n" title="Windows and GNOME; in-app on macOS">N</span></td>
+                  <td><span class="cap n" title="Windows and GNOME; in-app on macOS">N</span></td>
+                </tr>
+                <tr>
+                  <td>Window focus<span class="grp">Window</span></td>
+                  <td><span class="cap n" title="focus / blur events">N</span></td>
+                  <td><span class="cap n" title="Window events">N</span></td>
+                  <td><span class="cap n" title="Window events">N</span></td>
+                  <td><span class="cap n" title="BrowserWindow events">N</span></td>
+                  <td><span class="cap n" title="Window events">N</span></td>
+                </tr>
+                <tr>
+                  <td>Mica · acrylic · vibrancy<span class="grp">Window</span></td>
+                  <td><span class="cap x" title="Glass blurs page content only">X</span></td>
+                  <td><span class="cap n" title="Mica, translucent macOS">N</span></td>
+                  <td><span class="cap n" title="Window effects">N</span></td>
+                  <td><span class="cap n" title="backgroundMaterial, vibrancy">N</span></td>
+                  <td><span class="cap p" title="Limited by Photino">P</span></td>
+                </tr>
+                <tr>
+                  <td>Custom title bar<span class="grp">Window</span></td>
+                  <td><span class="cap p" title="Window Controls Overlay (Chromium)">P</span></td>
+                  <td><span class="cap n" title="Frameless + drag regions">N</span></td>
+                  <td><span class="cap n" title="Overlay or frameless">N</span></td>
+                  <td><span class="cap n" title="titleBarOverlay">N</span></td>
+                  <td><span class="cap p" title="Frameless only">P</span></td>
+                </tr>
+                <tr>
+                  <td>Native menus<span class="grp">OS services</span></td>
+                  <td><span class="cap x" title="HTML menus">X</span></td>
+                  <td>
+                    <span class="cap n" title="macOS: global menu bar + context menus. Windows/Linux: context menus"
+                      >N</span
+                    >
+                    <span class="cap p" title="Windows/Linux: the app menu reaches only new, framed windows">P</span>
+                  </td>
+                  <td>
+                    <span class="cap n" title="macOS: global menu bar + context menus. Windows/Linux: context menus"
+                      >N</span
+                    >
+                    <span class="cap p" title="Windows/Linux: the app menu is the window's menu bar">P</span>
+                  </td>
+                  <td><span class="cap n" title="Menu API">N</span></td>
+                  <td><span class="cap x" title="None in Photino (desktop-ui draws them)">X</span></td>
+                </tr>
+                <tr>
+                  <td>Notifications<span class="grp">OS services</span></td>
+                  <td><span class="cap p" title="Notification API, needs permission">P</span></td>
+                  <td><span class="cap p" title="Varies by version">P</span></td>
+                  <td><span class="cap n" title="Notification plugin">N</span></td>
+                  <td><span class="cap n" title="Built in">N</span></td>
+                  <td><span class="cap p" title="Via OS APIs">P</span></td>
+                </tr>
+                <tr>
+                  <td>Taskbar / dock progress<span class="grp">OS services</span></td>
+                  <td><span class="cap p" title="App badge only">P</span></td>
+                  <td><span class="cap p" title="Custom native code">P</span></td>
+                  <td><span class="cap n" title="setProgressBar">N</span></td>
+                  <td><span class="cap n" title="setProgressBar">N</span></td>
+                  <td><span class="cap p" title="Custom native code">P</span></td>
+                </tr>
+                <tr>
+                  <td>File dialogs<span class="grp">OS services</span></td>
+                  <td><span class="cap p" title="File System Access (Chromium)">P</span></td>
+                  <td><span class="cap n" title="Runtime dialogs">N</span></td>
+                  <td><span class="cap n" title="Dialog plugin">N</span></td>
+                  <td><span class="cap n" title="Dialog module">N</span></td>
+                  <td><span class="cap n" title="Photino dialogs (no message())">N</span></td>
+                </tr>
+                <tr>
+                  <td>OS version &amp; skin<span class="grp">Platform</span></td>
+                  <td><span class="cap p" title="UA Client Hints, Chromium only">P</span></td>
+                  <td><span class="cap n" title="RtlGetVersion · sysctl · env">N</span></td>
+                  <td><span class="cap n" title="Native version APIs">N</span></td>
+                  <td><span class="cap n" title="os.release() · getSystemVersion()">N</span></td>
+                  <td><span class="cap n" title="Environment.OSVersion">N</span></td>
+                </tr>
+                <tr>
+                  <td>GTK vs Qt detection<span class="grp">Linux</span></td>
+                  <td><span class="cap x" title="Not detectable from a web page">X</span></td>
+                  <td><span class="cap n" title="XDG_CURRENT_DESKTOP">N</span></td>
+                  <td><span class="cap n" title="XDG_CURRENT_DESKTOP">N</span></td>
+                  <td><span class="cap n" title="XDG_CURRENT_DESKTOP">N</span></td>
+                  <td><span class="cap n" title="XDG_CURRENT_DESKTOP">N</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="legend reveal">
+            <span><span class="cap n">N</span> native</span>
+            <span><span class="cap p">P</span> partial or fallback</span>
+            <span><span class="cap x">X</span> not available: components fall back</span>
+            <span class="muted">Electron's column is the plan for an adapter that doesn't exist yet.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contract -->
+      <section id="contract" class="tight">
+        <div class="wrap split top">
+          <div class="reveal">
+            <div class="eyebrow">The contract</div>
+            <h2><code style="font-size: 0.8em; white-space: normal">NativeHost</code></h2>
+            <p class="lead">
+              Exported by <code>@spartan-native/theme</code>, implemented by every adapter, consumed by every component.
+            </p>
+            <ul class="checks">
+              <li><strong>Appearance</strong>: one <code>AppearanceState</code>, plus a change subscription</li>
+              <li><strong>Window</strong>: focus; minimize, maximize and close where the host owns a window</li>
+              <li>
+                <strong>Menus</strong>: plain <code>MenuItem</code> data with portable <code>mod+shift+s</code>
+                accelerators, so it crosses into Go, Rust, Node or .NET
+              </li>
+              <li>
+                <strong>Dialogs</strong>: open, save, pick a folder; a cancelled dialog resolves to <code>[]</code> or
+                <code>null</code>, never rejects
+              </li>
+            </ul>
+          </div>
+          <div class="code reveal">
+            <div class="code-head">
+              <span class="file">native-host.ts</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+            </div>
+            <pre><code data-lang="ts">export interface NativeHost {
+  readonly runtime: 'web' | 'wails' | 'tauri' | 'electron' | 'dotnet' | 'static';
+  readonly capabilities: HostCapabilities;
+  platform(): Promise&lt;PlatformInfo&gt;;
+  appearance(): Promise&lt;AppearanceState&gt;;
+  onAppearanceChange(cb: (s: AppearanceState) =&gt; void): Unsubscribe;
+  readonly window: WindowHost;
+  readonly menus?: MenuHost;
+  readonly dialogs?: DialogHost;
+  readonly notifications?: NotificationHost;
+}
+
+export interface AppearanceState {
+  skin: Skin;
+  accent: string; // #rrggbb
+  scheme: 'light' | 'dark';
+  contrast: 'normal' | 'more' | 'forced';
+  reduceTransparency: boolean;
+  reduceMotion: boolean;
+  textScale: number; // 1 = 100 %
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Skin resolution -->
+      <section id="skin-resolution" class="tight">
+        <div class="wrap split top">
+          <div class="reveal">
+            <div class="eyebrow">resolveSkin()</div>
+            <h2>Same OS, same skin, every runtime.</h2>
+            <p class="lead">
+              Adapters detect the platform and hand it to <code>resolveSkin()</code> from the theme, so a Wails app and
+              a PWA on the same machine look the same.
+            </p>
+          </div>
+          <div class="table-wrap reveal">
+            <table>
+              <thead>
+                <tr>
+                  <th>Detected</th>
+                  <th>Skin</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Windows, build ≥ 22000 or unknown</td>
+                  <td><code>win</code></td>
+                </tr>
+                <tr>
+                  <td>Windows, build &lt; 22000</td>
+                  <td><code>w10</code></td>
+                </tr>
+                <tr>
+                  <td>macOS ≥ 26</td>
+                  <td><code>mac</code></td>
+                </tr>
+                <tr>
+                  <td>macOS &lt; 26</td>
+                  <td><code>macc</code></td>
+                </tr>
+                <tr>
+                  <td>Linux, any desktop except KDE</td>
+                  <td><code>gtk</code></td>
+                </tr>
+                <tr>
+                  <td>Linux, KDE</td>
+                  <td><code>qt</code></td>
+                </tr>
+                <tr>
+                  <td>ChromeOS</td>
+                  <td><code>cros</code></td>
+                </tr>
+                <tr>
+                  <td>Unknown</td>
+                  <td><code>web</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- host-web -->
+      <section id="web" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">@spartan-native/host-web</div>
+            <h2>Everything a browser will tell you. Live.</h2>
+            <p class="lead">
+              For browsers and installed PWAs, using browser APIs only. Overrides from an in-app setting still win.
+            </p>
+          </div>
+          <div class="table-wrap reveal">
+            <table>
+              <thead>
+                <tr>
+                  <th>Setting</th>
+                  <th>Source</th>
+                  <th>Live</th>
+                  <th>Capability</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Light / dark</td>
+                  <td><code>prefers-color-scheme</code></td>
+                  <td>✓</td>
+                  <td><span class="cap n">N</span></td>
+                </tr>
+                <tr>
+                  <td>Contrast</td>
+                  <td><code>prefers-contrast: more</code>, <code>forced-colors: active</code></td>
+                  <td>✓</td>
+                  <td><span class="cap n">N</span></td>
+                </tr>
+                <tr>
+                  <td>Reduce transparency</td>
+                  <td><code>prefers-reduced-transparency</code> (Chromium, Safari)</td>
+                  <td>✓</td>
+                  <td><span class="cap p">P</span></td>
+                </tr>
+                <tr>
+                  <td>Reduce motion</td>
+                  <td><code>prefers-reduced-motion</code></td>
+                  <td>✓</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td>Text size</td>
+                  <td>The browser's default font size</td>
+                  <td>✓ ResizeObserver</td>
+                  <td><span class="cap p">P</span></td>
+                </tr>
+                <tr>
+                  <td>Accent</td>
+                  <td>
+                    CSS <code>AccentColor</code> (Firefox, Safari); else <code>options.accent</code> or the stock accent
+                  </td>
+                  <td>on focus</td>
+                  <td><span class="cap p">P</span></td>
+                </tr>
+                <tr>
+                  <td>Window focus</td>
+                  <td><code>focus</code>, <code>blur</code>, <code>visibilitychange</code></td>
+                  <td>✓</td>
+                  <td><span class="cap n">N</span></td>
+                </tr>
+                <tr>
+                  <td>OS, version, skin</td>
+                  <td>User-Agent Client Hints, else the user-agent string</td>
+                  <td>once</td>
+                  <td><span class="cap p">P</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="grid grid-2" style="margin-top: 32px">
+            <div class="card reveal">
+              <h3>Browser limits, handled</h3>
+              <ul class="checks">
+                <li>
+                  <strong>Chromium hides the accent</strong> (anti-fingerprinting). The adapter detects it and uses the
+                  platform's stock accent; offer an in-app picker with <code>theme.override({ accent })</code>
+                </li>
+                <li><strong>Frozen versions</strong> without Client Hints map to Windows 11 and macOS 26</li>
+                <li>
+                  <strong>GNOME vs KDE</strong> isn't visible to a page: GTK is assumed, pass <code>skin: 'qt'</code>
+                </li>
+              </ul>
+            </div>
+            <div class="code reveal">
+              <div class="code-head">
+                <span class="file">app.config.ts</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="ts">webHost({
+  accent: '#9141ac', // when the browser hides the system accent
+  skin: 'gtk',       // force a skin, e.g. from a user setting
+});
+
+// Installed apps: 'browser' | 'standalone' | 'overlay'
+const off = watchDisplayMode((mode) =&gt; …);</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Conformance -->
+      <section id="conformance" class="tight">
+        <div class="wrap split top">
+          <div class="reveal">
+            <div class="eyebrow">@spartan-native/host-conformance</div>
+            <h2>Thirteen checks every adapter must pass.</h2>
+            <p class="lead">
+              Each check becomes one test, so a failure names exactly what is wrong. Give it a driver and it simulates
+              the OS to test the live events too.
+            </p>
+            <ul class="checks">
+              <li>
+                A known <code>runtime</code>; every capability <code>native</code>, <code>partial</code> or
+                <code>none</code>
+              </li>
+              <li>Valid <code>PlatformInfo</code> and <code>AppearanceState</code>, agreeing on the skin</li>
+              <li>
+                <code>menus</code> and <code>dialogs</code> present exactly when their capability isn't
+                <code>none</code>
+              </li>
+              <li>Unsubscribe functions safe to call twice; nothing throws for <code>none</code></li>
+              <li><em>With a driver</em>: live appearance and focus events that stop after unsubscribe</li>
+            </ul>
+          </div>
+          <div class="stack reveal">
+            <div class="code">
+              <div class="code-head">
+                <span class="file">wails-host.spec.ts</span
+                ><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="ts">import { describeHostConformance } from '@spartan-native/host-conformance';
+
+describeHostConformance('wailsHost', () =&gt; {
+  const runtime = fakeWailsRuntime();
+  return {
+    host: wailsHost({ runtime }),
+    driver: {
+      setAppearance: (patch) =&gt; runtime.emitThemeChange(patch),
+      setFocused: (focused) =&gt; runtime.emitFocus(focused),
+    },
+  };
+});</code></pre>
+            </div>
+            <div class="code">
+              <div class="code-head">
+                <span class="file">or as a function</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="ts">const report = await checkHostConformance(host, driver);
+report.passed;  // false if any check failed
+report.results; // [{ id, title, status, detail? }]</code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="wrap" style="margin-top: 48px">
+          <figure class="reveal">
+            <div class="shot">
+              <img
+                src="../docs/images/project-host-adapters.jpg"
+                alt="Capability matrix per adapter and the shared NativeHost contract"
+                loading="lazy"
+              />
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <section class="tight">
+        <div class="wrap pager">
+          <a href="desktop-ui.html"><small>← Previous · Layer 03</small><b>@spartan-native/desktop-ui</b></a>
+          <a class="next" href="./"><small>Back to</small><b>Overview →</b></a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot">
+        <div>
+          <a class="logo" href="./"><img src="assets/logo.svg" alt="" width="28" height="28" />Spartan Native</a>
+          <p class="fine">
+            MIT licensed. Platform names are trademarks of their respective owners; Spartan Native is not affiliated
+            with or endorsed by any of them.
+          </p>
+        </div>
+        <div>
+          <h5>Packages</h5>
+          <ul>
+            <li><a href="theme.html">theme</a></li>
+            <li><a href="helm.html">helm</a></li>
+            <li><a href="desktop-ui.html">desktop-ui</a></li>
+            <li><a href="hosts.html">host-*</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Docs</h5>
+          <ul>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/02-architecture.md"
+                >Architecture</a
+              >
+            </li>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/03-theme-tokens.md">Tokens</a>
+            </li>
+            <li><a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/09-roadmap.md">Roadmap</a></li>
+            <li><a href="https://github.com/Spartan-Native/spartan-native/blob/main/CHANGELOG.md">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Project</h5>
+          <ul>
+            <li><a href="https://github.com/Spartan-Native/spartan-native">GitHub</a></li>
+            <li><a href="https://github.com/Spartan-Native/harbor">Harbor sample app</a></li>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/CONTRIBUTING.md">Contributing</a>
+            </li>
+            <li><a href="https://spartan.ng">spartan/ui</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

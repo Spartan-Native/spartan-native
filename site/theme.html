@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@spartan-native/theme · Spartan Native</title>
+    <meta
+      name="description"
+      content="Tokens, derivePalette() and seven platform skins that make stock spartan/ui components follow the OS."
+    />
+    <meta name="theme-color" content="#08090d" />
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/site.css" />
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="nav">
+      <div class="wrap">
+        <a class="logo" href="./"><img src="assets/logo.svg" alt="" width="28" height="28" />Spartan Native</a>
+        <ul class="nav-links">
+          <li><a href="theme.html" aria-current="page">Theme</a></li>
+          <li><a href="helm.html">Helm</a></li>
+          <li><a href="desktop-ui.html">Desktop UI</a></li>
+          <li><a href="hosts.html">Hosts</a></li>
+          <li><a href="https://github.com/Spartan-Native/spartan-native/tree/main/docs">Docs</a></li>
+        </ul>
+        <div class="nav-end">
+          <a class="btn btn-ghost btn-sm" href="https://github.com/Spartan-Native/spartan-native">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path
+                d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.83 1.19 3.08 0 4.41-2.7 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"
+              />
+            </svg>
+            GitHub
+          </a>
+          <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="grid-bg" aria-hidden="true"></div>
+        <div class="wrap split">
+          <div>
+            <div class="eyebrow"><span class="num">01</span> Layer 01 · required</div>
+            <h1>The <span class="gradient-text">theme</span>.</h1>
+            <p class="lead">
+              Stock spartan/ui components follow the system accent, light/dark, text size, transparency and window
+              focus, and look at home on Windows, macOS, GNOME, KDE and ChromeOS. No templates are forked.
+            </p>
+            <div class="meta">
+              <span class="tag ok">Implemented for all seven skins</span>
+              <span class="tag">Angular 22+</span>
+              <span class="tag">Tailwind CSS 4</span>
+            </div>
+          </div>
+          <div class="code">
+            <div class="code-head">
+              <span class="file">terminal</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+            </div>
+            <pre><code data-lang="bash">npm install @spartan-native/theme</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <nav class="subnav" aria-label="On this page">
+        <div class="wrap">
+          <a href="#setup">Setup</a>
+          <a href="#how">How it works</a>
+          <a href="#palette">Palette</a>
+          <a href="#skins">Skins</a>
+          <a href="#metrics">Metrics</a>
+          <a href="#states">States</a>
+          <a href="#api">API</a>
+          <a href="#storybook">Storybook</a>
+        </div>
+      </nav>
+
+      <!-- Setup -->
+      <section id="setup" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Setup</div>
+            <h2>Three files. That's it.</h2>
+            <p class="lead">
+              Start with <code>staticHost()</code> for a fixed skin, then swap in <code>webHost()</code> or a desktop
+              adapter to read the real OS.
+            </p>
+          </div>
+          <div class="grid grid-3">
+            <div class="code reveal">
+              <div class="code-head">
+                <span class="file">app.config.ts</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="ts">import { provideSpartanNative, staticHost } from '@spartan-native/theme';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideSpartanNative({
+      host: staticHost({ skin: 'mac' }),
+      persist: true, // keep the user's choice
+    }),
+  ],
+};</code></pre>
+            </div>
+            <div class="code reveal">
+              <div class="code-head">
+                <span class="file">angular.json</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="json">// build.options.styles:
+// Tailwind + spartan preset first, then the theme
+"styles": [
+  "src/styles.css",
+  "src/theme.scss"
+]</code></pre>
+            </div>
+            <div class="code reveal">
+              <div class="code-head">
+                <span class="file">src/theme.scss</span><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="scss">// resolved by package name
+@use '@spartan-native/theme/styles/spartan-native';</code></pre>
+            </div>
+          </div>
+          <div class="split top" style="margin-top: 48px">
+            <div class="reveal">
+              <h3>The live appearance, as signals</h3>
+              <p class="muted">
+                Inject <code>SpartanNativeTheme</code> anywhere. Read the skin, scheme, text scale and focus as signals,
+                let an in-app settings screen override them, or go back to the OS values.
+              </p>
+              <p class="muted">
+                <code>platformFamily()</code> is the <em>real</em> OS, whatever skin the user picked: use it for key
+                bindings and native window buttons. A Mac dressed as Windows still gets ⌘.
+              </p>
+              <p class="muted">
+                No Angular? <code>applySpartanNative(element, appearance)</code> does the same on any element, and the
+                static palettes make it work as plain CSS:
+                <code>&lt;html class="t-gtk dark" data-sn-skin="gtk"&gt;</code>.
+              </p>
+            </div>
+            <div class="code reveal">
+              <div class="code-head">
+                <span class="file">settings.component.ts</span
+                ><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="ts">const theme = inject(SpartanNativeTheme);
+
+theme.skin();            // 'win' | 'mac' | 'gtk' | …
+theme.scheme();          // 'light' | 'dark'
+theme.platformFamily();  // 'macos' on a Mac dressed as Windows
+
+theme.override({ scheme: 'dark' }); // from an in-app setting
+theme.followSystem();               // back to the OS values</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- How it works -->
+      <section id="how" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">How it works</div>
+            <h2>Tokens in, skins on top.</h2>
+          </div>
+          <div class="flow">
+            <div class="card reveal">
+              <h3><code>derivePalette()</code></h3>
+              <p>
+                Turns one accent color into every color token (<code>--sn-color-*</code>), with per-platform neutrals
+                and WCAG contrast checks.
+              </p>
+            </div>
+            <div class="card reveal">
+              <h3><code>applySpartanNative()</code></h3>
+              <p>
+                Writes the tokens inline on the root, plus the classes <code>t-&lt;skin&gt;</code>, <code>dark</code>,
+                <code>rt</code>, <code>inactive</code>, <code>hc</code> and <code>reduce-motion</code>.
+              </p>
+            </div>
+            <div class="card reveal">
+              <h3>The SCSS</h3>
+              <p>
+                Maps the tokens onto spartan's variable names so stock components pick up the colors, then each skin
+                restyles shape, materials and states.
+              </p>
+            </div>
+          </div>
+          <div class="card reveal" style="margin-top: 20px">
+            <h3>One cascade layer, no <code>!important</code></h3>
+            <p>
+              All CSS lives in the <code>spartan-native</code> layer, ordered <strong>after</strong> Tailwind's
+              <code>utilities</code>. Skins beat spartan's utility classes without <code>!important</code>, and your own
+              unlayered CSS still beats the skins. <code>_hooks.scss</code> is the only file that knows spartan's
+              markup, so an upstream change is a one-file fix.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Palette -->
+      <section id="palette" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Accent derivation</div>
+            <h2>Pick an accent. Watch the palette follow.</h2>
+            <p class="lead">
+              A simplified preview of what <code>derivePalette()</code> does: the accent is mixed with each platform's
+              real neutrals. The real function also adjusts text until it reaches 4.5:1, and builds a Material 3 tonal
+              palette for ChromeOS.
+            </p>
+          </div>
+          <div class="demo reveal" id="palette-demo">
+            <div class="demo-head">
+              <div class="seg" role="group" aria-label="Platform">
+                <button data-pal-skin="win">Windows</button>
+                <button data-pal-skin="mac">macOS</button>
+                <button data-pal-skin="gtk">GNOME</button>
+                <button data-pal-skin="qt">KDE</button>
+              </div>
+              <div class="seg" role="group" aria-label="Scheme">
+                <button data-pal-scheme="light">Light</button>
+                <button data-pal-scheme="dark">Dark</button>
+              </div>
+              <div class="swatches" role="group" aria-label="Accent">
+                <button data-pal-accent="#0078d4" style="--c: #0078d4" aria-label="Blue"></button>
+                <button data-pal-accent="#9141ac" style="--c: #9141ac" aria-label="Purple"></button>
+                <button data-pal-accent="#e5446d" style="--c: #e5446d" aria-label="Pink"></button>
+                <button data-pal-accent="#e66100" style="--c: #e66100" aria-label="Orange"></button>
+                <button data-pal-accent="#2ec27e" style="--c: #2ec27e" aria-label="Green"></button>
+                <button data-pal-accent="#f6d32d" style="--c: #f6d32d" aria-label="Yellow"></button>
+                <label aria-label="Any color"><input type="color" value="#7c5cff" /></label>
+              </div>
+            </div>
+            <div class="demo-body">
+              <div class="palette"></div>
+              <p class="muted" style="margin: 16px 0 0; font-size: 13.5px" data-ratio></p>
+            </div>
+          </div>
+          <figure class="reveal" style="margin-top: 40px">
+            <div class="shot">
+              <img
+                src="../docs/images/theme-derived-palette.jpg"
+                alt="The twelve derived tokens per platform, in light and dark"
+                loading="lazy"
+              />
+            </div>
+            <figcaption>The derived palette per platform, in light and dark, from the design.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Skins -->
+      <section id="skins" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Skins</div>
+            <h2>Seven skins, one set of tokens.</h2>
+            <p class="lead">
+              A skin is a class on the document root. The ids are short because they are CSS classes and are stored with
+              the user's overrides, so they never change.
+            </p>
+          </div>
+          <div class="skins">
+            <div class="skin reveal">
+              <code class="id">win</code>
+              <h4>Windows 11 · Fluent</h4>
+              <p>Mica and acrylic surfaces, the accent selection pill, Fluent hover, press and focus states.</p>
+              <div class="tags"><span class="tag">t-win</span><span class="tag">Segoe UI Variable</span></div>
+            </div>
+            <div class="skin reveal">
+              <code class="id">w10</code>
+              <h4>Windows 10</h4>
+              <p>Flat Fluent without Mica: square corners, 2px borders, solid surfaces. Overrides on top of win11.</p>
+              <div class="tags"><span class="tag">t-win t-w10</span><span class="tag">Segoe UI</span></div>
+            </div>
+            <div class="skin reveal">
+              <code class="id">mac</code>
+              <h4>macOS 26 · Liquid Glass</h4>
+              <p>Glass surfaces, capsule controls, traffic lights, sheets and an inspector that feel like AppKit.</p>
+              <div class="tags"><span class="tag">t-mac</span><span class="tag">SF Pro</span></div>
+            </div>
+            <div class="skin reveal">
+              <code class="id">macc</code>
+              <h4>macOS 13–15 · classic</h4>
+              <p>Vibrancy instead of Liquid Glass, rounded-rectangle buttons and the pre-26 control sizes.</p>
+              <div class="tags"><span class="tag">t-mac t-macc</span><span class="tag">Ventura → Sequoia</span></div>
+            </div>
+            <div class="skin reveal">
+              <code class="id">gtk</code>
+              <h4>GNOME · GTK 4 / Adwaita</h4>
+              <p>Header bars, boxed lists, bold buttons and AdwStatusPage-style empty states.</p>
+              <div class="tags"><span class="tag">t-gtk</span><span class="tag">Adwaita Sans</span></div>
+            </div>
+            <div class="skin reveal">
+              <code class="id">qt</code>
+              <h4>KDE Plasma · Breeze</h4>
+              <p>Accent-outline hover, accent-filled selection and Kirigami-style forms and placeholders.</p>
+              <div class="tags"><span class="tag">t-qt</span><span class="tag">Noto Sans</span></div>
+            </div>
+            <div class="skin reveal">
+              <code class="id">cros</code>
+              <h4>ChromeOS · Material 3</h4>
+              <p>A tonal palette generated from the accent, pill buttons and tonal selection. Ideal for PWAs.</p>
+              <div class="tags"><span class="tag">t-cros</span><span class="tag">Roboto</span></div>
+            </div>
+            <div class="skin reveal">
+              <code class="id">web</code>
+              <h4>Unknown OS</h4>
+              <p>Token defaults only, with no style sheet of its own yet. Stock spartan shapes, derived colors.</p>
+              <div class="tags"><span class="tag">t-web</span><span class="tag plan">Fallback</span></div>
+            </div>
+          </div>
+          <figure class="reveal" style="margin-top: 40px">
+            <div class="shot">
+              <img
+                src="../docs/images/project-platform-skins.jpg"
+                alt="The seven platform skins with their buttons, switch and checkbox"
+                loading="lazy"
+              />
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <!-- Metrics -->
+      <section id="metrics" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">Key metrics</div>
+            <h2>Every pixel, per platform.</h2>
+            <p class="lead">At 100 % text size. Sizes are in rem, so they all grow with the OS text size.</p>
+          </div>
+          <div class="table-wrap reveal">
+            <table>
+              <thead>
+                <tr>
+                  <th>Control</th>
+                  <th>win (11)</th>
+                  <th>w10</th>
+                  <th>mac (26)</th>
+                  <th>gtk</th>
+                  <th>qt</th>
+                  <th>cros</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Base font size</td>
+                  <td>14</td>
+                  <td>14</td>
+                  <td>13</td>
+                  <td>14</td>
+                  <td>13</td>
+                  <td>14</td>
+                </tr>
+                <tr>
+                  <td>Button height / radius</td>
+                  <td>32 / 4</td>
+                  <td>32 / 2 (2px border)</td>
+                  <td>30 / pill</td>
+                  <td>34 / 6, bold</td>
+                  <td>32 / 5</td>
+                  <td>36 / pill, outlined</td>
+                </tr>
+                <tr>
+                  <td>Input height / radius</td>
+                  <td>32 / 4, accent bottom stroke</td>
+                  <td>32 / 0, 2px border</td>
+                  <td>28 / 8</td>
+                  <td>34 / 6, filled</td>
+                  <td>32 / 5</td>
+                  <td>40 / 4, outlined</td>
+                </tr>
+                <tr>
+                  <td>Checkbox</td>
+                  <td>20, r4</td>
+                  <td>20, r0, 2px</td>
+                  <td>16, r5</td>
+                  <td>20, r6</td>
+                  <td>18, r3</td>
+                  <td>18, r2, 2px</td>
+                </tr>
+                <tr>
+                  <td>Switch track / knob</td>
+                  <td>40×20 / 12</td>
+                  <td>44×20 / 10</td>
+                  <td>44×24 / 26×20</td>
+                  <td>48×26 / 20</td>
+                  <td>36×18 / 16</td>
+                  <td>52×32 / 16</td>
+                </tr>
+                <tr>
+                  <td>Tab height / radius</td>
+                  <td>40 / 4</td>
+                  <td>—</td>
+                  <td>26 / pill (segmented)</td>
+                  <td>30 / 6, bold</td>
+                  <td>34 / 5 5 0 0</td>
+                  <td>48 / underline</td>
+                </tr>
+                <tr>
+                  <td>Menu radius</td>
+                  <td>8, acrylic + blur 30</td>
+                  <td>0</td>
+                  <td>14, glass</td>
+                  <td>12, solid</td>
+                  <td>5</td>
+                  <td>4, padding 8</td>
+                </tr>
+                <tr>
+                  <td>Card radius</td>
+                  <td>8 + stroke</td>
+                  <td>0</td>
+                  <td>22</td>
+                  <td>12 + shadow</td>
+                  <td>5 + border</td>
+                  <td>12 + elevation</td>
+                </tr>
+                <tr>
+                  <td>Dialog radius</td>
+                  <td>8</td>
+                  <td>0</td>
+                  <td>26, centered</td>
+                  <td>14, centered</td>
+                  <td>6</td>
+                  <td>28</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- States -->
+      <section id="states" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">States</div>
+            <h2>Materials and the window around them.</h2>
+          </div>
+          <div class="grid grid-2">
+            <div class="card reveal">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="4" />
+                  <path d="M3 9h18" />
+                </svg>
+              </div>
+              <h3>Materials</h3>
+              <ul class="checks">
+                <li><strong>Windows 11</strong>: a Mica-like backdrop, acrylic menus with a 30px blur</li>
+                <li><strong>macOS 26</strong>: Liquid Glass with a highlight edge; <strong>13–15</strong>: vibrancy</li>
+                <li><strong>GNOME, KDE</strong>: flat backgrounds, solid surfaces with shadow</li>
+                <li><strong>ChromeOS</strong>: M3 surfaces and tonal containers</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 3v18" />
+                </svg>
+              </div>
+              <h3>States on the root</h3>
+              <ul class="checks">
+                <li>
+                  <strong><code>.rt</code></strong
+                  >: every backdrop filter off; glass and acrylic become solid
+                </li>
+                <li>
+                  <strong><code>.inactive</code></strong
+                  >: Mica off on Windows, grey traffic lights and selection on macOS, dimmed header bar on GNOME
+                </li>
+                <li>
+                  <strong><code>.hc</code></strong> and <code>forced-colors</code>: system colors take over
+                </li>
+                <li>
+                  <strong><code>.reduce-motion</code></strong
+                  >: transitions and animations off
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- API -->
+      <section id="api" class="tight">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <div class="eyebrow">API</div>
+            <h2>What it exports.</h2>
+          </div>
+          <div class="table-wrap reveal">
+            <table>
+              <thead>
+                <tr>
+                  <th>Export</th>
+                  <th>What it is</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>provideSpartanNative({ host, overrides?, persist? })</code></td>
+                  <td>Angular providers; reads the host (and persisted overrides) before first render</td>
+                </tr>
+                <tr>
+                  <td><code>SpartanNativeTheme</code></td>
+                  <td>
+                    Signals: <code>appearance</code>, <code>skin</code>, <code>scheme</code>, <code>textScale</code>,
+                    <code>focused</code>, <code>platform</code>, <code>platformFamily</code>, … and
+                    <code>override()</code>, <code>followSystem()</code>, <code>capability()</code>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <code>injectSkin()</code>, <code>injectPlatformFamily()</code>, <code>injectNativeSkin()</code>
+                  </td>
+                  <td>The look, and the real OS (behavior), as signals</td>
+                </tr>
+                <tr>
+                  <td><code>SKIN_LABELS</code>, <code>SKIN_OPTIONS</code>, <code>TEXT_SCALE_OPTIONS</code>, …</td>
+                  <td>Display names for an appearance settings screen</td>
+                </tr>
+                <tr>
+                  <td><code>applySpartanNative(el, appearance)</code></td>
+                  <td>Framework-free: classes and variables on any element</td>
+                </tr>
+                <tr>
+                  <td><code>derivePalette({ skin, accent, scheme, reduceTransparency })</code></td>
+                  <td>The color algorithm</td>
+                </tr>
+                <tr>
+                  <td><code>paletteToCssVars(palette)</code></td>
+                  <td>The <code>--sn-color-*</code> map</td>
+                </tr>
+                <tr>
+                  <td><code>resolveSkin(platformInfo)</code>, <code>skinClasses(skin)</code></td>
+                  <td>The OS → skin table</td>
+                </tr>
+                <tr>
+                  <td><code>staticHost(initial?)</code></td>
+                  <td>A code-controlled <code>NativeHost</code> for demos, tests and Storybook</td>
+                </tr>
+                <tr>
+                  <td><code>NativeHost</code>, <code>AppearanceState</code>, <code>PlatformInfo</code>, …</td>
+                  <td>The host contract every adapter implements (<a href="hosts.html#contract">see Hosts</a>)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Storybook -->
+      <section id="storybook" class="tight">
+        <div class="wrap split">
+          <div class="reveal">
+            <div class="eyebrow">Storybook</div>
+            <h2>Every skin, one toolbar.</h2>
+            <p class="lead">
+              The <code>@spartan-native/theme/storybook</code> entry point publishes the same toolbar the project uses:
+              an OS select, reduce transparency, contrast, inactive window, text size 100–200 % and an accent picker.
+            </p>
+            <ul class="checks">
+              <li>All the skinned spartan/ui components, plus a catalog of 43 more</li>
+              <li>364 visual regression screenshots: every skin × scheme × state, popups opened</li>
+              <li>Each control appears only if the preview declares its global</li>
+            </ul>
+          </div>
+          <div class="stack reveal">
+            <div class="code">
+              <div class="code-head">
+                <span class="file">.storybook/preview.ts</span
+                ><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="ts">import { spartanNativePreview } from '@spartan-native/theme/storybook';
+
+export default {
+  ...spartanNativePreview({ textSize: true, windowFocus: true }),
+} satisfies Preview;</code></pre>
+            </div>
+            <div class="code">
+              <div class="code-head">
+                <span class="file">.storybook/manager.tsx</span
+                ><button class="copy-btn" data-copy aria-label="Copy"></button>
+              </div>
+              <pre><code data-lang="ts">import '@spartan-native/theme/storybook/manager';</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tight">
+        <div class="wrap pager">
+          <a class="next" href="helm.html"><small>Next · Layer 02</small><b>@spartan-native/helm →</b></a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot">
+        <div>
+          <a class="logo" href="./"><img src="assets/logo.svg" alt="" width="28" height="28" />Spartan Native</a>
+          <p class="fine">
+            MIT licensed. Platform names are trademarks of their respective owners; Spartan Native is not affiliated
+            with or endorsed by any of them.
+          </p>
+        </div>
+        <div>
+          <h5>Packages</h5>
+          <ul>
+            <li><a href="theme.html">theme</a></li>
+            <li><a href="helm.html">helm</a></li>
+            <li><a href="desktop-ui.html">desktop-ui</a></li>
+            <li><a href="hosts.html">host-*</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Docs</h5>
+          <ul>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/02-architecture.md"
+                >Architecture</a
+              >
+            </li>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/03-theme-tokens.md">Tokens</a>
+            </li>
+            <li><a href="https://github.com/Spartan-Native/spartan-native/blob/main/docs/09-roadmap.md">Roadmap</a></li>
+            <li><a href="https://github.com/Spartan-Native/spartan-native/blob/main/CHANGELOG.md">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Project</h5>
+          <ul>
+            <li><a href="https://github.com/Spartan-Native/spartan-native">GitHub</a></li>
+            <li><a href="https://github.com/Spartan-Native/harbor">Harbor sample app</a></li>
+            <li>
+              <a href="https://github.com/Spartan-Native/spartan-native/blob/main/CONTRIBUTING.md">Contributing</a>
+            </li>
+            <li><a href="https://spartan.ng">spartan/ui</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
