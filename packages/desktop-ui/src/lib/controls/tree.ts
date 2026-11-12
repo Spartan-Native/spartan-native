@@ -27,6 +27,7 @@ import {
   typeaheadIndex,
 } from '@spartan-native/helm';
 import { injectSkin, skinFamily, type Skin } from '@spartan-native/theme';
+import { byDocumentOrder } from '../internal/document-order';
 
 const TYPEAHEAD_RESET_MS = 600;
 const PAGE = 10;
@@ -42,12 +43,6 @@ const EXPANDER: Record<Skin, 'triangle' | 'chevron'> = {
   cros: 'chevron',
   web: 'triangle',
 };
-
-/** Document order of two elements, for Array.sort. */
-function domOrder(a: { element: Element }, b: { element: Element }): number {
-  if (a.element === b.element) return 0;
-  return a.element.compareDocumentPosition(b.element) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
-}
 
 /**
  * A hierarchical list (folders, sections, a document outline) with the desktop selection model:
@@ -114,7 +109,7 @@ export class SnTree<K = unknown> {
   /** Every item, in document order. */
   private readonly ordered = computed(() => {
     this.orderVersion();
-    return [...this.registered()].sort(domOrder);
+    return [...this.registered()].sort(byDocumentOrder);
   });
   /** The items whose ancestors are all open: what the keyboard and Shift ranges walk. */
   private readonly visible = computed(() => this.ordered().filter((item) => item.isVisible()));
