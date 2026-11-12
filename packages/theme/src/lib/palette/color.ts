@@ -7,29 +7,22 @@ import { DEFAULT_ACCENT } from '../contract/native-host';
 export type Rgb = [number, number, number];
 export type Hsl = [h: number, s: number, l: number];
 
+/** `#rgb` or `#rrggbb` → [r, g, b] in 0–255. */
 export function hexToRgb(hex: string): Rgb {
-  let h = String(hex || '').replace('#', '');
-  if (h.length === 3)
-    h = h
-      .split('')
-      .map((x) => x + x)
-      .join('');
-  if (!/^[0-9a-fA-F]{6}$/.test(h)) h = DEFAULT_ACCENT.slice(1);
-  const n = parseInt(h, 16);
-  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  let digits = String(hex || '').replace('#', '');
+  if (digits.length === 3) digits = [...digits].map((digit) => digit + digit).join('');
+  if (!/^[0-9a-fA-F]{6}$/.test(digits)) digits = DEFAULT_ACCENT.slice(1);
+  const value = parseInt(digits, 16);
+  return [(value >> 16) & 255, (value >> 8) & 255, value & 255];
 }
 
+/** [r, g, b] (rounded and clamped to 0–255) → `#rrggbb`. */
 export function rgbToHex(rgb: readonly number[]): string {
-  return (
-    '#' +
-    rgb
-      .map((v) =>
-        Math.max(0, Math.min(255, Math.round(v)))
-          .toString(16)
-          .padStart(2, '0'),
-      )
-      .join('')
-  );
+  const channel = (value: number) =>
+    Math.max(0, Math.min(255, Math.round(value)))
+      .toString(16)
+      .padStart(2, '0');
+  return '#' + rgb.map(channel).join('');
 }
 
 /** Normalises any accepted input to lower-case `#rrggbb`. */
@@ -39,52 +32,52 @@ export function normalizeHex(hex: string): string {
 
 /** Linear RGB interpolation from `a` (t = 0) to `b` (t = 1). */
 export function mix(a: string, b: string, t: number): string {
-  const A = hexToRgb(a),
-    B = hexToRgb(b);
-  return rgbToHex(A.map((v, i) => v + (B[i] - v) * t));
+  const from = hexToRgb(a);
+  const to = hexToRgb(b);
+  return rgbToHex(from.map((value, i) => value + (to[i] - value) * t));
 }
 
+/** `#rrggbb` → `rgba(r,g,b,alpha)`. */
 export function rgba(hex: string, alpha: number): string {
   const [r, g, b] = hexToRgb(hex);
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
+/** `#rrggbb` → [hue 0–360, saturation 0–1, lightness 0–1]. */
 export function toHsl(hex: string): Hsl {
-  const [R, G, B] = hexToRgb(hex);
-  const r = R / 255,
-    g = G / 255,
-    b = B / 255;
-  const mx = Math.max(r, g, b),
-    mn = Math.min(r, g, b);
-  const l = (mx + mn) / 2;
-  let h = 0,
-    s = 0;
-  if (mx !== mn) {
-    const d = mx - mn;
-    s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
-    if (mx === r) h = (g - b) / d + (g < b ? 6 : 0);
-    else if (mx === g) h = (b - r) / d + 2;
-    else h = (r - g) / d + 4;
+  const [r, g, b] = hexToRgb(hex).map((channel) => channel / 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  let h = 0;
+  let s = 0;
+  if (max !== min) {
+    const range = max - min;
+    s = l > 0.5 ? range / (2 - max - min) : range / (max + min);
+    if (max === r) h = (g - b) / range + (g < b ? 6 : 0);
+    else if (max === g) h = (b - r) / range + 2;
+    else h = (r - g) / range + 4;
     h *= 60;
   }
   return [h, s, l];
 }
 
+/** [hue (any angle), saturation 0–1, lightness 0–1] → `#rrggbb`. */
 export function fromHsl(h: number, s: number, l: number): string {
   h = ((h % 360) + 360) % 360;
-  const c = (1 - Math.abs(2 * l - 1)) * s;
-  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
-  const m = l - c / 2;
-  let r = 0,
-    g = 0,
-    b = 0;
-  if (h < 60) [r, g] = [c, x];
-  else if (h < 120) [r, g] = [x, c];
-  else if (h < 180) [g, b] = [c, x];
-  else if (h < 240) [g, b] = [x, c];
-  else if (h < 300) [r, b] = [x, c];
-  else [r, b] = [c, x];
-  return rgbToHex([(r + m) * 255, (g + m) * 255, (b + m) * 255]);
+  const chroma = (1 - Math.abs(2 * l - 1)) * s;
+  const second = chroma * (1 - Math.abs(((h / 60) % 2) - 1)); // the second-largest channel
+  const lift = l - chroma / 2; // added to every channel
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  if (h < 60) [r, g] = [chroma, second];
+  else if (h < 120) [r, g] = [second, chroma];
+  else if (h < 180) [g, b] = [chroma, second];
+  else if (h < 240) [g, b] = [second, chroma];
+  else if (h < 300) [r, b] = [second, chroma];
+  else [r, b] = [chroma, second];
+  return rgbToHex([(r + lift) * 255, (g + lift) * 255, (b + lift) * 255]);
 }
 
 /** Shift HSL lightness by `delta`, clamped to 0–1. */
@@ -93,19 +86,21 @@ export function adjustLightness(hex: string, delta: number): string {
   return fromHsl(h, s, Math.max(0, Math.min(1, l + delta)));
 }
 
+/** WCAG 2 relative luminance, 0 (black) to 1 (white). */
 export function relativeLuminance(hex: string): number {
-  const w = [0.2126, 0.7152, 0.0722];
-  return hexToRgb(hex).reduce((acc, v, i) => {
-    const c = v / 255;
-    return acc + w[i] * (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+  const weights = [0.2126, 0.7152, 0.0722];
+  return hexToRgb(hex).reduce((sum, value, i) => {
+    const c = value / 255;
+    const linear = c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    return sum + weights[i] * linear;
   }, 0);
 }
 
 /** WCAG 2 contrast ratio between two colors. */
 export function contrastRatio(a: string, b: string): number {
-  const x = relativeLuminance(a),
-    y = relativeLuminance(b);
-  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+  const luminanceA = relativeLuminance(a);
+  const luminanceB = relativeLuminance(b);
+  return (Math.max(luminanceA, luminanceB) + 0.05) / (Math.min(luminanceA, luminanceB) + 0.05);
 }
 
 /**
@@ -113,9 +108,11 @@ export function contrastRatio(a: string, b: string): number {
  * `lighten` = true in dark mode, false in light mode.
  */
 export function ensureContrast(fg: string, bg: string, ratio: number, lighten: boolean): string {
-  let c = fg;
-  for (let i = 0; i < 40 && contrastRatio(c, bg) < ratio; i++) c = adjustLightness(c, lighten ? 0.03 : -0.03);
-  return c;
+  let color = fg;
+  for (let step = 0; step < 40 && contrastRatio(color, bg) < ratio; step++) {
+    color = adjustLightness(color, lighten ? 0.03 : -0.03);
+  }
+  return color;
 }
 
 /** White text when it reaches 3:1 on `bg`, otherwise near-black. */
