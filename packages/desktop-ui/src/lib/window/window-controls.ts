@@ -9,9 +9,21 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { injectSkin, skinFamily, SpartanNativeTheme } from '@spartan-native/theme';
+import { injectSkin, skinFamily, SpartanNativeTheme, type Skin } from '@spartan-native/theme';
 
 export type WindowButton = 'minimize' | 'maximize' | 'close';
+
+/** Which button set each skin draws. The web fallback shares GNOME's. */
+const BUTTON_SET: Record<Skin, 'windows' | 'macos' | 'gnome' | 'kde' | 'cros'> = {
+  win: 'windows',
+  w10: 'windows',
+  mac: 'macos',
+  macc: 'macos',
+  gtk: 'gnome',
+  qt: 'kde',
+  cros: 'cros',
+  web: 'gnome',
+};
 
 /**
  * The window's own buttons, drawn the way the OS draws them:
@@ -146,14 +158,8 @@ export class SnWindowControls {
 
   protected readonly skin = injectSkin();
   protected readonly family = computed(() => skinFamily(this.skin()));
-  /** Which button set to draw: KDE and ChromeOS have their own, the web family shares GNOME's. */
-  protected readonly look = computed(() => {
-    const skin = this.skin();
-    if (skin === 'qt') return 'kde';
-    if (skin === 'cros') return 'cros';
-    const family = this.family();
-    return family === 'macos' || family === 'windows' ? family : 'gnome';
-  });
+  /** Which button set to draw. */
+  protected readonly look = computed(() => BUTTON_SET[this.skin()]);
 
   private readonly hostWindow = inject(SpartanNativeTheme, { optional: true })?.window;
   private readonly hostMaximized = signal(false);
