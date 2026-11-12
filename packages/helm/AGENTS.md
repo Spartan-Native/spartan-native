@@ -20,7 +20,7 @@ Requires `@spartan-native/theme` (with `provideSpartanNative()`) and its stylesh
 | --- | --- |
 | `SnSelectableImports` | `snSelectable`, `snSelectableItem` |
 | `SnDialogActionsImports` | `snDefaultAction`, `snCancelAction`, `snActionScope`, `snDialogButtons` |
-| Pure functions | `selectionClick`, `selectionMoveTo`, `selectionMoveBy`, `selectionToggleActive`, `selectionAll`, `selectionClear`, `selectionSync`, `typeaheadIndex`, `EMPTY_SELECTION`, types `SelectionState`, `SelectionModifiers` |
+| Pure functions | `selectionClick`, `selectionMoveTo`, `selectionMoveBy`, `selectionToggleActive`, `selectionAll`, `selectionClear`, `selectionSync`, `typeaheadIndex`, `EMPTY_SELECTION`, the constants `SELECTION_PAGE_SIZE` (10) and `TYPEAHEAD_RESET_MS` (600), types `SelectionState`, `SelectionModifiers` |
 
 ### Lists and tables: `snSelectable`
 

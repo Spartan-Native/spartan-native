@@ -26,13 +26,13 @@ import {
   type SelectionModifiers,
   type SelectionState,
   typeaheadIndex,
+  SELECTION_PAGE_SIZE,
+  TYPEAHEAD_RESET_MS,
 } from './selection-model';
 
 /** listbox: a list of options · grid: table rows */
 export type SelectableRole = 'listbox' | 'grid';
 
-const PAGE = 10;
-const TYPEAHEAD_RESET_MS = 600;
 let nextId = 0;
 
 interface SelectableParent<K> {
@@ -231,10 +231,10 @@ export class SnSelectable<K = unknown> implements SelectableParent<K> {
         next = selectionMoveTo(state, keys, keys.length - 1, mods, multiple);
         break;
       case 'PageDown':
-        next = selectionMoveBy(state, keys, PAGE, mods, multiple);
+        next = selectionMoveBy(state, keys, SELECTION_PAGE_SIZE, mods, multiple);
         break;
       case 'PageUp':
-        next = selectionMoveBy(state, keys, -PAGE, mods, multiple);
+        next = selectionMoveBy(state, keys, -SELECTION_PAGE_SIZE, mods, multiple);
         break;
       case ' ':
         if (this.typeahead) return this.onTypeahead(event); // a space inside a type-ahead word
