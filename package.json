@@ -18,7 +18,9 @@
     "test:visual": "ng run theme:build-storybook && ng run desktop-ui:build-storybook && playwright test",
     "test:report": "npx playwright show-report dist/playwright-report",
     "pack:libs": "node scripts/pack-libs.mjs",
-    "check:packages": "node scripts/check-packages.mjs"
+    "check:packages": "node scripts/check-packages.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "private": true,
   "packageManager": "npm@11.20.0",
