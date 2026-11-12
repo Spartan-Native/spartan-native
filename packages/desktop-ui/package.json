@@ -1,6 +1,6 @@
 {
   "name": "@spartan-native/desktop-ui",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "OS-signature components for spartan/ui apps: window chrome (title bar, window controls), command bar, coach mark, modal sheet, inspector, sidebar navigation, settings lists, status pages, status bar, split button, number box, tree view, shortcut formatting and *snPlatformIf.",
   "keywords": [
     "angular",
@@ -12,11 +12,11 @@
   "peerDependencies": {
     "@angular/common": "^22.2.0",
     "@angular/core": "^22.2.0",
-    "@spartan-native/theme": "0.0.0",
+    "@spartan-native/theme": "0.1.0",
     "@ng-icons/core": ">=32.0.0",
     "@angular/cdk": "^22.2.0",
     "@angular/forms": "^22.2.0",
-    "@spartan-native/helm": "0.0.0"
+    "@spartan-native/helm": "0.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
