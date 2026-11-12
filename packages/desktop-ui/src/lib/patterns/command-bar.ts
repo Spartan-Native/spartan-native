@@ -103,6 +103,7 @@ export class SnCommandGroup {
  * `secondary` commands always live there.
  */
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector -- an attribute on a real <button>, so it keeps native button behavior
   selector: 'button[snCommand]',
   imports: [NgIcon],
   hostDirectives: [SnTooltip],
@@ -126,6 +127,7 @@ export class SnCommandGroup {
 export class SnCommand implements FocusableOption {
   readonly icon = input('');
   readonly label = input.required<string>();
+  // eslint-disable-next-line @angular-eslint/no-input-rename -- the `disabled` getter below is FocusableOption's, so the input needs another name
   readonly isDisabled = input(false, { alias: 'disabled', transform: booleanAttribute });
   /** Show only the icon on every OS (the label stays as accessible name and tooltip). */
   readonly hideLabel = input(false, { transform: booleanAttribute });

@@ -40,6 +40,11 @@ Branch `public-release-prep` (not committed yet).
 
 **Before the first npm release (owner):** create the `spartan-native` organization on npmjs.com (the packages don't exist there yet; the scope itself could not be checked from the CLI), add an `NPM_TOKEN` secret for the first publish, then set up trusted publishing per package and delete the secret.
 
+- Phase 3: done.
+  - 3.1: Prettier at 120 columns, with compact markdown tables (`proseWrap: "never"`) and MDX skipped (Prettier only parses MDX 1). The formatting is commit `295783b` alone, listed in `.git-blame-ignore-revs`. Verified: tests, builds, an identical generated palette, and every stylesheet compiles to the same CSS apart from whitespace.
+  - 3.2: ESLint 10 with `angular-eslint` 22 and `typescript-eslint` (`eslint.config.mjs`, `npm run lint`); CI runs `format:check` and `lint`. Real fixes: two dead assignments, a story template the linter couldn't parse, a test selector. Each remaining exception carries its reason, inline or in the config.
+  - 3.3: Stylelint dropped. `stylelint-config-standard-scss` reports 737 findings, nearly all notation preferences, and two of its rules are wrong here (vendor prefixes Safari still needs, scrollbar pseudo-elements).
+
 **Owner tasks moved from `TODO.md`** (deleted in phase 2; the repository split it tracked is already on `main`):
 
 - GitHub Packages still holds the old `0.1.0` packages published from this repository before the split, including the broken `@spartan-native/host-wails@0.1.0` and the scaffold `host-tauri`, `host-dotnet` and `host-electron`. Delete them (package settings → Manage versions) so nobody installs them by accident.
@@ -49,7 +54,7 @@ Branch `public-release-prep` (not committed yet).
 - Run `npm run test:visual` to confirm the theme and desktop-ui baselines still match after the split.
 - The local branch `repo-split-todo` is merged and can be deleted.
 
-**Next:** phases 3, 4 and 5.
+**Next:** phases 4 and 5.
 
 ## What the review found
 

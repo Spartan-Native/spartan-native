@@ -141,6 +141,7 @@ export class SnWindowControls {
 
   readonly minimize = output<void>();
   readonly maximize = output<void>();
+  // eslint-disable-next-line @angular-eslint/no-output-native -- public API named after the window action; the DOM `close` event doesn't bubble, so it can't collide
   readonly close = output<void>();
 
   protected readonly skin = injectSkin();

@@ -366,7 +366,10 @@ export class SnTree<K = unknown> {
     '(focus)': 'tree.focused(this)',
   },
   template: `
+    <!-- Mouse only: the keyboard is handled on the treeitem host (Enter, Space, ← →), as in the ARIA tree pattern. -->
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <div class="row" (mousedown)="onMouseDown($event)" (click)="tree.click(this, $event)" (dblclick)="onDoubleClick()">
+      <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
       <span class="expander" (click)="onExpanderClick($event)" (dblclick)="$event.stopPropagation()">
         @if (hasChildren()) {
           @if (tree.triangle()) {

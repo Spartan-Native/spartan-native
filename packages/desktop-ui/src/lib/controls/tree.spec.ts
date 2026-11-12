@@ -147,13 +147,13 @@ interface Node {
 }
 
 @Component({
-  selector: 'test-node',
+  selector: 'sn-test-node',
   imports: [SnTreeImports],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <sn-tree-item [value]="node().id" [label]="node().id" [expanded]="true">
       @for (child of node().children ?? []; track child.id) {
-        <test-node [node]="child" />
+        <sn-test-node [node]="child" />
       }
     </sn-tree-item>
   `,
@@ -165,7 +165,7 @@ class TestNode {
 @Component({
   imports: [SnTreeImports, TestNode],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<sn-tree aria-label="Data"><test-node [node]="root" /><test-node [node]="{ id: 'z' }" /></sn-tree>`,
+  template: `<sn-tree aria-label="Data"><sn-test-node [node]="root" /><sn-test-node [node]="{ id: 'z' }" /></sn-tree>`,
 })
 class RecursiveHost {
   readonly root: Node = { id: 'a', children: [{ id: 'b', children: [{ id: 'c' }] }, { id: 'd' }] };

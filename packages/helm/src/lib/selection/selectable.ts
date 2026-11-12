@@ -77,6 +77,7 @@ export class SnSelectableItem<K = unknown> {
    */
   readonly value = input<K>(undefined as K);
   /** Text used for type-ahead; defaults to the row's text. */
+  // eslint-disable-next-line @angular-eslint/no-input-rename -- `label` alone would clash with other directives on the row
   readonly label = input<string | undefined>(undefined, { alias: 'snSelectableLabel' });
 
   readonly id = `sn-selectable-item-${nextId++}`;
@@ -208,7 +209,7 @@ export class SnSelectable<K = unknown> implements SelectableParent<K> {
     const multiple = this.multiple();
     const state = this.state();
     const mac = this.isMac();
-    let next: SelectionState<K> | null = null;
+    let next: SelectionState<K> | null;
 
     switch (event.key) {
       case 'ArrowDown':

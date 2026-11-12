@@ -25,7 +25,7 @@ export interface NavigatorLike {
 export async function detectPlatform(nav: NavigatorLike): Promise<PlatformInfo> {
   const uaData = nav.userAgentData;
   if (uaData?.platform) {
-    let version: string | null = null;
+    let version: string | null;
     try {
       version = (await uaData.getHighEntropyValues?.(['platformVersion']))?.platformVersion ?? null;
     } catch {

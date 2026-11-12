@@ -20,7 +20,8 @@
     "pack:libs": "node scripts/pack-libs.mjs",
     "check:packages": "node scripts/check-packages.mjs",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint": "eslint ."
   },
   "private": true,
   "packageManager": "npm@11.20.0",
@@ -54,6 +55,7 @@
     "@angular/build": "^22.2.6",
     "@angular/cli": "^22.2.6",
     "@angular/compiler-cli": "^22.2.0",
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.65.0",
     "@spartan-ng/cli": "^1.9.0",
     "@storybook/addon-a11y": "^10.6.6",
@@ -62,7 +64,10 @@
     "@storybook/angular": "^10.6.6",
     "@tailwindcss/postcss": "^4.3.5",
     "@types/luxon": "^3.7.1",
+    "angular-eslint": "22.6.0",
     "esbuild": "^0.28.2",
+    "eslint": "^10.12.0",
+    "globals": "^17.14.0",
     "jsdom": "^30.0.0",
     "ng-packagr": "^22.2.6",
     "postcss": "^8.5.32",
@@ -70,6 +75,7 @@
     "remark-gfm": "^4.0.1",
     "storybook": "^10.6.6",
     "typescript": "~6.0.3",
+    "typescript-eslint": "8.71.0",
     "vitest": "^5.0.0"
   },
   "description": "Spartan Native: a native-look theme for spartan/ui (Angular) on Windows, macOS, GNOME, KDE and ChromeOS.",
