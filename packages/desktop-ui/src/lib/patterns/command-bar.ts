@@ -30,6 +30,8 @@ import { injectPlatformFamily, injectSkin, skinFamily, type Skin } from '@sparta
 import { SnTooltip } from '../controls/tooltip';
 import type { SnMenuItem } from '../menubar/menu-model';
 import { SnMenuTemplates } from '../menubar/menu-templates';
+import { byDocumentOrder } from '../internal/document-order';
+import { fitCommandBar } from './command-bar-fit';
 
 /** How each skin lays out its command surface. */
 interface CommandBarLayout {
@@ -245,69 +247,7 @@ export class SnCommand implements FocusableOption {
     '(keydown)': 'onKeydown($event)',
     '(focusin)': 'onFocusin($event)',
   },
-  template: `
-    <div class="lead">
-      <ng-content select="[snCommandBarStart]" />
-      @if (commandsLead()) {
-        <ng-container [ngTemplateOutlet]="toolbar" />
-      }
-    </div>
-    @if (title()) {
-      <span
-        #titleEl
-        class="title"
-        [attr.role]="headingLevel() ? 'heading' : null"
-        [attr.aria-level]="headingLevel() || null"
-        >{{ title() }}</span
-      >
-    }
-    <div class="trail">
-      <div class="cluster">
-        @if (!commandsLead()) {
-          <ng-container [ngTemplateOutlet]="toolbar" />
-        }
-        <button
-          snCommand
-          hideLabel
-          class="more"
-          [label]="overflowLabel()"
-          [cdkMenuTriggerFor]="menuItems().length ? menus.menu() : (overflow()?.template ?? null)"
-          [cdkMenuTriggerData]="{ $implicit: menuItems() }"
-          [cdkMenuPosition]="menuPosition"
-        >
-          @switch (moreGlyph()) {
-            @case ('menu') {
-              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 4h11M2.5 8h11M2.5 12h11" /></svg>
-            }
-            @case ('vertical') {
-              <svg viewBox="0 0 16 16" aria-hidden="true">
-                <circle cx="8" cy="3" r="1.4" />
-                <circle cx="8" cy="8" r="1.4" />
-                <circle cx="8" cy="13" r="1.4" />
-              </svg>
-            }
-            @default {
-              <svg viewBox="0 0 16 16" aria-hidden="true">
-                <circle cx="3" cy="8" r="1.3" />
-                <circle cx="8" cy="8" r="1.3" />
-                <circle cx="13" cy="8" r="1.3" />
-              </svg>
-            }
-          }
-        </button>
-      </div>
-      <ng-content select="[snCommandBarEnd]" />
-    </div>
-    <ng-template #toolbar>
-      <div class="commands" role="toolbar" [attr.aria-label]="ariaLabel() || title() || null">
-        <ng-content />
-        @if (commands(); as extra) {
-          <ng-container [ngTemplateOutlet]="extra" [ngTemplateOutletInjector]="commandInjector" />
-        }
-      </div>
-    </ng-template>
-    <sn-menu-templates #menus [family]="platform()" />
-  `,
+  templateUrl: './command-bar.html',
   styleUrl: './command-bar.scss',
 })
 export class SnCommandBar {
@@ -355,10 +295,14 @@ export class SnCommandBar {
   });
 
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+  private readonly destroyRef = inject(DestroyRef);
   private readonly titleEl = viewChild<ElementRef<HTMLElement>>('titleEl');
   private readonly more = viewChild.required(SnCommand);
   private readonly registered = signal<readonly SnCommand[]>([]);
-  /** The commands in document order (projected, grouped, and from `[commands]`). */
+  /**
+   * Every command in document order: projected, grouped, from `[commands]`, and the overflow
+   * button (it is a command too).
+   */
   private readonly ordered = signal<readonly SnCommand[]>([]);
   /** The commands currently in the overflow menu, in document order. */
   private readonly collapsedCommands = signal<readonly SnCommand[]>([]);
@@ -374,14 +318,12 @@ export class SnCommandBar {
     return commands.length && extra.length ? [...commands, { type: 'separator' }, ...extra] : [...commands, ...extra];
   });
 
-  /** Every command in document order, the overflow button included (it is a command too). */
-  private readonly items = this.ordered;
-  /** The view exists (fit() measures it). */
+  /** The view exists, so fit() can measure it. */
   private rendered = false;
   /** Bumped after each fit: which commands are hidden changed. */
   private readonly fitted = signal(0);
   private readonly active = signal<SnCommand | null>(null);
-  private readonly keys = new FocusKeyManager(this.items, inject(Injector))
+  private readonly keys = new FocusKeyManager(this.ordered, inject(Injector))
     .withHorizontalOrientation(inject(Directionality, { optional: true })?.value ?? 'ltr')
     .withVerticalOrientation(false)
     .withHomeAndEnd()
@@ -389,25 +331,47 @@ export class SnCommandBar {
 
   constructor() {
     this.keys.change.subscribe(() => this.active.set(this.keys.activeItem));
-    // roving tabindex: the last focused command, or the first enabled one, is the tab stop
+    this.keepOneTabStop();
+    this.keepDocumentOrder();
+    this.refitWhenContentChanges();
+    this.refitWhenResized();
+    this.refitWhenFontsLoad();
+    this.destroyRef.onDestroy(() => (this.rendered = false));
+  }
+
+  /** @internal */
+  register(command: SnCommand): void {
+    this.registered.update((list) => [...list, command]);
+  }
+
+  /** @internal */
+  unregister(command: SnCommand): void {
+    this.registered.update((list) => list.filter((c) => c !== command));
+  }
+
+  /** Roving tabindex: the last focused command, or else the first enabled one, is the only tab stop. */
+  private keepOneTabStop(): void {
     effect(() => {
-      const items = this.items();
+      const items = this.ordered();
       const active = this.active();
       this.fitted();
-      const visible = (i: SnCommand) => !i.disabled && !i.element.hidden;
-      const stop = active && items.includes(active) && visible(active) ? active : items.find(visible);
+      const reachable = (item: SnCommand) => !item.disabled && !item.element.hidden;
+      const stop = active && items.includes(active) && reachable(active) ? active : items.find(reachable);
       for (const item of items) item.tabbable.set(item === stop);
     });
-    // keep the commands in document order, whichever template they came from
+  }
+
+  /** Commands register in creation order; keep them in document order, whichever template they came from. */
+  private keepDocumentOrder(): void {
     afterRenderEffect(() => {
-      const list = this.registered();
-      const sorted = [...list].sort((a, b) =>
-        a.element.compareDocumentPosition(b.element) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1,
-      );
+      const sorted = [...this.registered()].sort(byDocumentOrder);
       const current = untracked(this.ordered);
       if (sorted.length !== current.length || sorted.some((c, i) => c !== current[i])) this.ordered.set(sorted);
     });
-    // fit the bar whenever something that changes its width does
+  }
+
+  /** Fit again whenever an input that changes the bar's content width changes. */
+  private refitWhenContentChanges(): void {
     afterRenderEffect(() => {
       this.ordered();
       this.title();
@@ -427,83 +391,49 @@ export class SnCommandBar {
         this.fit();
       });
     });
-    if (typeof ResizeObserver !== 'undefined') {
-      let width = -1;
-      const observer = new ResizeObserver(([entry]) => {
-        const next = Math.round(entry.contentRect.width);
-        if (next === width) return;
-        width = next;
-        this.fit();
-      });
-      observer.observe(this.host);
-      inject(DestroyRef).onDestroy(() => observer.disconnect());
-    }
-    // Text gets wider when a web font arrives, without the bar changing size: fit again then.
+  }
+
+  /** Fit again when the bar's own width changes. */
+  private refitWhenResized(): void {
+    if (typeof ResizeObserver === 'undefined') return;
+    let width = -1;
+    const observer = new ResizeObserver(([entry]) => {
+      const next = Math.round(entry.contentRect.width);
+      if (next === width) return;
+      width = next;
+      this.fit();
+    });
+    observer.observe(this.host);
+    this.destroyRef.onDestroy(() => observer.disconnect());
+  }
+
+  /** Text gets wider when a web font arrives, without the bar changing size: fit again then. */
+  private refitWhenFontsLoad(): void {
     const fonts = this.host.ownerDocument.fonts as FontFaceSet | undefined;
-    if (fonts?.addEventListener) {
-      const refit = () => this.fit();
-      void fonts.ready.then(refit);
-      fonts.addEventListener('loadingdone', refit);
-      inject(DestroyRef).onDestroy(() => fonts.removeEventListener('loadingdone', refit));
-    }
-    inject(DestroyRef).onDestroy(() => (this.rendered = false));
+    if (!fonts?.addEventListener) return;
+    const refit = () => this.fit();
+    void fonts.ready.then(refit);
+    fonts.addEventListener('loadingdone', refit);
+    this.destroyRef.onDestroy(() => fonts.removeEventListener('loadingdone', refit));
   }
 
-  /** @internal */
-  register(command: SnCommand): void {
-    this.registered.update((list) => [...list, command]);
-  }
-
-  /** @internal */
-  unregister(command: SnCommand): void {
-    this.registered.update((list) => list.filter((c) => c !== command));
-  }
-
-  /**
-   * Makes the commands fit: shows them all, then, while the bar overflows or the title is cut,
-   * drops the labels (labelled skins), then collapses commands into the overflow menu, lowest
-   * priority first (the later one first on a tie). Works on the DOM directly, so every step is
-   * measured before the next.
-   */
+  /** Drops labels and collapses commands until the bar fits. See fitCommandBar(). */
   private fit(): void {
     if (!this.rendered) return; // before the first render, or destroyed
-    const moreCommand = this.more();
-    const more = moreCommand.element;
-    const commands = this.ordered().filter((c) => c !== moreCommand);
-    const title = this.titleEl()?.nativeElement;
-    const auto = this.collapse() === 'auto';
-
-    for (const c of commands) c.setCollapsed(c.secondary());
-    this.host.removeAttribute('data-compact');
-    let compact = false;
-    const showMore = () => {
-      const collapsed = commands.some((c) => c.collapsed());
-      more.hidden = !(collapsed || this.overflowItems().length || this.overflow());
-    };
-    showMore();
-
-    const overflowing = () =>
-      this.host.scrollWidth > this.host.clientWidth + 1 || (!!title && title.scrollWidth > title.clientWidth + 1);
-
-    if (auto && overflowing()) {
-      if (!this.iconOnly() && commands.some((c) => c.icon() || c.element.querySelector('svg, ng-icon, img'))) {
-        compact = true;
-        this.host.setAttribute('data-compact', '');
-      }
-      const queue = commands
-        .map((command, index) => ({ command, index }))
-        .filter(({ command }) => !command.secondary())
-        .sort((a, b) => a.command.priority() - b.command.priority() || b.index - a.index);
-      for (const { command } of queue) {
-        if (!overflowing()) break;
-        command.setCollapsed(true);
-        showMore();
-      }
-    }
+    const more = this.more();
+    const { compact, collapsed } = fitCommandBar({
+      host: this.host,
+      title: this.titleEl()?.nativeElement,
+      more: more.element,
+      commands: this.ordered().filter((c) => c !== more),
+      collapse: this.collapse() === 'auto',
+      labelsShown: !this.iconOnly(),
+      hasOwnMenu: this.overflowItems().length > 0 || !!this.overflow(),
+    });
 
     this.compact.set(compact);
     this.fitted.update((n) => n + 1);
-    this.collapsedCommands.set(commands.filter((c) => c.collapsed()));
+    this.collapsedCommands.set(collapsed);
     if (isDevMode() && this.overflow() && this.menuItems().length) {
       console.warn(
         'sn-command-bar: commands are in the overflow menu, so the snCommandOverflow template is not shown. Use secondary commands or overflowItems instead.',
@@ -512,12 +442,12 @@ export class SnCommandBar {
   }
 
   protected onKeydown(event: KeyboardEvent): void {
-    if (!this.items().some((i) => i.element === event.target)) return;
+    if (!this.ordered().some((i) => i.element === event.target)) return;
     this.keys.onKeydown(event);
   }
 
   protected onFocusin(event: FocusEvent): void {
-    const item = this.items().find((i) => i.element === event.target);
+    const item = this.ordered().find((i) => i.element === event.target);
     if (item) {
       this.keys.updateActiveItem(item);
       this.active.set(item);
