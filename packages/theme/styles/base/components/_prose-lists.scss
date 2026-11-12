@@ -1,0 +1,20 @@
+// Lists in alert and dialog descriptions: the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.base {
+  // Tailwind's reset removes list markers; prose in an alert or dialog description keeps them.
+  :is(#{h.$alert-description}, #{h.$dialog-description}) :is(ul, ol) {
+    margin-block: 0.25em;
+    padding-inline-start: 1.25em;
+  }
+
+  :is(#{h.$alert-description}, #{h.$dialog-description}) ul {
+    list-style: disc;
+  }
+
+  :is(#{h.$alert-description}, #{h.$dialog-description}) ol {
+    list-style: decimal;
+  }
+}

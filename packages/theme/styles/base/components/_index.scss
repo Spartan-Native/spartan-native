@@ -1,0 +1,26 @@
+// Components: the parts that look the same on every skin, plus the shared structure (sizes,
+// spacing, resets) that the skins then dress per platform. One file per component, named like
+// the skins' own component files.
+//
+// Everything here reads tokens; skins/*/components/* override only what differs. Avatar,
+// skeleton, spinner and scroll area are fully token-driven and have no per-skin file.
+//
+// Most rules sit in the base layer. A few (toast, the accordion chevron, calendar days) must
+// compete with the skins and sit in the skins layer; within a layer, this order is the cascade
+// order, so keep new files in it deliberately.
+@use 'tooltip';
+@use 'prose-lists';
+@use 'popover';
+@use 'command';
+@use 'menubar';
+@use 'toggle';
+@use 'navigation';
+@use 'toast';
+@use 'accordion';
+@use 'avatar';
+@use 'calendar';
+@use 'sheet';
+@use 'kbd';
+@use 'spinner';
+@use 'skeleton';
+@use 'scroll-area';

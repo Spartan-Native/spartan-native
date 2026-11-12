@@ -1,0 +1,55 @@
+// Toast (sonner): shared structure, in the skins layer (see below).
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.skins {
+  // Sonner's CSS is unlayered, so layout overrides need !important; and since
+  // an earlier layer wins between !important declarations, these live in the
+  // skins layer, where the skins' .t-* prefix out-ranks them. The radius goes
+  // through --radius because of the `rounded-2xl!` utility (--radius × 1.8).
+  #{h.$toast} {
+    --normal-bg: var(--sn-color-surface-solid);
+    --normal-text: var(--sn-color-fg);
+    --normal-border: var(--sn-color-stroke);
+    --radius: calc(var(--sn-toast-radius) / 1.8);
+    font-family: var(--sn-font-sans);
+    font-size: var(--sn-font-size) !important;
+    gap: #{px(12)} !important;
+    padding: #{px(12)} #{px(14)} !important;
+    box-shadow: var(--sn-shadow-overlay) !important;
+  }
+
+  // The status icon sits on an accent tile
+  #{h.$toast-icon} {
+    width: #{px(32)} !important;
+    height: #{px(32)} !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    border-radius: #{px(8)};
+    background: var(--sn-color-primary);
+    color: var(--sn-color-primary-fg);
+    --ng-icon__color: var(--sn-color-primary-fg);
+  }
+
+  #{h.$toast}[data-type='error'] [data-icon] {
+    background: var(--sn-color-danger);
+    color: var(--sn-color-danger-fg);
+    --ng-icon__color: var(--sn-color-danger-fg);
+  }
+
+  #{h.$toast}[data-type='warning'] [data-icon] {
+    background: var(--sn-color-warning);
+    color: var(--sn-color-warning-fg);
+    --ng-icon__color: var(--sn-color-warning-fg);
+  }
+
+  #{h.$toast-title} {
+    font-weight: var(--sn-font-weight-strong) !important;
+  }
+
+  #{h.$toast-description} {
+    color: var(--sn-color-fg-muted) !important;
+    font-size: 0.9em;
+  }
+}

@@ -1,0 +1,23 @@
+// Menubar (hlm-menubar): the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.base {
+  #{h.$menubar} {
+    height: auto;
+    gap: #{px(2)};
+    box-shadow: none;
+    color: var(--sn-color-fg);
+  }
+
+  #{h.$menubar-trigger} {
+    display: inline-flex;
+    align-items: center;
+    padding-block: 0;
+    font-size: var(--sn-font-size);
+    font-weight: 400;
+    color: var(--sn-color-fg);
+    transition: background-color var(--sn-duration-fast) var(--sn-easing);
+  }
+}

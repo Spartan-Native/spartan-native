@@ -1,0 +1,22 @@
+// Toggle and toggle group: the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.base {
+  #{h.$toggle} {
+    min-height: var(--sn-control-height);
+    height: auto;
+    font-size: var(--sn-font-size);
+    font-weight: var(--sn-font-weight-control);
+    color: var(--sn-color-fg);
+    box-shadow: none;
+    transition:
+      background-color var(--sn-duration-fast) var(--sn-easing),
+      color var(--sn-duration-fast) var(--sn-easing);
+  }
+
+  #{h.$toggle-group} {
+    box-shadow: none;
+  }
+}

@@ -1,0 +1,41 @@
+// Accordion: the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.base {
+  #{h.$accordion-trigger} {
+    align-items: center;
+    min-height: var(--sn-accordion-header-height);
+    padding: 0 #{px(14)};
+    border: 0;
+    font-size: var(--sn-font-size);
+    font-weight: 400;
+    color: var(--sn-color-fg);
+    text-decoration: none;
+    transition: background-color var(--sn-duration-fast) var(--sn-easing);
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  #{h.$accordion-body} {
+    padding: 0 #{px(14)} #{px(14)};
+    color: var(--sn-color-fg-muted);
+    font-size: 0.93em;
+  }
+}
+
+@layer spartan-native.skins {
+  // One chevron at a time: down while closed, up while open. ng-icon's own
+  // unlayered `:host { display: inline-block }` beats spartan's `hidden`
+  // utility (so both chevrons showed) and any normal layered rule, hence
+  // !important. It sits in the skins layer so skins that use one rotating
+  // chevron (macOS, Breeze) can override it: for !important declarations an
+  // earlier layer would win.
+  #{h.$accordion-trigger}[aria-expanded='true'] #{h.$accordion-icon-closed},
+  #{h.$accordion-trigger}:not([aria-expanded='true']) #{h.$accordion-icon-open} {
+    display: none !important;
+  }
+}

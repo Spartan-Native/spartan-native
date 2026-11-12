@@ -30,7 +30,7 @@
       }
     }
 
-    // !important: see the chevron note in base/_components.scss
+    // !important: see the chevron note in base/components/_accordion.scss
     #{h.$accordion-trigger} #{h.$accordion-icon-closed} {
       display: inline-block !important;
       rotate: -90deg;

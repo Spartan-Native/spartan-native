@@ -1,0 +1,18 @@
+// Avatar: the same on every skin: the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.base {
+  #{h.$avatar-fallback} {
+    background: var(--sn-color-secondary);
+    color: var(--sn-color-secondary-fg);
+    font-weight: var(--sn-font-weight-strong);
+  }
+
+  #{h.$avatar-group-count} {
+    background: var(--sn-color-control);
+    color: var(--sn-color-fg);
+    font-weight: var(--sn-font-weight-strong);
+  }
+}

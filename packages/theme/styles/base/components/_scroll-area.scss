@@ -1,0 +1,18 @@
+// Scroll area (ngx-scrollbar): the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.base {
+  // A thin overlay thumb that widens under the pointer, like every desktop OS since 2011.
+  #{h.$scroll-area} {
+    --scrollbar-thumb-shape: 999px;
+    --scrollbar-track-shape: 999px;
+    --scrollbar-track-color: transparent;
+    --scrollbar-thumb-color: var(--sn-scrollbar-thumb);
+    --scrollbar-thumb-hover-color: var(--sn-scrollbar-thumb-hover);
+    --scrollbar-track-thickness: var(--sn-scrollbar-thickness);
+    --scrollbar-track-hover-thickness: var(--sn-scrollbar-hover-thickness);
+    --scrollbar-track-offset: 3px;
+  }
+}
