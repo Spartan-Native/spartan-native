@@ -123,9 +123,6 @@
       "path": "./packages/hosts/host-electron/tsconfig.lib.json"
     },
     {
-      "path": "./packages/hosts/host-electron/tsconfig.spec.json"
-    },
-    {
       "path": "./packages/hosts/host-conformance/tsconfig.lib.json"
     },
     {
