@@ -79,6 +79,8 @@ const [file] = (await host.dialogs?.openFile({ filters: [{ name: 'Images', exten
 
 ## Skins
 
+The ids are short because they are CSS classes and are stored with the user's overrides: they never change. `macc` is classic macOS (13–15), `qt` is KDE Plasma, `gtk` covers GNOME and every other Linux desktop. Show users `SKIN_LABELS[skin]`, never the id.
+
 | `Skin`         | OS                        | Root classes             |
 | -------------- | ------------------------- | ------------------------ |
 | `win` / `w10`  | Windows 11 / 10           | `t-win` / `t-win t-w10`  |
@@ -86,7 +88,7 @@ const [file] = (await host.dialogs?.openFile({ filters: [{ name: 'Images', exten
 | `gtk`          | GNOME (Adwaita)           | `t-gtk`                  |
 | `qt`           | KDE Plasma (Breeze)       | `t-qt`                   |
 | `cros`         | ChromeOS (Material 3)     | `t-cros`                 |
-| `web`          | unknown OS, no skin sheet | none                     |
+| `web`          | unknown OS, no skin sheet | `t-web` (no rules)       |
 
 State classes on `<html>`: `dark`, `rt` (reduce transparency), `inactive` (window unfocused), `hc` (more/forced contrast), `reduce-motion`. `<html>` also has `data-sn-skin="<skin>"`.
 
