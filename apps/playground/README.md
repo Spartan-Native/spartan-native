@@ -1,18 +1,14 @@
-# Docs playground
+# Playground
 
-Every component and OS pattern on every skin, with the same controls as the design canvas (skin, accent, light/dark, text size, transparency, window focus). It replaces the canvas as the living spec.
-
-> Status: **not built yet.** The app is still the Angular CLI starter page. Until it is built, the three Storybooks (`npm run storybook:theme`, `:helm`, `:desktop-ui`) are the living spec. See the [roadmap](../../docs/09-roadmap.md).
+One window built from stock spartan/ui and `@spartan-native/desktop-ui` components, with the controls to look at it as each OS: skin, light or dark, any accent, reduced transparency, and an inactive window.
 
 ```bash
-npx ng serve playground
+npm start            # ng serve playground → http://localhost:4200
 npx ng build playground
 ```
 
-## Target design
+It runs on `webHost()`, so it starts from this browser's own OS settings. The controls change them through `SpartanNativeTheme.override()`, the API an app's own settings screen uses, and **Follow the system** drops the overrides again. The overrides are kept between reloads (`persist`).
 
-The playground reproduces the design canvas's comparison views: pick a component or pattern, then see it on every skin, with light and dark side by side.
+The window shows a title bar, a command bar, a settings group (whose system-tray row becomes "Show in menu bar" on macOS through `*snPlatformIf`), the button variants, and, after **Delete all**, a status page. For every component on every skin side by side, use the Storybooks (`npm run storybook:theme`, `:helm`, `:desktop-ui`).
 
-![Component comparison: Button on every skin](../../docs/images/helm-button.jpg)
-
-![OS pattern comparison: settings list](../../docs/images/desktop-ui-settings-list.jpg)
+![The component comparison in the theme Storybook](https://raw.githubusercontent.com/Spartan-Native/spartan-native/main/docs/images/helm-button.jpg)

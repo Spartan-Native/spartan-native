@@ -1,2 +1,3 @@
-// The Spartan Native theme, resolved by package name.
+// The Spartan Native skins, then helm's desktop behaviors. Loads after styles.css (angular.json).
 @use '@spartan-native/theme/styles/spartan-native';
+@use '@spartan-native/helm/styles/spartan-native-helm';
