@@ -2,7 +2,7 @@
 
 **Layer 02 · optional.** Desktop **behaviors** for stock spartan/ui. `@spartan-native/theme` makes the components *look* native; helm makes them *behave* like a desktop app.
 
-> Status: **first components implemented**: the desktop selection model and the default/cancel buttons. Spec: [`05-components.md`](../../docs/05-components.md) (desktop interaction rules).
+> Status: **first components implemented**: the desktop selection model and the default/cancel buttons. Spec: [`05-components.md`](https://github.com/Spartan-Native/spartan-native/blob/main/docs/05-components.md) (desktop interaction rules).
 
 ## Components
 

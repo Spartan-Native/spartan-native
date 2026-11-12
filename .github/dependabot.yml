@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      # Angular, spartan and Storybook move in lockstep; update each family in one pull request.
+      angular:
+        patterns: ['@angular/*', '@angular-devkit/*', 'ng-packagr']
+      spartan:
+        patterns: ['@spartan-ng/*']
+      storybook:
+        patterns: ['storybook', '@storybook/*']
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

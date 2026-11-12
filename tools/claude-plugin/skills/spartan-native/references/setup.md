@@ -6,12 +6,7 @@ Requirements: Angular 22+, Tailwind CSS 4, spartan/ui (`@spartan-ng/brain` 1.9+)
 
 ## 1. Install
 
-The `@spartan-native/*` packages are published privately to GitHub Packages, not npmjs.com. Point the scope at that registry in the app's `.npmrc`, with a GitHub token that has `read:packages` and access to the Spartan-Native organization:
-
-```ini
-@spartan-native:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
+The `@spartan-native/*` packages are on the public npm registry (npmjs.com), so no `.npmrc` or token is needed. The host adapters that live in their own repositories (`host-wails`, `host-tauri`, `host-dotnet`) say in their host reference where their native side comes from.
 
 Stable releases are on the `latest` dist-tag; betas are on `beta` (`npm install @spartan-native/theme@beta`). Install every `@spartan-native/*` package at the same version.
 

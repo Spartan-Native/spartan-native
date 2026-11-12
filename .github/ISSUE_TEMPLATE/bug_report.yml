@@ -1,0 +1,65 @@
+name: Bug report
+description: Something looks or behaves wrong.
+labels: [bug]
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      multiple: true
+      options:
+        - '@spartan-native/theme'
+        - '@spartan-native/helm'
+        - '@spartan-native/desktop-ui'
+        - '@spartan-native/host-web'
+        - '@spartan-native/host-conformance'
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: '0.1.0'
+    validations:
+      required: true
+  - type: dropdown
+    id: skin
+    attributes:
+      label: Skin
+      multiple: true
+      options:
+        - Windows 11 (win)
+        - Windows 10 (w10)
+        - macOS 26 (mac)
+        - macOS 13–15 (macc)
+        - GNOME (gtk)
+        - KDE Plasma (qt)
+        - ChromeOS (cros)
+        - Generic (web)
+        - All of them
+  - type: input
+    id: runtime
+    attributes:
+      label: Host / runtime
+      description: Which host adapter, and the browser or desktop shell.
+      placeholder: webHost() in Chrome 142, wailsHost() in Wails v3, …
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Windows 11 24H2, macOS 26.1, Fedora 43 GNOME 49, …
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The smallest markup or StackBlitz that shows it is the fastest way to a fix.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected, and what happened instead
+      description: Screenshots help, especially next to the real OS control.
+    validations:
+      required: true

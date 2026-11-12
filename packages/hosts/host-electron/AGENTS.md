@@ -4,7 +4,7 @@ Instructions for AI coding agents.
 
 ## Status: scaffold, nothing to use yet
 
-This will be the `NativeHost` adapter for **Electron** (Layer 04), with a main-process module and a preload script as its native side. It exports **no working API yet**: the only export is a scaffold marker. Don't import it in an app, and don't write code against a planned `electronHost()`.
+This will be the `NativeHost` adapter for **Electron** (Layer 04), with a main-process module and a preload script as its native side. It exports **no working API yet** (the only export is a scaffold marker) and is not published to npm. Don't import it in an app, and don't write code against a planned `electronHost()`.
 
 ## What to use instead
 

@@ -1,5 +1,9 @@
 # Spartan Native
 
+[![CI](https://github.com/Spartan-Native/spartan-native/actions/workflows/ci.yml/badge.svg)](https://github.com/Spartan-Native/spartan-native/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@spartan-native/theme?label=%40spartan-native%2Ftheme)](https://www.npmjs.com/package/@spartan-native/theme)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 **Native on every desktop. One Angular codebase.**
 
 ![One Harbor Backup window cut into seven vertical slices, each rendered in a different skin: Windows 11 light, Windows 10 dark, macOS 26 light, macOS 13–15 dark, GNOME light, KDE dark, ChromeOS light](docs/images/hero-one-app-seven-skins.png)
@@ -8,7 +12,48 @@
 
 Spartan Native is a native-look theme for [spartan/ui](https://spartan.ng) (Angular). It does not fork spartan. Your components stay the same and read one shared set of CSS variables. A **skin** changes their geometry, materials and states to match each OS, and a **host adapter** feeds in the settings the user already chose in the OS: accent color, light/dark, contrast, transparency, text size and window focus. The same app runs in a browser/PWA and in Wails, Tauri, Electron or Photino.NET. Only one line of `app.config.ts` changes per runtime.
 
-> **Status:** `@spartan-native/theme` is implemented for **Windows 11, macOS 26 and GNOME**, with a Storybook and the Harbor Backup sample app (in its own repository, [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor)). `@spartan-native/helm` has its first desktop behaviors (selection model, default/cancel buttons), and `@spartan-native/desktop-ui` has window chrome, the six OS patterns, a status bar, the controls spartan lacks (split button, number box, tree view) and the menubar adapter with context menus (the macOS global menu bar and OS context menus through Wails). `@spartan-native/host-web` reads the OS settings live in any browser (and Harbor installs as a PWA), and `@spartan-native/host-conformance` tests every adapter. `@spartan-native/host-wails` reads the real OS settings through a Go service (Harbor runs as a Wails desktop app); it lives in its own repository, [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails), together with its Go module. `@spartan-native/host-tauri` (a Tauri v2 plugin in Rust) and `@spartan-native/host-dotnet` (a .NET library for Photino.NET) are ports of it, each in its own repository too; both pass the conformance suite and read the OS on macOS, but haven't run in a real app window yet. Electron is still a scaffold. The full spec is in [`docs/`](docs/README.md); the next steps are in the [roadmap](docs/09-roadmap.md).
+## Status
+
+| Package | State | Lives in |
+| --- | --- | --- |
+| [`@spartan-native/theme`](packages/theme) | Implemented for all seven skins | this repository |
+| [`@spartan-native/helm`](packages/helm) | Selection model, default/cancel buttons, dialog button order | this repository |
+| [`@spartan-native/desktop-ui`](packages/desktop-ui) | Window chrome, the six OS patterns, status bar, split button, number box, tree view, menubar adapter | this repository |
+| [`@spartan-native/host-web`](packages/hosts/host-web) | Implemented: browsers and installable PWAs | this repository |
+| [`@spartan-native/host-conformance`](packages/hosts/host-conformance) | Implemented: the test suite every adapter must pass | this repository |
+| `@spartan-native/host-wails` | Implemented, runs the sample app as a Wails desktop app | [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails) |
+| `@spartan-native/host-tauri` | Implemented, passes the conformance suite; not yet tried in a real app window | [`Spartan-Native/host-tauri`](https://github.com/Spartan-Native/host-tauri) |
+| `@spartan-native/host-dotnet` | Implemented for Photino.NET, passes the conformance suite; not yet tried in a real app window | [`Spartan-Native/host-dotnet`](https://github.com/Spartan-Native/host-dotnet) |
+| `@spartan-native/host-electron` | Planned (not published) | [`packages/hosts/host-electron`](packages/hosts/host-electron) |
+| Harbor Backup | Sample app: browser, PWA and Wails desktop | [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor) |
+
+The project is before `1.0`: a minor version may still contain breaking changes (see the [changelog](CHANGELOG.md)). What comes next is in the [roadmap](docs/09-roadmap.md).
+
+## Quick start
+
+Requires Angular 22+, Tailwind CSS 4 and spartan/ui (`@spartan-ng/brain` 1.9+).
+
+```bash
+npm install @spartan-native/theme @spartan-native/helm @spartan-native/desktop-ui @spartan-native/host-web
+```
+
+```ts
+// app.config.ts
+import { provideSpartanNative } from '@spartan-native/theme';
+import { webHost } from '@spartan-native/host-web';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideSpartanNative({ host: webHost() })],
+};
+```
+
+```scss
+// src/theme.scss, listed after src/styles.css (Tailwind + the spartan preset) in angular.json "styles"
+@use '@spartan-native/theme/styles/spartan-native';
+@use '@spartan-native/helm/styles/spartan-native-helm';
+```
+
+Your stock spartan/ui components now follow the OS. The [theme README](packages/theme) explains the rest of the API. The full setup for every runtime, as a guide an agent can follow too, is in [`tools/claude-plugin`](tools/claude-plugin/skills/spartan-native/references/setup.md).
 
 ---
 
@@ -48,7 +93,7 @@ The project is five layers. Only the first is required. Each one builds on the l
 | 02 | [`@spartan-native/helm`](packages/helm) | Desktop behaviors: the list/table selection model, default (Enter) and cancel (Esc) buttons |
 | 03 | [`@spartan-native/desktop-ui`](packages/desktop-ui) | Window chrome and OS signature patterns spartan doesn't have |
 | 04 | [`@spartan-native/host-*`](packages/hosts) | Bridges to the real OS settings, one per runtime |
-| 05 | [`spartan-native-plugin`](tools/claude-plugin) | Claude Code plugin that applies the conventions automatically |
+| 05 | [`spartan-native` plugin](tools/claude-plugin) | Claude Code plugin that applies the conventions automatically |
 
 → [Architecture & packages](docs/02-architecture.md)
 
@@ -86,97 +131,9 @@ export const appConfig = {
 
 ---
 
-## Workspace
+## Contributing
 
-### Requirements
-
-| Tool | Version |
-| --- | --- |
-| Node.js | `^24.15.0 \|\| >=26.0.0`; **26** for development (`.nvmrc`) |
-| npm | ≥ 11 (`engine-strict=true` in `.npmrc`) |
-| Angular | 22.2 (CLI 22.2.6) |
-| spartan/ui | `@spartan-ng/brain` 1.9.0, `@spartan-ng/cli` 1.9.0 |
-| TypeScript | ~6.0.3 (Angular 22 requires `>=6.0 <6.1`) |
-| Tailwind CSS | 4.3 (required by spartan/ui) |
-| Storybook | 10.6 (`@storybook/angular`) |
-
-```bash
-nvm install   # reads .nvmrc → Node 26
-nvm use
-npm install
-```
-
-### Layout
-
-```
-spartan-native/
-├── packages/                     Angular libraries (ng-packagr), published as @spartan-native/*
-│   ├── theme/            01  tokens, derivePalette(), skins for win/mac/gtk, provider     [Storybook :6006]
-│   ├── helm/             02  desktop behaviors: selection model, default/cancel buttons [Storybook :6007]
-│   ├── desktop-ui/       03  title bar, window controls, settings list, status page      [Storybook :6008]
-│   └── hosts/            04  runtime adapters behind the NativeHost contract
-│       ├── host-web/             browser / PWA (implemented)
-│       ├── host-electron/        Electron         (+ native/ main + preload)
-│       └── host-conformance/     the test suite every adapter must pass (implemented)
-├── apps/
-│   └── playground/           docs playground (the living spec)
-├── libs/spartan-ui/           stock spartan/ui helm components (generated, never edited; workspace-local)
-├── tools/claude-plugin/  05  Claude Code plugin (not part of the Angular build)
-└── docs/                     the implementation spec, images and design sources
-```
-
-These parts live in their own repositories:
-
-| Repository | What it is |
-| --- | --- |
-| [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails) | `@spartan-native/host-wails` (Go + Wails v3, implemented) and its Go module `github.com/spartan-native/host-wails` |
-| [`Spartan-Native/host-tauri`](https://github.com/Spartan-Native/host-tauri) | `@spartan-native/host-tauri` (Rust + Tauri v2) and its plugin crate `tauri-plugin-spartan-native` |
-| [`Spartan-Native/host-dotnet`](https://github.com/Spartan-Native/host-dotnet) | `@spartan-native/host-dotnet` (.NET + Photino.NET) and its NuGet package `SpartanNative.Photino` |
-| [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor) | The Harbor Backup sample app: browser, installable PWA, and a Wails v3 desktop shell |
-
-### Dependency graph
-
-```
-theme  ◄── helm  ◄── desktop-ui
-  ▲
-  └──── host-web · host-wails · host-tauri · host-electron · host-dotnet · host-conformance
-```
-
-Each library declares Angular, spartan/ui and its sibling `@spartan-native/*` packages as **peer dependencies**. The root `package.json` holds the actual installed versions.
-
-**Path mapping:** in the root `tsconfig.json`, `@spartan-native/*` points to library **sources**, so apps, specs and Storybook work without a build. Each library's `tsconfig.lib.json` points its siblings at `dist/`, which is what ng-packagr needs. So build in dependency order with `npm run build:libs`.
-
-### Commands
-
-| Command | What it does |
-| --- | --- |
-| `npm start` | Serve the playground |
-| `npm run build:libs` | Build all libraries in dependency order into `dist/` |
-| `npm run build` | Libraries, then the playground |
-| `npm test` | Unit tests (Vitest via `@angular/build:unit-test`) |
-| `npm run storybook:theme` / `:helm` / `:desktop-ui` | Interactive Storybook for one lower layer |
-| `npm run build-storybook:<lib>` | Static Storybook into `dist/storybook/<lib>` |
-| `npx ng g @spartan-ng/cli:ui <name>` | Add a stock spartan helm component to `libs/spartan-ui` (config: `components.json`) |
-| `npm run theme:palette` | Regenerate the static default palettes after changing `derivePalette()` |
-
-### Package boundaries
-
-Every package under `packages/` is meant to become its own repository later, so a package only ever refers to the packages it depends on, **by package name**:
-
-- **npm workspaces** link `@spartan-native/*` into `node_modules`, so `@use '@spartan-native/theme/styles/spartan-native'` and `import … from '@spartan-native/theme'` work exactly as they will from npm.
-- **Workspace glue lives at the root, not in packages:** `tsconfig.json` maps `@spartan-native/*` to sources (apps, tests, Storybook), and `tsconfig.lib.json` maps them to `dist/` for library builds. Packages only `extends` these.
-- **Stock spartan components** (`libs/spartan-ui`) are reached through spartan's `@spartan-ng/helm/*` alias, never by path.
-- Each package's `devDependencies` list what its own Storybook needs.
-
-### Storybook
-
-Each Storybook is self-contained in its project's `.storybook/` folder. They share the toolbar by importing `@spartan-native/theme/storybook`: OS and transparency in the toolbar, light/dark from Storybook's theme switcher, and the system accent as a color picker in Controls.
-
-| Command | Shows |
-| --- | --- |
-| `npm run storybook:theme` (:6006) | The stock spartan/ui components, themed |
-| `npm run storybook:helm` (:6007) | The selection model on a list and a table, and default/cancel buttons |
-| `npm run storybook:desktop-ui` (:6008) | Title bar, settings list, status page, shortcuts and `*snPlatformIf` on every OS |
+Setup, the workspace layout, commands and release steps are in [CONTRIBUTING.md](CONTRIBUTING.md). Please read the [code of conduct](CODE_OF_CONDUCT.md), and report security problems as described in [SECURITY.md](SECURITY.md).
 
 ## Docs
 
@@ -189,3 +146,7 @@ Each Storybook is self-contained in its project's `.storybook/` folder. They sha
 | [Roadmap](docs/09-roadmap.md) | [Open questions](docs/10-open-questions.md) |
 
 <sub>Images are rendered from the design canvas "Spartan Native Theme — Wails" (`docs/reference/design-source/`) with the scripts in `docs/reference/screenshot-tools/`. Platform names are trademarks of their respective owners.</sub>
+
+## License
+
+[MIT](LICENSE). The stock spartan/ui components in `libs/spartan-ui` are MIT-licensed by their authors; see [NOTICE](NOTICE). Platform names are trademarks of their respective owners, and Spartan Native is not affiliated with or endorsed by any of them.

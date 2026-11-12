@@ -47,7 +47,7 @@ Thumbs.db
 *storybook.log
 storybook-static/
 
-# Nx cache
+# Nx cache (the spartan CLI runs on Nx and writes it)
 .nx/
 
 # Playwright

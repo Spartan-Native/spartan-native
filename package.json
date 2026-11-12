@@ -1,6 +1,6 @@
 {
   "name": "spartan-native",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve playground",
@@ -17,7 +17,8 @@
     "theme:palette": "node packages/theme/scripts/generate-palette-defaults.mjs",
     "test:visual": "ng run theme:build-storybook && ng run desktop-ui:build-storybook && playwright test",
     "test:report": "npx playwright show-report dist/playwright-report",
-    "pack:libs": "node scripts/pack-libs.mjs"
+    "pack:libs": "node scripts/pack-libs.mjs",
+    "check:packages": "node scripts/check-packages.mjs"
   },
   "private": true,
   "packageManager": "npm@11.20.0",
@@ -70,6 +71,16 @@
     "vitest": "^5.0.0"
   },
   "description": "Spartan Native: a native-look theme for spartan/ui (Angular) on Windows, macOS, GNOME, KDE and ChromeOS.",
+  "license": "MIT",
+  "author": "Roland Molnár",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spartan-Native/spartan-native.git"
+  },
+  "homepage": "https://github.com/Spartan-Native/spartan-native#readme",
+  "bugs": {
+    "url": "https://github.com/Spartan-Native/spartan-native/issues"
+  },
   "engines": {
     "node": "^24.15.0 || >=26.0.0",
     "npm": ">=11.0.0"

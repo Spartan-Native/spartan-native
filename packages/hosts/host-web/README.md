@@ -2,7 +2,7 @@
 
 **Layer 04 · host adapter for browsers and installed PWAs.** It implements `NativeHost` from `@spartan-native/theme` with browser APIs only, so an app picks up the OS settings **live**: accent, light/dark, contrast, transparency, motion, text size and window focus.
 
-> Status: **implemented**, and passes `@spartan-native/host-conformance`. Spec: [`07-host-adapters.md`](../../../docs/07-host-adapters.md).
+> Status: **implemented**, and passes `@spartan-native/host-conformance`. Spec: [`07-host-adapters.md`](https://github.com/Spartan-Native/spartan-native/blob/main/docs/07-host-adapters.md).
 
 ```ts
 // app.config.ts

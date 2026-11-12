@@ -1,0 +1,20 @@
+name: Feature request
+description: A component, OS pattern, skin detail or host capability that is missing.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What do you need?
+      description: What are you building, and what is missing or hard today?
+    validations:
+      required: true
+  - type: textarea
+    id: native
+    attributes:
+      label: How the OS does it
+      description: The native control or convention on each platform you care about, with links or screenshots if you have them.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you do today instead

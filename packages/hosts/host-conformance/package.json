@@ -2,6 +2,17 @@
   "name": "@spartan-native/host-conformance",
   "version": "0.1.0",
   "description": "The conformance suite every @spartan-native/host-* adapter must pass: contract shape, capability flags, live appearance and focus events, graceful fallbacks.",
+  "license": "MIT",
+  "author": "Roland Molnár",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spartan-Native/spartan-native.git",
+    "directory": "packages/hosts/host-conformance"
+  },
+  "homepage": "https://github.com/Spartan-Native/spartan-native/tree/main/packages/hosts/host-conformance#readme",
+  "bugs": {
+    "url": "https://github.com/Spartan-Native/spartan-native/issues"
+  },
   "keywords": [
     "spartan-native",
     "native-host",
@@ -14,5 +25,8 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
 }

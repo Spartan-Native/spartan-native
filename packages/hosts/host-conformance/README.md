@@ -2,7 +2,7 @@
 
 **The test suite every `@spartan-native/host-*` adapter must pass.** It is framework-free. Use it from any test runner, or as a function that returns a report.
 
-> Status: **implemented.** `webHost` and `staticHost` pass it. Spec: [`07-host-adapters.md`](../../../docs/07-host-adapters.md).
+> Status: **implemented.** `webHost` and `staticHost` pass it. Spec: [`07-host-adapters.md`](https://github.com/Spartan-Native/spartan-native/blob/main/docs/07-host-adapters.md).
 
 ## In a test runner (Vitest, Jest, Jasmine)
 
