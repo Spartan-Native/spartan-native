@@ -1,0 +1,16 @@
+# Build output and caches (.gitignore'd files are skipped too)
+dist
+.angular
+.nx
+
+# Generated or third-party: never formatted by hand
+libs/spartan-ui
+package-lock.json
+packages/theme/styles/contract/_palette-defaults.scss
+**/__screenshots__
+
+# The design archive is kept as it was exported
+docs/reference
+
+# Prettier's MDX parser only understands MDX 1; the Storybook docs are MDX 3
+*.mdx
