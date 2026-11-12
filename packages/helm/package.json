@@ -1,6 +1,6 @@
 {
   "name": "@spartan-native/helm",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Desktop behaviors for spartan/ui: the desktop selection model for lists and tables, default (Enter) / cancel (Esc) buttons, and dialog buttons in each OS's order.",
   "keywords": [
     "angular",
@@ -15,7 +15,7 @@
     "@spartan-ng/brain": "^1.9.0",
     "@angular/cdk": "^22.2.0",
     "@angular/forms": "^22.2.0",
-    "@spartan-native/theme": "0.0.0"
+    "@spartan-native/theme": "0.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
