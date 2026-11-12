@@ -1,0 +1,89 @@
+// Calendar and date picker: the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+// The day reset lives in the skins layer: calendar days are hlmBtn ghost buttons, and the
+// skins layer beats the base layer whatever the specificity. There the calendar hooks (0,3,1)
+// out-rank the button skins (0,3,0).
+
+@layer spartan-native.base {
+  // spartan sets --cell-size and --cell-radius with utilities; the skin tokens win.
+  #{h.$calendar} {
+    --cell-size: var(--sn-calendar-cell);
+    --cell-radius: var(--sn-calendar-cell-radius);
+    padding: #{px(12)};
+    color: var(--sn-color-fg);
+    font-size: var(--sn-font-size);
+  }
+
+  #{h.$calendar-header} {
+    font-size: var(--sn-font-size);
+    font-weight: var(--sn-font-weight-strong);
+  }
+
+  #{h.$calendar-weekday} {
+    color: var(--sn-color-fg-muted);
+    font-size: 0.78em;
+  }
+}
+
+@layer spartan-native.skins {
+  #{h.$calendar-nav} {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    padding: 0;
+  }
+
+  #{h.$calendar-day} {
+    width: 100%;
+    min-width: var(--cell-size);
+    min-height: 0;
+    height: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--cell-radius);
+    background: transparent;
+    box-shadow: none;
+    color: var(--sn-color-fg);
+    font-size: 0.93em;
+    font-weight: 400;
+    filter: none;
+
+    &:hover {
+      background: color-mix(in srgb, var(--sn-color-fg) 7%, transparent);
+      color: var(--sn-color-fg);
+    }
+
+    &:active {
+      background: color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
+    }
+  }
+
+  #{h.$calendar-day-in-range} {
+    background: var(--sn-color-secondary);
+    color: var(--sn-color-secondary-fg);
+  }
+
+  #{h.$calendar-day-selected} {
+    &,
+    &:hover {
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+    }
+  }
+
+  #{h.$calendar-day-outside} {
+    color: var(--sn-color-fg-muted);
+  }
+
+  // Out-ranks the disabled-button skins (Windows 10 fills them grey)
+  #{h.$calendar-day-disabled} {
+    &,
+    &:hover {
+      background: transparent;
+      color: var(--sn-color-fg-muted);
+      opacity: 0.5;
+    }
+  }
+}

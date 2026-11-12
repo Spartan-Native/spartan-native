@@ -1,0 +1,17 @@
+// Kbd: the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.base {
+  #{h.$kbd} {
+    min-width: #{px(24)};
+    height: auto;
+    min-height: #{px(22)};
+    padding: 0 #{px(6)};
+    font-family: var(--sn-font-sans);
+    font-size: 0.82em;
+    font-weight: 400;
+    color: var(--sn-color-fg);
+  }
+}

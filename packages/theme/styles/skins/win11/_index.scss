@@ -1,4 +1,6 @@
 // Windows 11 · Fluent: `.t-win` (Windows 10 adds `.t-w10` on top later)
+// A full skin: its tokens, one file per component, and the inactive-window rules.
+// components/_navigation is Windows-only: the other skins keep the base breadcrumb.
 @use 'tokens';
 @use 'components/button';
 @use 'components/text-field';

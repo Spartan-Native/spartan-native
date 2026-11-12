@@ -1,0 +1,27 @@
+// Sheet (side drawer): the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.base {
+  #{h.$sheet} {
+    color: var(--sn-color-fg);
+    font-size: var(--sn-font-size);
+  }
+
+  #{h.$sheet-title} {
+    font-size: 1.15em;
+    font-weight: var(--sn-font-weight-strong);
+  }
+
+  #{h.$sheet-description} {
+    color: var(--sn-color-fg-muted);
+    font-size: var(--sn-font-size);
+  }
+
+  // Desktop panels put their buttons in a row at the bottom right
+  #{h.$sheet-footer} {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}

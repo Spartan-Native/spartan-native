@@ -1,6 +1,7 @@
 // ============================================================================
 //  Windows 11 · BreadcrumbBar (hlm-breadcrumb): the large page-header trail
 //  Pagination links are buttons and take the button skin as they are.
+//  Windows only: the other skins keep the breadcrumb from base/components/_navigation.
 // ============================================================================
 @use '../../../hooks' as h;
 @use '../../../functions' as *;

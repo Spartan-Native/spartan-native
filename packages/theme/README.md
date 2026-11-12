@@ -84,7 +84,8 @@ styles/                          published as @spartan-native/theme/styles/*
 │   ├── _root.scss               text scale (rem = 16px × scale), platform font on body, arrow cursor
 │   ├── _materials.scss          .sn-window .sn-sidebar .sn-content .sn-glass .sn-list-item .sn-chrome
 │   ├── _tones.scss              .sn-tone-success / -warning / -danger / -accent (tints on hlmAlert)
-│   └── _states.scss             .rt, .hc, forced-colors, .reduce-motion
+│   ├── _states.scss             .rt, .hc, forced-colors, .reduce-motion
+│   └── components/              shared structure per component, before any skin (_command, _calendar, …)
 └── skins/
     ├── win11/                   .t-win
     ├── win10/                   .t-win.t-w10   variant: _tokens + _components override win11

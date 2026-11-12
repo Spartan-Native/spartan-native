@@ -1,0 +1,20 @@
+// Spinner: the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.base {
+  // A ring with an accent arc (ProgressRing, the AppKit and GTK spinners), not a loader
+  // icon. Size it with font-size.
+  #{h.$spinner} {
+    width: 1em;
+    height: 1em;
+    border: 0.125em solid var(--sn-color-track);
+    border-top-color: var(--sn-spinner-color);
+    border-radius: 50%;
+
+    > ng-icon {
+      display: none;
+    }
+  }
+}

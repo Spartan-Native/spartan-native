@@ -1,4 +1,5 @@
 // macOS 26 · Liquid Glass: `.t-mac` (macOS 13–15 adds `.t-macc` on top later)
+// A full skin: its tokens, one file per component, and the inactive-window rules.
 @use 'tokens';
 @use 'components/button';
 @use 'components/text-field';

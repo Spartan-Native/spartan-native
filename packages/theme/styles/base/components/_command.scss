@@ -1,0 +1,82 @@
+// Command palette (hlm-command): the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.base {
+  // hlm-command carries `rounded-xl!` (--radius × 1.4); skins set --radius.
+  #{h.$command} {
+    padding: 0;
+    color: var(--sn-color-fg);
+    font-size: var(--sn-font-size);
+  }
+
+  // Inside a dialog the dialog is the surface
+  #{h.$command-in-dialog} {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  #{h.$command-input-wrapper} {
+    display: flex;
+    align-items: center;
+    padding: 0 #{px(6)};
+  }
+
+  #{h.$command-input-group} {
+    flex: 1;
+    border-color: transparent;
+    background: transparent;
+  }
+
+  #{h.$command-input} {
+    font-size: 1.05em;
+    color: var(--sn-color-fg);
+
+    &::placeholder {
+      color: var(--sn-color-fg-muted);
+    }
+  }
+
+  #{h.$command-list} {
+    padding: #{px(6)};
+  }
+
+  #{h.$command-group} {
+    padding: 0;
+  }
+
+  #{h.$command-group-label} {
+    padding: #{px(8)} #{px(10)} #{px(4)};
+    color: var(--sn-color-fg-muted);
+    font-size: 0.8em;
+    font-weight: var(--sn-font-weight-strong);
+  }
+
+  #{h.$command-item} {
+    position: relative;
+    min-height: var(--sn-command-item-height);
+    padding: 0 #{px(10)};
+    font-size: var(--sn-font-size);
+    color: var(--sn-color-fg);
+  }
+
+  #{h.$command-shortcut} {
+    color: var(--sn-color-fg-muted);
+    font-size: 0.85em;
+    letter-spacing: normal;
+  }
+
+  #{h.$command-separator} {
+    margin: #{px(4)} 0;
+    background: var(--sn-color-stroke);
+  }
+
+  :is(#{h.$list-empty}) {
+    color: var(--sn-color-fg-muted);
+    font-size: var(--sn-font-size);
+  }
+}

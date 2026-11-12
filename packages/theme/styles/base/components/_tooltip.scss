@@ -1,0 +1,20 @@
+// desktop-ui's snTooltip: the shared structure every skin starts from.
+
+@use '../../hooks' as h;
+@use '../../functions' as *;
+
+@layer spartan-native.base {
+  // The same default as hlmTooltip (an inverse label); skins that restyle the tooltip
+  // ($tooltip) restyle this one too.
+  [data-slot='sn-tooltip'] {
+    max-width: 20rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--sn-tooltip-radius, 0.25rem);
+    background: var(--sn-color-fg);
+    color: var(--sn-color-bg);
+    font-family: var(--sn-font-sans);
+    font-size: var(--sn-font-size-small);
+    line-height: var(--sn-line-height);
+    pointer-events: none;
+  }
+}
