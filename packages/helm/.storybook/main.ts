@@ -1,3 +1,5 @@
+// Each package's .storybook/ is self-contained on purpose, so the package can move to its own
+// repository: the other packages have near-identical copies of this file.
 import type { StorybookConfig } from '@storybook/angular';
 import remarkGfm from 'remark-gfm';
 
