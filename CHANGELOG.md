@@ -18,6 +18,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Removed
 
+- Helpers that were public only by accident (through `export *`), with no users in this or the sibling repositories: `coachMarkPositions`, `coachMarkSide`, `nextIndex` and `itemsWithAccelerators` from `@spartan-native/desktop-ui`, and `detectPlatform`, `NavigatorLike` and `UserAgentDataLike` from `@spartan-native/host-web` (`webHost().platform()` gives the same result).
 - `@spartan-native/host-electron` is no longer published. It has no implementation yet and returns once it does.
 
 ## [0.1.0] - 2026-11-12

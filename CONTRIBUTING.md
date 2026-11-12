@@ -108,6 +108,7 @@ After adding one, give it hooks in `packages/theme/styles/_hooks.scss` and a ski
 
 ## Rules for changes
 
+- **The public API is a list of names.** Each package's `src/public-api.ts` exports every public name explicitly, never `export *`, so a helper exported from its own file for the unit tests doesn't become public by accident. Mark such helpers `@internal` in their doc comment.
 - **Keep the agent docs in sync.** Each published package has an `AGENTS.md` that ships inside it, written for agents that build apps with the package. When you add, rename or remove a public export, input, slot, token or host service, update that package's `AGENTS.md` in the same change. These files refer to other packages by name only, never by repository path.
 - **Keep the skill in sync.** When a change affects app setup, the host list, which component to use for a need, or anything a template uses, update `tools/claude-plugin/skills/spartan-native` too.
 - **Shipped READMEs use absolute links.** A package's `README.md` is shown on npmjs.com, where relative links out of the package break. Link to `https://github.com/Spartan-Native/spartan-native/blob/main/…` instead. `npm run check:packages` catches this.

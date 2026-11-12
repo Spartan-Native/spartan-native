@@ -85,7 +85,11 @@ export class SnSidebarNav {
   }
 }
 
-/** Where ↑ ↓ Home End move the focus from `current` (-1: nothing focused); null for other keys. Doesn't wrap, like the native lists. */
+/**
+ * Where ↑ ↓ Home End move the focus from `current` (-1: nothing focused); null for other keys. Doesn't wrap, like the native lists.
+ *
+ * @internal Not in the public API; exported for the unit tests.
+ */
 export function nextIndex(key: string, current: number, count: number): number | null {
   switch (key) {
     case 'ArrowDown':

@@ -1,11 +1,16 @@
 import { type PlatformInfo, resolveSkin, type Skin } from '@spartan-native/theme';
 
-/** The subset of User-Agent Client Hints this adapter reads (Chromium). */
+/**
+ * The subset of User-Agent Client Hints this adapter reads (Chromium).
+ *
+ * @internal Not in the public API; exported for webHost() and the unit tests.
+ */
 export interface UserAgentDataLike {
   readonly platform?: string;
   getHighEntropyValues?(hints: string[]): Promise<{ platformVersion?: string }>;
 }
 
+/** @internal Not in the public API; exported for webHost() and the unit tests. */
 export interface NavigatorLike {
   readonly userAgent: string;
   readonly userAgentData?: UserAgentDataLike;
@@ -21,6 +26,8 @@ export interface NavigatorLike {
  *   frozen. Windows → Windows 11, macOS → macOS 26 (the current releases).
  *   confidence: 'hint'.
  * - The Linux desktop (GNOME / KDE) is never visible to a web page: GTK is assumed.
+ *
+ * @internal Not in the public API; exported for webHost() and the unit tests.
  */
 export async function detectPlatform(nav: NavigatorLike): Promise<PlatformInfo> {
   const uaData = nav.userAgentData;
