@@ -2,6 +2,17 @@
   "name": "@spartan-native/helm",
   "version": "0.1.0",
   "description": "Desktop behaviors for spartan/ui: the desktop selection model for lists and tables, default (Enter) / cancel (Esc) buttons, and dialog buttons in each OS's order.",
+  "license": "MIT",
+  "author": "Roland Molnár",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spartan-Native/spartan-native.git",
+    "directory": "packages/helm"
+  },
+  "homepage": "https://github.com/Spartan-Native/spartan-native/tree/main/packages/helm#readme",
+  "bugs": {
+    "url": "https://github.com/Spartan-Native/spartan-native/issues"
+  },
   "keywords": [
     "angular",
     "spartan-ng",
@@ -44,5 +55,8 @@
       "sass": "./styles/*.scss",
       "default": "./styles/*"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

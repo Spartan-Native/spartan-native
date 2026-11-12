@@ -2,6 +2,17 @@
   "name": "@spartan-native/host-electron",
   "version": "0.1.0",
   "description": "NativeHost adapter for TypeScript + Electron (renderer side; main-process module + preload live in native/).",
+  "license": "MIT",
+  "author": "Roland Molnár",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spartan-Native/spartan-native.git",
+    "directory": "packages/hosts/host-electron"
+  },
+  "homepage": "https://github.com/Spartan-Native/spartan-native/tree/main/packages/hosts/host-electron#readme",
+  "bugs": {
+    "url": "https://github.com/Spartan-Native/spartan-native/issues"
+  },
   "keywords": [
     "angular",
     "spartan-ng",
@@ -17,5 +28,6 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "private": true
 }

@@ -2,7 +2,7 @@
 
 **Layer 03 · optional.** The pieces stock spartan doesn't have: **window chrome** and the **patterns each OS is known for**. Each component changes its *layout* per OS, not just its colors, and follows the skin live.
 
-> Status: **implemented for all seven skins** (Windows 11 and 10, macOS 26 and 13–15, GNOME, KDE Plasma, ChromeOS): title bar, window controls, status bar, the six OS patterns (command bar, coach mark, modal sheet, inspector, settings list, status page), an assistant and a setup checklist, sidebar navigation, a skinned tooltip, the desktop controls spartan lacks (split button, number box, tree view), shortcut formatting and `*snPlatformIf`, and the menubar adapter with context menus (native through the host, in the page otherwise). Every component also follows Windows contrast themes (`forced-colors`). Spec: [`06-os-patterns.md`](../../docs/06-os-patterns.md).
+> Status: **implemented for all seven skins** (Windows 11 and 10, macOS 26 and 13–15, GNOME, KDE Plasma, ChromeOS): title bar, window controls, status bar, the six OS patterns (command bar, coach mark, modal sheet, inspector, settings list, status page), an assistant and a setup checklist, sidebar navigation, a skinned tooltip, the desktop controls spartan lacks (split button, number box, tree view), shortcut formatting and `*snPlatformIf`, and the menubar adapter with context menus (native through the host, in the page otherwise). Every component also follows Windows contrast themes (`forced-colors`). Spec: [`06-os-patterns.md`](https://github.com/Spartan-Native/spartan-native/blob/main/docs/06-os-patterns.md).
 
 ## Components
 
@@ -83,7 +83,7 @@ Imports: `SnWindowImports` (with the status bar), `SnControlsImports`, `SnMenuIm
 
 ## Next
 
-Window effects and Snap Layouts through the host ([09](../../docs/09-roadmap.md), phase 05).
+Window effects and Snap Layouts through the host ([09](https://github.com/Spartan-Native/spartan-native/blob/main/docs/09-roadmap.md), phase 05).
 
 ## Commands
 

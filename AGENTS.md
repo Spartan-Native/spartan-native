@@ -27,8 +27,12 @@ Each published package has its own `AGENTS.md`, written for agents that build ap
 | `@spartan-native/theme` | `packages/theme/AGENTS.md` |
 | `@spartan-native/helm` | `packages/helm/AGENTS.md` |
 | `@spartan-native/desktop-ui` | `packages/desktop-ui/AGENTS.md` |
-| `@spartan-native/host-web`, `-wails`, `-conformance` | `packages/hosts/<host>/AGENTS.md` |
-| `@spartan-native/host-electron`, `-tauri`, `-dotnet` | `packages/hosts/<host>/AGENTS.md` (scaffolds: "don't use yet") |
+| `@spartan-native/host-web`, `-conformance` | `packages/hosts/<host>/AGENTS.md` |
+| `@spartan-native/host-electron` | `packages/hosts/host-electron/AGENTS.md` (scaffold, not published: "don't use yet") |
+
+`@spartan-native/host-wails`, `-tauri` and `-dotnet` live in their own repositories (`Spartan-Native/host-wails`, `Spartan-Native/host-tauri`, `Spartan-Native/host-dotnet`), each with its own `AGENTS.md`.
+
+The packages that are published to npm are listed in `scripts/libraries.mjs`. Before you add a package to that list, give it `license`, `repository`, `homepage`, `bugs` and `publishConfig.access: "public"` in its `package.json` and a `LICENSE` file in its folder. Then run `npm run build:libs && npm run check:packages`.
 
 **Keep them in sync.** When you add, rename or remove a public export, input, slot, token or host service, update that package's `AGENTS.md` in the same change. These files must only refer to other packages by name (`@spartan-native/theme`), never by repo path, because the repo isn't there once the package is installed.
 

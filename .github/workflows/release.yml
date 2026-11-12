@@ -1,6 +1,5 @@
-# Publishes every @spartan-native/* package to the GitHub Packages npm registry when a
-# release tag is pushed. The packages inherit the repository's visibility (private repo =
-# private packages).
+# Publishes every @spartan-native/* package listed in scripts/libraries.mjs to npmjs.org when a
+# release tag is pushed, then creates a GitHub Release from the matching CHANGELOG.md section.
 #
 # Release tags (a leading "v" is optional):
 #   1.2.3 / v1.2.3                 -> published as 1.2.3 with dist-tag "latest"
@@ -9,6 +8,19 @@
 # Any other tag (or a branch push) does not publish anything.
 #
 #   git tag v1.2.3 && git push origin v1.2.3
+#
+# npm authentication, either:
+#   - Trusted publishing (preferred): on npmjs.com, in each package's settings, add this
+#     repository and workflow file (release.yml) as a trusted publisher. No secret needed.
+#     A package must exist before it can have a trusted publisher, so the first release
+#     uses a token.
+#   - A granular access token with publish rights on the @spartan-native scope, stored as the
+#     repository secret NPM_TOKEN. Delete the secret once trusted publishing is set up.
+#
+# Provenance statements are added while the repository is public (npm refuses them for
+# private repositories).
+#
+# Re-running the workflow is safe: versions already on npm are skipped.
 
 name: Release packages
 
@@ -56,8 +68,8 @@ jobs:
     if: needs.version.outputs.version != ''
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
+      contents: write # create the GitHub Release
+      id-token: write # npm trusted publishing and provenance
     env:
       VERSION: ${{ needs.version.outputs.version }}
       DIST_TAG: ${{ needs.version.outputs.dist-tag }}
@@ -68,8 +80,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-          registry-url: https://npm.pkg.github.com
-          scope: '@spartan-native'
+          registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
         run: npm ci
@@ -83,11 +94,45 @@ jobs:
       - name: Stamp version ${{ env.VERSION }}
         run: node scripts/stamp-release.mjs "$VERSION"
 
-      - name: Publish to GitHub Packages (${{ env.DIST_TAG }})
+      - name: Check packages
+        run: npm run check:packages
+
+      - name: Publish to npm (${{ env.DIST_TAG }})
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PROVENANCE: ${{ github.event.repository.private && '--no-provenance' || '--provenance' }}
         run: |
-          # Dependencies first, same order as build:libs.
-          for lib in theme helm desktop-ui host-web host-electron host-conformance; do
-            npm publish "dist/$lib" --tag "$DIST_TAG"
+          # Dependencies first: scripts/libraries.mjs is in dependency order.
+          for lib in $(node scripts/libraries.mjs); do
+            name=$(node -p "require('./dist/$lib/package.json').name")
+            if npm view "$name@$VERSION" version >/dev/null 2>&1; then
+              echo "$name@$VERSION is already on npm, skipping."
+              continue
+            fi
+            npm publish "./dist/$lib" --tag "$DIST_TAG" --access public $PROVENANCE
           done
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists."
+            exit 0
+          fi
+          # The CHANGELOG.md section "## [<version>] ..." up to the next "## [",
+          # without the "[x]: url" link definitions at the end of the file.
+          awk -v v="$VERSION" '
+            /^## \[/ { if (found) exit; if (index($0, "## [" v "]") == 1) { found = 1; next } }
+            /^\[[^]]+\]: / { next }
+            found { print }
+          ' CHANGELOG.md > release-notes.md
+          prerelease=""
+          [[ "$DIST_TAG" == "beta" ]] && prerelease="--prerelease"
+          if [[ -s release-notes.md ]]; then
+            gh release create "$TAG" --title "$VERSION" --notes-file release-notes.md $prerelease
+          else
+            echo "::warning::CHANGELOG.md has no section for $VERSION; using generated notes."
+            gh release create "$TAG" --title "$VERSION" --generate-notes $prerelease
+          fi

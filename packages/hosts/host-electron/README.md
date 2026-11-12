@@ -2,13 +2,13 @@
 
 **Layer 04 · host adapter for TypeScript + Electron.** It implements the `NativeHost` contract from `@spartan-native/theme`, so the theme and components never know which runtime they are in. Renders in bundled Chromium.
 
-> Status: scaffold. No implementation yet. Spec: [`07-host-adapters.md`](../../../docs/07-host-adapters.md) (contract and capability matrix).
+> Status: scaffold. No implementation yet, and not published to npm until there is one. Spec: [`07-host-adapters.md`](https://github.com/Spartan-Native/spartan-native/blob/main/docs/07-host-adapters.md) (contract and capability matrix).
 
 ## Contract and capabilities
 
 The highlighted column in the design shows Wails; every adapter fills in its own column of this matrix.
 
-![Capability matrix per adapter and the shared NativeHost contract](../../../docs/images/project-host-adapters.jpg)
+![Capability matrix per adapter and the shared NativeHost contract](https://raw.githubusercontent.com/Spartan-Native/spartan-native/main/docs/images/project-host-adapters.jpg)
 
 ## Usage (planned)
 

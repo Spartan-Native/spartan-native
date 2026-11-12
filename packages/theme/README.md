@@ -2,9 +2,9 @@
 
 **Layer 01 · required.** Makes stock spartan/ui components follow the system accent, light/dark, text size, transparency and window focus, and look at home on **Windows 11 and 10**, **macOS 26 and 13–15**, **GNOME (GTK 4 / Adwaita)**, **KDE Plasma (Breeze)** and **ChromeOS (Material 3)**.
 
-> Status: **implemented for every skin**: Windows 11, Windows 10, macOS 26, macOS 13–15, GNOME, KDE Plasma and ChromeOS. Only the generic `web` fallback has no style sheet of its own. Spec: [`03-theme-tokens.md`](../../docs/03-theme-tokens.md), [`04-platform-skins.md`](../../docs/04-platform-skins.md).
+> Status: **implemented for every skin**: Windows 11, Windows 10, macOS 26, macOS 13–15, GNOME, KDE Plasma and ChromeOS. Only the generic `web` fallback has no style sheet of its own. Spec: [`03-theme-tokens.md`](https://github.com/Spartan-Native/spartan-native/blob/main/docs/03-theme-tokens.md), [`04-platform-skins.md`](https://github.com/Spartan-Native/spartan-native/blob/main/docs/04-platform-skins.md).
 
-![Harbor Backup sliced across seven skins](../../docs/images/hero-one-app-seven-skins.png)
+![Harbor Backup sliced across seven skins](https://raw.githubusercontent.com/Spartan-Native/spartan-native/main/docs/images/hero-one-app-seven-skins.png)
 
 ## Use it
 

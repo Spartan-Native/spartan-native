@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/Spartan-Native/spartan-native/security/advisories/new
+    about: Please report security problems privately, not as an issue.
+  - name: Problem in a stock spartan/ui component
+    url: https://github.com/spartan-ng/spartan/issues
+    about: If it also happens without Spartan Native's theme, it belongs to spartan/ui.

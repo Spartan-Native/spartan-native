@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Builds every @spartan-native package and packs each one into a .tgz in dist/tgz,
 // so it can be installed in another project with:
-//   npm install /path/to/spartan-native/dist/tgz/spartan-native-theme-0.0.0.tgz
+//   npm install /path/to/spartan-native/dist/tgz/spartan-native-theme-<version>.tgz
 //
 // Usage: npm run pack:libs            (build + pack)
 //        npm run pack:libs -- --skip-build   (pack what is already in dist/)
@@ -10,20 +10,11 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { publishedLibraries as libs } from './libraries.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');
 const out = join(dist, 'tgz');
-
-// Same order as `npm run build:libs` (dependencies first).
-const libs = [
-  'theme',
-  'helm',
-  'desktop-ui',
-  'host-web',
-  'host-electron',
-  'host-conformance',
-];
 
 const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 const run = (cmd, args) => {
