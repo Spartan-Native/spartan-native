@@ -1,5 +1,5 @@
 /**
- * The host contract (docs/07-host-adapters.md).
+ * The host contract.
  * Every @spartan-native/host-* adapter implements NativeHost; the theme and the
  * components only ever talk to this interface.
  */
@@ -225,7 +225,7 @@ export interface DialogHost {
   message?(options: MessageOptions): Promise<string | null>;
 }
 
-/** OS notifications. Specified in phase 05 (docs/10-open-questions.md, Q2). */
+/** OS notifications. A placeholder: its shape is not specified yet. */
 export type NotificationHost = Record<string, never>;
 
 export interface NativeHost {

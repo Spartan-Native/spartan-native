@@ -83,7 +83,7 @@ Imports: `SnWindowImports` (with the status bar), `SnControlsImports`, `SnMenuIm
 
 ## Next
 
-Window effects and Snap Layouts through the host ([09](https://github.com/Spartan-Native/spartan-native/blob/main/docs/09-roadmap.md), phase 05).
+Window effects and Snap Layouts through the host. See the [roadmap](https://github.com/Spartan-Native/spartan-native/blob/main/docs/09-roadmap.md).
 
 ## Commands
 

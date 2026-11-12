@@ -1,8 +1,10 @@
 # 08 — Sample app: Harbor Backup
 
-Harbor Backup is the reference app: one window with sidebar navigation and five pages (Overview, Schedules, Destinations, Restore files, Settings), shown on every skin in light and dark. It is the end-to-end acceptance test for every package and adapter: it must run in the browser with `host-web` and in Wails with `host-wails`, with only `app.config.ts` differing.
+> **Describes:** the sample app, which lives in its own repository. Its full specification is there.
 
-It lives in its own repository, [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor), and installs the `@spartan-native/*` packages from npm like any other app. The full spec (window, pages, layer walkthrough, acceptance criteria) is `docs/sample-app.md` there, and the design source is [`reference/design-source/SampleApp.dc.html`](reference/design-source/SampleApp.dc.html) here.
+Harbor Backup is the reference app: one window with sidebar navigation and five pages (Overview, Schedules, Destinations, Restore files, Settings), shown on every skin in light and dark. It is the end-to-end acceptance test for every package and adapter: it runs in the browser and as a PWA with `host-web`, and as a desktop app in Wails with `host-wails`, with only `app.config.ts` differing. Tauri and Photino.NET shells are planned (see the [roadmap](09-roadmap.md)).
+
+It lives in its own repository, [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor), and installs the `@spartan-native/*` packages from npm like any other app. The full specification (window, pages, layer walkthrough, acceptance criteria) is `docs/sample-app.md` in that repository. Its original design mockup is archived here as [`reference/design-source/SampleApp.dc.html`](reference/design-source/SampleApp.dc.html).
 
 ## Acceptance
 

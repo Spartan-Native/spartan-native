@@ -1,57 +1,60 @@
 # 03 — Theme tokens & accent derivation
 
-Every color comes from one input: the system accent (`#rrggbb`). It is combined with per-platform neutrals for light and dark, then text colors are pushed until they reach WCAG contrast. The algorithm below is taken from the mockup code, and [`reference/palette.reference.ts`](reference/palette.reference.ts) ports it to typed TypeScript.
+> **Describes:** what is built, in `@spartan-native/theme`. The code is `derivePalette()` in `src/lib/palette/derive-palette.ts`; the variable names are in `styles/contract/`.
+
+Every color comes from one input: the system accent (`#rrggbb`). It is combined with per-platform neutrals for light and dark, then text colors are pushed until they reach WCAG contrast. The algorithm comes from the design mockups; the short names in the algorithm below (`bg`, `atext`, `mfg`, …) are the mockups' names, and the table maps them to the real variables.
 
 ## Inputs
 
 | Input | Values | Source |
 | --- | --- | --- |
 | `skin` | `win` `w10` `mac` `macc` `gtk` `qt` `cros` (`web`) | `PlatformInfo.skin`, user override |
-| `accent` | `#rrggbb`; default `#0078D4` | `AppearanceState.accent` |
+| `accent` | `#rrggbb`; default `#0078d4` | `AppearanceState.accent` |
 | `scheme` | `light` / `dark` | OS |
 | `reduceTransparency` | boolean | OS |
-| `textScale` | 1, 1.25, 1.5, 1.75, 2 | OS (Windows, GNOME); in-app setting on macOS |
-| `contrast` | `normal` / `more` / `forced` | OS. Planned: not in the mockups yet |
+| `textScale` | 1, 1.25, 1.5, 1.75, 2 | OS (Windows, GNOME); in-app on macOS (Q9) |
+| `contrast` | `normal` / `more` / `forced` | OS. `forced` hands the colors to the OS; `more` has no palette rules yet (Q6) |
 | window focused | boolean | host window events |
 
-Accent swatches used in the mockups: Windows blue `#0078D4`, macOS blue `#007AFF`, GNOME blue `#3584E4`, KDE blue `#3DAEE9`, purple `#9141AC`, orange `#E66100`, green `#26A269`, pink `#D56199`.
+Accent swatches used in the mockups and the tests: Windows blue `#0078D4`, macOS blue `#007AFF`, GNOME blue `#3584E4`, KDE blue `#3DAEE9`, purple `#9141AC`, orange `#E66100`, green `#26A269`, pink `#D56199`.
 
 ## Token contract
 
-The mockup names are short. The "proposed contract name" column maps each to spartan/ui (shadcn-style) names where one exists. Freeze the final names in phase 2. This is open question Q1.
+Every color token is `--sn-color-<name>`, one per key of the `Palette` type (`fgMuted` → `--sn-color-fg-muted`). `styles/contract/_spartan-bridge.scss` maps them onto spartan/ui's own variable names, which is what makes stock components follow the accent before any skin restyles them.
 
-| Mockup var | Proposed contract name | Meaning |
-| --- | --- | --- |
-| `--bg` | `--background` | Window background |
-| `--wall` | `--sn-wall` | Backdrop behind materials (gradient on win/mac; equal to bg elsewhere) |
-| `--surf` | `--card` / `--popover` | Surface; translucent (60% alpha) on `mac` |
-| `--surf-solid` | `--sn-surface-solid` | Opaque version of surface |
-| `--fg` | `--foreground` | Body text |
-| `--mfg` | `--muted-foreground` | Secondary text, ≥ 4.5:1 on bg |
-| `--primary` / `--pfg` | `--primary` / `--primary-foreground` | Accent fill and the text on it |
-| `--primary-b` | `--sn-primary-edge` | Primary darkened by 12% lightness (Fluent bottom edge) |
-| `--secondary` / `--sfg` | `--secondary` / `--secondary-foreground` | Accent-tinted surface and its text |
-| `--atext` | `--sn-accent-text` | Accent used as text, ≥ 4.5:1 on bg |
-| muted | `--muted` | Accent-tinted bg |
-| `--border` | `--border` | Divider and outline |
-| `--inp-b` | `--input` | Input bottom stroke (Fluent) |
-| `--ring` | `--ring` | Accent at 50% alpha |
-| `--dest` / `--dfg` | `--destructive` / `--destructive-foreground` | Error |
-| `--ok` / `--okfg` | `--sn-success` / `-foreground` | Success |
-| `--warn` / `--warnfg` | `--sn-warning` / `-foreground` | Warning |
-| `--stroke`, `--stroke-b` | `--sn-stroke`, `--sn-stroke-bottom` | Hairline control borders |
-| `--strong` | `--sn-strong` | Unchecked checkbox/radio/switch outline |
-| `--trk` | `--sn-track` | Switch/slider track |
-| `--btnbg` | `--sn-control` | Neutral button fill (gtk/qt) |
-| `--hover` | `--accent` (spartan hover) | Hover fill |
-| `--acrylic` | `--sn-acrylic` | Menu/flyout material (90% alpha surface) |
-| `--glass`, `--glass-b`, `--glass-hi` | `--sn-glass`, `--sn-glass-border`, `--sn-glass-highlight` | Liquid Glass fill, edge and top highlight |
-| `--seg-on` | `--sn-segment-on` | Selected segmented-control item |
-| `--scrim` | `--sn-scrim` | Modal backdrop |
-| `--toastbg` | `--sn-toast` | Toast background |
-| `--sidebg` | `--sn-sidebar` | Sidebar fill |
-| `--font`, `--fs` | `--sn-font`, `--sn-font-size` | Per-skin font stack and base size |
-| `--ts` | `--ts` | Text scale multiplier; `font-size: calc(var(--fs) * var(--ts))` |
+| Mockup name | Variable | spartan/ui name it feeds | Meaning |
+| --- | --- | --- | --- |
+| `bg` | `--sn-color-bg` | `--background` | Window background |
+| `wall` | `--sn-color-wall` | — | Backdrop behind materials (gradient on win/mac; equal to bg elsewhere) |
+| `surf` | `--sn-color-surface` | — | Surface; translucent (60% alpha) on `mac` |
+| `surf-solid` | `--sn-color-surface-solid` | `--card`, `--popover` | Opaque version of surface |
+| `fg` | `--sn-color-fg` | `--foreground` and the other `*-foreground` on neutral surfaces | Body text |
+| `mfg` | `--sn-color-fg-muted` | `--muted-foreground` | Secondary text, ≥ 4.5:1 on bg |
+| `primary` / `pfg` | `--sn-color-primary` / `--sn-color-primary-fg` | `--primary` / `--primary-foreground` | Accent fill and the text on it |
+| `primary-b` | `--sn-color-primary-edge` | — | Primary darkened by 12% lightness (Fluent bottom edge) |
+| `secondary` / `sfg` | `--sn-color-secondary` / `--sn-color-secondary-fg` | `--secondary` / `--secondary-foreground` | Accent-tinted surface and its text |
+| — | `--sn-color-accent` | `--ring` | The accent itself |
+| `atext` | `--sn-color-accent-text` | — | Accent used as text, ≥ 4.5:1 on bg |
+| muted | `--sn-color-muted` | `--muted` | Accent-tinted bg |
+| `border` | `--sn-color-border` | `--border`, `--input` | Divider and outline |
+| `inp-b` | `--sn-color-input-stroke` | — | Input bottom stroke (Fluent) |
+| `ring` | `--sn-color-ring` | — | Accent at 50% alpha |
+| `dest` / `dfg` | `--sn-color-danger` / `-fg` | `--destructive` | Error |
+| `ok` / `okfg` | `--sn-color-success` / `-fg` | — | Success |
+| `warn` / `warnfg` | `--sn-color-warning` / `-fg` | — | Warning |
+| `stroke`, `stroke-b` | `--sn-color-stroke`, `--sn-color-stroke-bottom` | — | Hairline control borders |
+| `strong` | `--sn-color-control-strong` | — | Unchecked checkbox/radio/switch outline |
+| `trk` | `--sn-color-track` | — | Switch/slider track |
+| `btnbg` | `--sn-color-control` | — | Neutral button fill (gtk/qt) |
+| `hover` | `--sn-color-hover` | `--accent` (spartan's hover fill) | Hover fill |
+| `acrylic` | `--sn-color-acrylic` | — | Menu/flyout material (90% alpha surface) |
+| `glass`, `glass-b`, `glass-hi` | `--sn-color-glass`, `-glass-border`, `-glass-highlight` | — | Liquid Glass fill, edge and top highlight |
+| `seg-on` | `--sn-color-segment-on` | — | Selected segmented-control item |
+| `scrim` | `--sn-color-scrim` | — | Modal backdrop |
+| `toastbg` | `--sn-color-toast` | — | Toast background |
+| `sidebg` | `--sn-color-sidebar` | `--sidebar` | Sidebar fill |
+| `font`, `fs` | `--sn-font-sans`, `--sn-font-size` | `--font-sans` | Per-skin font stack and base size |
+| `ts` | `--sn-text-scale` | — | Text scale; the root font size is `16px × --sn-text-scale`, so every `rem` grows with it |
 
 ## Algorithm
 
@@ -136,11 +139,14 @@ wall  mac: two radial gradients (accent hue +35° at top-left, accent at bottom-
 
 ### Text size
 
-`--ts` multiplies the base font size. Controls must grow with it, so use `em`/`calc` sizes and never fixed px heights for text-bearing controls. The mockups grow preview heights by `1 + (ts − 1) × 0.8`.
+`--sn-text-scale` sets the root font size, so every `rem` grows with the OS text size. Skin sizes are written with the `px()` function in `styles/_functions.scss` (`px(32)` → `2rem`), so controls grow with their text instead of clipping it.
 
-## Acceptance checks for the theme package
+## What the unit tests check
 
-- For every skin × light/dark × the 8 swatches, plus random accents: `fg`, `mfg`, `atext` and `sfg` reach ≥ 4.5:1 on their backgrounds, and `pfg` on `primary` reaches ≥ 3:1. Write these as unit tests.
-  - **Known failure in the mockup algorithm:** on `cros` light, `atext` is the M3 primary with no contrast check. With KDE blue `#3DAEE9` it reaches only 4.23:1, and with green `#26A269` only 3.06:1. Every other skin/accent/scheme combination of the 8 swatches passes. Fix this by running `ensure()` on the M3 `atext` (see Q12).
-- An invalid accent falls back to `#0078D4`.
-- Output is deterministic: the same inputs give the same hex values as the reference port.
+`derive-palette.spec.ts` checks, for every skin × light/dark × the 8 swatches:
+
+- `fg`, `mfg` and `atext` reach ≥ 4.5:1 on `bg`, and `pfg` reaches ≥ 3:1 on `primary`. (`sfg` is contrast-checked by the algorithm but has no test of its own.) On `cros` light, `atext` gets the same contrast check as every other skin; the mockups' algorithm skipped it there (Q12).
+- An invalid accent falls back to `#0078d4`.
+- The output is deterministic.
+
+After changing `derivePalette()`, run `npm run theme:palette` to regenerate the static palettes in `styles/contract/_palette-defaults.scss`, which make the theme work as plain CSS.

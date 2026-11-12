@@ -75,7 +75,7 @@ export class SnCancelAction {
 }
 
 /**
- * A row of dialog buttons, put in the order of the current OS (docs/05, Q5): the
+ * A row of dialog buttons, put in the order of the current OS: the
  * snDefaultAction, the snCancelAction and every other button. Write them in any order;
  * the skin decides where each goes. spartan's hlm-dialog-footer and hlm-alert-dialog-footer
  * get the same treatment without this directive. It sets an attribute, not `data-slot`, so it

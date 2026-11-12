@@ -1,8 +1,20 @@
 # 04 — Platform skins
 
+> **Describes:** the design rules the skins in `@spartan-native/theme` (`styles/skins/`) implement. Where a number here and a skin's `_tokens.scss` differ, the skin is right. Color names such as `--wall` and `--acrylic` are the mockups' short names; [03](03-theme-tokens.md#token-contract) maps them to the real `--sn-color-*` variables.
+
 Seven skins read one set of tokens. Components stay the same, while geometry, materials and states follow each platform. Each skin is a class on the root (`t-win`, `t-w10`, `t-mac`, `t-macc`, `t-gtk`, `t-qt`, `t-cros`), plus `dark`, `rt` (reduced transparency) and `inactive` (window not focused). `w10` and `macc` add to their parent skin: `t-win t-w10` and `t-mac t-macc`.
 
-The full mockup CSS (about 70 KB) is in [`reference/component-skins.mockup.css`](reference/component-skins.mockup.css). It is the visual source of truth. Port it into `@spartan-native/helm` as CSS keyed on these classes.
+| Skin | Root classes | Folder in `styles/skins/` |
+| --- | --- | --- |
+| `win` | `t-win` | `win11/` |
+| `w10` | `t-win t-w10` | `win10/` (overrides on top of `win11/`) |
+| `mac` | `t-mac` | `macos26/` |
+| `macc` | `t-mac t-macc` | `macos-classic/` (overrides on top of `macos26/`) |
+| `gtk` | `t-gtk` | `gtk/` |
+| `qt` | `t-qt` | `kde/` |
+| `cros` | `t-cros` | `chromeos/` |
+
+The skins were ported from the mockups' CSS, which is archived in [`reference/component-skins.mockup.css`](reference/component-skins.mockup.css).
 
 ## Key metrics (px, at 100% text size)
 
@@ -27,7 +39,7 @@ The full mockup CSS (about 70 KB) is in [`reference/component-skins.mockup.css`]
 | --- | --- | --- | --- |
 | win | Mica-like gradient (`--wall`) | Acrylic: `--acrylic` + `backdrop-filter: blur(30px)` | solid `--surf` |
 | w10 | flat `--bg` | solid | solid |
-| mac | Liquid Glass wallpaper gradient | `.gl` glass: `--glass`, `blur(22px) saturate(180%)`, `--glass-b` border, inset `--glass-hi` top highlight | translucent `--surf` (60%) |
+| mac | Liquid Glass wallpaper gradient | glass (`.sn-glass`): `--glass`, `blur(22px) saturate(180%)`, `--glass-b` border, inset `--glass-hi` top highlight | translucent `--surf` (60%) |
 | macc | flat `--bg` | vibrancy (glass at 72–80% alpha, no highlight) | — |
 | gtk / qt | flat `--bg` | solid `--surf` + shadow | solid |
 | cros | M3 surface | `--glass` (= container) | tonal containers |
@@ -56,4 +68,4 @@ The Windows 10 skin uses square corners and 2px borders. Neutral buttons are fil
 | Delete | `⌘⌫` | `Del` |
 | Rename | `↩` | `F2` |
 
-The shortcut formatter in `desktop-ui` owns these.
+`snShortcut` in `@spartan-native/desktop-ui` writes these, following the real OS rather than the skin.

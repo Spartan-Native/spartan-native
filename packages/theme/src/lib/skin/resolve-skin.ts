@@ -1,8 +1,8 @@
 import type { PlatformInfo, Skin } from '../contract/native-host';
 
 /**
- * The fallback table from docs/07-host-adapters.md: detected OS → skin.
- * Cinnamon, XFCE and unknown Linux desktops use GTK (docs/10-open-questions.md, Q7).
+ * Detected OS → skin. Windows before build 22000 is Windows 10, macOS before 26 is the
+ * classic macOS skin, and every Linux desktop except KDE (GNOME, Cinnamon, XFCE, unknown) uses GTK.
  */
 export function resolveSkin(info: Pick<PlatformInfo, 'os' | 'version' | 'build' | 'desktop'>): Skin {
   switch (info.os) {

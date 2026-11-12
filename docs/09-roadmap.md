@@ -1,48 +1,38 @@
-# 09 — Roadmap & milestones
+# 09 — Roadmap
 
-The project is at phase 01. The phases and their one-line descriptions come from the design; the deliverables and exit criteria are proposals for the implementation team to confirm.
+> **Describes:** what is built and what is left, as of `0.1.0`. Released changes are in the [changelog](../CHANGELOG.md).
 
-| # | Phase | When | Scope (from design) |
+The project was planned in six phases. Phases 01 to 03 are done; 04 to 06 are mostly done.
+
+| # | Phase | State | What it covered |
 | --- | --- | --- | --- |
-| 01 | Design mockups | Now (done) | 28 components, 6 OS patterns and a sample app across Windows, macOS, GNOME and KDE, all interactive |
-| 02 | Token contract & spike | Next | Freeze the variable names and host interface; prove five stock helm components can be restyled from CSS alone |
-| 03 | Theme + helm packages | Next | Accent derivation, platform variable sets, per-OS component skins, states and native behaviors |
-| 04 | Host adapters | Later | Web/PWA from day one, then Electron → Tauri → Wails → Photino.NET, all passing the same conformance tests |
-| 05 | Desktop UI & integration | Later | Title bars, OS patterns, native menus, window effects and Snap Layouts through the bridge |
-| 06 | Gaps & tooling | Later | Tree view, number box, split button, status bar; the Claude Code plugin and a docs playground |
+| 01 | Design mockups | Done | Components, the six OS patterns and a sample app across every platform, all interactive |
+| 02 | Token contract & spike | Done | The `--sn-*` variables, the `NativeHost` interface, and proof that stock spartan/ui components can be restyled from CSS alone (they can: no component templates were forked) |
+| 03 | Theme + helm | Done | `derivePalette()`, the seven skins with every state, `provideSpartanNative()`, the selection model, default/cancel buttons, dialog button order, visual regression tests |
+| 04 | Host adapters | Mostly done | Web/PWA, Wails, Tauri and Photino.NET implemented and passing the conformance suite; Electron open |
+| 05 | Desktop UI & integration | Mostly done | Title bar, the six OS patterns, menubar adapter, native context menus, `forced-colors` support; window effects and Snap Layouts open |
+| 06 | Gaps & tooling | Partly done | Tree view, number box, split button and status bar done; the agent skill done; playground and plugin commands open |
 
-## Phase 02: Token contract & spike (start here)
+## What is left
 
-**Deliverables**
+**Host adapters**
 
-1. Set up the monorepo (Angular + spartan/ui; Nx recommended) with `packages/theme` and `apps/playground`.
-2. `derivePalette()` ported from [`reference/palette.reference.ts`](reference/palette.reference.ts), with unit tests for contrast and for matching the reference output exactly.
-3. Final token names, mapping mockup names to spartan/shadcn names (see [03](03-theme-tokens.md)). Decide which are added `--sn-*` tokens.
-4. Final `NativeHost`, `WindowHost`, `MenuHost`, `NotificationHost` and `Capability` types, plus a `host-web` stub.
-5. **Spike:** restyle five stock helm components (suggested: Button, Input, Switch, Select, Dialog) for at least win, mac and gtk, using only CSS keyed on `.t-*` classes, with no template forks.
+- `@spartan-native/host-electron`: the adapter itself. Today it is a scaffold and is not published.
+- `host-tauri` and `host-dotnet` read the OS and pass the conformance suite, but have not yet run inside a real app window. The check is a Tauri and a Photino.NET shell for the Harbor sample app.
+- `NotificationHost`: the shape of the notifications service ([Q2](10-open-questions.md)).
 
-**Exit criteria:** the spike shows stock components are skinnable from CSS alone. If any need template changes, record which and why, and decide between wrapping and contributing upstream.
+**Theme**
 
-## Phase 03: Theme + helm
+- A derived palette for `contrast: more` ([Q6](10-open-questions.md)). `forced-colors` already works: system colors take over.
+- A style sheet for the generic `web` skin ([Q4](10-open-questions.md)). Today it gets the token defaults only.
+- A Tailwind preset (in the original plan; not built).
 
-- Variable sets for every skin × scheme × rt × text scale; a Tailwind preset.
-- `provideSpartanNative()`: applies the classes and variables and reacts live.
-- All 28 component skins with every state; the behaviors from [05](05-components.md).
-- Visual regression against the mockups (Playwright screenshots, one per skin × scheme).
+**Desktop UI**
 
-## Phase 04: Host adapters
+- Window materials through the host: Mica and acrylic on Windows, vibrancy on macOS. The CSS materials work today; the native window effects behind them don't.
+- Snap Layouts on the Windows maximize button.
 
-- `host-web` (complete), Wails (Go module + TS package, complete), Tauri (Rust plugin + TS package) and Photino.NET (C# + TS package) (implemented, not yet run in an app window), then Electron.
-- Shared conformance suite; capability flags checked against reality. Fill in the matrix in [07](07-host-adapters.md) with confirmed values.
+**Tooling**
 
-## Phase 05: Desktop UI & integration
-
-- Title bar in three modes; the six OS patterns with their counterparts; the menubar adapter; native context menus; window effects; Snap Layouts. (Done: title bar, the six patterns, the menubar adapter and context menus, with Wails as the first native host. Open: window effects, Snap Layouts.)
-- High-contrast / `forced-colors` support (currently "Planned"). desktop-ui follows `forced-colors` (done); the derived palette for `contrast: more` is still open (Q6).
-- Harbor Backup complete on web + Wails.
-
-## Phase 06: Gaps & tooling
-
-- New components: tree view, number box, split button, status bar (done, in `desktop-ui`).
-- `spartan-native-plugin`: skill, commands `new-app`, `add-screen` and `audit`, the `native-ui-reviewer` agent, and a hook against hard-coded colors.
-- Public docs playground that replaces the design canvas.
+- A public docs playground that shows every component and pattern on every skin. `apps/playground` is still the Angular CLI starter.
+- Claude Code plugin: the skill and its templates are done. Planned but not built: the commands `new-app`, `add-screen` and `audit`, a `native-ui-reviewer` agent, and a hook that flags hard-coded colors.

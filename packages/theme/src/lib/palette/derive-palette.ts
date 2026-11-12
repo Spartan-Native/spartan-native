@@ -1,6 +1,6 @@
 /**
  * derivePalette(): one accent color in, every theme color out.
- * Ported from the design mockups (docs/reference/palette.reference.ts, docs/03-theme-tokens.md).
+ * The algorithm, step by step, is in the repository's docs/03-theme-tokens.md.
  */
 import type { ColorScheme, Skin } from '../contract/native-host';
 import {
@@ -193,7 +193,8 @@ function material3(t: Palette, acc: string, dark: boolean): Palette {
     fg: c.on, fgMuted: ensure(c.onv, c.surface, 4.5, dark),
     primary: c.primary, primaryFg: c.pfg, primaryEdge: c.invP,
     secondary: c.scn, secondaryFg: c.osc, segmentOn: c.scn,
-    // Fix for docs/10-open-questions.md Q12: the M3 primary is contrast-checked when used as text.
+    // The M3 primary tone isn't contrast-checked by M3 itself, and on some accents it is too
+    // weak as text: check it like every other skin's accent text.
     accentText: ensure(c.primary, c.surface, 4.5, dark),
     border: c.outline, inputStroke: c.outline, stroke: c.ov, controlStrong: c.onv, track: c.highest,
     control: c.high, hover: c.cont, acrylic: c.high, glass: c.cont, glassBorder: c.pc, glassHighlight: c.opc,

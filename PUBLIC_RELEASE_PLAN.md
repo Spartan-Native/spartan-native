@@ -30,12 +30,23 @@ Branch `public-release-prep` (not committed yet).
 - Phase 1: 1.1–1.10 all done. CI (`ci.yml`) runs tests, `build:libs` and `check:packages`; add `format:check` and `lint` after phase 3.
 - Phase 6: 1, 2 and 4 done. `release.yml` publishes to npmjs.org (trusted publishing or `NPM_TOKEN`, provenance when the repository is public, skips versions already on npm) and creates the GitHub Release from `CHANGELOG.md`. `scripts/check-packages.mjs` checks metadata, tarball contents and README links. Fixed: `npm publish "dist/$lib"` was read by npm 11 as a GitHub `owner/repo` shorthand; it is now `./dist/$lib`. 3 (installing the tarballs into a scratch app) and 5 (peer warnings) are not done.
 - Phase 5.2: the published-library list is now one file, `scripts/libraries.mjs`, read by the pack, stamp, check and release scripts.
-- From phase 2: 2.5 (README: badges, status table, quick start, workspace section moved to `CONTRIBUTING.md`, license section), 2.7 (root `AGENTS.md` table), the package-README half of 2.8 (absolute links), the `libs/spartan-ui` path fix, Q10/Q11 in `docs/10-open-questions.md`, and the install instructions in the skill's `references/setup.md`.
+- Phase 2: done.
+  - 2.1–2.4: the docs index, roadmap and open questions are rewritten. Every doc says at the top whether it describes what is built or a design. Docs 01–08 were checked against the code (token names, `resolveSkin()`, the `NativeHost` shape, component selectors, the conformance checks). `docs/reference/` is labelled as an unmaintained archive (D4 is still open: the files are kept, not deleted).
+  - 2.5–2.9: README, `AGENTS.md` and the package READMEs are updated; `TODO.md` is deleted (its open items are below); design-phase references are removed from source comments, which also produces no change in the generated palette.
+  - The "Done when" grep still matches `src/styles.css` (the app's stylesheet); those are correct. The pattern should have been `src/styles/`.
 - Version rule: the source `package.json` versions hold the last released version (root set to `0.1.0` to match); the release tag decides the published version.
 
 **Before the first npm release (owner):** create the `spartan-native` organization on npmjs.com (the packages don't exist there yet; the scope itself could not be checked from the CLI), add an `NPM_TOKEN` secret for the first publish, then set up trusted publishing per package and delete the secret.
 
-**Next:** the rest of phase 2, then phases 3, 4 and 5.
+**Owner tasks moved from `TODO.md`** (deleted in phase 2; the repository split it tracked is already on `main`):
+- GitHub Packages still holds the old `0.1.0` packages published from this repository before the split, including the broken `@spartan-native/host-wails@0.1.0` and the scaffold `host-tauri`, `host-dotnet` and `host-electron`. Delete them (package settings → Manage versions) so nobody installs them by accident.
+- The sibling repositories (`host-wails`, `host-tauri`, `host-dotnet`, `harbor`) still install from or publish to GitHub Packages. Move them to npmjs.org too, or `harbor` will keep needing a token. Each has its own `TODO.md`.
+- `host-tauri` and `host-dotnet`: create the GitHub repositories, push the local clones, and follow each repository's `TODO.md`.
+- Harbor: add Tauri and Photino.NET desktop shells (the skill's `templates/tauri` and `templates/dotnet` are a start). That is the end-to-end check neither host has had yet.
+- Run `npm run test:visual` to confirm the theme and desktop-ui baselines still match after the split.
+- The local branch `repo-split-todo` is merged and can be deleted.
+
+**Next:** phases 3, 4 and 5.
 
 ## What the review found
 

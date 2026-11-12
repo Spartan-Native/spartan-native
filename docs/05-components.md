@@ -1,8 +1,10 @@
-# 05 — Components (`@spartan-native/helm`)
+# 05 — Components
 
-The component comparison artboard (`Main.dc.html`, "Light vs dark per platform") shows 28 entries: the derived palette plus 27 spartan/helm component groups. Each is shown on all seven skins in light and dark, at every text size, with reduced transparency and window-focus toggles. Each one needs a skin per platform plus the states listed under the table.
+> **Describes:** the spartan/ui components the skins in `@spartan-native/theme` restyle, and the desktop behaviors in `@spartan-native/helm`. The theme's Storybook (`npm run storybook:theme`) shows them on every skin.
 
-| # | Component | spartan API | Mockup content to reproduce |
+The design covered 27 spartan/helm component groups plus the derived palette, each on all seven skins in light and dark, at every text size, with reduced transparency and the window focused or not. The theme restyles them from CSS only, through the `data-slot` hooks in `styles/_hooks.scss`, without changing their templates. The table keeps the design's demo content, which the Storybook reproduces.
+
+| # | Component | spartan API | Demo content |
 | --- | --- | --- | --- |
 | 0 | Derived palette | theme tokens (CSS vars) | 12 swatches: background, surface, primary, primary-fg, secondary, accent-text, muted, border, destructive, success, warning, ring 50% |
 | 1 | Button | `hlmBtn` | Primary, Secondary, Outline, Ghost, Delete (destructive), Disabled |
@@ -33,7 +35,7 @@ The component comparison artboard (`Main.dc.html`, "Light vs dark per platform")
 | 26 | Kbd & Separator | `hlm-kbd` · `hlmSeparator` | Command palette Ctrl K, New window Ctrl N, Preferences Ctrl , |
 | 27 | Scroll area | `hlm-scroll-area` | "Activity log" |
 
-## States every component must cover
+## States every component covers
 
 - Hover, pressed (active), `:focus-visible` (accent ring `--ring`), disabled.
 - Light and dark, all 5 text sizes, reduced transparency, inactive window.
@@ -54,8 +56,8 @@ The component comparison artboard (`Main.dc.html`, "Light vs dark per platform")
 | Dialog button order | Per OS (Q5): Windows and KDE put the default button first and Cancel last; macOS puts the default button on the right, Cancel left of it and other buttons apart on the far left; GNOME puts Cancel first and the default button last. Mark the buttons with `snDefaultAction` / `snCancelAction`; hlm dialog footers and `[snDialogButtons]` reorder them |
 | List and table selection | Click selects one; Shift-click selects a range from the anchor; Ctrl/⌘-click toggles; ↑ ↓ move; Home/End; type-ahead jumps by prefix; Ctrl/⌘A selects all; Esc clears. The table status line reads "{n} selected · click, Shift-click, Ctrl-click · ↑ ↓ Home End · type to jump · Ctrl+A · Esc clears" |
 | Shortcut display | `⌘X` on macOS, `Ctrl+X` elsewhere; Rename is `↩` vs `F2`; Delete is `⌘⌫` vs `Del` |
-| Accessibility | Real `<button>`/`<input>`; `aria-pressed`, `aria-checked`, `aria-selected`, `aria-sort`, `aria-expanded`, `aria-current="page"` as in the mockups; contrast ≥ 4.5:1 |
+| Accessibility | Real `<button>`/`<input>`; `aria-pressed`, `aria-checked`, `aria-selected`, `aria-sort`, `aria-expanded`, `aria-current="page"`; contrast ≥ 4.5:1 |
 
-## Gaps (roadmap phase 06)
+## Components spartan doesn't have
 
 spartan has no tree view, number box, split button or status bar. `@spartan-native/desktop-ui` adds them: `<sn-tree>`, `<sn-number-box>`, `<sn-split-button>` and `<sn-status-bar>`, each drawn the way its OS draws it (see [06](06-os-patterns.md#other-desktop-ui-pieces)).

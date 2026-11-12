@@ -2,7 +2,7 @@
 
 Every component and OS pattern on every skin, with the same controls as the design canvas (skin, accent, light/dark, text size, transparency, window focus). It replaces the canvas as the living spec.
 
-> Status: Angular CLI scaffold. Target: Phase 06 (a minimal version is useful from phase 03).
+> Status: **not built yet.** The app is still the Angular CLI starter page. Until it is built, the three Storybooks (`npm run storybook:theme`, `:helm`, `:desktop-ui`) are the living spec. See the [roadmap](../../docs/09-roadmap.md).
 
 ```bash
 npx ng serve playground

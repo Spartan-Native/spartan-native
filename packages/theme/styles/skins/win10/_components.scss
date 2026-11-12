@@ -1,6 +1,6 @@
 // ============================================================================
 //  Windows 10 · component overrides on top of win11
-//  Source: docs/04-platform-skins.md "Windows 10 specifics".
+//  Square corners, 2px borders, solid surfaces: no Mica, no acrylic.
 // ============================================================================
 @use '../../hooks' as h;
 @use '../../functions' as *;
