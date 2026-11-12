@@ -45,6 +45,16 @@ Branch `public-release-prep` (not committed yet).
   - 3.2: ESLint 10 with `angular-eslint` 22 and `typescript-eslint` (`eslint.config.mjs`, `npm run lint`); CI runs `format:check` and `lint`. Real fixes: two dead assignments, a story template the linter couldn't parse, a test selector. Each remaining exception carries its reason, inline or in the config.
   - 3.3: Stylelint dropped. `stylelint-config-standard-scss` reports 737 findings, nearly all notation preferences, and two of its rules are wrong here (vendor prefixes Safari still needs, scrollbar pseudo-elements).
 
+- Phase 4: done. Every step was checked against the state before it: unit tests, a byte-identical `derivePalette()` snapshot (8 skins × 2 schemes × reduced transparency × 40 accents, key order included), the generated palette file, and the compiled CSS of all 23 stylesheet entry points.
+  - 4.1 `derive-palette.ts` and `color.ts` rewritten for reading; output byte-identical.
+  - 4.2 the skin ids are explained on the `Skin` type, in one table in the theme README, and in the theme `AGENTS.md`.
+  - 4.3 desktop-ui's per-skin decisions are `Record<Skin, …>` tables.
+  - 4.4 `command-bar.ts` split: `command-bar.html`, `command-bar-fit.ts` (`fitCommandBar()`, with unit tests), named setup methods. The tree and number box were left as they are: nothing in them reads badly enough to split.
+  - 4.5 `SELECTION_PAGE_SIZE` and `TYPEAHEAD_RESET_MS` exported from helm; one shared document-order helper. `nextId` counters left as planned.
+  - 4.6 every `public-api.ts` lists its exports by name. Seven accidental exports removed after checking this and the four sibling repositories (see `CHANGELOG.md`).
+  - 4.7 `base/_components.scss` split into `base/components/`; the compiled CSS is cascade-equivalent (same rules, same order, per layer). The banner comment style was left alone.
+  - Visual tests: the CSS is equivalent and no component template changed except moving the command bar's into its own file, so the screenshots should not move. Run `npm run test:visual` to confirm.
+
 **Owner tasks moved from `TODO.md`** (deleted in phase 2; the repository split it tracked is already on `main`):
 
 - GitHub Packages still holds the old `0.1.0` packages published from this repository before the split, including the broken `@spartan-native/host-wails@0.1.0` and the scaffold `host-tauri`, `host-dotnet` and `host-electron`. Delete them (package settings → Manage versions) so nobody installs them by accident.
@@ -54,7 +64,7 @@ Branch `public-release-prep` (not committed yet).
 - Run `npm run test:visual` to confirm the theme and desktop-ui baselines still match after the split.
 - The local branch `repo-split-todo` is merged and can be deleted.
 
-**Next:** phases 4 and 5.
+**Next:** phase 5.
 
 ## What the review found
 
