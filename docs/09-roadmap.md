@@ -11,7 +11,7 @@ The project was planned in six phases. Phases 01 to 03 are done; 04 to 06 are mo
 | 03 | Theme + helm | Done | `derivePalette()`, the seven skins with every state, `provideSpartanNative()`, the selection model, default/cancel buttons, dialog button order, visual regression tests |
 | 04 | Host adapters | Mostly done | Web/PWA, Wails, Tauri and Photino.NET implemented and passing the conformance suite; Electron open |
 | 05 | Desktop UI & integration | Mostly done | Title bar, the six OS patterns, menubar adapter, native context menus, `forced-colors` support; window effects and Snap Layouts open |
-| 06 | Gaps & tooling | Partly done | Tree view, number box, split button and status bar done; the agent skill done; playground and plugin commands open |
+| 06 | Gaps & tooling | Partly done | Tree view, number box, split button and status bar done; the agent skill and a first playground done; plugin commands open |
 
 ## What is left
 
@@ -34,5 +34,5 @@ The project was planned in six phases. Phases 01 to 03 are done; 04 to 06 are mo
 
 **Tooling**
 
-- A public docs playground that shows every component and pattern on every skin. `apps/playground` is still the Angular CLI starter.
+- A public docs playground that shows every component and pattern on every skin. `apps/playground` is a first, single-window version.
 - Claude Code plugin: the skill and its templates are done. Planned but not built: the commands `new-app`, `add-screen` and `audit`, a `native-ui-reviewer` agent, and a hook that flags hard-coded colors.

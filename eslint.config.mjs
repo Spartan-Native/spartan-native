@@ -37,6 +37,12 @@ export default tseslint.config(
         'error',
         { allowList: ['label', 'hlmCarouselPrevious', 'hlmCarouselNext', 'hlmCodeBlockCopyButton'] },
       ],
+      // spartan components that render a native form control inside them: a <label> wrapping
+      // one labels that control.
+      '@angular-eslint/template/label-has-associated-control': [
+        'error',
+        { controlComponents: ['hlm-native-select', 'hlm-switch', 'hlm-checkbox'] },
+      ],
     },
   },
   {

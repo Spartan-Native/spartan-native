@@ -1,7 +1,14 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
+import { webHost } from '@spartan-native/host-web';
+import { provideSpartanNative } from '@spartan-native/theme';
+import { provideSpartanHlm } from '@spartan-ng/helm/utils';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes)],
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideSpartanHlm(),
+    // Reads this browser's OS settings live. The controls in the playground override them;
+    // `persist` keeps those overrides across reloads.
+    provideSpartanNative({ host: webHost(), persist: { key: 'spartan-native-playground' } }),
+  ],
 };
