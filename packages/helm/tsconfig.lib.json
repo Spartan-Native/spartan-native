@@ -6,12 +6,6 @@
     "declarationMap": true,
     "types": []
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "**/*.spec.ts",
-    "src/stories/**",
-    "**/*.stories.ts"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.spec.ts", "src/stories/**", "**/*.stories.ts"]
 }

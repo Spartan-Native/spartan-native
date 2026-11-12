@@ -16,7 +16,15 @@
 import React from 'react';
 import { Select, Separator, ToggleButton } from 'storybook/internal/components';
 import { addons, types, useGlobals, useGlobalTypes } from 'storybook/manager-api';
-import { AppleIcon, ChromeIcon, ContrastIcon, EyeCloseIcon, LinuxIcon, MirrorIcon, WindowsIcon } from '@storybook/icons';
+import {
+  AppleIcon,
+  ChromeIcon,
+  ContrastIcon,
+  EyeCloseIcon,
+  LinuxIcon,
+  MirrorIcon,
+  WindowsIcon,
+} from '@storybook/icons';
 import { ACCENT_PRESETS, STORYBOOK_SKINS, type OsFamily } from '../src/toolbar-options';
 
 const ADDON_ID = 'spartan-native/toolbar';
@@ -45,13 +53,7 @@ const Swatch = ({ color }: { color: string }) => (
 );
 
 /** On/off switch for a two-valued global: pressed = the `on` value. */
-function Switch(props: {
-  global: string;
-  on: string;
-  off: string;
-  label: string;
-  icon: React.ReactElement;
-}) {
+function Switch(props: { global: string; on: string; off: string; label: string; icon: React.ReactElement }) {
   const [globals, updateGlobals] = useGlobals();
   const pressed = globals[props.global] === props.on;
   return (
@@ -120,7 +122,10 @@ const Toolbar = React.memo(function Toolbar() {
             {preset?.title ?? accent}
           </Select>
           {/* Any other color: the native picker, drawn as a small chip */}
-          <label title="Custom accent color" style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}>
+          <label
+            title="Custom accent color"
+            style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}
+          >
             <input
               type="color"
               aria-label="Custom accent color"

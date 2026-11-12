@@ -58,7 +58,7 @@ Keep Photino's OS frame (its default). The OS draws the title bar and window but
 import { dotnetHost, isPhotino } from '@spartan-native/host-dotnet';
 import { webHost } from '@spartan-native/host-web';
 
-provideSpartanNative({ host: isPhotino() ? dotnetHost() : webHost() })
+provideSpartanNative({ host: isPhotino() ? dotnetHost() : webHost() });
 ```
 
 ## 5. Native services through the host

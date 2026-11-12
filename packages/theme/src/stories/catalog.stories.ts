@@ -40,17 +40,44 @@ const stage = (inner: string) => ({
   template: `<div style="padding: 2rem; min-height: 100vh; box-sizing: border-box; background: var(--sn-color-bg); color: var(--sn-color-fg)">${inner}</div>`,
 });
 
-export const Pickers: StoryObj = { name: 'Combobox, autocomplete & native select', render: () => stage('<sn-pickers-showcase />') };
+export const Pickers: StoryObj = {
+  name: 'Combobox, autocomplete & native select',
+  render: () => stage('<sn-pickers-showcase />'),
+};
 export const Dates: StoryObj = { name: 'Calendar & date picker', render: () => stage('<sn-dates-showcase />') };
-export const InputExtras: StoryObj = { name: 'Input group, OTP & kbd', render: () => stage('<sn-input-extras-showcase />') };
-export const Toggles: StoryObj = { name: 'Toggle, toggle group & button group', render: () => stage('<sn-toggles-showcase />') };
-export const Navigation: StoryObj = { name: 'Menubar, breadcrumb, pagination & navigation menu', render: () => stage('<sn-navigation-showcase />') };
-export const Popups: StoryObj = { name: 'Popover, hover card, context menu, sheet, drawer & toast', render: () => stage('<sn-popups-showcase />') };
+export const InputExtras: StoryObj = {
+  name: 'Input group, OTP & kbd',
+  render: () => stage('<sn-input-extras-showcase />'),
+};
+export const Toggles: StoryObj = {
+  name: 'Toggle, toggle group & button group',
+  render: () => stage('<sn-toggles-showcase />'),
+};
+export const Navigation: StoryObj = {
+  name: 'Menubar, breadcrumb, pagination & navigation menu',
+  render: () => stage('<sn-navigation-showcase />'),
+};
+export const Popups: StoryObj = {
+  name: 'Popover, hover card, context menu, sheet, drawer & toast',
+  render: () => stage('<sn-popups-showcase />'),
+};
 export const Command: StoryObj = { name: 'Command palette', render: () => stage('<sn-command-showcase />') };
-export const Disclosure: StoryObj = { name: 'Accordion & collapsible', render: () => stage('<sn-disclosure-showcase />') };
-export const Display: StoryObj = { name: 'Avatar, item, empty, skeleton, spinner & typography', render: () => stage('<sn-display-showcase />') };
-export const Containers: StoryObj = { name: 'Aspect ratio, scroll area, resizable & carousel', render: () => stage('<sn-containers-showcase />') };
+export const Disclosure: StoryObj = {
+  name: 'Accordion & collapsible',
+  render: () => stage('<sn-disclosure-showcase />'),
+};
+export const Display: StoryObj = {
+  name: 'Avatar, item, empty, skeleton, spinner & typography',
+  render: () => stage('<sn-display-showcase />'),
+};
+export const Containers: StoryObj = {
+  name: 'Aspect ratio, scroll area, resizable & carousel',
+  render: () => stage('<sn-containers-showcase />'),
+};
 export const Sidebar: StoryObj = { name: 'Sidebar', render: () => stage('<sn-sidebar-showcase />') };
-export const Conversation: StoryObj = { name: 'Message, bubble, attachment, code block & marker', render: () => stage('<sn-conversation-showcase />') };
+export const Conversation: StoryObj = {
+  name: 'Message, bubble, attachment, code block & marker',
+  render: () => stage('<sn-conversation-showcase />'),
+};
 export const Assistant: StoryObj = { name: 'Trace & questionnaire', render: () => stage('<sn-assistant-showcase />') };
 export const Chart: StoryObj = { name: 'Chart', render: () => stage('<sn-chart-showcase />') };

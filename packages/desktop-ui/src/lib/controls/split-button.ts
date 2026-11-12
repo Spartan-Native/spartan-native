@@ -129,7 +129,9 @@ export class SnSplitButton {
   protected readonly menu = contentChild(SnSplitButtonMenu);
   private readonly trigger = viewChild.required(CdkMenuTrigger);
 
-  protected readonly partClass = computed(() => [VARIANT_CLASS[this.variant()], this.small() ? 'h-8' : ''].join(' ').trim());
+  protected readonly partClass = computed(() =>
+    [VARIANT_CLASS[this.variant()], this.small() ? 'h-8' : ''].join(' ').trim(),
+  );
   protected readonly menuPosition: ConnectedPosition[] = [
     { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top', offsetY: 4 },
     { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom', offsetY: -4 },

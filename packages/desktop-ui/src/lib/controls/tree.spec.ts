@@ -38,11 +38,15 @@ async function setup(skin = 'win') {
   const item = (label: string) => el.querySelector<HTMLElement>(`[role="treeitem"][aria-label="${label}"]`)!;
   const focused = () => (document.activeElement as HTMLElement).getAttribute('aria-label');
   const key = async (k: string, init: KeyboardEventInit = {}) => {
-    document.activeElement!.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true, ...init }));
+    document.activeElement!.dispatchEvent(
+      new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true, ...init }),
+    );
     await fixture.whenStable();
   };
   const click = async (label: string, init: MouseEventInit = {}) => {
-    item(label).querySelector('.row')!.dispatchEvent(new MouseEvent('click', { bubbles: true, ...init }));
+    item(label)
+      .querySelector('.row')!
+      .dispatchEvent(new MouseEvent('click', { bubbles: true, ...init }));
     await fixture.whenStable();
   };
   return { fixture, el, host: fixture.componentInstance, item, focused, key, click };
@@ -176,13 +180,17 @@ describe('SnTree with a recursive component', () => {
     await new Promise((r) => setTimeout(r));
     await fixture.whenStable();
     const el: HTMLElement = fixture.nativeElement;
-    const levels = [...el.querySelectorAll('[role="treeitem"]')].map((i) => `${i.getAttribute('aria-label')}${i.getAttribute('aria-level')}`);
+    const levels = [...el.querySelectorAll('[role="treeitem"]')].map(
+      (i) => `${i.getAttribute('aria-label')}${i.getAttribute('aria-level')}`,
+    );
     expect(levels).toEqual(['a1', 'b2', 'c3', 'd2', 'z1']);
 
     el.querySelector<HTMLElement>('[aria-label="a"]')!.focus();
     const order: string[] = [];
     for (let i = 0; i < 4; i++) {
-      document.activeElement!.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true }));
+      document.activeElement!.dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true }),
+      );
       await fixture.whenStable();
       order.push((document.activeElement as HTMLElement).getAttribute('aria-label')!);
     }

@@ -21,26 +21,80 @@ const SETTLE: Record<string, (page: Page) => Promise<void>> = {
 };
 
 const STORIES = [
-  'pickers', 'dates', 'input-extras', 'toggles',
-  'navigation', 'popups', 'command',
-  'disclosure', 'display', 'containers', 'sidebar',
-  'conversation', 'assistant', 'chart',
+  'pickers',
+  'dates',
+  'input-extras',
+  'toggles',
+  'navigation',
+  'popups',
+  'command',
+  'disclosure',
+  'display',
+  'containers',
+  'sidebar',
+  'conversation',
+  'assistant',
+  'chart',
 ];
 
 /** Popups: [story, open it, what shows once it is open].
  *  Sheet and drawer: the cdk-dialog-container has no box of its own, so wait for the panel. */
 const POPUPS: Record<string, [string, (p: Page) => Promise<unknown>, (p: Page) => Promise<unknown>]> = {
-  combobox: ['pickers', (p) => p.getByRole('combobox', { name: 'Destination' }).click(), (p) => p.getByRole('listbox').waitFor()],
-  autocomplete: ['pickers', (p) => p.getByRole('combobox', { name: 'Restore files' }).fill('Doc'), (p) => p.getByRole('listbox', { name: 'Matching files' }).waitFor()],
-  'date-picker': ['dates', (p) => p.getByRole('button', { name: 'Pause until' }).click(), (p) => p.getByRole('dialog').getByRole('grid').waitFor()],
-  menubar: ['navigation', (p) => p.getByRole('menuitem', { name: 'File' }).click(), (p) => p.getByRole('menu').waitFor()],
-  'navigation-menu': ['navigation', (p) => p.getByRole('button', { name: 'Backups' }).click(), (p) => p.locator('[data-slot="navigation-menu-content"][data-state="open"]').waitFor()],
-  popover: ['popups', (p) => p.getByRole('button', { name: 'Retention…' }).click(), (p) => p.getByRole('dialog').waitFor()],
-  'hover-card': ['popups', (p) => p.getByRole('button', { name: 'Office NAS' }).hover(), (p) => p.locator('[data-slot="hover-card-content"][data-state="open"]').waitFor()],
-  'context-menu': ['popups', (p) => p.locator('[data-slot="context-menu-trigger"]').click({ button: 'right' }), (p) => p.getByRole('menu').waitFor()],
-  sheet: ['popups', (p) => p.getByRole('button', { name: 'Backup details' }).click(), (p) => p.locator('[data-slot="sheet-content"]').waitFor()],
-  drawer: ['popups', (p) => p.getByRole('button', { name: 'Restore files', exact: true }).click(), (p) => p.locator('[data-slot="drawer-content"]').waitFor()],
-  toast: ['popups', (p) => p.getByRole('button', { name: 'Show notification' }).click(), (p) => p.locator('li[data-sonner-toast]').waitFor()],
+  combobox: [
+    'pickers',
+    (p) => p.getByRole('combobox', { name: 'Destination' }).click(),
+    (p) => p.getByRole('listbox').waitFor(),
+  ],
+  autocomplete: [
+    'pickers',
+    (p) => p.getByRole('combobox', { name: 'Restore files' }).fill('Doc'),
+    (p) => p.getByRole('listbox', { name: 'Matching files' }).waitFor(),
+  ],
+  'date-picker': [
+    'dates',
+    (p) => p.getByRole('button', { name: 'Pause until' }).click(),
+    (p) => p.getByRole('dialog').getByRole('grid').waitFor(),
+  ],
+  menubar: [
+    'navigation',
+    (p) => p.getByRole('menuitem', { name: 'File' }).click(),
+    (p) => p.getByRole('menu').waitFor(),
+  ],
+  'navigation-menu': [
+    'navigation',
+    (p) => p.getByRole('button', { name: 'Backups' }).click(),
+    (p) => p.locator('[data-slot="navigation-menu-content"][data-state="open"]').waitFor(),
+  ],
+  popover: [
+    'popups',
+    (p) => p.getByRole('button', { name: 'Retention…' }).click(),
+    (p) => p.getByRole('dialog').waitFor(),
+  ],
+  'hover-card': [
+    'popups',
+    (p) => p.getByRole('button', { name: 'Office NAS' }).hover(),
+    (p) => p.locator('[data-slot="hover-card-content"][data-state="open"]').waitFor(),
+  ],
+  'context-menu': [
+    'popups',
+    (p) => p.locator('[data-slot="context-menu-trigger"]').click({ button: 'right' }),
+    (p) => p.getByRole('menu').waitFor(),
+  ],
+  sheet: [
+    'popups',
+    (p) => p.getByRole('button', { name: 'Backup details' }).click(),
+    (p) => p.locator('[data-slot="sheet-content"]').waitFor(),
+  ],
+  drawer: [
+    'popups',
+    (p) => p.getByRole('button', { name: 'Restore files', exact: true }).click(),
+    (p) => p.locator('[data-slot="drawer-content"]').waitFor(),
+  ],
+  toast: [
+    'popups',
+    (p) => p.getByRole('button', { name: 'Show notification' }).click(),
+    (p) => p.locator('li[data-sonner-toast]').waitFor(),
+  ],
 };
 
 for (const skin of SKINS) {

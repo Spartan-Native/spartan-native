@@ -23,11 +23,20 @@ import { SnSettingsGroup, SnSettingsRow } from '../lib/patterns/settings';
         <sn-number-box ariaLabel="Upload limit in MB/s" [(value)]="limit" [min]="0" [step]="0.5" [decimals]="1" />
       </sn-settings-row>
     </sn-settings-group>
-    <p class="note">Keep {{ versions() ?? '–' }} versions · limit {{ limit() ?? '–' }} MB/s. Try ↑ ↓, PgUp, or type 4*12.</p>
+    <p class="note">
+      Keep {{ versions() ?? '–' }} versions · limit {{ limit() ?? '–' }} MB/s. Try ↑ ↓, PgUp, or type 4*12.
+    </p>
   `,
   styles: `
-    :host { display: block; max-width: 36rem; }
-    .note { margin: 1rem 0 0; color: var(--sn-color-fg-muted); font-size: var(--sn-font-size-small); }
+    :host {
+      display: block;
+      max-width: 36rem;
+    }
+    .note {
+      margin: 1rem 0 0;
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
   `,
 })
 class NumberBoxDemo {
@@ -47,7 +56,8 @@ const meta: Meta<SnNumberBox> = {
 export default meta;
 type Story = StoryObj<SnNumberBox>;
 
-const stage = (content: string) => `<div style="padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem">${content}</div>`;
+const stage = (content: string) =>
+  `<div style="padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem">${content}</div>`;
 
 export const Default: Story = {
   render: () => ({

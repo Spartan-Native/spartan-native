@@ -5,7 +5,9 @@
 @use '../../hooks' as h;
 @use '../../functions' as *;
 
-$hairline: 0 0 0 0.5px color-mix(in srgb, var(--sn-color-fg) 18%, transparent), 0 1px 1px rgb(0 0 0 / 0.12);
+$hairline:
+  0 0 0 0.5px color-mix(in srgb, var(--sn-color-fg) 18%, transparent),
+  0 1px 1px rgb(0 0 0 / 0.12);
 
 @layer spartan-native.skins {
   .t-mac.t-macc {
@@ -29,7 +31,9 @@ $hairline: 0 0 0 0.5px color-mix(in srgb, var(--sn-color-fg) 18%, transparent), 
 
     // Default button: no glow, just a faint top highlight
     #{h.$button-primary} {
-      box-shadow: 0 1px 1px rgb(0 0 0 / 0.18), inset 0 0.5px 0 rgb(255 255 255 / 0.25);
+      box-shadow:
+        0 1px 1px rgb(0 0 0 / 0.18),
+        inset 0 0.5px 0 rgb(255 255 255 / 0.25);
     }
 
     #{h.$button-secondary} {
@@ -156,7 +160,9 @@ $hairline: 0 0 0 0.5px color-mix(in srgb, var(--sn-color-fg) 18%, transparent), 
       border-color: transparent;
       border-radius: var(--sn-radius-control);
       background: var(--sn-color-surface-solid);
-      box-shadow: 0 0 0 0.5px color-mix(in srgb, var(--sn-color-fg) 18%, transparent), 0 1px 1px rgb(0 0 0 / 0.12);
+      box-shadow:
+        0 0 0 0.5px color-mix(in srgb, var(--sn-color-fg) 18%, transparent),
+        0 1px 1px rgb(0 0 0 / 0.12);
     }
 
     #{h.$accordion} {

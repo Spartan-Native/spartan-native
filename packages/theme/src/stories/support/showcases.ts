@@ -110,9 +110,7 @@ export class FieldsShowcase {}
     <div class="row">
       <hlm-switch inputId="sw1" [checked]="true" /><label hlmLabel for="sw1">Automatic backups</label>
     </div>
-    <div class="row">
-      <hlm-switch inputId="sw2" /><label hlmLabel for="sw2">Back up on battery</label>
-    </div>
+    <div class="row"><hlm-switch inputId="sw2" /><label hlmLabel for="sw2">Back up on battery</label></div>
     <div class="row">
       <hlm-checkbox inputId="cb1" [checked]="true" /><label hlmLabel for="cb1">Encrypt backups</label>
       <hlm-checkbox inputId="cb2" /><label hlmLabel for="cb2">Verify after copy</label>
@@ -203,8 +201,12 @@ export class CardBadgesShowcase {}
       <!-- A menu panel rendered inline, so its look is visible without opening it -->
       <hlm-dropdown-menu style="width: 13.75rem">
         <span hlmDropdownMenuLabel>Backup</span>
-        <button hlmDropdownMenuItem>Back up now <span hlmDropdownMenuShortcut>{{ mod }}B</span></button>
-        <button hlmDropdownMenuItem>Restore files… <span hlmDropdownMenuShortcut>{{ mod }}R</span></button>
+        <button hlmDropdownMenuItem>
+          Back up now <span hlmDropdownMenuShortcut>{{ mod }}B</span>
+        </button>
+        <button hlmDropdownMenuItem>
+          Restore files… <span hlmDropdownMenuShortcut>{{ mod }}R</span>
+        </button>
         <button hlmDropdownMenuItem disabled>Verify archive</button>
         <hlm-dropdown-menu-separator />
         <button hlmDropdownMenuItem variant="destructive">Delete backup</button>
@@ -213,7 +215,9 @@ export class CardBadgesShowcase {}
       <div class="field">
         <div class="row">
           <button hlmBtn variant="outline" [hlmDropdownMenuTrigger]="menu">Actions</button>
-          <button hlmBtn variant="ghost" size="icon" aria-label="More" hlmTooltip="More actions"><ng-icon name="lucideEllipsis" /></button>
+          <button hlmBtn variant="ghost" size="icon" aria-label="More" hlmTooltip="More actions">
+            <ng-icon name="lucideEllipsis" />
+          </button>
           <button hlmBtn variant="outline" hlmTooltip="Back up the selected folders now">Hover for a tooltip</button>
         </div>
         <hlm-select [value]="'Every hour'">
@@ -316,23 +320,60 @@ export class AlertsShowcase {}
 
 @Component({
   selector: 'sn-table-form-showcase',
-  imports: [HlmCheckboxImports, HlmFieldImports, HlmInputImports, HlmSeparatorImports, HlmTableImports, ReactiveFormsModule],
+  imports: [
+    HlmCheckboxImports,
+    HlmFieldImports,
+    HlmInputImports,
+    HlmSeparatorImports,
+    HlmTableImports,
+    ReactiveFormsModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div hlmTableContainer style="max-width: 35rem">
       <table hlmTable>
-        <caption hlmTableCaption>The second row is selected (data-state="selected").</caption>
+        <caption hlmTableCaption>
+          The second row is selected (data-state="selected").
+        </caption>
         <thead hlmTHead>
-          <tr hlmTr><th hlmTh>Backup</th><th hlmTh>Destination</th><th hlmTh>Last run</th><th hlmTh>Size</th></tr>
+          <tr hlmTr>
+            <th hlmTh>Backup</th>
+            <th hlmTh>Destination</th>
+            <th hlmTh>Last run</th>
+            <th hlmTh>Size</th>
+          </tr>
         </thead>
         <tbody hlmTBody>
-          <tr hlmTr><td hlmTd>Documents</td><td hlmTd>Office NAS</td><td hlmTd>Today, 09:12</td><td hlmTd>4.2 GB</td></tr>
-          <tr hlmTr data-state="selected"><td hlmTd>Photos</td><td hlmTd>Office NAS</td><td hlmTd>Yesterday</td><td hlmTd>182 GB</td></tr>
-          <tr hlmTr><td hlmTd>Projects</td><td hlmTd>Cloud</td><td hlmTd>Today, 08:00</td><td hlmTd>31 GB</td></tr>
-          <tr hlmTr><td hlmTd>Mail</td><td hlmTd>Cloud</td><td hlmTd>Never</td><td hlmTd>—</td></tr>
+          <tr hlmTr>
+            <td hlmTd>Documents</td>
+            <td hlmTd>Office NAS</td>
+            <td hlmTd>Today, 09:12</td>
+            <td hlmTd>4.2 GB</td>
+          </tr>
+          <tr hlmTr data-state="selected">
+            <td hlmTd>Photos</td>
+            <td hlmTd>Office NAS</td>
+            <td hlmTd>Yesterday</td>
+            <td hlmTd>182 GB</td>
+          </tr>
+          <tr hlmTr>
+            <td hlmTd>Projects</td>
+            <td hlmTd>Cloud</td>
+            <td hlmTd>Today, 08:00</td>
+            <td hlmTd>31 GB</td>
+          </tr>
+          <tr hlmTr>
+            <td hlmTd>Mail</td>
+            <td hlmTd>Cloud</td>
+            <td hlmTd>Never</td>
+            <td hlmTd>—</td>
+          </tr>
         </tbody>
         <tfoot hlmTFoot>
-          <tr hlmTr><td hlmTd colspan="3">Total</td><td hlmTd>217 GB</td></tr>
+          <tr hlmTr>
+            <td hlmTd colspan="3">Total</td>
+            <td hlmTd>217 GB</td>
+          </tr>
         </tfoot>
       </table>
     </div>
@@ -393,6 +434,12 @@ export class TableFormShowcase {
     <sn-table-form-showcase />
     <sn-overlays-showcase />
   `,
-  styles: `:host { display: flex; flex-direction: column; gap: 1.375rem; }`,
+  styles: `
+    :host {
+      display: flex;
+      flex-direction: column;
+      gap: 1.375rem;
+    }
+  `,
 })
 export class AllShowcases {}

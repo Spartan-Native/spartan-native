@@ -12,7 +12,11 @@
   <ng-template #trayRow>
     <sn-settings-row title="Show in system tray">
       <ng-icon snSettingsIcon name="lucideBell" />
-      <hlm-switch aria-label="Show in system tray" [checked]="notifications()" (checkedChange)="notifications.set($event)" />
+      <hlm-switch
+        aria-label="Show in system tray"
+        [checked]="notifications()"
+        (checkedChange)="notifications.set($event)"
+      />
     </sn-settings-row>
   </ng-template>
 
@@ -24,8 +28,15 @@
 <sn-settings-group title="Appearance" description="System follows your device's light or dark setting.">
   <sn-settings-row title="Theme">
     <ng-icon snSettingsIcon name="lucideSunMoon" />
-    <hlm-toggle-group type="single" variant="outline" size="sm" [nullable]="false" aria-label="Theme"
-                      [value]="appearance()" (valueChange)="setAppearance($event)">
+    <hlm-toggle-group
+      type="single"
+      variant="outline"
+      size="sm"
+      [nullable]="false"
+      aria-label="Theme"
+      [value]="appearance()"
+      (valueChange)="setAppearance($event)"
+    >
       <button hlmToggleGroupItem value="system">System</button>
       <button hlmToggleGroupItem value="light">Light</button>
       <button hlmToggleGroupItem value="dark">Dark</button>

@@ -75,7 +75,7 @@ Add the plugin's permission to the window's capability (`templates/tauri/capabil
 import { isTauri, tauriHost } from '@spartan-native/host-tauri';
 import { webHost } from '@spartan-native/host-web';
 
-provideSpartanNative({ host: isTauri() ? tauriHost() : webHost() })
+provideSpartanNative({ host: isTauri() ? tauriHost() : webHost() });
 ```
 
 ## 5. Native services through the host

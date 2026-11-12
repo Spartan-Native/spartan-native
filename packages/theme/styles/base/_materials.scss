@@ -38,7 +38,9 @@
   .sn-glass {
     background: var(--sn-color-glass);
     border: 1px solid var(--sn-color-glass-border);
-    box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), var(--sn-shadow-card);
+    box-shadow:
+      inset 0 1px 0 var(--sn-color-glass-highlight),
+      var(--sn-shadow-card);
     -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
     backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
   }
@@ -86,7 +88,9 @@
 
   // Window chrome (title bar, header bar, toolbar): dims when the window is inactive.
   .sn-chrome {
-    transition: color var(--sn-duration-fast) var(--sn-easing), opacity var(--sn-duration-fast) var(--sn-easing);
+    transition:
+      color var(--sn-duration-fast) var(--sn-easing),
+      opacity var(--sn-duration-fast) var(--sn-easing);
   }
 
   .sn-text-muted {

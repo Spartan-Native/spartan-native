@@ -45,7 +45,9 @@
     #{h.$radio-dot} {
       width: 0;
       height: 0;
-      transition: width var(--sn-duration-fast) var(--sn-easing), height var(--sn-duration-fast) var(--sn-easing);
+      transition:
+        width var(--sn-duration-fast) var(--sn-easing),
+        height var(--sn-duration-fast) var(--sn-easing);
     }
 
     #{h.$radio-on} {

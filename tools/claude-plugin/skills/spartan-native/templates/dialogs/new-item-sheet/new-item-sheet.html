@@ -3,7 +3,13 @@
   <form class="form" id="new-item-form" novalidate (submit)="$event.preventDefault(); submit()">
     <div class="field">
       <label hlmLabel for="new-item-name">Name</label>
-      <input hlmInput id="new-item-name" autocomplete="off" [value]="name()" (input)="name.set($any($event.target).value)" />
+      <input
+        hlmInput
+        id="new-item-name"
+        autocomplete="off"
+        [value]="name()"
+        (input)="name.set($any($event.target).value)"
+      />
     </div>
     <div class="field">
       <label hlmLabel for="new-item-kind">Kind</label>

@@ -18,18 +18,18 @@
     // --- Typography ----------------------------------------------------------
     --sn-font-sans: system-ui, sans-serif;
     --sn-font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Source Code Pro', monospace;
-    --sn-font-size: #{px(14)};          // body and controls
-    --sn-font-size-small: #{px(12)};    // captions, badges
-    --sn-font-size-title: #{px(20)};    // page titles
+    --sn-font-size: #{px(14)}; // body and controls
+    --sn-font-size-small: #{px(12)}; // captions, badges
+    --sn-font-size-title: #{px(20)}; // page titles
     --sn-line-height: 1.43;
-    --sn-font-weight-control: 500;      // button and tab labels
-    --sn-font-weight-strong: 600;       // headings, selected tabs
+    --sn-font-weight-control: 500; // button and tab labels
+    --sn-font-weight-strong: 600; // headings, selected tabs
 
     // --- Shape ---------------------------------------------------------------
-    --sn-radius-control: #{px(6)};      // buttons
+    --sn-radius-control: #{px(6)}; // buttons
     --sn-radius-input: var(--sn-radius-control);
-    --sn-radius-surface: #{px(10)};     // cards, groups
-    --sn-radius-overlay: #{px(12)};     // dialogs, menus
+    --sn-radius-surface: #{px(10)}; // cards, groups
+    --sn-radius-overlay: #{px(12)}; // dialogs, menus
     --sn-radius-window: #{px(10)};
     --sn-radius-pill: 999px;
 
@@ -39,13 +39,13 @@
     --sn-control-padding-x: #{px(12)};
     --sn-input-height: var(--sn-control-height);
     --sn-input-padding-x: #{px(10)};
-    --sn-check-size: #{px(16)};         // checkbox and radio
+    --sn-check-size: #{px(16)}; // checkbox and radio
     --sn-check-radius: #{px(4)};
     --sn-switch-width: #{px(36)};
     --sn-switch-height: #{px(20)};
     --sn-switch-thumb-width: #{px(16)};
     --sn-switch-thumb-height: #{px(16)};
-    --sn-switch-inset: #{px(2)};        // gap between track and thumb
+    --sn-switch-inset: #{px(2)}; // gap between track and thumb
     --sn-switch-border: 0px;
     --sn-progress-height: #{px(6)};
     --sn-tab-height: #{px(30)};
@@ -82,8 +82,8 @@
     // --- Disclosure, loading and scrolling -------------------------------------
     --sn-accordion-header-height: #{px(44)};
     --sn-spinner-color: var(--sn-color-primary);
-    --sn-scrollbar-thickness: 2px;          // thumb at rest
-    --sn-scrollbar-hover-thickness: 6px;    // thumb while the pointer is over the bar
+    --sn-scrollbar-thickness: 2px; // thumb at rest
+    --sn-scrollbar-hover-thickness: 6px; // thumb while the pointer is over the bar
     --sn-scrollbar-thumb: color-mix(in srgb, var(--sn-color-fg) 40%, transparent);
     --sn-scrollbar-thumb-hover: var(--sn-scrollbar-thumb);
 
@@ -104,7 +104,7 @@
     // --- Materials -------------------------------------------------------------
     --sn-material-blur: 0px;
     --sn-material-saturate: 100%;
-    --sn-window-bg: var(--sn-color-bg);      // behind everything in the window
+    --sn-window-bg: var(--sn-color-bg); // behind everything in the window
     --sn-sidebar-bg: var(--sn-color-sidebar);
     --sn-content-bg: var(--sn-color-bg);
     --sn-content-border: transparent;

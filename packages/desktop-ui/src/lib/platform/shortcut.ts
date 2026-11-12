@@ -17,18 +17,44 @@ const MAC_ORDER = ['ctrl', 'alt', 'shift', 'mod'] as const; // ⌃ ⌥ ⇧ ⌘, 
 const PC_ORDER = ['mod', 'ctrl', 'alt', 'shift'] as const;
 
 const MAC: Record<string, string> = {
-  mod: '⌘', ctrl: '⌃', alt: '⌥', shift: '⇧',
-  enter: '↩', backspace: '⌫', delete: '⌦', escape: '⎋', tab: '⇥', space: 'Space',
-  up: '↑', down: '↓', left: '←', right: '→',
+  mod: '⌘',
+  ctrl: '⌃',
+  alt: '⌥',
+  shift: '⇧',
+  enter: '↩',
+  backspace: '⌫',
+  delete: '⌦',
+  escape: '⎋',
+  tab: '⇥',
+  space: 'Space',
+  up: '↑',
+  down: '↓',
+  left: '←',
+  right: '→',
 };
 const PC: Record<string, string> = {
-  mod: 'Ctrl', ctrl: 'Ctrl', alt: 'Alt', shift: 'Shift',
-  enter: 'Enter', backspace: 'Backspace', delete: 'Del', escape: 'Esc', tab: 'Tab', space: 'Space',
-  up: '↑', down: '↓', left: '←', right: '→',
+  mod: 'Ctrl',
+  ctrl: 'Ctrl',
+  alt: 'Alt',
+  shift: 'Shift',
+  enter: 'Enter',
+  backspace: 'Backspace',
+  delete: 'Del',
+  escape: 'Esc',
+  tab: 'Tab',
+  space: 'Space',
+  up: '↑',
+  down: '↓',
+  left: '←',
+  right: '→',
 };
 
 export function formatShortcut(shortcut: string, family: PlatformFamily): string {
-  const parts = shortcut.toLowerCase().split('+').map((p) => p.trim()).filter(Boolean);
+  const parts = shortcut
+    .toLowerCase()
+    .split('+')
+    .map((p) => p.trim())
+    .filter(Boolean);
   const mac = family === 'macos';
   const order: readonly string[] = mac ? MAC_ORDER : PC_ORDER;
   const names = mac ? MAC : PC;
@@ -39,9 +65,7 @@ export function formatShortcut(shortcut: string, family: PlatformFamily): string
   const shown = mac ? modifiers : [...new Set(modifiers.map((m) => names[m]))];
   const key = keys.map((k) => names[k] ?? k.toUpperCase());
 
-  return mac
-    ? [...shown.map((m) => names[m]), ...key].join('')
-    : [...shown, ...key].join('+');
+  return mac ? [...shown.map((m) => names[m]), ...key].join('') : [...shown, ...key].join('+');
 }
 
 /**

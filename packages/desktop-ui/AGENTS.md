@@ -4,7 +4,7 @@ Instructions for AI coding agents building an Angular app with `@spartan-native/
 
 ## What this package is
 
-Layer 03 of Spartan Native (optional). These are the pieces stock spartan/ui doesn't have: **window chrome**, the **patterns each OS is known for**, **menus**, and the **desktop controls** spartan lacks. Each component changes its *layout* per OS, not just its colors, and follows the skin live.
+Layer 03 of Spartan Native (optional). These are the pieces stock spartan/ui doesn't have: **window chrome**, the **patterns each OS is known for**, **menus**, and the **desktop controls** spartan lacks. Each component changes its _layout_ per OS, not just its colors, and follows the skin live.
 
 It requires `@spartan-native/theme` (with `provideSpartanNative()`) and `@spartan-native/helm`. Its styles are component-scoped, so there is no extra stylesheet to load. Icon inputs (`icon="lucideClock"`) take an `@ng-icons` name you've registered with `provideIcons()`.
 
@@ -55,24 +55,29 @@ One `SnMenuItem[]` definition feeds both the menu bar and context menus. With a 
 
 ```ts
 const menu: SnMenuItem[] = [
-  { role: 'appMenu' },                                    // macOS only; dropped elsewhere
-  { label: 'File', submenu: [
-    { label: 'New backup…', accelerator: 'mod+n', action: () => this.create() },
-    { type: 'separator' },
-    { role: 'close' },
-  ]},
+  { role: 'appMenu' }, // macOS only; dropped elsewhere
+  {
+    label: 'File',
+    submenu: [
+      { label: 'New backup…', accelerator: 'mod+n', action: () => this.create() },
+      { type: 'separator' },
+      { role: 'close' },
+    ],
+  },
   { role: 'editMenu' },
 ];
 ```
 
 ```html
-<sn-menubar [menu]="menu" />                         <!-- native: 'auto' | 'always' | 'never' -->
-<li [snContextMenu]="fileMenu(file)">{{ file.name }}</li>   <!-- snContextMenuNative, snContextMenuDisabled -->
+<sn-menubar [menu]="menu" />
+<!-- native: 'auto' | 'always' | 'never' -->
+<li [snContextMenu]="fileMenu(file)">{{ file.name }}</li>
+<!-- snContextMenuNative, snContextMenuDisabled -->
 ```
 
 - `SnMenuItem` is the contract's `MenuItem` (`id`, `label`, `type` normal/checkbox/radio/separator, `accelerator`, `enabled`, `checked`, `role`, `submenu`) plus an `action` function.
 - Write accelerators in the portable notation: `mod+shift+s`, `alt+f4`, `delete`, `f2`. `mod` is ⌘ on macOS and Ctrl elsewhere.
-- The menu bar binds its accelerators. Context menus only *show* them, so bind those shortcuts where the selection lives.
+- The menu bar binds its accelerators. Context menus only _show_ them, so bind those shortcuts where the selection lives.
 - For menus built in code, use the `SnNativeMenus` service. Helpers: `toHostMenu()`, `tidyMenu()`, `inPageMenu()`, `matchesAccelerator()`, `runEditCommand()`.
 
 ### Platform helpers

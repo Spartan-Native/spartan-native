@@ -1,4 +1,13 @@
-import { afterNextRender, ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, signal } from '@angular/core';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  input,
+  signal,
+} from '@angular/core';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { SnContextMenu } from '../lib/menubar/context-menu';
 import type { SnMenuItem } from '../lib/menubar/menu-model';
@@ -32,14 +41,47 @@ const FILES = ['Budget 2026.xlsx', 'Q4 Report.pdf', 'Meeting notes.md', 'Roadmap
     </div>
   `,
   styles: `
-    .window { max-width: 40rem; display: flex; flex-direction: column; min-height: 20rem; }
-    .content { display: flex; flex-direction: column; gap: 0.75rem; padding: 1rem; background: var(--sn-color-bg); flex: 1; }
-    .field { display: flex; align-items: center; gap: 0.5rem; }
-    .field input { font: inherit; padding: 0.25rem 0.5rem; }
-    .files { margin: 0; padding: 0; list-style: none; }
-    .files li { padding: 0.375rem 0.75rem; border-radius: var(--sn-list-item-radius); outline-offset: -2px; }
-    .files li:hover { background: var(--sn-color-hover); }
-    .log { margin: 0; color: var(--sn-color-fg-muted); font-size: var(--sn-font-size-small); }
+    .window {
+      max-width: 40rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 20rem;
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: var(--sn-color-bg);
+      flex: 1;
+    }
+    .field {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .field input {
+      font: inherit;
+      padding: 0.25rem 0.5rem;
+    }
+    .files {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .files li {
+      padding: 0.375rem 0.75rem;
+      border-radius: var(--sn-list-item-radius);
+      outline-offset: -2px;
+    }
+    .files li:hover {
+      background: var(--sn-color-hover);
+    }
+    .log {
+      margin: 0;
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
   `,
 })
 class MenubarDemo {
@@ -60,11 +102,19 @@ class MenubarDemo {
         { label: 'New backup…', accelerator: 'mod+n', action: () => this.log.set('New backup') },
         { label: 'Restore files…', accelerator: 'mod+r', action: () => this.log.set('Restore files') },
         { type: 'separator' },
-        { label: 'Pause backups', type: 'checkbox', checked: this.paused(), action: () => this.paused.update((p) => !p) },
-        { label: 'Export', submenu: [
-          { label: 'Settings…', action: () => this.log.set('Export settings') },
-          { label: 'Log…', action: () => this.log.set('Export log') },
-        ] },
+        {
+          label: 'Pause backups',
+          type: 'checkbox',
+          checked: this.paused(),
+          action: () => this.paused.update((p) => !p),
+        },
+        {
+          label: 'Export',
+          submenu: [
+            { label: 'Settings…', action: () => this.log.set('Export settings') },
+            { label: 'Log…', action: () => this.log.set('Export log') },
+          ],
+        },
         { type: 'separator' },
         { role: 'close' },
       ],
@@ -102,7 +152,13 @@ class MenubarDemo {
         const item = this.element.querySelector<HTMLElement>('.files li:nth-child(2)')!;
         const rect = item.getBoundingClientRect();
         item.dispatchEvent(
-          new MouseEvent('contextmenu', { bubbles: true, cancelable: true, button: 2, clientX: rect.left + 60, clientY: rect.top + rect.height / 2 }),
+          new MouseEvent('contextmenu', {
+            bubbles: true,
+            cancelable: true,
+            button: 2,
+            clientX: rect.left + 60,
+            clientY: rect.top + rect.height / 2,
+          }),
         );
       }
     });

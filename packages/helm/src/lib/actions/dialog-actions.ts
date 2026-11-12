@@ -4,7 +4,8 @@ import { DestroyRef, Directive, ElementRef, afterNextRender, inject } from '@ang
 const SCOPE = '[snActionScope], [role="dialog"], [role="alertdialog"], form';
 
 /** Elements that use Enter themselves, so it must not trigger the default button there. */
-const OWNS_ENTER = 'textarea, button, a[href], select, [contenteditable=""], [contenteditable="true"], [role="listbox"], [role="grid"], [role="menu"], [role="tree"]';
+const OWNS_ENTER =
+  'textarea, button, a[href], select, [contenteditable=""], [contenteditable="true"], [role="listbox"], [role="grid"], [role="menu"], [role="tree"]';
 
 /**
  * Marks a custom area for snDefaultAction / snCancelAction (dialogs and forms are scopes already).

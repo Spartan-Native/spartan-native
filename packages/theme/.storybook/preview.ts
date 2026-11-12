@@ -9,8 +9,11 @@ const spartanNative = spartanNativePreview({ textSize: true, windowFocus: true }
 
 export default {
   ...spartanNative,
-  decorators: [applicationConfig({
+  decorators: [
+    applicationConfig({
       // Breadcrumb and pagination links use RouterLink; don't route the iframe URL itself.
       providers: [provideSpartanHlm(), provideRouter([], withDisabledInitialNavigation())],
-    }), ...(spartanNative.decorators as [])],
+    }),
+    ...(spartanNative.decorators as []),
+  ],
 } satisfies Preview;

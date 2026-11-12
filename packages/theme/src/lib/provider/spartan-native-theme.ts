@@ -39,11 +39,19 @@ export interface SpartanNativePersistence {
 export const DEFAULT_PERSIST_KEY = 'spartan-native:overrides';
 
 const APPEARANCE_KEYS: readonly (keyof AppearanceState)[] = [
-  'skin', 'accent', 'scheme', 'contrast', 'reduceTransparency', 'reduceMotion', 'textScale',
+  'skin',
+  'accent',
+  'scheme',
+  'contrast',
+  'reduceTransparency',
+  'reduceMotion',
+  'textScale',
 ];
 
 /** The store `persist` asks for, or null when off or unavailable (SSR, privacy mode). */
-function persistence(option: SpartanNativeOptions['persist']): { key: string; storage: SpartanNativePersistence['storage'] & object } | null {
+function persistence(
+  option: SpartanNativeOptions['persist'],
+): { key: string; storage: SpartanNativePersistence['storage'] & object } | null {
   if (!option) return null;
   const config = option === true ? {} : option;
   let storage = config.storage;
@@ -58,7 +66,10 @@ function persistence(option: SpartanNativeOptions['persist']): { key: string; st
 }
 
 /** Reads stored overrides, keeping only appearance fields of the right type. */
-export function readStoredOverrides(storage: Pick<Storage, 'getItem'>, key = DEFAULT_PERSIST_KEY): Partial<AppearanceState> {
+export function readStoredOverrides(
+  storage: Pick<Storage, 'getItem'>,
+  key = DEFAULT_PERSIST_KEY,
+): Partial<AppearanceState> {
   try {
     const raw = storage.getItem(key);
     const parsed: unknown = raw ? JSON.parse(raw) : null;

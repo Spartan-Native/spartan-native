@@ -4,7 +4,7 @@ Instructions for AI coding agents building an Angular app with `@spartan-native/
 
 ## What this package is
 
-Layer 02 of Spartan Native (optional). `@spartan-native/theme` makes stock spartan/ui *look* native. helm makes it *behave* like a desktop app: OS-correct list and table selection, Enter/Esc on the default and cancel buttons, and dialog buttons in each OS's order. It's directives only. You keep using the stock `hlm*` components and add helm's attributes to them.
+Layer 02 of Spartan Native (optional). `@spartan-native/theme` makes stock spartan/ui _look_ native. helm makes it _behave_ like a desktop app: OS-correct list and table selection, Enter/Esc on the default and cancel buttons, and dialog buttons in each OS's order. It's directives only. You keep using the stock `hlm*` components and add helm's attributes to them.
 
 Requires `@spartan-native/theme` (with `provideSpartanNative()`) and its stylesheet.
 
@@ -29,14 +29,16 @@ Use it for any list or table where users select rows (files, records, messages).
 ```html
 <div snSelectable [(selection)]="selected" (activated)="open($event)" aria-label="Files">
   @for (f of files(); track f.id) {
-    <div snSelectableItem [value]="f.id">{{ f.name }}</div>
+  <div snSelectableItem [value]="f.id">{{ f.name }}</div>
   }
 </div>
 
 <table hlmTable snSelectable="grid" [(selection)]="selected" aria-label="Backups">
   <tbody hlmTBody>
     @for (row of rows(); track row.id) {
-      <tr hlmTr snSelectableItem [value]="row.id">…</tr>
+    <tr hlmTr snSelectableItem [value]="row.id">
+      …
+    </tr>
     }
   </tbody>
 </table>
@@ -69,12 +71,12 @@ Use it for any list or table where users select rows (files, records, messages).
 
 Write the buttons in any order. Mark the default and cancel buttons, and the skin places them:
 
-| Skin | Order |
-| --- | --- |
-| Windows, KDE | default · other · Cancel |
-| macOS | other ‹gap› Cancel · default |
-| GNOME | Cancel · other · default |
-| ChromeOS, web | other · Cancel · default |
+| Skin          | Order                        |
+| ------------- | ---------------------------- |
+| Windows, KDE  | default · other · Cancel     |
+| macOS         | other ‹gap› Cancel · default |
+| GNOME         | Cancel · other · default     |
+| ChromeOS, web | other · Cancel · default     |
 
 - `hlm-dialog-footer` and `hlm-alert-dialog-footer` get this automatically. Add `snDialogButtons` only to other button rows, such as a card footer (`<div hlmCardFooter snDialogButtons>`).
 - A row with neither a default nor a cancel button keeps its source order.

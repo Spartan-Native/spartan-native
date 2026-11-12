@@ -13,7 +13,14 @@ describe('menu model', () => {
   it('gives every item with an action an id and maps it back', () => {
     const run = () => undefined;
     const { menu, actions } = toHostMenu([
-      { label: 'File', submenu: [{ label: 'New', accelerator: 'mod+n', action: run }, { type: 'separator' }, { id: 'quit-it', label: 'Quit', action: run }] },
+      {
+        label: 'File',
+        submenu: [
+          { label: 'New', accelerator: 'mod+n', action: run },
+          { type: 'separator' },
+          { id: 'quit-it', label: 'Quit', action: run },
+        ],
+      },
       { role: 'editMenu' },
     ]);
     const file = menu[0].submenu!;
@@ -29,7 +36,16 @@ describe('menu model', () => {
     const minimize = vi.fn();
     const items: SnMenuItem[] = [
       { role: 'appMenu' },
-      { label: 'File', submenu: [{ role: 'hide' }, { type: 'separator' }, { label: 'Open', action: () => undefined }, { type: 'separator' }, { role: 'quit' }] },
+      {
+        label: 'File',
+        submenu: [
+          { role: 'hide' },
+          { type: 'separator' },
+          { label: 'Open', action: () => undefined },
+          { type: 'separator' },
+          { role: 'quit' },
+        ],
+      },
       { role: 'editMenu' },
       { role: 'windowMenu' },
       { role: 'about' },
@@ -37,10 +53,23 @@ describe('menu model', () => {
     const win = inPageMenu(items, 'windows', { minimize });
     expect(win.map((i) => i.label)).toEqual(['File', 'Edit', 'Window']);
     expect(win[0].submenu!.map((i) => i.label ?? '—')).toEqual(['Open']); // no close in the host: no Exit
-    expect(win[1].submenu!.map((i) => i.label ?? '—')).toEqual(['Undo', 'Redo', '—', 'Cut', 'Copy', 'Paste', 'Select all']);
+    expect(win[1].submenu!.map((i) => i.label ?? '—')).toEqual([
+      'Undo',
+      'Redo',
+      '—',
+      'Cut',
+      'Copy',
+      'Paste',
+      'Select all',
+    ]);
     expect(win[1].submenu![1].accelerator).toBe('mod+y');
     const windowMenu = win[2].submenu!;
-    expect(windowMenu.map((i) => (i.label ? `${i.label}${i.enabled === false ? ' (off)' : ''}` : '—'))).toEqual(['Minimize', 'Maximize (off)', '—', 'Close (off)']);
+    expect(windowMenu.map((i) => (i.label ? `${i.label}${i.enabled === false ? ' (off)' : ''}` : '—'))).toEqual([
+      'Minimize',
+      'Maximize (off)',
+      '—',
+      'Close (off)',
+    ]);
     windowMenu[0].action!();
     expect(minimize).toHaveBeenCalled();
 
@@ -55,7 +84,9 @@ describe('menu model', () => {
     expect(matchesAccelerator(key('n', { ctrlKey: true }), 'mod+n', 'windows')).toBe(true);
     expect(matchesAccelerator(key('n', { metaKey: true }), 'mod+n', 'windows')).toBe(false);
     expect(matchesAccelerator(key('n', { metaKey: true }), 'mod+n', 'macos')).toBe(true);
-    expect(matchesAccelerator(key('S', { ctrlKey: true, shiftKey: true, code: 'KeyS' }), 'mod+shift+s', 'linux')).toBe(true);
+    expect(matchesAccelerator(key('S', { ctrlKey: true, shiftKey: true, code: 'KeyS' }), 'mod+shift+s', 'linux')).toBe(
+      true,
+    );
     expect(matchesAccelerator(key('n', { ctrlKey: true, shiftKey: true }), 'mod+n', 'windows')).toBe(false);
     expect(matchesAccelerator(key('Delete'), 'delete', 'windows')).toBe(true);
     expect(matchesAccelerator(key('F2'), 'f2', 'windows')).toBe(true);
@@ -65,7 +96,10 @@ describe('menu model', () => {
 /** A host with native menus, recording what it was sent. */
 function fakeTheme(level: 'native' | 'none' = 'native') {
   const listeners = new Set<(id: string) => void>();
-  const sent: { app: MenuItem[][]; context: { menu: MenuItem[]; at: { x: number; y: number } }[] } = { app: [], context: [] };
+  const sent: { app: MenuItem[][]; context: { menu: MenuItem[]; at: { x: number; y: number } }[] } = {
+    app: [],
+    context: [],
+  };
   const skin = signal('win');
   const native = signal<string | null>(null); // the real OS, when it differs from the skin
   const theme = {
@@ -77,7 +111,10 @@ function fakeTheme(level: 'native' | 'none' = 'native') {
     window: { minimize: vi.fn(async () => undefined) },
     menus: {
       setApplicationMenu: vi.fn(async (menu: readonly MenuItem[]) => void sent.app.push([...menu])),
-      showContextMenu: vi.fn(async (menu: readonly MenuItem[], at: { x: number; y: number }) => void sent.context.push({ menu: [...menu], at })),
+      showContextMenu: vi.fn(
+        async (menu: readonly MenuItem[], at: { x: number; y: number }) =>
+          void sent.context.push({ menu: [...menu], at }),
+      ),
       onAction: (cb: (id: string) => void) => {
         listeners.add(cb);
         return () => listeners.delete(cb);
@@ -107,7 +144,12 @@ class Host {
       submenu: [
         { label: 'New backup', accelerator: 'mod+n', action: () => this.log.update((l) => [...l, 'new']) },
         { label: 'Wrap', type: 'checkbox', checked: this.wrap(), action: () => this.wrap.update((w) => !w) },
-        { label: 'Disabled', enabled: false, accelerator: 'mod+d', action: () => this.log.update((l) => [...l, 'disabled']) },
+        {
+          label: 'Disabled',
+          enabled: false,
+          accelerator: 'mod+d',
+          action: () => this.log.update((l) => [...l, 'disabled']),
+        },
       ],
     },
     { role: 'windowMenu' },
@@ -133,8 +175,14 @@ async function setup(skin: string, theme?: ReturnType<typeof fakeTheme>['theme']
 }
 
 const overlayItems = () =>
-  [...document.querySelectorAll<HTMLElement>('.cdk-overlay-container [data-slot="dropdown-menu"]:last-of-type [role^="menuitem"]')].map((i) =>
-    [i.querySelector('.sn-menu-label')!.textContent!.trim(), i.querySelector('kbd')?.textContent].filter(Boolean).join(' '),
+  [
+    ...document.querySelectorAll<HTMLElement>(
+      '.cdk-overlay-container [data-slot="dropdown-menu"]:last-of-type [role^="menuitem"]',
+    ),
+  ].map((i) =>
+    [i.querySelector('.sn-menu-label')!.textContent!.trim(), i.querySelector('kbd')?.textContent]
+      .filter(Boolean)
+      .join(' '),
   );
 
 describe('SnMenubar', () => {
@@ -239,7 +287,13 @@ describe('SnContextMenu', () => {
   it('opens an in-page menu at the pointer without native menus', async () => {
     const { el, fixture, host } = await setup('win');
     const target = el.querySelector<HTMLElement>('#target')!;
-    const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true, button: 2, clientX: 40, clientY: 50 });
+    const event = new MouseEvent('contextmenu', {
+      bubbles: true,
+      cancelable: true,
+      button: 2,
+      clientX: 40,
+      clientY: 50,
+    });
     target.dispatchEvent(event);
     await fixture.whenStable();
     expect(event.defaultPrevented).toBe(true);
@@ -252,7 +306,13 @@ describe('SnContextMenu', () => {
   it('shows the OS context menu through the host', async () => {
     const { theme, sent, choose } = fakeTheme();
     const { el, fixture, host } = await setup('win', theme);
-    const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true, button: 2, clientX: 40, clientY: 50 });
+    const event = new MouseEvent('contextmenu', {
+      bubbles: true,
+      cancelable: true,
+      button: 2,
+      clientX: 40,
+      clientY: 50,
+    });
     el.querySelector('#target')!.dispatchEvent(event);
     await fixture.whenStable();
     await flush();

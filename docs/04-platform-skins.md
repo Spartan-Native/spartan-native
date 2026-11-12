@@ -4,15 +4,15 @@
 
 Seven skins read one set of tokens. Components stay the same, while geometry, materials and states follow each platform. Each skin is a class on the root (`t-win`, `t-w10`, `t-mac`, `t-macc`, `t-gtk`, `t-qt`, `t-cros`), plus `dark`, `rt` (reduced transparency) and `inactive` (window not focused). `w10` and `macc` add to their parent skin: `t-win t-w10` and `t-mac t-macc`.
 
-| Skin | Root classes | Folder in `styles/skins/` |
-| --- | --- | --- |
-| `win` | `t-win` | `win11/` |
-| `w10` | `t-win t-w10` | `win10/` (overrides on top of `win11/`) |
-| `mac` | `t-mac` | `macos26/` |
+| Skin   | Root classes   | Folder in `styles/skins/`                         |
+| ------ | -------------- | ------------------------------------------------- |
+| `win`  | `t-win`        | `win11/`                                          |
+| `w10`  | `t-win t-w10`  | `win10/` (overrides on top of `win11/`)           |
+| `mac`  | `t-mac`        | `macos26/`                                        |
 | `macc` | `t-mac t-macc` | `macos-classic/` (overrides on top of `macos26/`) |
-| `gtk` | `t-gtk` | `gtk/` |
-| `qt` | `t-qt` | `kde/` |
-| `cros` | `t-cros` | `chromeos/` |
+| `gtk`  | `t-gtk`        | `gtk/`                                            |
+| `qt`   | `t-qt`         | `kde/`                                            |
+| `cros` | `t-cros`       | `chromeos/`                                       |
 
 The skins were ported from the mockups' CSS, which is archived in [`reference/component-skins.mockup.css`](reference/component-skins.mockup.css).
 
@@ -62,10 +62,10 @@ The Windows 10 skin uses square corners and 2px borders. Neutral buttons are fil
 
 ## Shortcut glyphs
 
-| | mac / macc | all others |
-| --- | --- | --- |
-| Modifier prefix | `⌘` | `Ctrl+` |
-| Delete | `⌘⌫` | `Del` |
-| Rename | `↩` | `F2` |
+|                 | mac / macc | all others |
+| --------------- | ---------- | ---------- |
+| Modifier prefix | `⌘`        | `Ctrl+`    |
+| Delete          | `⌘⌫`       | `Del`      |
+| Rename          | `↩`        | `F2`       |
 
 `snShortcut` in `@spartan-native/desktop-ui` writes these, following the real OS rather than the skin.

@@ -12,7 +12,9 @@
       --normal-border: var(--sn-color-glass-border);
       --sn-toast-radius: var(--sn-radius-surface);
       @include glass(var(--sn-shadow-overlay));
-      box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), var(--sn-shadow-overlay) !important;
+      box-shadow:
+        inset 0 1px 0 var(--sn-color-glass-highlight),
+        var(--sn-shadow-overlay) !important;
     }
 
     #{h.$toast-action} {

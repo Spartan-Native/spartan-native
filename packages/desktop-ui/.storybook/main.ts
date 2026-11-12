@@ -5,7 +5,10 @@ const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(ts|mdx)'],
   addons: [
     // remark-gfm: GitHub-style Markdown (tables, task lists) in the MDX docs pages
-    { name: '@storybook/addon-docs', options: { mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } } } },
+    {
+      name: '@storybook/addon-docs',
+      options: { mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } } },
+    },
     '@storybook/addon-a11y',
     '@storybook/addon-themes',
   ],

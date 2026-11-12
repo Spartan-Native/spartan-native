@@ -79,14 +79,14 @@ const [file] = (await host.dialogs?.openFile({ filters: [{ name: 'Images', exten
 
 ## Skins
 
-| `Skin` | OS | Root classes |
-| --- | --- | --- |
-| `win` / `w10` | Windows 11 / 10 | `t-win` / `t-win t-w10` |
-| `mac` / `macc` | macOS 26 / 13–15 | `t-mac` / `t-mac t-macc` |
-| `gtk` | GNOME (Adwaita) | `t-gtk` |
-| `qt` | KDE Plasma (Breeze) | `t-qt` |
-| `cros` | ChromeOS (Material 3) | `t-cros` |
-| `web` | unknown OS, no skin sheet | none |
+| `Skin`         | OS                        | Root classes             |
+| -------------- | ------------------------- | ------------------------ |
+| `win` / `w10`  | Windows 11 / 10           | `t-win` / `t-win t-w10`  |
+| `mac` / `macc` | macOS 26 / 13–15          | `t-mac` / `t-mac t-macc` |
+| `gtk`          | GNOME (Adwaita)           | `t-gtk`                  |
+| `qt`           | KDE Plasma (Breeze)       | `t-qt`                   |
+| `cros`         | ChromeOS (Material 3)     | `t-cros`                 |
+| `web`          | unknown OS, no skin sheet | none                     |
 
 State classes on `<html>`: `dark`, `rt` (reduce transparency), `inactive` (window unfocused), `hc` (more/forced contrast), `reduce-motion`. `<html>` also has `data-sn-skin="<skin>"`.
 
@@ -96,7 +96,7 @@ State classes on `<html>`: `dark`, `rt` (reduce transparency), `inactive` (windo
 2. **Size with rem or the theme's tokens**, not px, so the OS text size (`--sn-text-scale`) scales your UI. Useful tokens: `--sn-control-height`, `--sn-radius-control|surface|overlay`, `--sn-font-size`, `--sn-font-size-small`, `--sn-dialog-padding`, `--sn-row-height`.
 3. **Use the material classes for the app frame:** `sn-window`, `sn-sidebar`, `sn-content`, `sn-glass`, `sn-chrome` (dims with the inactive window), `sn-list-item`. For status tints on `hlmBadge` or `hlmAlert`, use `sn-tone-success|warning|danger|accent`.
 4. **Use spartan's variants for intent.** `outline` is the platform's standard button, `default` is the accent/suggested action, and `ghost` is flat. Don't restyle components per OS in app code; the skins already do that.
-5. **Per-OS logic belongs in templates** through `*snPlatformIf` (desktop-ui) or `injectSkin()`, not in user-agent sniffing. The skin is the *look*; for *behavior* that follows the real OS (keys, native window buttons) use `injectPlatformFamily()`.
+5. **Per-OS logic belongs in templates** through `*snPlatformIf` (desktop-ui) or `injectSkin()`, not in user-agent sniffing. The skin is the _look_; for _behavior_ that follows the real OS (keys, native window buttons) use `injectPlatformFamily()`.
 6. **Don't persist the appearance yourself.** Use `provideSpartanNative({ persist: true })` instead of mirroring `override()` into storage.
 7. **Cascade:** all theme CSS sits in `@layer spartan-native`, after Tailwind's `utilities`. Your unlayered CSS beats the skins, so keep overrides minimal and token-based.
 8. **Never use `!important`** to fight a skin. If a skin is wrong, fix the token or the skin file.

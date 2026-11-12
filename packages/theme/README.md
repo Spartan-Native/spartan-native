@@ -32,15 +32,15 @@ export const appConfig: ApplicationConfig = {
 ```ts
 // anywhere: the live appearance as signals
 const theme = inject(SpartanNativeTheme);
-theme.skin();                       // 'win' | 'mac' | 'gtk' | …
+theme.skin(); // 'win' | 'mac' | 'gtk' | …
 theme.override({ scheme: 'dark' }); // e.g. from an in-app settings screen
-theme.followSystem();               // back to the OS values
+theme.followSystem(); // back to the OS values
 
 // keep the user's choice between launches (applied before the first render)
 provideSpartanNative({ host, persist: true });
 
 // the real OS, whatever skin the user picked: for keys and native window buttons
-theme.platformFamily();             // 'macos' on a Mac dressed as Windows
+theme.platformFamily(); // 'macos' on a Mac dressed as Windows
 ```
 
 Without Angular (or before bootstrap), `applySpartanNative(element, appearance)` does the same on any element. The static palettes in `contract/_palette-defaults.scss` make it work as plain CSS too: `<html class="t-gtk dark" data-sn-skin="gtk">`.
@@ -102,13 +102,15 @@ Every skin file has the same shape: tokens set the numbers, components read toke
       color: var(--sn-color-primary-fg);
       border-bottom-color: var(--sn-color-primary-edge);
 
-      &:hover { background: color-mix(in srgb, var(--sn-color-primary) 90%, var(--sn-color-bg)); }
+      &:hover {
+        background: color-mix(in srgb, var(--sn-color-primary) 90%, var(--sn-color-bg));
+      }
     }
   }
 }
 ```
 
-**Variant mapping:** spartan `outline` → the platform's *standard* button, `default` → accent / suggested action, `ghost` → flat / subtle.
+**Variant mapping:** spartan `outline` → the platform's _standard_ button, `default` → accent / suggested action, `ghost` → flat / subtle.
 
 ### Adding a component skin
 
@@ -135,9 +137,9 @@ It shows only the **stock spartan/ui components**, themed:
 | Light / dark | Storybook's theme switcher (toolbar) |
 | System accent | toolbar select with a swatch per preset, plus a picker for any color |
 
-Stories (*Theme/Spartan components*, the skinned ones): **All components**, Buttons, Text fields & select, Switch/checkbox/radio, Slider/progress/tabs, Card & badges, Alerts, Table/separator/field, and **Menus, dialogs & tooltips** (an inline menu panel, plus a dropdown, select list, dialog, alert dialog and tooltips to open).
+Stories (_Theme/Spartan components_, the skinned ones): **All components**, Buttons, Text fields & select, Switch/checkbox/radio, Slider/progress/tabs, Card & badges, Alerts, Table/separator/field, and **Menus, dialogs & tooltips** (an inline menu panel, plus a dropdown, select list, dialog, alert dialog and tooltips to open).
 
-*Theme/Spartan catalog* uses every other component the spartan CLI generates (43 more, in `src/stories/support/catalog-*.ts`): combobox, autocomplete, native select, calendar, date picker, input group, OTP, kbd, toggle, toggle group, button group, menubar, breadcrumb, pagination, navigation menu, popover, hover card, context menu, sheet, drawer, toast, command, accordion, collapsible, avatar, item, empty, skeleton, spinner, typography, aspect ratio, scroll area, resizable, carousel, sidebar, message, bubble, message scroller, attachment, code block, marker, trace, questionnaire and chart. Most have no platform skin yet: they follow the palette, font and text size, and keep spartan's stock shapes.
+_Theme/Spartan catalog_ uses every other component the spartan CLI generates (43 more, in `src/stories/support/catalog-*.ts`): combobox, autocomplete, native select, calendar, date picker, input group, OTP, kbd, toggle, toggle group, button group, menubar, breadcrumb, pagination, navigation menu, popover, hover card, context menu, sheet, drawer, toast, command, accordion, collapsible, avatar, item, empty, skeleton, spinner, typography, aspect ratio, scroll area, resizable, carousel, sidebar, message, bubble, message scroller, attachment, code block, marker, trace, questionnaire and chart. Most have no platform skin yet: they follow the palette, font and text size, and keep spartan's stock shapes.
 
 ### The `@spartan-native/theme/storybook` entry point
 
@@ -194,7 +196,4 @@ npm run test:visual -- --update-snapshots    # accept an intended change (review
 npx playwright show-report dist/playwright-report
 ```
 
-`e2e/visual.spec.ts` takes 91 screenshots: every skin in light and dark, with reduced transparency, more contrast,
-an inactive window and 200 % text, plus the dropdown menu, select list, dialog, alert dialog and tooltip actually
-opened. `e2e/catalog.spec.ts` adds 273 more: every catalog story on every skin in light and dark, plus each popup (combobox, autocomplete, date picker, menubar, navigation menu, popover, hover card, context menu, sheet, drawer, toast) opened. The tolerance is zero differing pixels. Baselines live in `e2e/__screenshots__/<platform>/`: fonts differ per
-OS, so record them on the machine (or CI image) that checks them. On a new machine run `npx playwright install chromium` once.
+`e2e/visual.spec.ts` takes 91 screenshots: every skin in light and dark, with reduced transparency, more contrast, an inactive window and 200 % text, plus the dropdown menu, select list, dialog, alert dialog and tooltip actually opened. `e2e/catalog.spec.ts` adds 273 more: every catalog story on every skin in light and dark, plus each popup (combobox, autocomplete, date picker, menubar, navigation menu, popover, hover card, context menu, sheet, drawer, toast) opened. The tolerance is zero differing pixels. Baselines live in `e2e/__screenshots__/<platform>/`: fonts differ per OS, so record them on the machine (or CI image) that checks them. On a new machine run `npx playwright install chromium` once.

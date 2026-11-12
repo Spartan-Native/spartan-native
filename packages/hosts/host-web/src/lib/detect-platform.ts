@@ -51,7 +51,12 @@ export function fromClientHints(platform: string, version: string | null): Platf
   switch (platform.toLowerCase()) {
     case 'windows':
       // Client Hints: 1–10 = Windows 10, ≥ 13 = Windows 11
-      return info('windows', version, version ? 'exact' : 'hint', Number.isFinite(major) && major > 0 && major < 13 ? 'w10' : 'win');
+      return info(
+        'windows',
+        version,
+        version ? 'exact' : 'hint',
+        Number.isFinite(major) && major > 0 && major < 13 ? 'w10' : 'win',
+      );
     case 'macos':
       return info('macos', version, version ? 'exact' : 'hint');
     case 'chrome os':

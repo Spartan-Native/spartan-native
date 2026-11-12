@@ -48,7 +48,8 @@ describe('SnSplitButton', () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const action = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
-    const down = (altKey: boolean) => action.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', altKey, bubbles: true }));
+    const down = (altKey: boolean) =>
+      action.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', altKey, bubbles: true }));
 
     down(false);
     await fixture.whenStable();

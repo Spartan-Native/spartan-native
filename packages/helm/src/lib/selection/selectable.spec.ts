@@ -42,7 +42,9 @@ describe('snSelectable', () => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.selection.set(['Notes.md']);
     await fixture.whenStable();
-    const rows = Array.from(fixture.nativeElement.querySelectorAll('[data-slot="sn-selectable-item"]')) as HTMLElement[];
+    const rows = Array.from(
+      fixture.nativeElement.querySelectorAll('[data-slot="sn-selectable-item"]'),
+    ) as HTMLElement[];
     expect(fixture.componentInstance.selection()).toEqual(['Notes.md']);
     expect(rows[1].hasAttribute('data-selected')).toBe(true);
 

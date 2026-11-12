@@ -61,7 +61,13 @@ describe('SpartanNativeTheme · platform and persistence', () => {
   it('stores overrides and reads them back before the first render', async () => {
     const storage = memory();
     TestBed.configureTestingModule({
-      providers: [provideSpartanNative({ host: staticHost({ skin: 'gtk' }), overrides: { scheme: 'light' }, persist: { storage } })],
+      providers: [
+        provideSpartanNative({
+          host: staticHost({ skin: 'gtk' }),
+          overrides: { scheme: 'light' },
+          persist: { storage },
+        }),
+      ],
     });
     const theme = TestBed.inject(SpartanNativeTheme);
     theme.override({ skin: 'qt', scheme: 'dark' });
@@ -71,7 +77,13 @@ describe('SpartanNativeTheme · platform and persistence', () => {
     // a new app: the stored choice wins over options.overrides
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      providers: [provideSpartanNative({ host: staticHost({ skin: 'gtk' }), overrides: { scheme: 'light' }, persist: { storage } })],
+      providers: [
+        provideSpartanNative({
+          host: staticHost({ skin: 'gtk' }),
+          overrides: { scheme: 'light' },
+          persist: { storage },
+        }),
+      ],
     });
     const next = TestBed.inject(SpartanNativeTheme);
     expect(next.overrides()).toEqual({ skin: 'qt', scheme: 'dark' });

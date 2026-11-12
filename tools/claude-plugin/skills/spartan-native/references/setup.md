@@ -72,8 +72,8 @@ Start the root component from `templates/shell`. It renders:
 
 ```ts
 const theme = inject(SpartanNativeTheme);
-theme.override({ scheme: 'dark' });       // or { accent: '#0a84ff' }, { skin: 'mac' }
-theme.followSystem();                      // back to the OS
+theme.override({ scheme: 'dark' }); // or { accent: '#0a84ff' }, { skin: 'mac' }
+theme.followSystem(); // back to the OS
 ```
 
 Live state is on the same service as signals: `theme.skin()`, `theme.scheme()`, `theme.platform()`, `theme.focused()`.

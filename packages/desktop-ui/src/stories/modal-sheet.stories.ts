@@ -11,7 +11,15 @@ import { SnTitleBar } from '../lib/window/title-bar';
 /** A Harbor window (title bar + destinations list) that owns the sheet, so the macOS sheet hangs from its title bar. */
 @Component({
   selector: 'sn-modal-sheet-demo',
-  imports: [HlmButtonImports, HlmInputImports, HlmLabelImports, HlmSelectImports, HlmSwitchImports, SnModalSheet, SnTitleBar],
+  imports: [
+    HlmButtonImports,
+    HlmInputImports,
+    HlmLabelImports,
+    HlmSelectImports,
+    HlmSwitchImports,
+    SnModalSheet,
+    SnTitleBar,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="sn-window window" snSheetHost>
@@ -62,13 +70,45 @@ import { SnTitleBar } from '../lib/window/title-bar';
     </div>
   `,
   styles: `
-    .window { max-width: 40rem; }
-    .body { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.5rem; min-height: 22rem; background: var(--sn-color-bg); }
-    ul { align-self: stretch; margin: 0; padding: 0; list-style: none; }
-    li { display: flex; align-items: center; justify-content: space-between; padding: 0.25rem 0; border-bottom: 1px solid var(--sn-color-border); }
-    .field { display: flex; flex-direction: column; gap: 0.375rem; }
-    .row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-    .text { margin: 0; }
+    .window {
+      max-width: 40rem;
+    }
+    .body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.5rem;
+      min-height: 22rem;
+      background: var(--sn-color-bg);
+    }
+    ul {
+      align-self: stretch;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.25rem 0;
+      border-bottom: 1px solid var(--sn-color-border);
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .text {
+      margin: 0;
+    }
   `,
 })
 class ModalSheetDemo {
@@ -119,5 +159,7 @@ export const OpenedByButton: StoryObj = {
 
 export const DestructiveConfirmation: StoryObj = {
   name: 'Destructive confirmation',
-  render: () => ({ template: `<div style="padding: 2rem"><sn-modal-sheet-demo [startOpen]="true" [confirm]="true" /></div>` }),
+  render: () => ({
+    template: `<div style="padding: 2rem"><sn-modal-sheet-demo [startOpen]="true" [confirm]="true" /></div>`,
+  }),
 };

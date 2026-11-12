@@ -59,8 +59,20 @@ export type Capability =
 
 /** Every capability, in matrix order. Adapters and the conformance suite iterate this. */
 export const CAPABILITIES: readonly Capability[] = [
-  'systemAccent', 'colorScheme', 'highContrast', 'reduceTransparency', 'textScale', 'windowFocus', 'windowMaterial',
-  'customTitleBar', 'nativeMenus', 'notifications', 'taskbarProgress', 'fileDialogs', 'osVersion', 'linuxDesktop',
+  'systemAccent',
+  'colorScheme',
+  'highContrast',
+  'reduceTransparency',
+  'textScale',
+  'windowFocus',
+  'windowMaterial',
+  'customTitleBar',
+  'nativeMenus',
+  'notifications',
+  'taskbarProgress',
+  'fileDialogs',
+  'osVersion',
+  'linuxDesktop',
 ];
 
 export type CapabilityLevel = 'native' | 'partial' | 'none';
@@ -110,8 +122,24 @@ export type MenuRole =
   | 'toggleFullscreen';
 
 export const MENU_ROLES: readonly MenuRole[] = [
-  'appMenu', 'editMenu', 'windowMenu', 'about', 'hide', 'hideOthers', 'showAll', 'quit', 'undo', 'redo',
-  'cut', 'copy', 'paste', 'selectAll', 'minimize', 'zoom', 'close', 'toggleFullscreen',
+  'appMenu',
+  'editMenu',
+  'windowMenu',
+  'about',
+  'hide',
+  'hideOthers',
+  'showAll',
+  'quit',
+  'undo',
+  'redo',
+  'cut',
+  'copy',
+  'paste',
+  'selectAll',
+  'minimize',
+  'zoom',
+  'close',
+  'toggleFullscreen',
 ];
 
 /**

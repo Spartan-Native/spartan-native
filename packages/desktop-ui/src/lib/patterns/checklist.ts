@@ -51,7 +51,9 @@ export class SnChecklist {
       }
     </span>
     <div class="text">
-      <span class="title">{{ title() }}<span class="state"> ({{ done() ? doneLabel() : todoLabel() }})</span></span>
+      <span class="title"
+        >{{ title() }}<span class="state"> ({{ done() ? doneLabel() : todoLabel() }})</span></span
+      >
       <div class="description"><ng-content /></div>
     </div>
     <div class="action"><ng-content select="[snChecklistAction]" /></div>

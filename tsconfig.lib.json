@@ -2,24 +2,12 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "@spartan-native/desktop-ui": [
-        "./dist/desktop-ui"
-      ],
-      "@spartan-native/helm": [
-        "./dist/helm"
-      ],
-      "@spartan-native/host-conformance": [
-        "./dist/host-conformance"
-      ],
-      "@spartan-native/host-electron": [
-        "./dist/host-electron"
-      ],
-      "@spartan-native/host-web": [
-        "./dist/host-web"
-      ],
-      "@spartan-native/theme": [
-        "./dist/theme"
-      ]
+      "@spartan-native/desktop-ui": ["./dist/desktop-ui"],
+      "@spartan-native/helm": ["./dist/helm"],
+      "@spartan-native/host-conformance": ["./dist/host-conformance"],
+      "@spartan-native/host-electron": ["./dist/host-electron"],
+      "@spartan-native/host-web": ["./dist/host-web"],
+      "@spartan-native/theme": ["./dist/theme"]
     }
   }
 }

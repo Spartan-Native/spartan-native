@@ -212,14 +212,16 @@ export class SnSelectable<K = unknown> implements SelectableParent<K> {
 
     switch (event.key) {
       case 'ArrowDown':
-        next = mac && event.metaKey
-          ? selectionMoveTo(state, keys, keys.length - 1, { range: mods.range }, multiple)
-          : selectionMoveBy(state, keys, 1, mods, multiple);
+        next =
+          mac && event.metaKey
+            ? selectionMoveTo(state, keys, keys.length - 1, { range: mods.range }, multiple)
+            : selectionMoveBy(state, keys, 1, mods, multiple);
         break;
       case 'ArrowUp':
-        next = mac && event.metaKey
-          ? selectionMoveTo(state, keys, 0, { range: mods.range }, multiple)
-          : selectionMoveBy(state, keys, -1, mods, multiple);
+        next =
+          mac && event.metaKey
+            ? selectionMoveTo(state, keys, 0, { range: mods.range }, multiple)
+            : selectionMoveBy(state, keys, -1, mods, multiple);
         break;
       case 'Home':
         next = selectionMoveTo(state, keys, 0, mods, multiple);
@@ -267,7 +269,11 @@ export class SnSelectable<K = unknown> implements SelectableParent<K> {
 
     const items = this.items();
     const current = items.findIndex((i) => i.value() === this.cursor().active);
-    const index = typeaheadIndex(items.map((i) => i.typeaheadLabel()), this.typeahead, current);
+    const index = typeaheadIndex(
+      items.map((i) => i.typeaheadLabel()),
+      this.typeahead,
+      current,
+    );
     if (index >= 0) this.apply(selectionMoveTo(this.state(), this.keys(), index, {}, this.multiple()));
   }
 
@@ -306,4 +312,4 @@ function isEditable(target: EventTarget | null, host: EventTarget | null): boole
   );
 }
 
-export const SnSelectableImports =[SnSelectable, SnSelectableItem] as const;
+export const SnSelectableImports = [SnSelectable, SnSelectableItem] as const;

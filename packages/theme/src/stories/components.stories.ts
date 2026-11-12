@@ -20,7 +20,17 @@ const meta: Meta = {
   title: 'Theme/Spartan components',
   decorators: [
     moduleMetadata({
-      imports: [AlertsShowcase, TableFormShowcase, AllShowcases, ButtonsShowcase, CardBadgesShowcase, FieldsShowcase, ProgressTabsShowcase, SelectionShowcase, OverlaysShowcase],
+      imports: [
+        AlertsShowcase,
+        TableFormShowcase,
+        AllShowcases,
+        ButtonsShowcase,
+        CardBadgesShowcase,
+        FieldsShowcase,
+        ProgressTabsShowcase,
+        SelectionShowcase,
+        OverlaysShowcase,
+      ],
     }),
   ],
 };

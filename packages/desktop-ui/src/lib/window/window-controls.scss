@@ -19,7 +19,9 @@ button {
   background: transparent;
   color: inherit;
   cursor: default;
-  transition: background-color var(--sn-duration-fast) var(--sn-easing), color var(--sn-duration-fast) var(--sn-easing);
+  transition:
+    background-color var(--sn-duration-fast) var(--sn-easing),
+    color var(--sn-duration-fast) var(--sn-easing);
 
   &:focus-visible {
     outline: var(--sn-focus-outline);
@@ -104,9 +106,15 @@ svg {
     color: rgb(0 0 0 / 0.55);
 
     // the light colors are fixed by AppKit, not the accent
-    &.close { background: #ff5f57; }
-    &.minimize { background: #febc2e; }
-    &.zoom { background: #28c840; }
+    &.close {
+      background: #ff5f57;
+    }
+    &.minimize {
+      background: #febc2e;
+    }
+    &.zoom {
+      background: #28c840;
+    }
 
     svg {
       width: 0.5rem;

@@ -44,7 +44,8 @@
   }
 
   // Desktop apps use the arrow cursor on controls, not the web's hand pointer…
-  [data-sn-skin] :is(button, [role='button'], [role='tab'], [role='switch'], [role='checkbox'], [role='radio'], label, summary) {
+  [data-sn-skin]
+    :is(button, [role='button'], [role='tab'], [role='switch'], [role='checkbox'], [role='radio'], label, summary) {
     cursor: default;
   }
 

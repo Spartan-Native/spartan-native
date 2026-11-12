@@ -14,20 +14,33 @@ import { SnSplitButtonImports } from '../lib/controls/split-button';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="row">
-      <sn-split-button label="Back up now" icon="lucideCloudUpload" variant="accent" (triggered)="log.set('Back up now')">
+      <sn-split-button
+        label="Back up now"
+        icon="lucideCloudUpload"
+        variant="accent"
+        (triggered)="log.set('Back up now')"
+      >
         <ng-template snSplitButtonMenu>
           <div hlmDropdownMenu class="menu">
-            <button hlmDropdownMenuItem (triggered)="log.set('Back up Documents only')"><ng-icon name="lucideFolder" /> Documents only</button>
-            <button hlmDropdownMenuItem (triggered)="log.set('Back up Photos only')"><ng-icon name="lucideFolder" /> Photos only</button>
+            <button hlmDropdownMenuItem (triggered)="log.set('Back up Documents only')">
+              <ng-icon name="lucideFolder" /> Documents only
+            </button>
+            <button hlmDropdownMenuItem (triggered)="log.set('Back up Photos only')">
+              <ng-icon name="lucideFolder" /> Photos only
+            </button>
             <hlm-dropdown-menu-separator />
-            <button hlmDropdownMenuItem (triggered)="log.set('Verify last backup')"><ng-icon name="lucideShieldCheck" /> Verify last backup</button>
+            <button hlmDropdownMenuItem (triggered)="log.set('Verify last backup')">
+              <ng-icon name="lucideShieldCheck" /> Verify last backup
+            </button>
           </div>
         </ng-template>
       </sn-split-button>
       <sn-split-button label="Restore" icon="lucideHistory" (triggered)="log.set('Restore')">
         <ng-template snSplitButtonMenu>
           <div hlmDropdownMenu class="menu">
-            <button hlmDropdownMenuItem (triggered)="log.set('Restore to original location')">To the original location</button>
+            <button hlmDropdownMenuItem (triggered)="log.set('Restore to original location')">
+              To the original location
+            </button>
             <button hlmDropdownMenuItem (triggered)="log.set('Restore to…')">To another folder…</button>
           </div>
         </ng-template>
@@ -37,9 +50,20 @@ import { SnSplitButtonImports } from '../lib/controls/split-button';
     <p class="log">Last action: {{ log() }}</p>
   `,
   styles: `
-    .row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
-    .menu { min-width: 14rem; }
-    .log { margin: 1rem 0 0; color: var(--sn-color-fg-muted); font-size: var(--sn-font-size-small); }
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .menu {
+      min-width: 14rem;
+    }
+    .log {
+      margin: 1rem 0 0;
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
   `,
 })
 class SplitButtonDemo {

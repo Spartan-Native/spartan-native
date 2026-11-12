@@ -53,7 +53,10 @@ let nextId = 0;
   styleUrl: './sidebar-nav.scss',
 })
 export class SnSidebarNav {
-  private readonly items = contentChildren(forwardRef(() => SnSidebarItem), { descendants: true });
+  private readonly items = contentChildren(
+    forwardRef(() => SnSidebarItem),
+    { descendants: true },
+  );
   /** The item that keeps the single Tab stop: the last focused one, else the active one, else the first. */
   private readonly focused = signal<SnSidebarItem | null>(null);
   readonly tabStop = computed(() => {

@@ -36,8 +36,16 @@
   // Alerts take a tone as a tint, not a fill: each skin mixes --sn-alert-tone
   // into its own surface (<div hlmAlert class="sn-tone-warning">).
   #{h.$alert-destructive},
-  #{h.$alert}.sn-tone-danger { --sn-alert-tone: var(--sn-color-danger); }
-  #{h.$alert}.sn-tone-success { --sn-alert-tone: var(--sn-color-success); }
-  #{h.$alert}.sn-tone-warning { --sn-alert-tone: var(--sn-color-warning); }
-  #{h.$alert}.sn-tone-accent { --sn-alert-tone: var(--sn-color-primary); }
+  #{h.$alert}.sn-tone-danger {
+    --sn-alert-tone: var(--sn-color-danger);
+  }
+  #{h.$alert}.sn-tone-success {
+    --sn-alert-tone: var(--sn-color-success);
+  }
+  #{h.$alert}.sn-tone-warning {
+    --sn-alert-tone: var(--sn-color-warning);
+  }
+  #{h.$alert}.sn-tone-accent {
+    --sn-alert-tone: var(--sn-color-primary);
+  }
 }

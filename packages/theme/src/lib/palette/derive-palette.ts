@@ -82,7 +82,14 @@ const NEUTRALS: Record<Base, Record<ColorScheme, [string, string, string]>> = {
 };
 
 const BASE_OF: Record<Skin, Base> = {
-  win: 'win', w10: 'win', mac: 'mac', macc: 'mac', gtk: 'gtk', cros: 'gtk', qt: 'qt', web: 'gtk',
+  win: 'win',
+  w10: 'win',
+  mac: 'mac',
+  macc: 'mac',
+  gtk: 'gtk',
+  cros: 'gtk',
+  qt: 'qt',
+  web: 'gtk',
 };
 
 /** Semantic color at a fixed hue that borrows the accent's saturation and lightness. */
@@ -179,26 +186,81 @@ function material3(t: Palette, acc: string, dark: boolean): Palette {
   const sc = Math.max(0.35, Math.min(0.8, s));
   const T = (sat: number, l: number) => fromHsl(h, sat, l);
   const c = dark
-    ? { primary: T(sc, 0.8), pfg: T(sc, 0.2), pc: T(sc, 0.3), opc: T(sc, 0.9), scn: T(0.2, 0.3), osc: T(0.25, 0.88),
-        surface: T(0.12, 0.07), low: T(0.1, 0.1), cont: T(0.1, 0.12), high: T(0.1, 0.15), highest: T(0.1, 0.18),
-        on: T(0.08, 0.9), onv: T(0.08, 0.8), outline: T(0.06, 0.58), ov: T(0.08, 0.3), inv: T(0.06, 0.9),
-        invP: T(sc, 0.4), err: '#f2b8b5', onErr: '#601410' }
-    : { primary: T(sc, 0.4), pfg: '#ffffff', pc: T(sc * 0.9, 0.9), opc: T(sc, 0.15), scn: T(0.25, 0.88), osc: T(0.3, 0.18),
-        surface: T(0.15, 0.985), low: T(0.12, 0.96), cont: T(0.12, 0.945), high: T(0.12, 0.925), highest: T(0.1, 0.9),
-        on: T(0.08, 0.11), onv: T(0.08, 0.3), outline: T(0.06, 0.47), ov: T(0.08, 0.79), inv: T(0.06, 0.19),
-        invP: T(sc, 0.8), err: '#b3261e', onErr: '#ffffff' };
+    ? {
+        primary: T(sc, 0.8),
+        pfg: T(sc, 0.2),
+        pc: T(sc, 0.3),
+        opc: T(sc, 0.9),
+        scn: T(0.2, 0.3),
+        osc: T(0.25, 0.88),
+        surface: T(0.12, 0.07),
+        low: T(0.1, 0.1),
+        cont: T(0.1, 0.12),
+        high: T(0.1, 0.15),
+        highest: T(0.1, 0.18),
+        on: T(0.08, 0.9),
+        onv: T(0.08, 0.8),
+        outline: T(0.06, 0.58),
+        ov: T(0.08, 0.3),
+        inv: T(0.06, 0.9),
+        invP: T(sc, 0.4),
+        err: '#f2b8b5',
+        onErr: '#601410',
+      }
+    : {
+        primary: T(sc, 0.4),
+        pfg: '#ffffff',
+        pc: T(sc * 0.9, 0.9),
+        opc: T(sc, 0.15),
+        scn: T(0.25, 0.88),
+        osc: T(0.3, 0.18),
+        surface: T(0.15, 0.985),
+        low: T(0.12, 0.96),
+        cont: T(0.12, 0.945),
+        high: T(0.12, 0.925),
+        highest: T(0.1, 0.9),
+        on: T(0.08, 0.11),
+        onv: T(0.08, 0.3),
+        outline: T(0.06, 0.47),
+        ov: T(0.08, 0.79),
+        inv: T(0.06, 0.19),
+        invP: T(sc, 0.8),
+        err: '#b3261e',
+        onErr: '#ffffff',
+      };
   return {
     ...t,
-    wall: c.surface, bg: c.surface, surface: c.low, surfaceSolid: c.low, sidebar: c.low,
-    fg: c.on, fgMuted: ensure(c.onv, c.surface, 4.5, dark),
-    primary: c.primary, primaryFg: c.pfg, primaryEdge: c.invP,
-    secondary: c.scn, secondaryFg: c.osc, segmentOn: c.scn,
+    wall: c.surface,
+    bg: c.surface,
+    surface: c.low,
+    surfaceSolid: c.low,
+    sidebar: c.low,
+    fg: c.on,
+    fgMuted: ensure(c.onv, c.surface, 4.5, dark),
+    primary: c.primary,
+    primaryFg: c.pfg,
+    primaryEdge: c.invP,
+    secondary: c.scn,
+    secondaryFg: c.osc,
+    segmentOn: c.scn,
     // The M3 primary tone isn't contrast-checked by M3 itself, and on some accents it is too
     // weak as text: check it like every other skin's accent text.
     accentText: ensure(c.primary, c.surface, 4.5, dark),
-    border: c.outline, inputStroke: c.outline, stroke: c.ov, controlStrong: c.onv, track: c.highest,
-    control: c.high, hover: c.cont, acrylic: c.high, glass: c.cont, glassBorder: c.pc, glassHighlight: c.opc,
-    toast: c.inv, ring: rgba(c.primary, 0.5), danger: c.err, dangerFg: c.onErr,
+    border: c.outline,
+    inputStroke: c.outline,
+    stroke: c.ov,
+    controlStrong: c.onv,
+    track: c.highest,
+    control: c.high,
+    hover: c.cont,
+    acrylic: c.high,
+    glass: c.cont,
+    glassBorder: c.pc,
+    glassHighlight: c.opc,
+    toast: c.inv,
+    ring: rgba(c.primary, 0.5),
+    danger: c.err,
+    dangerFg: c.onErr,
   };
 }
 
@@ -218,10 +280,23 @@ export function derivePalette({ skin, accent, scheme, reduceTransparency = false
     };
   }
   if (skin === 'w10') {
-    t = { ...t, wall: t.bg, acrylic: t.surfaceSolid, primary: acc, primaryFg: onText(acc), primaryEdge: adjL(acc, -0.12) };
+    t = {
+      ...t,
+      wall: t.bg,
+      acrylic: t.surfaceSolid,
+      primary: acc,
+      primaryFg: onText(acc),
+      primaryEdge: adjL(acc, -0.12),
+    };
   }
   if (skin === 'macc') {
-    t = { ...t, wall: t.bg, glass: rgba(t.surfaceSolid, dark ? 0.72 : 0.8), glassBorder: t.stroke, glassHighlight: 'transparent' };
+    t = {
+      ...t,
+      wall: t.bg,
+      glass: rgba(t.surfaceSolid, dark ? 0.72 : 0.8),
+      glassBorder: t.stroke,
+      glassHighlight: 'transparent',
+    };
   }
   if (reduceTransparency) t = solid(t);
   if (skin === 'cros') t = material3(t, acc, dark);

@@ -27,7 +27,9 @@
       background: #fff;
       box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
       translate: 0 0;
-      transition: translate var(--sn-duration-fast) var(--sn-easing), width var(--sn-duration-fast) var(--sn-easing);
+      transition:
+        translate var(--sn-duration-fast) var(--sn-easing),
+        width var(--sn-duration-fast) var(--sn-easing);
     }
 
     #{h.$switch-thumb-on} {

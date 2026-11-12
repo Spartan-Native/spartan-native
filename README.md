@@ -1,8 +1,6 @@
 # Spartan Native
 
-[![CI](https://github.com/Spartan-Native/spartan-native/actions/workflows/ci.yml/badge.svg)](https://github.com/Spartan-Native/spartan-native/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/@spartan-native/theme?label=%40spartan-native%2Ftheme)](https://www.npmjs.com/package/@spartan-native/theme)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/Spartan-Native/spartan-native/actions/workflows/ci.yml/badge.svg)](https://github.com/Spartan-Native/spartan-native/actions/workflows/ci.yml) [![npm](https://img.shields.io/npm/v/@spartan-native/theme?label=%40spartan-native%2Ftheme)](https://www.npmjs.com/package/@spartan-native/theme) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **Native on every desktop. One Angular codebase.**
 
@@ -77,7 +75,7 @@ Every skin reads the same variables, so components stay identical while geometry
 
 ### 3. Settings users already chose, respected everywhere
 
-Theming makes an app *look* native. These behaviors make it *feel* native: live light/dark switching, solid surfaces when the user reduces transparency, text sizes from 100 to 200% with controls that grow, greyed-out selections when the window loses focus, the desktop selection model (Shift/Ctrl/⌘-click, arrow keys, type-ahead), and per-OS conventions such as ⌘ vs Ctrl, dialog button order and Enter/Esc.
+Theming makes an app _look_ native. These behaviors make it _feel_ native: live light/dark switching, solid surfaces when the user reduces transparency, text sizes from 100 to 200% with controls that grow, greyed-out selections when the window loses focus, the desktop selection model (Shift/Ctrl/⌘-click, arrow keys, type-ahead), and per-OS conventions such as ⌘ vs Ctrl, dialog button order and Enter/Esc.
 
 ![Native behaviors and their status in the design](docs/images/project-native-behaviors.jpg)
 
@@ -112,7 +110,7 @@ Every runtime adapter implements the same `NativeHost` interface. Each adapter r
 ```ts
 // app.config.ts: the only line that changes per runtime
 import { provideSpartanNative } from '@spartan-native/theme';
-import { wailsHost } from '@spartan-native/host-wails';   // or webHost, tauriHost, electronHost, dotnetHost
+import { wailsHost } from '@spartan-native/host-wails'; // or webHost, tauriHost, electronHost, dotnetHost
 
 export const appConfig = {
   providers: [provideSpartanNative({ host: wailsHost() })],
@@ -137,13 +135,13 @@ Setup, the workspace layout, commands and release steps are in [CONTRIBUTING.md]
 
 ## Docs
 
-| | |
-| --- | --- |
-| [Overview](docs/01-overview.md) | [Architecture](docs/02-architecture.md) |
-| [Tokens & palette](docs/03-theme-tokens.md) | [Platform skins](docs/04-platform-skins.md) |
-| [Components](docs/05-components.md) | [OS patterns](docs/06-os-patterns.md) |
-| [Host adapters](docs/07-host-adapters.md) | [Sample app](docs/08-sample-app.md) (in the harbor repository) |
-| [Roadmap](docs/09-roadmap.md) | [Open questions](docs/10-open-questions.md) |
+|                                             |                                                                |
+| ------------------------------------------- | -------------------------------------------------------------- |
+| [Overview](docs/01-overview.md)             | [Architecture](docs/02-architecture.md)                        |
+| [Tokens & palette](docs/03-theme-tokens.md) | [Platform skins](docs/04-platform-skins.md)                    |
+| [Components](docs/05-components.md)         | [OS patterns](docs/06-os-patterns.md)                          |
+| [Host adapters](docs/07-host-adapters.md)   | [Sample app](docs/08-sample-app.md) (in the harbor repository) |
+| [Roadmap](docs/09-roadmap.md)               | [Open questions](docs/10-open-questions.md)                    |
 
 <sub>The images were rendered from the original design mockups, archived in [`docs/reference/`](docs/reference/). Platform names are trademarks of their respective owners.</sub>
 

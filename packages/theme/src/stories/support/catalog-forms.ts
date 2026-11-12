@@ -46,12 +46,18 @@ const FILES = [
     <div class="field">
       <label hlmLabel for="sc-destination">Destination</label>
       <hlm-combobox [value]="'Harbor Cloud'">
-        <hlm-combobox-input inputId="sc-destination" placeholder="Choose a destination" triggerAriaLabel="Show destinations" />
+        <hlm-combobox-input
+          inputId="sc-destination"
+          placeholder="Choose a destination"
+          triggerAriaLabel="Show destinations"
+        />
         <hlm-combobox-content *hlmComboboxPortal>
           <hlm-combobox-empty>No destinations found.</hlm-combobox-empty>
           <div hlmComboboxList>
             @for (destination of destinations; track destination) {
-              <hlm-combobox-item [value]="destination" [disabled]="destination === 'SFTP server'">{{ destination }}</hlm-combobox-item>
+              <hlm-combobox-item [value]="destination" [disabled]="destination === 'SFTP server'">{{
+                destination
+              }}</hlm-combobox-item>
             }
           </div>
         </hlm-combobox-content>
@@ -225,7 +231,9 @@ export class InputExtrasShowcase {}
     <div class="row">
       <div hlmButtonGroup aria-label="Backup actions">
         <button hlmBtn variant="outline">Back up now</button>
-        <button hlmBtn variant="outline" size="icon" aria-label="More backup options"><ng-icon name="lucideChevronDown" /></button>
+        <button hlmBtn variant="outline" size="icon" aria-label="More backup options">
+          <ng-icon name="lucideChevronDown" />
+        </button>
       </div>
       <div hlmButtonGroup aria-label="Snapshot">
         <span hlmButtonGroupText>Snapshot</span>

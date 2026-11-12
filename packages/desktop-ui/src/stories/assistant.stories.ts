@@ -11,7 +11,15 @@ import { SnTitleBar } from '../lib/window/title-bar';
 /** Harbor's first-run setup: an assistant in a sheet, and the checklist it fills in. */
 @Component({
   selector: 'sn-assistant-demo',
-  imports: [HlmButtonImports, HlmInputImports, HlmLabelImports, SnAssistantImports, SnChecklistImports, SnModalSheet, SnTitleBar],
+  imports: [
+    HlmButtonImports,
+    HlmInputImports,
+    HlmLabelImports,
+    SnAssistantImports,
+    SnChecklistImports,
+    SnModalSheet,
+    SnTitleBar,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="sn-window window" snSheetHost>
@@ -20,11 +28,15 @@ import { SnTitleBar } from '../lib/window/title-bar';
         <sn-checklist aria-label="Get started">
           <sn-checklist-item title="Add a destination" [done]="!!destination()">
             Where your backups go: a disk, a NAS or the cloud.
-            <button hlmBtn size="sm" variant="outline" snChecklistAction (click)="step.set(1); open.set(true)">Add…</button>
+            <button hlmBtn size="sm" variant="outline" snChecklistAction (click)="step.set(1); open.set(true)">
+              Add…
+            </button>
           </sn-checklist-item>
           <sn-checklist-item title="Choose a schedule" [done]="scheduled()">
             Harbor backs up every hour by default.
-            <button hlmBtn size="sm" variant="outline" snChecklistAction (click)="step.set(2); open.set(true)">Choose…</button>
+            <button hlmBtn size="sm" variant="outline" snChecklistAction (click)="step.set(2); open.set(true)">
+              Choose…
+            </button>
           </sn-checklist-item>
           <sn-checklist-item title="Run the first backup">
             It can take a while; Harbor keeps going in the background.
@@ -40,7 +52,13 @@ import { SnTitleBar } from '../lib/window/title-bar';
           </ng-template>
           <ng-template snAssistantPage title="Where should backups go?" [canContinue]="!!destination()">
             <label hlmLabel for="dest">Destination name</label>
-            <input hlmInput id="dest" [value]="destination()" (input)="destination.set($any($event.target).value)" placeholder="Office NAS" />
+            <input
+              hlmInput
+              id="dest"
+              [value]="destination()"
+              (input)="destination.set($any($event.target).value)"
+              placeholder="Office NAS"
+            />
           </ng-template>
           <ng-template snAssistantPage title="How often?">
             <p class="text">Every hour, while this computer is on. You can change it in Schedules.</p>
@@ -50,10 +68,27 @@ import { SnTitleBar } from '../lib/window/title-bar';
     </div>
   `,
   styles: `
-    .window { max-width: 40rem; min-height: 26rem; display: flex; flex-direction: column; }
-    .body { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1rem 1.5rem; background: var(--sn-color-bg); flex: 1; }
-    sn-checklist { align-self: stretch; }
-    .text { margin: 0; }
+    .window {
+      max-width: 40rem;
+      min-height: 26rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .body {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      background: var(--sn-color-bg);
+      flex: 1;
+    }
+    sn-checklist {
+      align-self: stretch;
+    }
+    .text {
+      margin: 0;
+    }
   `,
 })
 class AssistantDemo {

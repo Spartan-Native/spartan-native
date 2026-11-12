@@ -10,11 +10,11 @@ It builds two Storybooks (theme, desktop-ui) and then takes Playwright screensho
 
 To check a change, use the lighter commands instead:
 
-| Command | Use it for |
-| --- | --- |
-| `npm test` | Unit tests |
+| Command              | Use it for                               |
+| -------------------- | ---------------------------------------- |
+| `npm test`           | Unit tests                               |
 | `npm run build:libs` | Checking that the packages still compile |
-| `ng build <project>` | Building a single package or app |
+| `ng build <project>` | Building a single package or app         |
 
 If a change probably affects the screenshots (skin CSS, tokens, component styles), say so in your summary and suggest that the user run `npm run test:visual`. Don't run it yourself.
 

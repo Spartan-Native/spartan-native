@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, input, linkedSignal, signal, type TemplateRef, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  linkedSignal,
+  signal,
+  type TemplateRef,
+  viewChild,
+} from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   lucideFile,
@@ -70,16 +79,30 @@ const FILES: DocFile[] = [
           <sn-window-controls snCommandBarStart />
         }
         <button snCommand icon="lucidePlus" label="New" (click)="create()"></button>
-        <button snCommand icon="lucideShare2" label="Share" [disabled]="!selected()" (click)="log.set('Shared ' + selected())"></button>
+        <button
+          snCommand
+          icon="lucideShare2"
+          label="Share"
+          [disabled]="!selected()"
+          (click)="log.set('Shared ' + selected())"
+        ></button>
         <button snCommand icon="lucideTrash2" label="Delete" [disabled]="!selected()" (click)="remove()"></button>
         @if (overflow()) {
           <ng-template snCommandOverflow>
             <div hlmDropdownMenu class="menu">
-              <button hlmDropdownMenuItem [disabled]="!selected()" (triggered)="log.set('Rename')"><ng-icon name="lucidePencil" /> Rename</button>
-              <button hlmDropdownMenuItem [disabled]="!selected()" (triggered)="log.set('Copy link')"><ng-icon name="lucideLink" /> Copy link</button>
-              <button hlmDropdownMenuItem [disabled]="!selected()" (triggered)="log.set('Move to…')"><ng-icon name="lucideFolderInput" /> Move to…</button>
+              <button hlmDropdownMenuItem [disabled]="!selected()" (triggered)="log.set('Rename')">
+                <ng-icon name="lucidePencil" /> Rename
+              </button>
+              <button hlmDropdownMenuItem [disabled]="!selected()" (triggered)="log.set('Copy link')">
+                <ng-icon name="lucideLink" /> Copy link
+              </button>
+              <button hlmDropdownMenuItem [disabled]="!selected()" (triggered)="log.set('Move to…')">
+                <ng-icon name="lucideFolderInput" /> Move to…
+              </button>
               <hlm-dropdown-menu-separator />
-              <button hlmDropdownMenuItem (triggered)="log.set('Properties')"><ng-icon name="lucideInfo" /> Properties</button>
+              <button hlmDropdownMenuItem (triggered)="log.set('Properties')">
+                <ng-icon name="lucideInfo" /> Properties
+              </button>
             </div>
           </ng-template>
         }
@@ -90,7 +113,12 @@ const FILES: DocFile[] = [
       <ul class="files" aria-label="Documents">
         @for (f of files(); track f.name) {
           <li>
-            <button type="button" class="file" [attr.aria-pressed]="selected() === f.name" (click)="selected.set(selected() === f.name ? '' : f.name)">
+            <button
+              type="button"
+              class="file"
+              [attr.aria-pressed]="selected() === f.name"
+              (click)="selected.set(selected() === f.name ? '' : f.name)"
+            >
               <ng-icon [name]="f.icon" aria-hidden="true" />
               <span class="name">{{ f.name }}</span>
               <span class="size">{{ f.size }}</span>
@@ -102,20 +130,62 @@ const FILES: DocFile[] = [
     </div>
   `,
   styles: `
-    .window { max-width: 40rem; display: flex; flex-direction: column; }
-    .files { margin: 0; padding: 0.5rem; list-style: none; background: var(--sn-color-bg); min-height: 12rem; }
-    .file {
-      all: unset; box-sizing: border-box; display: flex; align-items: center; gap: 0.75rem; width: 100%;
-      min-height: var(--sn-row-height); padding-inline: 0.75rem; border-radius: var(--sn-list-item-radius);
+    .window {
+      max-width: 40rem;
+      display: flex;
+      flex-direction: column;
     }
-    .file:hover { background: var(--sn-color-hover); }
-    .file[aria-pressed='true'] { background: var(--sn-row-selected-bg); color: var(--sn-row-selected-fg); }
-    .file:focus-visible { outline: var(--sn-row-focus-ring); outline-offset: -2px; }
-    .file ng-icon { font-size: 1.125rem; color: var(--sn-color-fg-muted); }
-    .name { flex: 1; }
-    .size { color: var(--sn-color-fg-muted); font-size: var(--sn-font-size-small); }
-    .status { margin: 0; padding: 0.375rem 1rem; font-size: var(--sn-font-size-small); color: var(--sn-color-fg-muted); background: var(--sn-color-bg); border-top: 1px solid var(--sn-color-border); }
-    .menu { min-width: 12rem; }
+    .files {
+      margin: 0;
+      padding: 0.5rem;
+      list-style: none;
+      background: var(--sn-color-bg);
+      min-height: 12rem;
+    }
+    .file {
+      all: unset;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      min-height: var(--sn-row-height);
+      padding-inline: 0.75rem;
+      border-radius: var(--sn-list-item-radius);
+    }
+    .file:hover {
+      background: var(--sn-color-hover);
+    }
+    .file[aria-pressed='true'] {
+      background: var(--sn-row-selected-bg);
+      color: var(--sn-row-selected-fg);
+    }
+    .file:focus-visible {
+      outline: var(--sn-row-focus-ring);
+      outline-offset: -2px;
+    }
+    .file ng-icon {
+      font-size: 1.125rem;
+      color: var(--sn-color-fg-muted);
+    }
+    .name {
+      flex: 1;
+    }
+    .size {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+    .status {
+      margin: 0;
+      padding: 0.375rem 1rem;
+      font-size: var(--sn-font-size-small);
+      color: var(--sn-color-fg-muted);
+      background: var(--sn-color-bg);
+      border-top: 1px solid var(--sn-color-border);
+    }
+    .menu {
+      min-width: 12rem;
+    }
   `,
 })
 class CommandBarDemo {
@@ -127,7 +197,9 @@ class CommandBarDemo {
   private readonly skin = injectSkin();
   protected readonly family = computed(() => skinFamily(this.skin()));
   /** macOS unified toolbar and GNOME header bar double as the title bar. */
-  protected readonly unified = computed(() => this.family() === 'macos' || this.skin() === 'gtk' || this.skin() === 'web');
+  protected readonly unified = computed(
+    () => this.family() === 'macos' || this.skin() === 'gtk' || this.skin() === 'web',
+  );
   protected readonly files = signal(FILES);
   protected readonly selected = linkedSignal(() => this.initialSelection());
   protected readonly log = signal('no command yet');
@@ -156,11 +228,27 @@ class CommandBarDemo {
 @Component({
   selector: 'sn-command-bar-groups-demo',
   imports: [SnCommandBarImports],
-  providers: [provideIcons({ lucidePlus, lucideShare2, lucideTrash2, lucideUndo2, lucideRedo2, lucidePencil, lucideRefreshCw, lucideFile })],
+  providers: [
+    provideIcons({
+      lucidePlus,
+      lucideShare2,
+      lucideTrash2,
+      lucideUndo2,
+      lucideRedo2,
+      lucidePencil,
+      lucideRefreshCw,
+      lucideFile,
+    }),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="sn-window" [style.width]="width()">
-      <sn-command-bar title="Quarterly documents" [commands]="pageCommands()" [overflowItems]="more" [titlePosition]="titlePosition()">
+      <sn-command-bar
+        title="Quarterly documents"
+        [commands]="pageCommands()"
+        [overflowItems]="more"
+        [titlePosition]="titlePosition()"
+      >
         <button snCommand icon="lucidePlus" label="New" variant="accent" priority="2" (click)="log.set('New')"></button>
         <sn-command-group label="History">
           <button snCommand icon="lucideUndo2" label="Undo" priority="1" (click)="log.set('Undo')"></button>
@@ -180,7 +268,13 @@ class CommandBarDemo {
     </ng-template>
   `,
   styles: `
-    .status { margin: 0; padding: 0.5rem 1rem; font-size: var(--sn-font-size-small); color: var(--sn-color-fg-muted); background: var(--sn-color-bg); }
+    .status {
+      margin: 0;
+      padding: 0.5rem 1rem;
+      font-size: var(--sn-font-size-small);
+      color: var(--sn-color-fg-muted);
+      background: var(--sn-color-bg);
+    }
   `,
 })
 class CommandBarGroupsDemo {
@@ -209,12 +303,16 @@ export const InAWindow: StoryObj = {
 
 export const WithOverflow: StoryObj = {
   name: 'With overflow commands',
-  render: () => ({ template: `<div style="padding: 2rem; min-height: 22rem"><sn-command-bar-demo [overflow]="true" /></div>` }),
+  render: () => ({
+    template: `<div style="padding: 2rem; min-height: 22rem"><sn-command-bar-demo [overflow]="true" /></div>`,
+  }),
 };
 
 export const DisabledCommands: StoryObj = {
   name: 'Disabled commands',
-  render: () => ({ template: `<div style="padding: 2rem"><sn-command-bar-demo initialSelection="" [overflow]="true" /></div>` }),
+  render: () => ({
+    template: `<div style="padding: 2rem"><sn-command-bar-demo initialSelection="" [overflow]="true" /></div>`,
+  }),
 };
 
 export const GroupsAndAccent: StoryObj = {
@@ -224,10 +322,14 @@ export const GroupsAndAccent: StoryObj = {
 
 export const Narrow: StoryObj = {
   name: 'Narrow: labels drop, then commands collapse',
-  render: () => ({ template: `<div style="padding: 2rem; min-height: 16rem"><sn-command-bar-groups-demo width="24rem" /></div>` }),
+  render: () => ({
+    template: `<div style="padding: 2rem; min-height: 16rem"><sn-command-bar-groups-demo width="24rem" /></div>`,
+  }),
 };
 
 export const CenteredTitle: StoryObj = {
   name: 'Centered title on every skin',
-  render: () => ({ template: `<div style="padding: 2rem; min-height: 16rem"><sn-command-bar-groups-demo titlePosition="center" /></div>` }),
+  render: () => ({
+    template: `<div style="padding: 2rem; min-height: 16rem"><sn-command-bar-groups-demo titlePosition="center" /></div>`,
+  }),
 };

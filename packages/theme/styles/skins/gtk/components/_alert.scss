@@ -10,7 +10,11 @@
       padding: px(12) px(16);
       border: 0;
       border-radius: var(--sn-radius-surface);
-      background: color-mix(in srgb, var(--sn-alert-tone, var(--sn-color-surface-solid)) 14%, var(--sn-color-surface-solid));
+      background: color-mix(
+        in srgb,
+        var(--sn-alert-tone, var(--sn-color-surface-solid)) 14%,
+        var(--sn-color-surface-solid)
+      );
       box-shadow: var(--sn-shadow-card);
       color: var(--sn-color-fg);
       font-size: var(--sn-font-size);

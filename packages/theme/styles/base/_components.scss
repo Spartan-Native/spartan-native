@@ -14,7 +14,7 @@
   // --- desktop-ui's snTooltip ----------------------------------------------------
   // The same default as hlmTooltip (an inverse label); skins that restyle the tooltip
   // ($tooltip) restyle this one too.
-  [data-slot="sn-tooltip"] {
+  [data-slot='sn-tooltip'] {
     max-width: 20rem;
     padding: 0.25rem 0.5rem;
     border-radius: var(--sn-tooltip-radius, 0.25rem);
@@ -161,7 +161,9 @@
     font-weight: var(--sn-font-weight-control);
     color: var(--sn-color-fg);
     box-shadow: none;
-    transition: background-color var(--sn-duration-fast) var(--sn-easing), color var(--sn-duration-fast) var(--sn-easing);
+    transition:
+      background-color var(--sn-duration-fast) var(--sn-easing),
+      color var(--sn-duration-fast) var(--sn-easing);
   }
 
   #{h.$toggle-group} {

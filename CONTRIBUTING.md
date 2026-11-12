@@ -43,12 +43,12 @@ spartan-native/
 
 These parts live in their own repositories:
 
-| Repository                                                                    | What it is                                                               |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails)   | `@spartan-native/host-wails` (Go + Wails v3) and its Go module           |
-| [`Spartan-Native/host-tauri`](https://github.com/Spartan-Native/host-tauri)   | `@spartan-native/host-tauri` (Rust + Tauri v2) and its plugin crate      |
+| Repository | What it is |
+| --- | --- |
+| [`Spartan-Native/host-wails`](https://github.com/Spartan-Native/host-wails) | `@spartan-native/host-wails` (Go + Wails v3) and its Go module |
+| [`Spartan-Native/host-tauri`](https://github.com/Spartan-Native/host-tauri) | `@spartan-native/host-tauri` (Rust + Tauri v2) and its plugin crate |
 | [`Spartan-Native/host-dotnet`](https://github.com/Spartan-Native/host-dotnet) | `@spartan-native/host-dotnet` (.NET + Photino.NET) and its NuGet package |
-| [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor)           | The Harbor Backup sample app                                             |
+| [`Spartan-Native/harbor`](https://github.com/Spartan-Native/harbor) | The Harbor Backup sample app |
 
 ### Dependency graph
 
@@ -62,18 +62,18 @@ Each library declares Angular, spartan/ui and its sibling `@spartan-native/*` pa
 
 ## Commands
 
-| Command                                             | What it does                                                                         |
-| --------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| `npm start`                                         | Serve the playground                                                                 |
-| `npm test`                                          | Unit tests (Vitest through `@angular/build:unit-test`) for every project             |
-| `npm run build:libs`                                | Build every library into `dist/`, in dependency order                                |
-| `npm run build`                                     | Libraries, then the playground                                                       |
-| `npm run check:packages`                            | After `build:libs`: check each package's metadata and tarball contents               |
-| `npm run pack:libs`                                 | Build and pack each published package into `dist/tgz`, to install in another project |
-| `npm run storybook:theme` / `:helm` / `:desktop-ui` | Interactive Storybook for one package                                                |
-| `npm run build-storybook:<lib>`                     | Static Storybook into `dist/storybook/<lib>`                                         |
-| `npm run theme:palette`                             | Regenerate the static default palettes after changing `derivePalette()`              |
-| `npm run test:visual`                               | Visual regression screenshots (see below)                                            |
+| Command | What it does |
+| --- | --- |
+| `npm start` | Serve the playground |
+| `npm test` | Unit tests (Vitest through `@angular/build:unit-test`) for every project |
+| `npm run build:libs` | Build every library into `dist/`, in dependency order |
+| `npm run build` | Libraries, then the playground |
+| `npm run check:packages` | After `build:libs`: check each package's metadata and tarball contents |
+| `npm run pack:libs` | Build and pack each published package into `dist/tgz`, to install in another project |
+| `npm run storybook:theme` / `:helm` / `:desktop-ui` | Interactive Storybook for one package |
+| `npm run build-storybook:<lib>` | Static Storybook into `dist/storybook/<lib>` |
+| `npm run theme:palette` | Regenerate the static default palettes after changing `derivePalette()` |
+| `npm run test:visual` | Visual regression screenshots (see below) |
 
 ### Visual tests
 

@@ -24,7 +24,12 @@ const search = `<button snTitleBarEnd hlmBtn variant="ghost" size="icon-sm" aria
 const meta: Meta<SnTitleBar> = {
   title: 'Desktop UI/Window/Title bar',
   component: SnTitleBar,
-  decorators: [moduleMetadata({ imports: [HlmButtonImports, NgIcon], providers: [provideIcons({ lucidePanelLeft, lucideSearch })] })],
+  decorators: [
+    moduleMetadata({
+      imports: [HlmButtonImports, NgIcon],
+      providers: [provideIcons({ lucidePanelLeft, lucideSearch })],
+    }),
+  ],
 };
 export default meta;
 type Story = StoryObj<SnTitleBar>;

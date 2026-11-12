@@ -72,7 +72,7 @@
     --sn-selection-fg: var(--sn-color-secondary-fg);
     --sn-selection-indicator: transparent;
     --sn-row-height: #{px(24)};
-    --sn-row-selected-bg: var(--sn-color-primary);                    // accent fill while the list has focus
+    --sn-row-selected-bg: var(--sn-color-primary); // accent fill while the list has focus
     --sn-row-selected-fg: var(--sn-color-primary-fg);
     --sn-row-selected-bg-unfocused: color-mix(in srgb, var(--sn-color-fg) 12%, transparent);
     --sn-row-selected-fg-unfocused: var(--sn-color-fg);

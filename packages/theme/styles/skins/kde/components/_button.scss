@@ -18,7 +18,9 @@
       font-size: var(--sn-font-size);
       font-weight: var(--sn-font-weight-control);
       translate: none;
-      transition: border-color var(--sn-duration-fast) var(--sn-easing), background-color var(--sn-duration-fast);
+      transition:
+        border-color var(--sn-duration-fast) var(--sn-easing),
+        background-color var(--sn-duration-fast);
 
       &:hover {
         border-color: var(--sn-color-primary);

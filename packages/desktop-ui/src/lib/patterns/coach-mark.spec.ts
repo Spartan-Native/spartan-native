@@ -6,15 +6,30 @@ describe('coachMarkPositions', () => {
   it('tries centered, start, end on the preferred side, then the opposite side', () => {
     const below = coachMarkPositions('bottom');
     expect(below.map((p) => `${p.originY}/${p.originX}`)).toEqual([
-      'bottom/center', 'bottom/start', 'bottom/end', 'top/center', 'top/start', 'top/end',
+      'bottom/center',
+      'bottom/start',
+      'bottom/end',
+      'top/center',
+      'top/start',
+      'top/end',
     ]);
     expect(below[0]).toEqual({ originX: 'center', overlayX: 'center', originY: 'bottom', overlayY: 'top' });
     expect(coachMarkPositions('top')[0].overlayY).toBe('bottom');
   });
 
   it('puts the tip beside the anchor for start and end', () => {
-    expect(coachMarkPositions('end')[0]).toEqual({ originY: 'center', overlayY: 'center', originX: 'end', overlayX: 'start' });
-    expect(coachMarkPositions('start').at(-1)).toEqual({ originY: 'bottom', overlayY: 'bottom', originX: 'end', overlayX: 'start' });
+    expect(coachMarkPositions('end')[0]).toEqual({
+      originY: 'center',
+      overlayY: 'center',
+      originX: 'end',
+      overlayX: 'start',
+    });
+    expect(coachMarkPositions('start').at(-1)).toEqual({
+      originY: 'bottom',
+      overlayY: 'bottom',
+      originX: 'end',
+      overlayX: 'start',
+    });
   });
 });
 

@@ -14,15 +14,7 @@ import { publishedLibraries } from './libraries.mjs';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
-const requiredFields = [
-  'name',
-  'version',
-  'description',
-  'license',
-  'repository',
-  'homepage',
-  'bugs',
-];
+const requiredFields = ['name', 'version', 'description', 'license', 'repository', 'homepage', 'bugs'];
 const requiredFiles = ['package.json', 'README.md', 'LICENSE', 'AGENTS.md'];
 /** Extra files per package, beyond the ones every package needs. */
 const extraFiles = {
@@ -51,10 +43,7 @@ for (const lib of publishedLibraries) {
   if (pkg.publishConfig?.access !== 'public')
     fail(lib, 'publishConfig.access must be "public" (scoped packages are private by default)');
   if (pkg.publishConfig?.registry)
-    fail(
-      lib,
-      `publishConfig.registry is set (${pkg.publishConfig.registry}); packages go to npmjs.org`,
-    );
+    fail(lib, `publishConfig.registry is set (${pkg.publishConfig.registry}); packages go to npmjs.org`);
 
   const [packed] = JSON.parse(
     execFileSync(npm, ['pack', '--dry-run', '--json', '--ignore-scripts'], {
@@ -70,13 +59,9 @@ for (const lib of publishedLibraries) {
 
   const relativeLink = /\]\((?!https?:|#|mailto:)[^)]*\.\.\//;
   const readme = readFileSync(join(dir, 'README.md'), 'utf8');
-  if (relativeLink.test(readme))
-    fail(lib, 'README.md has a relative link out of the package; it breaks on npmjs.com');
+  if (relativeLink.test(readme)) fail(lib, 'README.md has a relative link out of the package; it breaks on npmjs.com');
 
-  if (!failed)
-    console.log(
-      `✓ ${pkg.name}: ${packed.entryCount} files, ${(packed.size / 1024).toFixed(0)} kB packed`,
-    );
+  if (!failed) console.log(`✓ ${pkg.name}: ${packed.entryCount} files, ${(packed.size / 1024).toFixed(0)} kB packed`);
 }
 
 process.exit(failed ? 1 : 0);

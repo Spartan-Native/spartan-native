@@ -38,6 +38,9 @@ describe('SnWindowControls', () => {
   });
 
   it('shows Restore while maximized and honours buttons', () => {
-    expect(render('qt', { maximized: true, buttons: ['maximize', 'close'] }).buttons).toEqual(['caption:Restore', 'caption close:Close']);
+    expect(render('qt', { maximized: true, buttons: ['maximize', 'close'] }).buttons).toEqual([
+      'caption:Restore',
+      'caption close:Close',
+    ]);
   });
 });

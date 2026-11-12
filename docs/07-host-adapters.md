@@ -17,33 +17,33 @@ Every adapter implements the same `NativeHost` interface and shares the same typ
 export interface NativeHost {
   readonly runtime: 'web' | 'wails' | 'tauri' | 'electron' | 'dotnet' | 'static';
   readonly capabilities: HostCapabilities;
-  platform(): Promise<PlatformInfo>;          // OS, version, desktop → skin
+  platform(): Promise<PlatformInfo>; // OS, version, desktop → skin
   appearance(): Promise<AppearanceState>;
   onAppearanceChange(cb: (s: AppearanceState) => void): Unsubscribe;
-  readonly window: WindowHost;                // focus; minimize, maximize, close where the host owns a window
-  readonly menus?: MenuHost;                  // native app & context menus
-  readonly dialogs?: DialogHost;              // file dialogs and alerts
+  readonly window: WindowHost; // focus; minimize, maximize, close where the host owns a window
+  readonly menus?: MenuHost; // native app & context menus
+  readonly dialogs?: DialogHost; // file dialogs and alerts
   readonly notifications?: NotificationHost;
 }
 
 export interface AppearanceState {
-  skin: Skin;                                 // from PlatformInfo, user can override
-  accent: string;                             // #rrggbb
+  skin: Skin; // from PlatformInfo, user can override
+  accent: string; // #rrggbb
   scheme: 'light' | 'dark';
   contrast: 'normal' | 'more' | 'forced';
   reduceTransparency: boolean;
   reduceMotion: boolean;
-  textScale: number;                          // 1 = 100 %
+  textScale: number; // 1 = 100 %
 }
 
 export type Skin = 'win' | 'w10' | 'mac' | 'macc' | 'gtk' | 'qt' | 'cros' | 'web';
 
 export interface PlatformInfo {
   os: 'windows' | 'macos' | 'linux' | 'chromeos' | 'unknown';
-  version: string | null;                     // '10.0.22631', '26.1', '15.6' …
-  build: number | null;                       // Windows: ≥ 22000 means Windows 11
+  version: string | null; // '10.0.22631', '26.1', '15.6' …
+  build: number | null; // Windows: ≥ 22000 means Windows 11
   desktop: 'gnome' | 'kde' | 'cinnamon' | 'xfce' | 'other' | null;
-  skin: Skin;                                 // resolveSkin(), below
+  skin: Skin; // resolveSkin(), below
   confidence: 'exact' | 'hint' | 'unknown';
 }
 
@@ -54,16 +54,16 @@ export type HostCapabilities = Record<Capability, 'native' | 'partial' | 'none'>
 
 `resolveSkin()` in `@spartan-native/theme` maps the detected platform to a skin. Adapters use it, so every runtime picks the same skin for the same OS.
 
-| Detected | Skin |
-| --- | --- |
-| windows, build ≥ 22000 or unknown | `win` |
-| windows, build < 22000 | `w10` |
-| macos ≥ 26 | `mac` |
-| macos < 26 | `macc` |
-| linux, any desktop except KDE (GNOME, Cinnamon, XFCE, unknown) | `gtk` |
-| linux, desktop `kde` | `qt` |
-| chromeos | `cros` |
-| unknown | `web` |
+| Detected                                                       | Skin   |
+| -------------------------------------------------------------- | ------ |
+| windows, build ≥ 22000 or unknown                              | `win`  |
+| windows, build < 22000                                         | `w10`  |
+| macos ≥ 26                                                     | `mac`  |
+| macos < 26                                                     | `macc` |
+| linux, any desktop except KDE (GNOME, Cinnamon, XFCE, unknown) | `gtk`  |
+| linux, desktop `kde`                                           | `qt`   |
+| chromeos                                                       | `cros` |
+| unknown                                                        | `web`  |
 
 ## Capability matrix
 

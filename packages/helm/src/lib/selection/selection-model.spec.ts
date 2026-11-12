@@ -44,7 +44,13 @@ describe('selection model', () => {
     });
 
     it('ignores modifiers in single-selection mode', () => {
-      const s = selectionClick(selectionClick(start, KEYS, 'a', {}, false), KEYS, 'c', { toggle: true, range: true }, false);
+      const s = selectionClick(
+        selectionClick(start, KEYS, 'a', {}, false),
+        KEYS,
+        'c',
+        { toggle: true, range: true },
+        false,
+      );
       expect(s.selected).toEqual(['c']);
     });
   });

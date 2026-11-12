@@ -36,10 +36,7 @@
             "configDir": "packages/theme/.storybook",
             "browserTarget": "theme:build",
             "compodoc": false,
-            "styles": [
-              "packages/theme/.storybook/tailwind.css",
-              "packages/theme/styles/spartan-native.scss"
-            ],
+            "styles": ["packages/theme/.storybook/tailwind.css", "packages/theme/styles/spartan-native.scss"],
             "port": 6006,
             "tsConfig": "packages/theme/.storybook/tsconfig.json"
           }
@@ -50,10 +47,7 @@
             "configDir": "packages/theme/.storybook",
             "browserTarget": "theme:build",
             "compodoc": false,
-            "styles": [
-              "packages/theme/.storybook/tailwind.css",
-              "packages/theme/styles/spartan-native.scss"
-            ],
+            "styles": ["packages/theme/.storybook/tailwind.css", "packages/theme/styles/spartan-native.scss"],
             "outputDir": "dist/storybook/theme",
             "tsConfig": "packages/theme/.storybook/tsconfig.json"
           }
@@ -90,10 +84,7 @@
             "configDir": "packages/helm/.storybook",
             "browserTarget": "helm:build",
             "compodoc": false,
-            "styles": [
-              "packages/helm/.storybook/tailwind.css",
-              "packages/helm/.storybook/theme.scss"
-            ],
+            "styles": ["packages/helm/.storybook/tailwind.css", "packages/helm/.storybook/theme.scss"],
             "port": 6007,
             "tsConfig": "packages/helm/.storybook/tsconfig.json"
           }
@@ -104,10 +95,7 @@
             "configDir": "packages/helm/.storybook",
             "browserTarget": "helm:build",
             "compodoc": false,
-            "styles": [
-              "packages/helm/.storybook/tailwind.css",
-              "packages/helm/.storybook/theme.scss"
-            ],
+            "styles": ["packages/helm/.storybook/tailwind.css", "packages/helm/.storybook/theme.scss"],
             "outputDir": "dist/storybook/helm",
             "tsConfig": "packages/helm/.storybook/tsconfig.json"
           }
@@ -144,10 +132,7 @@
             "configDir": "packages/desktop-ui/.storybook",
             "browserTarget": "desktop-ui:build",
             "compodoc": false,
-            "styles": [
-              "packages/desktop-ui/.storybook/tailwind.css",
-              "packages/desktop-ui/.storybook/theme.scss"
-            ],
+            "styles": ["packages/desktop-ui/.storybook/tailwind.css", "packages/desktop-ui/.storybook/theme.scss"],
             "port": 6008,
             "tsConfig": "packages/desktop-ui/.storybook/tsconfig.json"
           }
@@ -158,10 +143,7 @@
             "configDir": "packages/desktop-ui/.storybook",
             "browserTarget": "desktop-ui:build",
             "compodoc": false,
-            "styles": [
-              "packages/desktop-ui/.storybook/tailwind.css",
-              "packages/desktop-ui/.storybook/theme.scss"
-            ],
+            "styles": ["packages/desktop-ui/.storybook/tailwind.css", "packages/desktop-ui/.storybook/theme.scss"],
             "outputDir": "dist/storybook/desktop-ui",
             "tsConfig": "packages/desktop-ui/.storybook/tsconfig.json"
           }

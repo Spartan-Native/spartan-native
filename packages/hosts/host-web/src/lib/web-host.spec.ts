@@ -4,7 +4,9 @@ import { fromClientHints, fromUserAgent } from './detect-platform';
 import { webHost } from './web-host';
 
 /** A browser window whose media queries, accent and focus a test can change. */
-function fakeBrowser(init: { dark?: boolean; accent?: string | null; platform?: string; platformVersion?: string } = {}) {
+function fakeBrowser(
+  init: { dark?: boolean; accent?: string | null; platform?: string; platformVersion?: string } = {},
+) {
   const state = {
     dark: init.dark ?? false,
     moreContrast: false,
@@ -80,7 +82,13 @@ describe('webHost', () => {
   it('reads the OS settings from the browser', async () => {
     const { win } = fakeBrowser({ dark: true, platform: 'macOS', platformVersion: '26.1.0' });
     const a = await webHost({ window: win }).appearance();
-    expect(a).toMatchObject({ skin: 'mac', scheme: 'dark', accent: '#e66100', contrast: 'normal', reduceTransparency: false });
+    expect(a).toMatchObject({
+      skin: 'mac',
+      scheme: 'dark',
+      accent: '#e66100',
+      contrast: 'normal',
+      reduceTransparency: false,
+    });
   });
 
   it('reports live changes to transparency and dark mode', async () => {
@@ -140,7 +148,11 @@ describe('detectPlatform', () => {
   });
 
   it('falls back to the user-agent string', () => {
-    expect(fromUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)')).toMatchObject({ os: 'macos', skin: 'mac', confidence: 'hint' });
+    expect(fromUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)')).toMatchObject({
+      os: 'macos',
+      skin: 'mac',
+      confidence: 'hint',
+    });
     expect(fromUserAgent('Mozilla/5.0 (X11; Linux x86_64)')).toMatchObject({ os: 'linux', skin: 'gtk' });
     expect(fromUserAgent('Mozilla/5.0 (X11; CrOS x86_64 14541.0.0)').skin).toBe('cros');
     expect(fromUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 18_0)').skin).toBe('web');

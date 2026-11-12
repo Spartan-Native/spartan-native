@@ -72,7 +72,10 @@
 }
 
 // Windows, GNOME, KDE: a separator between a group and its neighbours
-:host(:is([data-family='windows'], [data-family='linux'], [data-family='web'])) ::ng-deep .commands > [data-slot='sn-command-group'] {
+:host(:is([data-family='windows'], [data-family='linux'], [data-family='web']))
+  ::ng-deep
+  .commands
+  > [data-slot='sn-command-group'] {
   &:not(:first-child)::before,
   &:not(:last-child):not(:has(+ [data-slot='sn-command-group']))::after {
     content: '';
@@ -268,7 +271,9 @@
   border-radius: var(--sn-radius-pill);
   background: var(--sn-color-glass);
   border: 1px solid var(--sn-color-glass-border);
-  box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), var(--sn-shadow-card);
+  box-shadow:
+    inset 0 1px 0 var(--sn-color-glass-highlight),
+    var(--sn-shadow-card);
   -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
   backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));
   gap: 0;

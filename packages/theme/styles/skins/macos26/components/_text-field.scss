@@ -41,7 +41,9 @@
       border: 1px solid var(--sn-color-glass-border);
       border-radius: var(--sn-radius-control);
       background: var(--sn-color-glass);
-      box-shadow: inset 0 1px 0 var(--sn-color-glass-highlight), 0 1px 3px rgb(0 0 0 / 0.08);
+      box-shadow:
+        inset 0 1px 0 var(--sn-color-glass-highlight),
+        0 1px 3px rgb(0 0 0 / 0.08);
       font-size: var(--sn-font-size);
       font-weight: var(--sn-font-weight-control);
       -webkit-backdrop-filter: blur(var(--sn-material-blur)) saturate(var(--sn-material-saturate));

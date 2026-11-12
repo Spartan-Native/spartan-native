@@ -110,24 +110,52 @@ export function inPageMenu(
       case 'selectAll':
         return edit('selectAll', mac ? 'Select All' : 'Select all', 'mod+a');
       case 'minimize':
-        return { label: label ?? 'Minimize', accelerator: mac ? 'mod+m' : undefined, enabled: !!window.minimize, action: () => window.minimize?.() };
+        return {
+          label: label ?? 'Minimize',
+          accelerator: mac ? 'mod+m' : undefined,
+          enabled: !!window.minimize,
+          action: () => window.minimize?.(),
+        };
       case 'zoom':
-        return { label: label ?? (mac ? 'Zoom' : 'Maximize'), enabled: !!window.toggleMaximize, action: () => window.toggleMaximize?.() };
+        return {
+          label: label ?? (mac ? 'Zoom' : 'Maximize'),
+          enabled: !!window.toggleMaximize,
+          action: () => window.toggleMaximize?.(),
+        };
       case 'close':
-        return { label: label ?? (mac ? 'Close Window' : 'Close'), accelerator: mac ? 'mod+w' : 'ctrl+w', enabled: !!window.close, action: () => window.close?.() };
+        return {
+          label: label ?? (mac ? 'Close Window' : 'Close'),
+          accelerator: mac ? 'mod+w' : 'ctrl+w',
+          enabled: !!window.close,
+          action: () => window.close?.(),
+        };
       case 'quit':
-        return window.close ? { label: label ?? (mac ? 'Quit' : 'Exit'), accelerator: mac ? 'mod+q' : undefined, action: () => window.close?.() } : null;
+        return window.close
+          ? {
+              label: label ?? (mac ? 'Quit' : 'Exit'),
+              accelerator: mac ? 'mod+q' : undefined,
+              action: () => window.close?.(),
+            }
+          : null;
       case 'toggleFullscreen':
-        return { label: label ?? (mac ? 'Enter Full Screen' : 'Full screen'), accelerator: mac ? 'ctrl+mod+f' : 'f11', action: toggleFullscreen };
+        return {
+          label: label ?? (mac ? 'Enter Full Screen' : 'Full screen'),
+          accelerator: mac ? 'ctrl+mod+f' : 'f11',
+          action: toggleFullscreen,
+        };
       case 'editMenu':
         return {
           label: label ?? 'Edit',
-          submenu: ['undo', 'redo', null, 'cut', 'copy', 'paste', 'selectAll'].map((x) => (x ? role(x as MenuRole)! : { type: 'separator' })),
+          submenu: ['undo', 'redo', null, 'cut', 'copy', 'paste', 'selectAll'].map((x) =>
+            x ? role(x as MenuRole)! : { type: 'separator' },
+          ),
         };
       case 'windowMenu':
         return {
           label: label ?? 'Window',
-          submenu: [role('minimize'), role('zoom'), { type: 'separator' as const }, role('close')].filter((x): x is SnMenuItem => !!x),
+          submenu: [role('minimize'), role('zoom'), { type: 'separator' as const }, role('close')].filter(
+            (x): x is SnMenuItem => !!x,
+          ),
         };
       default:
         return null; // about, and the macOS app menu roles
@@ -170,7 +198,10 @@ function toggleFullscreen(): void {
 
 /** Whether a key event is the accelerator (`mod` is ⌘ on macOS, Ctrl elsewhere). */
 export function matchesAccelerator(event: KeyboardEvent, accelerator: string, family: PlatformFamily): boolean {
-  const parts = accelerator.toLowerCase().split('+').map((p) => p.trim());
+  const parts = accelerator
+    .toLowerCase()
+    .split('+')
+    .map((p) => p.trim());
   const key = parts.pop();
   if (!key) return false;
   const mac = family === 'macos';
@@ -180,12 +211,27 @@ export function matchesAccelerator(event: KeyboardEvent, accelerator: string, fa
     alt: parts.includes('alt'),
     shift: parts.includes('shift'),
   };
-  if (event.ctrlKey !== wants.ctrl || event.metaKey !== wants.meta || event.altKey !== wants.alt || event.shiftKey !== wants.shift) {
+  if (
+    event.ctrlKey !== wants.ctrl ||
+    event.metaKey !== wants.meta ||
+    event.altKey !== wants.alt ||
+    event.shiftKey !== wants.shift
+  ) {
     return false;
   }
   const NAMES: Record<string, string> = {
-    enter: 'enter', escape: 'escape', backspace: 'backspace', delete: 'delete', tab: 'tab', space: ' ',
-    up: 'arrowup', down: 'arrowdown', left: 'arrowleft', right: 'arrowright', home: 'home', end: 'end',
+    enter: 'enter',
+    escape: 'escape',
+    backspace: 'backspace',
+    delete: 'delete',
+    tab: 'tab',
+    space: ' ',
+    up: 'arrowup',
+    down: 'arrowdown',
+    left: 'arrowleft',
+    right: 'arrowright',
+    home: 'home',
+    end: 'end',
   };
   const pressed = event.key.toLowerCase();
   if (NAMES[key]) return pressed === NAMES[key];
