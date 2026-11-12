@@ -12,7 +12,12 @@ import { SnTreeImports } from '../lib/controls/tree';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="pane">
-      <sn-tree aria-label="Backup contents" [multiple]="multiple()" [(selection)]="selection" (activated)="opened.set($event)">
+      <sn-tree
+        aria-label="Backup contents"
+        [multiple]="multiple()"
+        [(selection)]="selection"
+        (activated)="opened.set($event)"
+      >
         <sn-tree-item value="nas" label="Office NAS" icon="lucideHardDrive" [expanded]="true">
           <sn-tree-item value="docs" label="Documents" icon="lucideFolder" [expanded]="true">
             <sn-tree-item value="taxes" label="Taxes" icon="lucideFolder">
@@ -31,7 +36,13 @@ import { SnTreeImports } from '../lib/controls/tree';
             }
             <sn-tree-item value="photos/2026" label="2026" icon="lucideFolder" />
           </sn-tree-item>
-          <sn-tree-item value="music" label="Music" icon="lucideMusic" [expandable]="lazy()" (expandedChange)="load($event)">
+          <sn-tree-item
+            value="music"
+            label="Music"
+            icon="lucideMusic"
+            [expandable]="lazy()"
+            (expandedChange)="load($event)"
+          >
             @if (counts()) {
               <span snTreeItemEnd class="count">312</span>
             }
@@ -45,9 +56,23 @@ import { SnTreeImports } from '../lib/controls/tree';
     <p class="note">Selected: {{ selection().join(', ') || 'nothing' }} · opened: {{ opened() ?? '–' }}</p>
   `,
   styles: `
-    .pane { width: 18rem; max-height: 22rem; overflow: auto; background: var(--sn-content-bg, var(--sn-color-bg)); border: 1px solid var(--sn-color-border); border-radius: var(--sn-radius-surface); }
-    .count { color: var(--sn-color-fg-muted); font-size: var(--sn-font-size-small); }
-    .note { margin: 1rem 0 0; color: var(--sn-color-fg-muted); font-size: var(--sn-font-size-small); }
+    .pane {
+      width: 18rem;
+      max-height: 22rem;
+      overflow: auto;
+      background: var(--sn-content-bg, var(--sn-color-bg));
+      border: 1px solid var(--sn-color-border);
+      border-radius: var(--sn-radius-surface);
+    }
+    .count {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+    .note {
+      margin: 1rem 0 0;
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
   `,
 })
 class TreeDemo {
@@ -87,7 +112,9 @@ export const Default: StoryObj = {
 
 export const MultipleSelection: StoryObj = {
   name: 'Multiple selection',
-  render: () => ({ template: stage(`<sn-tree-demo [multiple]="true" [initialSelection]="['budget', 'report', 'notes']" />`) }),
+  render: () => ({
+    template: stage(`<sn-tree-demo [multiple]="true" [initialSelection]="['budget', 'report', 'notes']" />`),
+  }),
 };
 
 export const TrailingContent: StoryObj = {

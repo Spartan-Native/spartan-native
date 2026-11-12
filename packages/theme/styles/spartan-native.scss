@@ -28,11 +28,11 @@
 @use 'base/root';
 @use 'base/materials';
 @use 'base/tones';
-@use 'base/components';   // shared structure of the components below; skins dress it
+@use 'base/components'; // shared structure of the components below; skins dress it
 
 // 3. Skins: one folder per platform, each overriding only what differs
 @use 'skins/win11';
-@use 'skins/win10';         // .t-win.t-w10: overrides win11
+@use 'skins/win10'; // .t-win.t-w10: overrides win11
 @use 'skins/macos26';
 @use 'skins/macos-classic'; // .t-mac.t-macc: overrides macos26
 @use 'skins/gtk';

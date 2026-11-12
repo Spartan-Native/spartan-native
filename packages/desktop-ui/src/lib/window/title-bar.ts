@@ -45,7 +45,12 @@ import { SnWindowControls, type WindowButton } from './window-controls';
   },
   template: `
     @if (family() === 'macos' && windowControls() === 'custom') {
-      <sn-window-controls [buttons]="buttons()" (close)="close.emit()" (minimize)="minimize.emit()" (maximize)="maximize.emit()" />
+      <sn-window-controls
+        [buttons]="buttons()"
+        (close)="close.emit()"
+        (minimize)="minimize.emit()"
+        (maximize)="maximize.emit()"
+      />
     }
     <div class="start">
       @if (showIcon()) {
@@ -95,5 +100,7 @@ export class SnTitleBar {
   /** The real OS's skin: where and how big its own window buttons are. */
   protected readonly nativeSkin = injectNativeSkin();
   /** Windows, KDE and ChromeOS show the app icon in the title bar; macOS and GNOME don't. */
-  protected readonly showIcon = computed(() => this.family() === 'windows' || this.skin() === 'qt' || this.skin() === 'cros');
+  protected readonly showIcon = computed(
+    () => this.family() === 'windows' || this.skin() === 'qt' || this.skin() === 'cros',
+  );
 }

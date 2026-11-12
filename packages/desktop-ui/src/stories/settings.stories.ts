@@ -1,5 +1,12 @@
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideBattery, lucideChevronRight, lucideClock, lucideFolder, lucideRefreshCw, lucideShieldCheck } from '@ng-icons/lucide';
+import {
+  lucideBattery,
+  lucideChevronRight,
+  lucideClock,
+  lucideFolder,
+  lucideRefreshCw,
+  lucideShieldCheck,
+} from '@ng-icons/lucide';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmSelectImports } from '@spartan-ng/helm/select';
@@ -42,7 +49,16 @@ const meta: Meta<SnSettingsGroup> = {
   decorators: [
     moduleMetadata({
       imports: [SnSettingsRow, HlmButtonImports, HlmSelectImports, HlmSwitchImports, NgIcon],
-      providers: [provideIcons({ lucideBattery, lucideChevronRight, lucideClock, lucideFolder, lucideRefreshCw, lucideShieldCheck })],
+      providers: [
+        provideIcons({
+          lucideBattery,
+          lucideChevronRight,
+          lucideClock,
+          lucideFolder,
+          lucideRefreshCw,
+          lucideShieldCheck,
+        }),
+      ],
     }),
   ],
 };

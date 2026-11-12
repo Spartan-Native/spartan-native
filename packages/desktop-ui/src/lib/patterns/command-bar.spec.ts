@@ -35,7 +35,9 @@ describe('SnCommandBar', () => {
     const tabbable = () => buttons.filter((b) => b.tabIndex === 0).map((b) => b.textContent!.trim());
     const keyCodes: Record<string, number> = { ArrowLeft: 37, ArrowRight: 39, End: 35 };
     const press = async (key: string) => {
-      document.activeElement!.dispatchEvent(new KeyboardEvent('keydown', { key, keyCode: keyCodes[key], bubbles: true }));
+      document.activeElement!.dispatchEvent(
+        new KeyboardEvent('keydown', { key, keyCode: keyCodes[key], bubbles: true }),
+      );
       await fixture.whenStable();
     };
 
@@ -86,11 +88,9 @@ describe('SnCommandBar', () => {
     expect(bar.dataset['title']).toBe('start');
     expect(bar.querySelector('.trail [role="toolbar"]')).not.toBeNull();
     // the projected commands moved with the toolbar
-    expect([...bar.querySelectorAll('.trail [role="toolbar"] [data-slot="sn-command"]')].map((b) => b.textContent!.trim())).toEqual([
-      'New',
-      'Share',
-      'Delete',
-    ]);
+    expect(
+      [...bar.querySelectorAll('.trail [role="toolbar"] [data-slot="sn-command"]')].map((b) => b.textContent!.trim()),
+    ).toEqual(['New', 'Share', 'Delete']);
   });
 });
 
@@ -156,7 +156,9 @@ describe('SnCommandBar · groups, outside commands and overflow', () => {
   it('drops labels, then collapses commands by priority when the bar is too narrow', async () => {
     const { fixture, bar, command } = await setup();
     // jsdom has no layout: the bar is "as wide" as its visible commands, and room for 2
-    const visible = () => [...bar.querySelectorAll<HTMLElement>('[data-slot="sn-command"]:not([data-collapsed]):not([hidden])')];
+    const visible = () => [
+      ...bar.querySelectorAll<HTMLElement>('[data-slot="sn-command"]:not([data-collapsed]):not([hidden])'),
+    ];
     Object.defineProperty(bar, 'clientWidth', { configurable: true, get: () => 300 });
     Object.defineProperty(bar, 'scrollWidth', {
       configurable: true,
@@ -177,7 +179,9 @@ describe('SnCommandBar · groups, outside commands and overflow', () => {
     // the overflow menu lists them in order, then the secondary command, then overflowItems
     bar.querySelector<HTMLElement>('.more')!.click();
     await fixture.whenStable();
-    const labels = [...document.querySelectorAll('.cdk-overlay-container .sn-menu-label')].map((l) => l.textContent!.trim());
+    const labels = [...document.querySelectorAll('.cdk-overlay-container .sn-menu-label')].map((l) =>
+      l.textContent!.trim(),
+    );
     expect(labels).toEqual(['Delete', 'Rename', 'Settings']);
   });
 });

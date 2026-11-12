@@ -1,4 +1,14 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, DestroyRef, inject, input, output, signal } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { injectSkin, skinFamily, SpartanNativeTheme } from '@spartan-native/theme';
 
 export type WindowButton = 'minimize' | 'maximize' | 'close';
@@ -56,7 +66,12 @@ export type WindowButton = 'minimize' | 'maximize' | 'close';
           </button>
         }
         @if (show('maximize') && linuxAll()) {
-          <button type="button" class="round" [attr.aria-label]="isMaximized() ? 'Restore' : 'Maximize'" (click)="act('maximize')">
+          <button
+            type="button"
+            class="round"
+            [attr.aria-label]="isMaximized() ? 'Restore' : 'Maximize'"
+            (click)="act('maximize')"
+          >
             <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4.5" y="4.5" width="7" height="7" rx="1" /></svg>
           </button>
         }
@@ -78,7 +93,12 @@ export type WindowButton = 'minimize' | 'maximize' | 'close';
           </button>
         }
         @if (show('maximize')) {
-          <button type="button" class="caption" [attr.aria-label]="isMaximized() ? 'Restore' : 'Maximize'" (click)="act('maximize')">
+          <button
+            type="button"
+            class="caption"
+            [attr.aria-label]="isMaximized() ? 'Restore' : 'Maximize'"
+            (click)="act('maximize')"
+          >
             <svg viewBox="0 0 10 10" aria-hidden="true">
               @if (look() === 'kde') {
                 @if (isMaximized()) {
@@ -89,7 +109,13 @@ export type WindowButton = 'minimize' | 'maximize' | 'close';
               } @else if (isMaximized()) {
                 <path d="M2.5 2.5V1h6.5v6.5H7.5M1 2.5h6.5V9H1z" />
               } @else {
-                <rect x="0.5" y="0.5" width="9" height="9" [attr.rx]="skin() === 'w10' ? 0 : look() === 'cros' ? 1.5 : 1" />
+                <rect
+                  x="0.5"
+                  y="0.5"
+                  width="9"
+                  height="9"
+                  [attr.rx]="skin() === 'w10' ? 0 : look() === 'cros' ? 1.5 : 1"
+                />
               }
             </svg>
           </button>

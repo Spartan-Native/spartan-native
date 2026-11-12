@@ -35,13 +35,17 @@
       height: var(--sn-switch-thumb-height);
       background: var(--sn-color-control-strong);
       translate: 0 0;
-      transition: translate var(--sn-duration-fast) var(--sn-easing), width var(--sn-duration-fast), height var(--sn-duration-fast);
+      transition:
+        translate var(--sn-duration-fast) var(--sn-easing),
+        width var(--sn-duration-fast),
+        height var(--sn-duration-fast);
     }
 
     #{h.$switch-thumb-on} {
       background: var(--sn-color-primary-fg);
       translate: calc(
-          var(--sn-switch-width) - var(--sn-switch-thumb-width) - 2 * var(--sn-switch-inset) - 2 * var(--sn-switch-border)
+          var(--sn-switch-width) - var(--sn-switch-thumb-width) - 2 * var(--sn-switch-inset) - 2 *
+            var(--sn-switch-border)
         )
         0;
     }

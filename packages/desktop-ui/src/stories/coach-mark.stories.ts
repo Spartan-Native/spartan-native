@@ -15,7 +15,11 @@ import { SnTitleBar } from '../lib/window/title-bar';
   template: `
     <div class="sn-window window">
       <sn-title-bar title="Harbor Backup" />
-      <div class="body" [class.side]="placement() === 'start' || placement() === 'end'" [class.top]="placement() === 'top'">
+      <div
+        class="body"
+        [class.side]="placement() === 'start' || placement() === 'end'"
+        [class.top]="placement() === 'top'"
+      >
         <div class="toolbar">
           <button hlmBtn variant="outline" [snCoachMarkFor]="tip" (click)="tip.toggle()">
             <ng-icon name="lucideRefreshCw" /> Sync
@@ -31,13 +35,36 @@ import { SnTitleBar } from '../lib/window/title-bar';
     </sn-coach-mark>
   `,
   styles: `
-    .window { max-width: 40rem; }
-    .body { display: flex; flex-direction: column; gap: 1rem; padding: 1rem 1.5rem; min-height: 16rem; background: var(--sn-color-bg); }
-    .body.top { flex-direction: column-reverse; }
-    .body.side { flex-direction: row; align-items: center; justify-content: space-between; }
-    .toolbar { display: flex; justify-content: flex-end; }
-    .body.side .toolbar { order: 1; }
-    .status { margin: 0; color: var(--sn-color-fg-muted); }
+    .window {
+      max-width: 40rem;
+    }
+    .body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      min-height: 16rem;
+      background: var(--sn-color-bg);
+    }
+    .body.top {
+      flex-direction: column-reverse;
+    }
+    .body.side {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .body.side .toolbar {
+      order: 1;
+    }
+    .status {
+      margin: 0;
+      color: var(--sn-color-fg-muted);
+    }
   `,
 })
 class CoachMarkDemo {

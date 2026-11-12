@@ -9,7 +9,7 @@ npm install @spartan-native/host-web
 ```ts
 import { webHost } from '@spartan-native/host-web';
 
-provideSpartanNative({ host: webHost() })
+provideSpartanNative({ host: webHost() });
 // webHost({ accent: '#0a84ff' })  accent where the browser hides the OS accent (Chromium)
 // webHost({ skin: 'qt' })         force a skin (a browser can't tell GNOME from KDE; GTK is assumed)
 ```

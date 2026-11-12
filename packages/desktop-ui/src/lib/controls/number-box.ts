@@ -289,7 +289,8 @@ export class SnNumberBox implements ControlValueAccessor {
 
   protected onWheel(event: WheelEvent): void {
     // only while focused, so scrolling the page past the field doesn't change it
-    if (event.deltaY === 0 || this.field().nativeElement !== this.field().nativeElement.ownerDocument.activeElement) return;
+    if (event.deltaY === 0 || this.field().nativeElement !== this.field().nativeElement.ownerDocument.activeElement)
+      return;
     event.preventDefault();
     this.stepBy(event.deltaY < 0 ? 1 : -1);
   }

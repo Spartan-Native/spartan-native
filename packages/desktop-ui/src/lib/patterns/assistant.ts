@@ -82,7 +82,9 @@ const LABELS: Record<PlatformFamily, { back: string; next: string; finish: strin
     @if (skin() === 'qt') {
       <ol class="steps">
         @for (page of pages(); track page; let i = $index) {
-          <li [attr.aria-current]="i === current() ? 'step' : null" [attr.data-done]="i < current() ? '' : null">{{ page.title() }}</li>
+          <li [attr.aria-current]="i === current() ? 'step' : null" [attr.data-done]="i < current() ? '' : null">
+            {{ page.title() }}
+          </li>
         }
       </ol>
     }
@@ -107,7 +109,12 @@ const LABELS: Record<PlatformFamily, { back: string; next: string; finish: strin
       }
       <div class="nav">
         @if (cancelable()) {
-          <button type="button" data-slot="button" class="sn-assistant-button cancel border-border" (click)="cancel.emit()">
+          <button
+            type="button"
+            data-slot="button"
+            class="sn-assistant-button cancel border-border"
+            (click)="cancel.emit()"
+          >
             {{ cancelLabel() || words().cancel }}
           </button>
         }
@@ -153,7 +160,9 @@ export class SnAssistant {
   protected readonly current = computed(() => Math.min(Math.max(this.step(), 0), Math.max(this.pages().length - 1, 0)));
   protected readonly page = computed(() => this.pages()[this.current()] ?? null);
   protected readonly last = computed(() => this.current() >= this.pages().length - 1);
-  protected readonly showDots = computed(() => (this.skin() === 'gtk' || this.skin() === 'cros' || this.family() === 'web') && this.pages().length > 1);
+  protected readonly showDots = computed(
+    () => (this.skin() === 'gtk' || this.skin() === 'cros' || this.family() === 'web') && this.pages().length > 1,
+  );
   protected readonly progressText = computed(() =>
     this.progressLabel()
       .replace('{current}', String(this.current() + 1))
@@ -176,7 +185,8 @@ export class SnAssistant {
       }
       untracked(() => {
         const active = this.host.ownerDocument.activeElement;
-        if (!active || active === this.host.ownerDocument.body || this.host.contains(active)) this.heading().nativeElement.focus();
+        if (!active || active === this.host.ownerDocument.body || this.host.contains(active))
+          this.heading().nativeElement.focus();
       });
     });
   }

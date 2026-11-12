@@ -12,7 +12,11 @@
       padding: px(13) px(16);
       border: 1px solid var(--sn-color-stroke);
       border-radius: var(--sn-radius-control);
-      background: color-mix(in srgb, var(--sn-alert-tone, var(--sn-color-surface-solid)) 12%, var(--sn-color-surface-solid));
+      background: color-mix(
+        in srgb,
+        var(--sn-alert-tone, var(--sn-color-surface-solid)) 12%,
+        var(--sn-color-surface-solid)
+      );
       color: var(--sn-color-fg);
       font-size: var(--sn-font-size);
     }

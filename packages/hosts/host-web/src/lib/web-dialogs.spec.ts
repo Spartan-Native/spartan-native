@@ -10,7 +10,12 @@ describe('webDialogs', () => {
       types: [{ description: 'Images', accept: { 'application/octet-stream': ['.png', '.jpg'] } }],
       excludeAcceptAllOption: true,
     });
-    expect(toPickerTypes([{ name: 'PDF', extensions: ['pdf'] }, { name: 'All files', extensions: ['*'] }]).excludeAcceptAllOption).toBe(false);
+    expect(
+      toPickerTypes([
+        { name: 'PDF', extensions: ['pdf'] },
+        { name: 'All files', extensions: ['*'] },
+      ]).excludeAcceptAllOption,
+    ).toBe(false);
     expect(toPickerTypes()).toEqual({ types: [], excludeAcceptAllOption: false });
   });
 
@@ -35,7 +40,11 @@ describe('webDialogs', () => {
 
   it('passes other errors through', async () => {
     const fail = () => Promise.reject(new DOMException('Blocked', 'SecurityError'));
-    const dialogs = webDialogs({ showOpenFilePicker: fail, showSaveFilePicker: fail, showDirectoryPicker: fail } as unknown as Window);
+    const dialogs = webDialogs({
+      showOpenFilePicker: fail,
+      showSaveFilePicker: fail,
+      showDirectoryPicker: fail,
+    } as unknown as Window);
     await expect(dialogs.openFile()).rejects.toThrow('Blocked');
   });
 
@@ -46,7 +55,14 @@ describe('webDialogs', () => {
     expect(without.dialogs).toBeUndefined();
     expect(without.capabilities.fileDialogs).toBe('none');
 
-    const withPickers = webHost({ window: { ...base, showOpenFilePicker: abort, showSaveFilePicker: abort, showDirectoryPicker: abort } as unknown as Window });
+    const withPickers = webHost({
+      window: {
+        ...base,
+        showOpenFilePicker: abort,
+        showSaveFilePicker: abort,
+        showDirectoryPicker: abort,
+      } as unknown as Window,
+    });
     expect(withPickers.dialogs).toBeDefined();
     expect(withPickers.capabilities.fileDialogs).toBe('partial');
   });

@@ -51,7 +51,7 @@ Only the `host:` line in `app.config.ts` differs between runtimes. Never import 
 
 Before you write any markup, find the need in [references/components.md](references/components.md). In order of preference:
 
-1. A **desktop-ui** component (`<sn-title-bar>`, `<sn-sidebar-nav>`, `<sn-command-bar>`, `<sn-settings-group>`, `<sn-modal-sheet>`, `<sn-status-page>`, …). These change *layout* per OS, not just colors.
+1. A **desktop-ui** component (`<sn-title-bar>`, `<sn-sidebar-nav>`, `<sn-command-bar>`, `<sn-settings-group>`, `<sn-modal-sheet>`, `<sn-status-page>`, …). These change _layout_ per OS, not just colors.
 2. A **stock spartan/ui** component (`hlmBtn`, `hlmInput`, `hlm-switch`, `hlmTable`, `hlm-dialog`, …), plus **helm directives** for desktop behavior (`snSelectable`, `snDefaultAction`, `snCancelAction`).
 3. A **material class** from the theme for app-frame surfaces: `sn-window`, `sn-sidebar`, `sn-content`, `sn-chrome`, `sn-glass`, `sn-list-item`, `sn-tone-*`.
 4. Only then your own element, with layout CSS and `--sn-*` tokens.
@@ -85,9 +85,7 @@ Use `templateUrl` and `styleUrl`, never inline `template:` or `styles:`. Start f
 
 A component's `.css` file positions things. It doesn't decide how they look. Full rules: [references/styling.md](references/styling.md).
 
-**Allowed:** `display`, `flex`/`grid` and their gaps, `inline-size`/`block-size`, `min-*`/`max-*`, `padding`/`margin` for spacing, `overflow`, `position`.
-**Not allowed:** colors, backgrounds, borders, radii, shadows, font families, per-OS selectors (`.t-mac …`), `!important`, restyling an `hlm*` or `sn-*` component.
-**If you need a value**, use a token: `var(--sn-color-fg-muted)`, `var(--sn-radius-surface)`, `var(--sn-font-size-small)`. Use `rem` (or tokens) for sizes, so the OS text size scales the UI.
+**Allowed:** `display`, `flex`/`grid` and their gaps, `inline-size`/`block-size`, `min-*`/`max-*`, `padding`/`margin` for spacing, `overflow`, `position`. **Not allowed:** colors, backgrounds, borders, radii, shadows, font families, per-OS selectors (`.t-mac …`), `!important`, restyling an `hlm*` or `sn-*` component. **If you need a value**, use a token: `var(--sn-color-fg-muted)`, `var(--sn-radius-surface)`, `var(--sn-font-size-small)`. Use `rem` (or tokens) for sizes, so the OS text size scales the UI.
 
 ## 6. Rules that are easy to get wrong
 

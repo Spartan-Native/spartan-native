@@ -64,7 +64,8 @@ function capture<T>(subscribe: (cb: (v: T) => void) => () => void, timeoutMs = 5
   const next = (count = 1) =>
     new Promise<T[]>((resolve) => {
       const started = Date.now();
-      const poll = () => (received.length >= count || Date.now() - started > timeoutMs ? resolve(received) : setTimeout(poll, 5));
+      const poll = () =>
+        received.length >= count || Date.now() - started > timeoutMs ? resolve(received) : setTimeout(poll, 5);
       poll();
     });
   return { received, unsubscribe, next };
@@ -86,7 +87,10 @@ export function validateAppearance(a: AppearanceState): void {
   expect(['normal', 'more', 'forced'].includes(a.contrast), `appearance().contrast is "${a.contrast}"`);
   expect(typeof a.reduceTransparency === 'boolean', 'appearance().reduceTransparency must be a boolean');
   expect(typeof a.reduceMotion === 'boolean', 'appearance().reduceMotion must be a boolean');
-  expect(typeof a.textScale === 'number' && a.textScale >= 0.5 && a.textScale <= 4, `appearance().textScale is ${a.textScale}`);
+  expect(
+    typeof a.textScale === 'number' && a.textScale >= 0.5 && a.textScale <= 4,
+    `appearance().textScale is ${a.textScale}`,
+  );
 }
 
 /** The checks, in order. Exported so runners can show them as separate tests. */
@@ -94,7 +98,8 @@ export const CHECKS: readonly Check[] = [
   {
     id: 'runtime',
     title: 'declares a known runtime',
-    run: (h) => expect(RUNTIMES.includes(h.runtime), `runtime is "${h.runtime}"; expected one of ${RUNTIMES.join(', ')}`),
+    run: (h) =>
+      expect(RUNTIMES.includes(h.runtime), `runtime is "${h.runtime}"; expected one of ${RUNTIMES.join(', ')}`),
   },
   {
     id: 'capabilities',
@@ -159,8 +164,12 @@ export const CHECKS: readonly Check[] = [
         return;
       }
       expect(d, `fileDialogs is "${level}" but the host has no dialogs`);
-      for (const m of ['openFile', 'saveFile', 'pickFolder'] as const) expect(typeof d![m] === 'function', `dialogs.${m} must be a function`);
-      expect(d!.message === undefined || typeof d!.message === 'function', 'dialogs.message must be a function when present');
+      for (const m of ['openFile', 'saveFile', 'pickFolder'] as const)
+        expect(typeof d![m] === 'function', `dialogs.${m} must be a function`);
+      expect(
+        d!.message === undefined || typeof d!.message === 'function',
+        'dialogs.message must be a function when present',
+      );
     },
   },
   {
@@ -181,8 +190,13 @@ export const CHECKS: readonly Check[] = [
     title: "never throws for capabilities it reports as 'none'",
     run: async (h) => {
       // Optional services must be absent rather than throwing when unsupported.
-      if (h.capabilities.nativeMenus === 'none') expect(h.menus === undefined || typeof h.menus === 'object', 'menus must be undefined or an object');
-      if (h.capabilities.notifications === 'none') expect(h.notifications === undefined || typeof h.notifications === 'object', 'notifications must be undefined or an object');
+      if (h.capabilities.nativeMenus === 'none')
+        expect(h.menus === undefined || typeof h.menus === 'object', 'menus must be undefined or an object');
+      if (h.capabilities.notifications === 'none')
+        expect(
+          h.notifications === undefined || typeof h.notifications === 'object',
+          'notifications must be undefined or an object',
+        );
       await h.platform();
       await h.appearance();
     },
@@ -249,7 +263,12 @@ export async function checkHostConformance(host: NativeHost, driver: HostDriver 
       results.push({ id: check.id, title: check.title, status: 'pass' });
     } catch (e) {
       const skipped = e instanceof SkipCheck;
-      results.push({ id: check.id, title: check.title, status: skipped ? 'skip' : 'fail', detail: e instanceof Error ? e.message : String(e) });
+      results.push({
+        id: check.id,
+        title: check.title,
+        status: skipped ? 'skip' : 'fail',
+        detail: e instanceof Error ? e.message : String(e),
+      });
     }
   }
   return { runtime: host.runtime, passed: results.every((r) => r.status !== 'fail'), results };

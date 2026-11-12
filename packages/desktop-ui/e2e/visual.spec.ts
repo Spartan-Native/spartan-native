@@ -7,7 +7,15 @@ test.use({ reducedMotion: 'reduce', viewport: { width: 1000, height: 700 } });
 
 /** Story ids by component, from the built Storybook's index (`desktop-ui-<group>-<component>--<story>`). */
 const STORIES: Record<string, string[]> = {
-  'window-title-bar': ['default', 'with-subtitle', 'with-start-content', 'maximized', 'close-only', 'native-controls', 'inactive'],
+  'window-title-bar': [
+    'default',
+    'with-subtitle',
+    'with-start-content',
+    'maximized',
+    'close-only',
+    'native-controls',
+    'inactive',
+  ],
   'window-window-controls': ['default', 'maximized', 'close-only', 'linux-all', 'events', 'inactive'],
   'window-status-bar': ['default', 'with-progress', 'nothing-selected'],
   'window-menubar': ['in-a-window', 'open-menu', 'context-menu'],

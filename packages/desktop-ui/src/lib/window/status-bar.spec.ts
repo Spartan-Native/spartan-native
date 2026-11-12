@@ -24,7 +24,10 @@ describe('SnStatusBar', () => {
     const bar = el.querySelector('sn-status-bar')!;
     expect(bar.getAttribute('aria-label')).toBe('Status');
     expect(bar.getAttribute('data-family')).toBe('macos');
-    expect([...bar.querySelectorAll('.start [data-slot="sn-status-item"]')].map((i) => i.textContent)).toEqual(['4 items', 'Backing up…']);
+    expect([...bar.querySelectorAll('.start [data-slot="sn-status-item"]')].map((i) => i.textContent)).toEqual([
+      '4 items',
+      'Backing up…',
+    ]);
     expect(bar.querySelector('.end')!.textContent).toBe('1.2 TB free');
     const items = [...bar.querySelectorAll('[data-slot="sn-status-item"]')];
     expect(items.map((i) => i.getAttribute('role'))).toEqual([null, 'status', null]);

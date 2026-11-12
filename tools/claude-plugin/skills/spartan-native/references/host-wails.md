@@ -73,7 +73,7 @@ The app draws its own title bar, except where the OS keeps its buttons:
 import { isWails, wailsHost } from '@spartan-native/host-wails';
 import { webHost } from '@spartan-native/host-web';
 
-provideSpartanNative({ host: isWails() ? wailsHost() : webHost() })
+provideSpartanNative({ host: isWails() ? wailsHost() : webHost() });
 ```
 
 ## 5. Native services through the host

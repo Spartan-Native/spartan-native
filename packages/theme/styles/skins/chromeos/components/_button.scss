@@ -18,7 +18,9 @@
       font-weight: var(--sn-font-weight-control);
       letter-spacing: 0.01em;
       translate: none;
-      transition: background-color var(--sn-duration-fast) var(--sn-easing), box-shadow var(--sn-duration-fast);
+      transition:
+        background-color var(--sn-duration-fast) var(--sn-easing),
+        box-shadow var(--sn-duration-fast);
     }
 
     #{h.$button-small} {

@@ -10,7 +10,7 @@ The `NativeHost` adapter for browsers and installed PWAs (Layer 04). It implemen
 import { provideSpartanNative } from '@spartan-native/theme';
 import { webHost } from '@spartan-native/host-web';
 
-providers: [provideSpartanNative({ host: webHost() })]
+providers: [provideSpartanNative({ host: webHost() })];
 // in a desktop shell, fall back to it: isWails() ? wailsHost() : webHost()
 ```
 

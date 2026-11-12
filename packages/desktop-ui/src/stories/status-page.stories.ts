@@ -14,7 +14,12 @@ const stage = (content: string) =>
 const meta: Meta<SnStatusPage> = {
   title: 'Desktop UI/Patterns/Status page',
   component: SnStatusPage,
-  decorators: [moduleMetadata({ imports: [HlmButtonImports], providers: [provideIcons({ lucideCloudUpload, lucideSearch, lucideWifiOff })] })],
+  decorators: [
+    moduleMetadata({
+      imports: [HlmButtonImports],
+      providers: [provideIcons({ lucideCloudUpload, lucideSearch, lucideWifiOff })],
+    }),
+  ],
 };
 export default meta;
 type Story = StoryObj<SnStatusPage>;
@@ -45,7 +50,9 @@ export const TwoActions: Story = {
 export const WithoutActions: Story = {
   name: 'Without actions',
   render: () => ({
-    template: stage(`<sn-status-page icon="lucideSearch" title="No results" description="No files in this backup match “invoice”." />`),
+    template: stage(
+      `<sn-status-page icon="lucideSearch" title="No results" description="No files in this backup match “invoice”." />`,
+    ),
   }),
 };
 

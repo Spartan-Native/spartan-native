@@ -74,7 +74,9 @@ describe('SnAssistant', () => {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <sn-checklist>
-      <sn-checklist-item title="Add a destination" done>Where backups go. <button snChecklistAction>Add</button></sn-checklist-item>
+      <sn-checklist-item title="Add a destination" done
+        >Where backups go. <button snChecklistAction>Add</button></sn-checklist-item
+      >
       <sn-checklist-item title="Pick folders"><button snChecklistAction>Pick</button></sn-checklist-item>
     </sn-checklist>
   `,
@@ -88,7 +90,10 @@ describe('SnChecklist', () => {
     const el: HTMLElement = fixture.nativeElement;
     const items = [...el.querySelectorAll('[role="listitem"]')];
     expect(el.querySelector('[role="list"]')).not.toBeNull();
-    expect(items.map((i) => i.querySelector('.title')!.textContent)).toEqual(['Add a destination (done)', 'Pick folders (to do)']);
+    expect(items.map((i) => i.querySelector('.title')!.textContent)).toEqual([
+      'Add a destination (done)',
+      'Pick folders (to do)',
+    ]);
     expect(items[0].hasAttribute('data-done')).toBe(true);
     expect(items[0].querySelector('.action button')).not.toBeNull();
   });

@@ -28,8 +28,8 @@ Each check becomes one test, so a failure names exactly what is wrong. Without a
 
 ```ts
 const report = await checkHostConformance(host, driver);
-report.passed;   // false if any check failed
-report.results;  // [{ id, title, status: 'pass' | 'fail' | 'skip', detail? }]
+report.passed; // false if any check failed
+report.results; // [{ id, title, status: 'pass' | 'fail' | 'skip', detail? }]
 ```
 
 ## The checks
@@ -46,8 +46,8 @@ report.results;  // [{ id, title, status: 'pass' | 'fail' | 'skip', detail? }]
 | `dialogs-match-capability` | `dialogs` is present exactly when `fileDialogs` isn't `none`; it has `openFile`, `saveFile` and `pickFolder` (`message` is optional) |
 | `unsubscribe` | subscriptions return an unsubscribe function, safe to call twice |
 | `graceful` | nothing throws for capabilities reported as `none` |
-| `live-appearance` | *(driver)* an OS change is notified, with the new values |
-| `live-appearance-stops` | *(driver)* no notifications after unsubscribe |
-| `live-focus` | *(driver)* focus changes are notified |
+| `live-appearance` | _(driver)_ an OS change is notified, with the new values |
+| `live-appearance-stops` | _(driver)_ no notifications after unsubscribe |
+| `live-focus` | _(driver)_ focus changes are notified |
 
 Validators `validatePlatform()` and `validateAppearance()` are exported for adapters' own tests.

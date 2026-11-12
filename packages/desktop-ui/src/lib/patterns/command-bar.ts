@@ -231,7 +231,13 @@ export class SnCommand implements FocusableOption {
       }
     </div>
     @if (title()) {
-      <span #titleEl class="title" [attr.role]="headingLevel() ? 'heading' : null" [attr.aria-level]="headingLevel() || null">{{ title() }}</span>
+      <span
+        #titleEl
+        class="title"
+        [attr.role]="headingLevel() ? 'heading' : null"
+        [attr.aria-level]="headingLevel() || null"
+        >{{ title() }}</span
+      >
     }
     <div class="trail">
       <div class="cluster">
@@ -252,10 +258,18 @@ export class SnCommand implements FocusableOption {
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 4h11M2.5 8h11M2.5 12h11" /></svg>
             }
             @case ('vertical') {
-              <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="3" r="1.4" /><circle cx="8" cy="8" r="1.4" /><circle cx="8" cy="13" r="1.4" /></svg>
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <circle cx="8" cy="3" r="1.4" />
+                <circle cx="8" cy="8" r="1.4" />
+                <circle cx="8" cy="13" r="1.4" />
+              </svg>
             }
             @default {
-              <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="3" cy="8" r="1.3" /><circle cx="8" cy="8" r="1.3" /><circle cx="13" cy="8" r="1.3" /></svg>
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <circle cx="3" cy="8" r="1.3" />
+                <circle cx="8" cy="8" r="1.3" />
+                <circle cx="13" cy="8" r="1.3" />
+              </svg>
             }
           }
         </button>
@@ -472,7 +486,9 @@ export class SnCommandBar {
     this.fitted.update((n) => n + 1);
     this.collapsedCommands.set(commands.filter((c) => c.collapsed()));
     if (isDevMode() && this.overflow() && this.menuItems().length) {
-      console.warn('sn-command-bar: commands are in the overflow menu, so the snCommandOverflow template is not shown. Use secondary commands or overflowItems instead.');
+      console.warn(
+        'sn-command-bar: commands are in the overflow menu, so the snCommandOverflow template is not shown. Use secondary commands or overflowItems instead.',
+      );
     }
   }
 

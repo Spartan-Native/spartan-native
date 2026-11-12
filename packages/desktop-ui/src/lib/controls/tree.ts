@@ -139,7 +139,10 @@ export class SnTree<K = unknown> {
         if (kept.length !== this.selection().length) this.selection.set(kept);
         const { anchor, active } = this.cursor();
         if ((anchor !== null && !present.has(anchor)) || (active !== null && !present.has(active))) {
-          this.cursor.set({ anchor: present.has(anchor as K) ? anchor : null, active: present.has(active as K) ? active : null });
+          this.cursor.set({
+            anchor: present.has(anchor as K) ? anchor : null,
+            active: present.has(active as K) ? active : null,
+          });
         }
       });
     });
@@ -217,14 +220,16 @@ export class SnTree<K = unknown> {
 
     switch (event.key) {
       case 'ArrowDown':
-        next = mac && event.metaKey
-          ? selectionMoveTo(state, keys, keys.length - 1, { range: mods.range }, multiple)
-          : selectionMoveBy(state, keys, 1, mods, multiple);
+        next =
+          mac && event.metaKey
+            ? selectionMoveTo(state, keys, keys.length - 1, { range: mods.range }, multiple)
+            : selectionMoveBy(state, keys, 1, mods, multiple);
         break;
       case 'ArrowUp':
-        next = mac && event.metaKey
-          ? selectionMoveTo(state, keys, 0, { range: mods.range }, multiple)
-          : selectionMoveBy(state, keys, -1, mods, multiple);
+        next =
+          mac && event.metaKey
+            ? selectionMoveTo(state, keys, 0, { range: mods.range }, multiple)
+            : selectionMoveBy(state, keys, -1, mods, multiple);
         break;
       case 'Home':
         next = selectionMoveTo(state, keys, 0, mods, multiple);
@@ -292,7 +297,11 @@ export class SnTree<K = unknown> {
     this.typeaheadTimer = setTimeout(() => (this.typeahead = ''), TYPEAHEAD_RESET_MS);
     const visible = this.visible();
     const current = keys.indexOf(this.cursor().active as K);
-    const index = typeaheadIndex(visible.map((i) => i.label()), this.typeahead, current);
+    const index = typeaheadIndex(
+      visible.map((i) => i.label()),
+      this.typeahead,
+      current,
+    );
     if (index >= 0) this.apply(selectionMoveTo(this.state(), keys, index, {}, this.multiple()));
   }
 
@@ -399,7 +408,9 @@ export class SnTreeItem<K = unknown> {
   readonly hasChildren = computed(() => this.expandable() || this.children().length > 0);
   readonly selected = computed(() => this.tree.isSelected(this.value()));
   /** Every ancestor is open. */
-  readonly isVisible: () => boolean = computed(() => !this.parent || (this.parent.expanded() && this.parent.isVisible()));
+  readonly isVisible: () => boolean = computed(
+    () => !this.parent || (this.parent.expanded() && this.parent.isVisible()),
+  );
 
   constructor() {
     this.tree.register(this);

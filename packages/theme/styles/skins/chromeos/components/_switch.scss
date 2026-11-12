@@ -26,7 +26,9 @@
       height: var(--sn-switch-thumb-height);
       background: var(--sn-color-border);
       translate: 0 0;
-      transition: translate var(--sn-duration-fast) var(--sn-easing), width var(--sn-duration-fast) var(--sn-easing),
+      transition:
+        translate var(--sn-duration-fast) var(--sn-easing),
+        width var(--sn-duration-fast) var(--sn-easing),
         height var(--sn-duration-fast) var(--sn-easing);
     }
 
@@ -35,9 +37,7 @@
       width: px(24);
       height: px(24);
       background: var(--sn-color-primary-fg);
-      translate: calc(
-          var(--sn-switch-width) - #{px(24)} - #{px(4)} - var(--sn-switch-border) - var(--sn-switch-inset)
-        )
+      translate: calc(var(--sn-switch-width) - #{px(24)} - #{px(4)} - var(--sn-switch-border) - var(--sn-switch-inset))
         0;
     }
   }

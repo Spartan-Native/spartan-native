@@ -6,8 +6,7 @@ const stage = (content: string) => `
 `;
 /** A strip the height of a title bar, so Windows caption buttons have something to fill.
  *  Controls sit where the OS puts them: leading on macOS, trailing elsewhere (.storybook/theme.scss). */
-const strip = (controls: string) =>
-  `<div class="sn-window sn-story-controls-strip">${controls}</div>`;
+const strip = (controls: string) => `<div class="sn-window sn-story-controls-strip">${controls}</div>`;
 
 /**
  * The window's own buttons on their own: caption buttons, traffic lights, header-bar buttons, Breeze

@@ -153,8 +153,17 @@ export class SnMenubar {
   protected onDocumentKeydown(event: KeyboardEvent): void {
     if (this.isNative() || event.defaultPrevented || event.repeat) return;
     // F10 focuses the menu bar (Windows, GNOME, KDE)
-    if (event.key === 'F10' && !event.shiftKey && !event.ctrlKey && !event.altKey && !event.metaKey && this.platform() !== 'macos') {
-      const first = this.bar()?.nativeElement.querySelector('[data-slot="menubar-trigger"]:not([aria-disabled="true"])') as HTMLElement | null;
+    if (
+      event.key === 'F10' &&
+      !event.shiftKey &&
+      !event.ctrlKey &&
+      !event.altKey &&
+      !event.metaKey &&
+      this.platform() !== 'macos'
+    ) {
+      const first = this.bar()?.nativeElement.querySelector(
+        '[data-slot="menubar-trigger"]:not([aria-disabled="true"])',
+      ) as HTMLElement | null;
       if (first) {
         event.preventDefault();
         first.focus();
@@ -162,7 +171,9 @@ export class SnMenubar {
       return;
     }
     const family = this.platform();
-    const item = this.accelerated().find((i) => i.enabled !== false && matchesAccelerator(event, i.accelerator!, family));
+    const item = this.accelerated().find(
+      (i) => i.enabled !== false && matchesAccelerator(event, i.accelerator!, family),
+    );
     if (!item) return;
     event.preventDefault();
     item.action?.();

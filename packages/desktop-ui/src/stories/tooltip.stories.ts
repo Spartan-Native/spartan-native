@@ -12,12 +12,22 @@ import { SnTooltip } from '../lib/controls/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="row">
-      <button hlmBtn variant="outline" size="icon" aria-label="Refresh" snTooltip="Refresh"><ng-icon name="lucideRefreshCw" /></button>
-      <button hlmBtn variant="outline" size="icon" aria-label="Settings" snTooltip="Settings"><ng-icon name="lucideSettings" /></button>
+      <button hlmBtn variant="outline" size="icon" aria-label="Refresh" snTooltip="Refresh">
+        <ng-icon name="lucideRefreshCw" />
+      </button>
+      <button hlmBtn variant="outline" size="icon" aria-label="Settings" snTooltip="Settings">
+        <ng-icon name="lucideSettings" />
+      </button>
       <button hlmBtn variant="ghost" snTooltip="Backs up every folder in the list now">Back up now</button>
     </div>
   `,
-  styles: `.row { display: flex; gap: 0.75rem; padding: 3rem 2rem; }`,
+  styles: `
+    .row {
+      display: flex;
+      gap: 0.75rem;
+      padding: 3rem 2rem;
+    }
+  `,
 })
 class TooltipDemo {}
 

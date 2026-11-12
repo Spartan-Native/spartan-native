@@ -24,9 +24,7 @@ const VERSION = /^v?(\d+\.\d+\.\d+(?:-beta(?:\.\d+)?)?)$/;
 const [rawVersion] = process.argv.slice(2);
 const match = VERSION.exec(rawVersion ?? '');
 if (!match) {
-  console.error(
-    `"${rawVersion ?? ''}" is not a release version (1.2.3, 1.2.3-beta or 1.2.3-beta.4).`,
-  );
+  console.error(`"${rawVersion ?? ''}" is not a release version (1.2.3, 1.2.3-beta or 1.2.3-beta.4).`);
   process.exit(1);
 }
 const version = match[1];

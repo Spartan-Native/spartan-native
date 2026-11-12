@@ -40,7 +40,13 @@ function modKey(): string {
 // Breadcrumb and pagination links host RouterLink, so the app needs provideRouter(...).
 @Component({
   selector: 'sn-navigation-showcase',
-  imports: [HlmBreadcrumbImports, HlmDropdownMenuImports, HlmMenubarImports, HlmNavigationMenuImports, HlmPaginationImports],
+  imports: [
+    HlmBreadcrumbImports,
+    HlmDropdownMenuImports,
+    HlmMenubarImports,
+    HlmNavigationMenuImports,
+    HlmPaginationImports,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <hlm-menubar style="align-self: flex-start">
@@ -112,31 +118,41 @@ function modKey(): string {
 
     <ng-template #fileMenu>
       <hlm-dropdown-menu style="width: 14rem">
-        <button hlmDropdownMenuItem>New backup… <span hlmDropdownMenuShortcut>{{ mod() }}N</span></button>
-        <button hlmDropdownMenuItem>Back up now <span hlmDropdownMenuShortcut>{{ mod() }}B</span></button>
-        <button hlmDropdownMenuItem>Restore files… <span hlmDropdownMenuShortcut>{{ mod() }}R</span></button>
+        <button hlmDropdownMenuItem>
+          New backup… <span hlmDropdownMenuShortcut>{{ mod() }}N</span>
+        </button>
+        <button hlmDropdownMenuItem>
+          Back up now <span hlmDropdownMenuShortcut>{{ mod() }}B</span>
+        </button>
+        <button hlmDropdownMenuItem>
+          Restore files… <span hlmDropdownMenuShortcut>{{ mod() }}R</span>
+        </button>
         <hlm-dropdown-menu-separator />
         <button hlmDropdownMenuItem disabled>Export settings…</button>
-        <button hlmDropdownMenuItem>Close window <span hlmDropdownMenuShortcut>{{ mod() }}W</span></button>
+        <button hlmDropdownMenuItem>
+          Close window <span hlmDropdownMenuShortcut>{{ mod() }}W</span>
+        </button>
       </hlm-dropdown-menu>
     </ng-template>
     <ng-template #editMenu>
       <hlm-dropdown-menu style="width: 14rem">
-        <button hlmDropdownMenuItem>Undo <span hlmDropdownMenuShortcut>{{ mod() }}Z</span></button>
+        <button hlmDropdownMenuItem>
+          Undo <span hlmDropdownMenuShortcut>{{ mod() }}Z</span>
+        </button>
         <hlm-dropdown-menu-separator />
-        <button hlmDropdownMenuItem>Copy <span hlmDropdownMenuShortcut>{{ mod() }}C</span></button>
-        <button hlmDropdownMenuItem>Select all <span hlmDropdownMenuShortcut>{{ mod() }}A</span></button>
+        <button hlmDropdownMenuItem>
+          Copy <span hlmDropdownMenuShortcut>{{ mod() }}C</span>
+        </button>
+        <button hlmDropdownMenuItem>
+          Select all <span hlmDropdownMenuShortcut>{{ mod() }}A</span>
+        </button>
       </hlm-dropdown-menu>
     </ng-template>
     <ng-template #viewMenu>
       <hlm-dropdown-menu style="width: 14rem">
         <span hlmDropdownMenuLabel>Show</span>
-        <button hlmDropdownMenuCheckbox [checked]="true">
-          <hlm-dropdown-menu-checkbox-indicator />Sidebar
-        </button>
-        <button hlmDropdownMenuCheckbox>
-          <hlm-dropdown-menu-checkbox-indicator />Hidden files
-        </button>
+        <button hlmDropdownMenuCheckbox [checked]="true"><hlm-dropdown-menu-checkbox-indicator />Sidebar</button>
+        <button hlmDropdownMenuCheckbox><hlm-dropdown-menu-checkbox-indicator />Hidden files</button>
       </hlm-dropdown-menu>
     </ng-template>
   `,
@@ -235,8 +251,12 @@ export class NavigationShowcase {
 
     <ng-template #fileMenu>
       <hlm-dropdown-menu style="width: 14rem">
-        <button hlmDropdownMenuItem>Open <span hlmDropdownMenuShortcut>{{ mod() }}O</span></button>
-        <button hlmDropdownMenuItem>Back up now <span hlmDropdownMenuShortcut>{{ mod() }}B</span></button>
+        <button hlmDropdownMenuItem>
+          Open <span hlmDropdownMenuShortcut>{{ mod() }}O</span>
+        </button>
+        <button hlmDropdownMenuItem>
+          Back up now <span hlmDropdownMenuShortcut>{{ mod() }}B</span>
+        </button>
         <button hlmDropdownMenuItem>Show in Finder</button>
         <hlm-dropdown-menu-separator />
         <button hlmDropdownMenuItem variant="destructive">Delete backup</button>

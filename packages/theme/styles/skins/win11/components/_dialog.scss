@@ -21,7 +21,9 @@
       border: 1px solid var(--sn-color-stroke);
       border-radius: var(--sn-radius-overlay);
       background: var(--sn-color-surface-solid);
-      box-shadow: 0 32px 64px rgb(0 0 0 / 0.2), 0 2px 21px rgb(0 0 0 / 0.15);
+      box-shadow:
+        0 32px 64px rgb(0 0 0 / 0.2),
+        0 2px 21px rgb(0 0 0 / 0.15);
       color: var(--sn-color-fg);
       text-align: start;
     }

@@ -1,5 +1,9 @@
 import { Dialog, type DialogRef } from '@angular/cdk/dialog';
-import { createFlexibleConnectedPositionStrategy, createGlobalPositionStrategy, type PositionStrategy } from '@angular/cdk/overlay';
+import {
+  createFlexibleConnectedPositionStrategy,
+  createGlobalPositionStrategy,
+  type PositionStrategy,
+} from '@angular/cdk/overlay';
 import {
   afterRenderEffect,
   ChangeDetectionStrategy,
@@ -145,6 +149,8 @@ export class SnModalSheet {
     return createFlexibleConnectedPositionStrategy(this.injector, titleBar ?? window)
       .withFlexibleDimensions(false)
       .withPush(false)
-      .withPositions([{ originX: 'center', originY: titleBar ? 'bottom' : 'top', overlayX: 'center', overlayY: 'top' }]);
+      .withPositions([
+        { originX: 'center', originY: titleBar ? 'bottom' : 'top', overlayX: 'center', overlayY: 'top' },
+      ]);
   }
 }

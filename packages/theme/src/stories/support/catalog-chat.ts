@@ -160,11 +160,20 @@ const BACKUP_LOG = `02:00:01 INFO  Starting scheduled backup "Nightly"
         </hlm-message-scroller>
       </div>
     </div>
-    <p class="caption">message · bubble (default / ghost / muted / tinted / destructive) · code block · attachment · marker</p>
+    <p class="caption">
+      message · bubble (default / ghost / muted / tinted / destructive) · code block · attachment · marker
+    </p>
   `,
   styles: [
     SHARED_STYLES,
-    `.chat { display: flex; flex-direction: column; block-size: 30rem; max-inline-size: 36rem; }`,
+    `
+      .chat {
+        display: flex;
+        flex-direction: column;
+        block-size: 30rem;
+        max-inline-size: 36rem;
+      }
+    `,
   ],
 })
 export class ConversationShowcase {
@@ -248,7 +257,14 @@ export class ConversationShowcase {
   `,
   styles: [
     SHARED_STYLES,
-    `.panel { display: flex; flex-direction: column; gap: 1.5rem; max-inline-size: 36rem; }`,
+    `
+      .panel {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-inline-size: 36rem;
+      }
+    `,
   ],
 })
 export class AssistantShowcase {}
@@ -279,7 +295,14 @@ const BACKUP_WEEK: readonly BackupDay[] = [
     </div>
     <p class="caption">chart · backup size per night (GB), palette from --chart-1</p>
   `,
-  styles: [SHARED_STYLES, `.chart { max-inline-size: 36rem; }`],
+  styles: [
+    SHARED_STYLES,
+    `
+      .chart {
+        max-inline-size: 36rem;
+      }
+    `,
+  ],
 })
 export class ChartShowcase {
   protected readonly options: ChartOptions<BackupDay, string, number> = {

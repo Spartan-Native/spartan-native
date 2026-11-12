@@ -16,7 +16,7 @@ This will be the `NativeHost` adapter for **Electron** (Layer 04), with a main-p
 It will implement the contract from `@spartan-native/theme` (`NativeHost`, with the optional `menus` and `dialogs` services), pass `@spartan-native/host-conformance`, and be used the same way as every host:
 
 ```ts
-provideSpartanNative({ host: electronHost() })
+provideSpartanNative({ host: electronHost() });
 ```
 
 Implementers: follow `@spartan-native/host-wails` (its own repository, `Spartan-Native/host-wails`) as the reference adapter, and run `describeHostConformance` against a fake runtime.

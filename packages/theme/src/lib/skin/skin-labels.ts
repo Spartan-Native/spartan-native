@@ -30,7 +30,10 @@ export interface SnOption<T> {
 }
 
 /** The skins a user can pick from (every styled skin), labelled. */
-export const SKIN_OPTIONS: readonly SnOption<StyledSkin>[] = STYLED_SKINS.map((value) => ({ value, label: SKIN_LABELS[value] }));
+export const SKIN_OPTIONS: readonly SnOption<StyledSkin>[] = STYLED_SKINS.map((value) => ({
+  value,
+  label: SKIN_LABELS[value],
+}));
 
 /** The supported text sizes, labelled as percentages ("125 %"). */
 export const TEXT_SCALE_OPTIONS: readonly SnOption<number>[] = TEXT_SCALES.map((value) => ({

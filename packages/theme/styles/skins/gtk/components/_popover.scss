@@ -9,7 +9,9 @@
       border: 0;
       border-radius: var(--sn-radius-surface);
       background: var(--sn-color-surface-solid);
-      box-shadow: 0 2px 8px rgb(0 0 0 / 0.18), 0 0 0 1px rgb(0 0 0 / 0.06);
+      box-shadow:
+        0 2px 8px rgb(0 0 0 / 0.18),
+        0 0 0 1px rgb(0 0 0 / 0.06);
     }
   }
 }

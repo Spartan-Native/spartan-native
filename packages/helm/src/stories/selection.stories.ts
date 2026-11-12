@@ -1,6 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideFile, lucideFileArchive, lucideFileImage, lucideFileSpreadsheet, lucideFileText } from '@ng-icons/lucide';
+import {
+  lucideFile,
+  lucideFileArchive,
+  lucideFileImage,
+  lucideFileSpreadsheet,
+  lucideFileText,
+} from '@ng-icons/lucide';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { HlmBadgeImports } from '@spartan-ng/helm/badge';
 import { HlmTableImports } from '@spartan-ng/helm/table';
@@ -17,15 +23,64 @@ interface FileRow {
 }
 
 const FILES: FileRow[] = [
-  { id: 'budget', name: 'Budget 2026.xlsx', icon: 'lucideFileSpreadsheet', size: '48 KB', modified: 'Yesterday', status: 'Syncing', tone: 'accent' },
-  { id: 'notes', name: 'Meeting notes.md', icon: 'lucideFileText', size: '6 KB', modified: 'Today, 08:40', status: 'Synced', tone: 'success' },
-  { id: 'report', name: 'Q4 Report.pdf', icon: 'lucideFile', size: '2.4 MB', modified: 'Today, 09:12', status: 'Synced', tone: 'success' },
-  { id: 'readme', name: 'Readme.md', icon: 'lucideFileText', size: '2 KB', modified: '3 Nov', status: 'Synced', tone: 'success' },
-  { id: 'roadmap', name: 'Roadmap.png', icon: 'lucideFileImage', size: '1.1 MB', modified: 'Monday', status: 'Conflict', tone: 'warning' },
-  { id: 'archive', name: 'Archive.zip', icon: 'lucideFileArchive', size: '820 MB', modified: '12 Oct', status: 'Failed', tone: 'danger' },
+  {
+    id: 'budget',
+    name: 'Budget 2026.xlsx',
+    icon: 'lucideFileSpreadsheet',
+    size: '48 KB',
+    modified: 'Yesterday',
+    status: 'Syncing',
+    tone: 'accent',
+  },
+  {
+    id: 'notes',
+    name: 'Meeting notes.md',
+    icon: 'lucideFileText',
+    size: '6 KB',
+    modified: 'Today, 08:40',
+    status: 'Synced',
+    tone: 'success',
+  },
+  {
+    id: 'report',
+    name: 'Q4 Report.pdf',
+    icon: 'lucideFile',
+    size: '2.4 MB',
+    modified: 'Today, 09:12',
+    status: 'Synced',
+    tone: 'success',
+  },
+  {
+    id: 'readme',
+    name: 'Readme.md',
+    icon: 'lucideFileText',
+    size: '2 KB',
+    modified: '3 Nov',
+    status: 'Synced',
+    tone: 'success',
+  },
+  {
+    id: 'roadmap',
+    name: 'Roadmap.png',
+    icon: 'lucideFileImage',
+    size: '1.1 MB',
+    modified: 'Monday',
+    status: 'Conflict',
+    tone: 'warning',
+  },
+  {
+    id: 'archive',
+    name: 'Archive.zip',
+    icon: 'lucideFileArchive',
+    size: '820 MB',
+    modified: '12 Oct',
+    status: 'Failed',
+    tone: 'danger',
+  },
 ];
 
-const HELP = 'Click · Shift-click · Ctrl/⌘-click · ↑ ↓ Home End · Shift+arrows · Ctrl/⌘+A · Esc · type to jump · Enter / double-click opens';
+const HELP =
+  'Click · Shift-click · Ctrl/⌘-click · ↑ ↓ Home End · Shift+arrows · Ctrl/⌘+A · Esc · type to jump · Enter / double-click opens';
 
 @Component({
   selector: 'sn-file-list-demo',
@@ -46,14 +101,39 @@ const HELP = 'Click · Shift-click · Ctrl/⌘-click · ↑ ↓ Home End · Shif
     <p class="help">${HELP}</p>
   `,
   styles: `
-    :host { display: flex; flex-direction: column; gap: 10px; max-width: 420px; }
-    .list { display: flex; flex-direction: column; gap: 1px; padding: 6px; border-radius: var(--sn-radius-surface);
-      background: var(--sn-color-surface-solid); box-shadow: var(--sn-shadow-card); border: 1px solid var(--sn-color-stroke); }
-    .name { flex: 1; }
+    :host {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 420px;
+    }
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      padding: 6px;
+      border-radius: var(--sn-radius-surface);
+      background: var(--sn-color-surface-solid);
+      box-shadow: var(--sn-shadow-card);
+      border: 1px solid var(--sn-color-stroke);
+    }
+    .name {
+      flex: 1;
+    }
     /* derive from currentColor, so it stays readable on the selection fill */
-    .meta { color: color-mix(in srgb, currentColor 62%, transparent); font-size: var(--sn-font-size-small); }
-    .status { margin: 0; font-size: var(--sn-font-size-small); }
-    .help { margin: 0; font-size: var(--sn-font-size-small); color: var(--sn-color-fg-muted); }
+    .meta {
+      color: color-mix(in srgb, currentColor 62%, transparent);
+      font-size: var(--sn-font-size-small);
+    }
+    .status {
+      margin: 0;
+      font-size: var(--sn-font-size-small);
+    }
+    .help {
+      margin: 0;
+      font-size: var(--sn-font-size-small);
+      color: var(--sn-color-fg-muted);
+    }
   `,
 })
 export class FileListDemo {
@@ -75,7 +155,12 @@ export class FileListDemo {
     <div class="frame">
       <table hlmTable snSelectable="grid" [(selection)]="selection" (activated)="opened.set($event)" aria-label="Files">
         <thead hlmTHead>
-          <tr hlmTr><th hlmTh>Name</th><th hlmTh>Size</th><th hlmTh>Modified</th><th hlmTh>Status</th></tr>
+          <tr hlmTr>
+            <th hlmTh>Name</th>
+            <th hlmTh>Size</th>
+            <th hlmTh>Modified</th>
+            <th hlmTh>Status</th>
+          </tr>
         </thead>
         <tbody hlmTBody>
           @for (f of files; track f.id) {
@@ -83,7 +168,9 @@ export class FileListDemo {
               <td hlmTd>{{ f.name }}</td>
               <td hlmTd class="muted">{{ f.size }}</td>
               <td hlmTd class="muted">{{ f.modified }}</td>
-              <td hlmTd><span hlmBadge [class]="'sn-tone-' + f.tone">{{ f.status }}</span></td>
+              <td hlmTd>
+                <span hlmBadge [class]="'sn-tone-' + f.tone">{{ f.status }}</span>
+              </td>
             </tr>
           }
         </tbody>
@@ -93,12 +180,31 @@ export class FileListDemo {
     <p class="help">${HELP}</p>
   `,
   styles: `
-    :host { display: flex; flex-direction: column; gap: 10px; max-width: 720px; }
-    .frame { border-radius: var(--sn-radius-surface); overflow: hidden; background: var(--sn-color-surface-solid);
-      border: 1px solid var(--sn-color-stroke); box-shadow: var(--sn-shadow-card); }
-    .muted { color: color-mix(in srgb, currentColor 62%, transparent); }
-    .status { margin: 0; font-size: var(--sn-font-size-small); }
-    .help { margin: 0; font-size: var(--sn-font-size-small); color: var(--sn-color-fg-muted); }
+    :host {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 720px;
+    }
+    .frame {
+      border-radius: var(--sn-radius-surface);
+      overflow: hidden;
+      background: var(--sn-color-surface-solid);
+      border: 1px solid var(--sn-color-stroke);
+      box-shadow: var(--sn-shadow-card);
+    }
+    .muted {
+      color: color-mix(in srgb, currentColor 62%, transparent);
+    }
+    .status {
+      margin: 0;
+      font-size: var(--sn-font-size-small);
+    }
+    .help {
+      margin: 0;
+      font-size: var(--sn-font-size-small);
+      color: var(--sn-color-fg-muted);
+    }
   `,
 })
 export class FileTableDemo {

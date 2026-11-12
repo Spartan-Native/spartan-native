@@ -34,6 +34,7 @@ The other capabilities are reported honestly: `customTitleBar` (Window Controls 
 Where the File System Access pickers exist (Chromium), `host.dialogs` opens and saves files and picks folders. You get a `handle` back instead of a path. There is no `message()`: browsers have no OS alert with custom buttons.
 
 **Browser limits:**
+
 - **Accent on Chromium (Chrome, Edge, Brave, Electron-free PWAs):** Chromium returns its own fixed blue for `AccentColor` (anti-fingerprinting), so the OS accent can't reach the page. The adapter detects it, reports `systemAccent: 'none'`, and uses the platform's stock accent. Offer an in-app accent picker (`theme.override({ accent })`). The desktop adapters (Wails, Tauri, Electron, Photino) will read the real accent natively.
 - **Frozen versions:** without Client Hints, Windows and macOS versions are frozen in the user-agent string. Windows maps to the Windows 11 skin and macOS to macOS 26.
 - **Linux desktop:** GNOME vs KDE is not visible to a web page, so GTK is assumed. Pass `skin: 'qt'` to override.
@@ -53,8 +54,8 @@ const off = watchDisplayMode((mode) => …); // 'browser' | 'standalone' | 'over
 ```ts
 webHost({
   accent: '#9141ac', // when the browser doesn't expose the system accent
-  skin: 'gtk',       // force a skin (e.g. from a user setting)
-  window,            // another window / iframe, or a test double
+  skin: 'gtk', // force a skin (e.g. from a user setting)
+  window, // another window / iframe, or a test double
 });
 ```
 

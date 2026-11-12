@@ -1,6 +1,6 @@
 # @spartan-native/helm
 
-**Layer 02 · optional.** Desktop **behaviors** for stock spartan/ui. `@spartan-native/theme` makes the components *look* native; helm makes them *behave* like a desktop app.
+**Layer 02 · optional.** Desktop **behaviors** for stock spartan/ui. `@spartan-native/theme` makes the components _look_ native; helm makes them _behave_ like a desktop app.
 
 > Status: **first components implemented**: the desktop selection model and the default/cancel buttons. Spec: [`05-components.md`](https://github.com/Spartan-Native/spartan-native/blob/main/docs/05-components.md) (desktop interaction rules).
 
@@ -19,14 +19,16 @@
 ```html
 <div snSelectable [(selection)]="selected" (activated)="open($event)" aria-label="Files">
   @for (f of files; track f.id) {
-    <div snSelectableItem [value]="f.id">{{ f.name }}</div>
+  <div snSelectableItem [value]="f.id">{{ f.name }}</div>
   }
 </div>
 
 <table hlmTable snSelectable="grid" [(selection)]="selected">
   <tbody hlmTBody>
     @for (row of rows; track row.id) {
-      <tr hlmTr snSelectableItem [value]="row.id">…</tr>
+    <tr hlmTr snSelectableItem [value]="row.id">
+      …
+    </tr>
     }
   </tbody>
 </table>
@@ -80,13 +82,13 @@ Hooks: `[data-slot="sn-selectable"]`, `[data-slot="sn-selectable-item"]` with `[
 
 ## Structure
 
-| Path | Purpose |
-| --- | --- |
+| Path                 | Purpose                                                            |
+| -------------------- | ------------------------------------------------------------------ |
 | `src/lib/selection/` | `selection-model.ts` (pure logic) and `selectable.ts` (directives) |
-| `src/lib/actions/` | `snDefaultAction`, `snCancelAction`, `snActionScope` |
-| `styles/` | Published as `@spartan-native/helm/styles/*` |
-| `src/stories/` | Storybook: Selection (list, table), Default & cancel buttons |
-| `.storybook/` | Toolbar from `@spartan-native/theme/storybook`, plus window focus |
+| `src/lib/actions/`   | `snDefaultAction`, `snCancelAction`, `snActionScope`               |
+| `styles/`            | Published as `@spartan-native/helm/styles/*`                       |
+| `src/stories/`       | Storybook: Selection (list, table), Default & cancel buttons       |
+| `.storybook/`        | Toolbar from `@spartan-native/theme/storybook`, plus window focus  |
 
 ## Dependencies
 

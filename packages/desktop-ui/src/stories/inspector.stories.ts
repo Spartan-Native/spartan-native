@@ -32,11 +32,46 @@ interface BackupFile {
 }
 
 const FILES: BackupFile[] = [
-  { id: 'report', name: 'Q3 report.pdf', icon: 'lucideFileText', kind: 'PDF document', size: '2.4 MB', modified: 'Today, 09:12' },
-  { id: 'budget', name: 'Budget 2026.xlsx', icon: 'lucideFileSpreadsheet', kind: 'Excel spreadsheet', size: '48 KB', modified: 'Yesterday, 17:40' },
-  { id: 'notes', name: 'Meeting notes.md', icon: 'lucideFileText', kind: 'Markdown text', size: '6 KB', modified: 'Today, 08:40' },
-  { id: 'roadmap', name: 'Roadmap.png', icon: 'lucideFileImage', kind: 'PNG image', size: '1.1 MB', modified: 'Monday, 14:05' },
-  { id: 'photos', name: 'Photos 2025.zip', icon: 'lucideFileArchive', kind: 'ZIP archive', size: '820 MB', modified: '12 Oct, 11:30' },
+  {
+    id: 'report',
+    name: 'Q3 report.pdf',
+    icon: 'lucideFileText',
+    kind: 'PDF document',
+    size: '2.4 MB',
+    modified: 'Today, 09:12',
+  },
+  {
+    id: 'budget',
+    name: 'Budget 2026.xlsx',
+    icon: 'lucideFileSpreadsheet',
+    kind: 'Excel spreadsheet',
+    size: '48 KB',
+    modified: 'Yesterday, 17:40',
+  },
+  {
+    id: 'notes',
+    name: 'Meeting notes.md',
+    icon: 'lucideFileText',
+    kind: 'Markdown text',
+    size: '6 KB',
+    modified: 'Today, 08:40',
+  },
+  {
+    id: 'roadmap',
+    name: 'Roadmap.png',
+    icon: 'lucideFileImage',
+    kind: 'PNG image',
+    size: '1.1 MB',
+    modified: 'Monday, 14:05',
+  },
+  {
+    id: 'photos',
+    name: 'Photos 2025.zip',
+    icon: 'lucideFileArchive',
+    kind: 'ZIP archive',
+    size: '820 MB',
+    modified: '12 Oct, 11:30',
+  },
 ];
 
 const ICONS = {
@@ -64,7 +99,14 @@ const ICONS = {
     <sn-inspector-layout>
       <div class="toolbar">
         <h1>Documents</h1>
-        <button hlmBtn variant="ghost" size="icon-sm" aria-label="Show details" [attr.aria-pressed]="open()" (click)="open.set(!open())">
+        <button
+          hlmBtn
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Show details"
+          [attr.aria-pressed]="open()"
+          (click)="open.set(!open())"
+        >
           <ng-icon name="lucideInfo" />
         </button>
       </div>
@@ -88,7 +130,11 @@ const ICONS = {
           <sn-inspector-section title="Backup">
             <div class="control-row">
               <span id="keep-offline">Keep offline</span>
-              <hlm-switch aria-labelledby="keep-offline" [checked]="offline().has(f.id)" (checkedChange)="setOffline(f.id, $event)" />
+              <hlm-switch
+                aria-labelledby="keep-offline"
+                [checked]="offline().has(f.id)"
+                (checkedChange)="setOffline(f.id, $event)"
+              />
             </div>
             <button hlmBtn variant="outline" size="sm" class="versions">Show versions</button>
           </sn-inspector-section>
@@ -99,17 +145,65 @@ const ICONS = {
     </sn-inspector-layout>
   `,
   styles: `
-    :host { display: flex; flex-direction: column; min-height: 0; height: 100%; }
-    sn-inspector-layout { flex: 1; }
-    .toolbar { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem 0.25rem; }
-    h1 { flex: 1; margin: 0; font-size: var(--sn-font-size); font-weight: var(--sn-font-weight-strong); }
-    .list { display: flex; flex-direction: column; gap: 1px; padding: 0.5rem; outline: none; cursor: default; user-select: none; }
-    .list:focus-within [data-selected] .meta { color: inherit; }
-    .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .meta { color: var(--sn-color-fg-muted); font-size: var(--sn-font-size-small); }
-    .control-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; min-height: 2rem; }
-    .versions { align-self: flex-start; margin-top: 0.25rem; }
-    .empty { margin: 0; color: var(--sn-color-fg-muted); }
+    :host {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      height: 100%;
+    }
+    sn-inspector-layout {
+      flex: 1;
+    }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem 0.25rem;
+    }
+    h1 {
+      flex: 1;
+      margin: 0;
+      font-size: var(--sn-font-size);
+      font-weight: var(--sn-font-weight-strong);
+    }
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      padding: 0.5rem;
+      outline: none;
+      cursor: default;
+      user-select: none;
+    }
+    .list:focus-within [data-selected] .meta {
+      color: inherit;
+    }
+    .name {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .meta {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      min-height: 2rem;
+    }
+    .versions {
+      align-self: flex-start;
+      margin-top: 0.25rem;
+    }
+    .empty {
+      margin: 0;
+      color: var(--sn-color-fg-muted);
+    }
   `,
 })
 class InspectorFilesDemo {
@@ -139,8 +233,16 @@ class InspectorFilesDemo {
     </div>
   `,
   styles: `
-    .frame { display: flex; height: 26rem; }
-    .content { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .frame {
+      display: flex;
+      height: 26rem;
+    }
+    .content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
   `,
 })
 class InspectorDemo {
@@ -159,17 +261,47 @@ class InspectorDemo {
       <div class="body">
         <sn-sidebar-nav aria-label="Sections">
           <sn-sidebar-section title="Backups">
-            <button snSidebarItem icon="lucideHouse" [active]="page() === 'Overview'" (click)="page.set('Overview')">Overview</button>
-            <button snSidebarItem icon="lucideClock" [active]="page() === 'Schedules'" (click)="page.set('Schedules')">Schedules</button>
-            <button snSidebarItem icon="lucideHistory" badge="3" [active]="page() === 'Restore files'" (click)="page.set('Restore files')">Restore files</button>
+            <button snSidebarItem icon="lucideHouse" [active]="page() === 'Overview'" (click)="page.set('Overview')">
+              Overview
+            </button>
+            <button snSidebarItem icon="lucideClock" [active]="page() === 'Schedules'" (click)="page.set('Schedules')">
+              Schedules
+            </button>
+            <button
+              snSidebarItem
+              icon="lucideHistory"
+              badge="3"
+              [active]="page() === 'Restore files'"
+              (click)="page.set('Restore files')"
+            >
+              Restore files
+            </button>
           </sn-sidebar-section>
           <sn-sidebar-section title="Destinations">
-            <button snSidebarItem icon="lucideServer" [active]="page() === 'Office NAS'" (click)="page.set('Office NAS')">Office NAS</button>
-            <button snSidebarItem icon="lucideUsb" [active]="page() === 'Backup drive'" (click)="page.set('Backup drive')">Backup drive</button>
-            <button snSidebarItem icon="lucideCloud" [active]="page() === 'Cloud'" (click)="page.set('Cloud')">Cloud</button>
+            <button
+              snSidebarItem
+              icon="lucideServer"
+              [active]="page() === 'Office NAS'"
+              (click)="page.set('Office NAS')"
+            >
+              Office NAS
+            </button>
+            <button
+              snSidebarItem
+              icon="lucideUsb"
+              [active]="page() === 'Backup drive'"
+              (click)="page.set('Backup drive')"
+            >
+              Backup drive
+            </button>
+            <button snSidebarItem icon="lucideCloud" [active]="page() === 'Cloud'" (click)="page.set('Cloud')">
+              Cloud
+            </button>
           </sn-sidebar-section>
           <sn-sidebar-section>
-            <button snSidebarItem icon="lucideSettings" [active]="page() === 'Settings'" (click)="page.set('Settings')">Settings</button>
+            <button snSidebarItem icon="lucideSettings" [active]="page() === 'Settings'" (click)="page.set('Settings')">
+              Settings
+            </button>
           </sn-sidebar-section>
         </sn-sidebar-nav>
         <main class="sn-content content"><sn-inspector-files-demo /></main>
@@ -177,9 +309,23 @@ class InspectorDemo {
     </div>
   `,
   styles: `
-    .frame { display: flex; flex-direction: column; max-width: 64rem; height: 34rem; }
-    .body { display: flex; flex: 1; min-height: 0; }
-    .content { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .frame {
+      display: flex;
+      flex-direction: column;
+      max-width: 64rem;
+      height: 34rem;
+    }
+    .body {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+    .content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
   `,
 })
 class InspectorWindowDemo {

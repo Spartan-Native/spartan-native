@@ -5,7 +5,14 @@ describe('applySpartanNative', () => {
   it('sets classes and variables, and replaces only the classes it owns', () => {
     const root = document.createElement('div');
     root.classList.add('my-app', 't-gtk');
-    applySpartanNative(root, { ...DEFAULT_APPEARANCE, skin: 'mac', scheme: 'dark', reduceTransparency: true, focused: false, textScale: 1.5 });
+    applySpartanNative(root, {
+      ...DEFAULT_APPEARANCE,
+      skin: 'mac',
+      scheme: 'dark',
+      reduceTransparency: true,
+      focused: false,
+      textScale: 1.5,
+    });
 
     expect([...root.classList].sort()).toEqual(['dark', 'inactive', 'my-app', 'rt', 't-mac']);
     expect(root.dataset['snSkin']).toBe('mac');

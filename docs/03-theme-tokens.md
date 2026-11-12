@@ -69,12 +69,12 @@ Every color token is `--sn-color-<name>`, one per key of the `Palette` type (`fg
 
 ### Per-platform neutrals `[bg, surface, fg]`
 
-| Base | Light | Dark |
-| --- | --- | --- |
-| win | `#f3f3f3` `#fbfbfb` `#1a1a1a` | `#202020` `#2b2b2b` `#ffffff` |
-| mac | `#f2f2f4` `#ffffff` `#1d1d1f` | `#1e1e21` `#2c2c2f` `#f5f5f7` |
-| gtk | `#fafafb` `#ffffff` `#2e2e32` | `#222226` `#36363a` `#ffffff` |
-| qt | `#eff0f1` `#ffffff` `#232629` | `#202326` `#141618` `#fcfcfc` |
+| Base | Light                         | Dark                          |
+| ---- | ----------------------------- | ----------------------------- |
+| win  | `#f3f3f3` `#fbfbfb` `#1a1a1a` | `#202020` `#2b2b2b` `#ffffff` |
+| mac  | `#f2f2f4` `#ffffff` `#1d1d1f` | `#1e1e21` `#2c2c2f` `#f5f5f7` |
+| gtk  | `#fafafb` `#ffffff` `#2e2e32` | `#222226` `#36363a` `#ffffff` |
+| qt   | `#eff0f1` `#ffffff` `#232629` | `#202326` `#141618` `#fcfcfc` |
 
 `w10` uses the win neutrals and `macc` uses mac. `cros` starts from gtk, then its own Material 3 palette replaces it (below).
 

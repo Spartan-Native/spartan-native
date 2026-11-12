@@ -21,7 +21,9 @@
       border: 0;
       border-radius: var(--sn-radius-pill);
       background: #fff;
-      box-shadow: 0 1px 4px rgb(0 0 0 / 0.25), inset 0 0 0 0.5px rgb(0 0 0 / 0.08);
+      box-shadow:
+        0 1px 4px rgb(0 0 0 / 0.25),
+        inset 0 0 0 0.5px rgb(0 0 0 / 0.08);
       transition: scale var(--sn-duration-fast) var(--sn-easing);
 
       &:active {

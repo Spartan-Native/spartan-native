@@ -45,7 +45,9 @@ const kb = (n: number) => (n >= 1000 ? `${(n / 1000).toFixed(1)} MB` : `${n} KB`
         }
         @if (progress()) {
           <span snStatusItem snStatusBarEnd>
-            <hlm-progress class="meter" [value]="62" aria-label="Backup progress"><hlm-progress-indicator /></hlm-progress>
+            <hlm-progress class="meter" [value]="62" aria-label="Backup progress"
+              ><hlm-progress-indicator
+            /></hlm-progress>
           </span>
         }
         <span snStatusItem snStatusBarEnd>1.2 TB free</span>
@@ -53,19 +55,54 @@ const kb = (n: number) => (n >= 1000 ? `${(n / 1000).toFixed(1)} MB` : `${n} KB`
     </div>
   `,
   styles: `
-    .window { max-width: 40rem; display: flex; flex-direction: column; }
-    .files { margin: 0; padding: 0.5rem; list-style: none; background: var(--sn-color-bg); min-height: 11rem; }
-    .file {
-      all: unset; box-sizing: border-box; display: flex; align-items: center; gap: 0.75rem; width: 100%;
-      min-height: var(--sn-row-height); padding-inline: 0.75rem; border-radius: var(--sn-list-item-radius);
+    .window {
+      max-width: 40rem;
+      display: flex;
+      flex-direction: column;
     }
-    .file:hover { background: var(--sn-color-hover); }
-    .file[aria-pressed='true'] { background: var(--sn-row-selected-bg); color: var(--sn-row-selected-fg); }
-    .file:focus-visible { outline: var(--sn-row-focus-ring); outline-offset: -2px; }
-    .file ng-icon { font-size: 1.125rem; color: var(--sn-color-fg-muted); }
-    .name { flex: 1; }
-    .size { color: var(--sn-color-fg-muted); font-size: var(--sn-font-size-small); }
-    .meter { width: 6rem; }
+    .files {
+      margin: 0;
+      padding: 0.5rem;
+      list-style: none;
+      background: var(--sn-color-bg);
+      min-height: 11rem;
+    }
+    .file {
+      all: unset;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      min-height: var(--sn-row-height);
+      padding-inline: 0.75rem;
+      border-radius: var(--sn-list-item-radius);
+    }
+    .file:hover {
+      background: var(--sn-color-hover);
+    }
+    .file[aria-pressed='true'] {
+      background: var(--sn-row-selected-bg);
+      color: var(--sn-row-selected-fg);
+    }
+    .file:focus-visible {
+      outline: var(--sn-row-focus-ring);
+      outline-offset: -2px;
+    }
+    .file ng-icon {
+      font-size: 1.125rem;
+      color: var(--sn-color-fg-muted);
+    }
+    .name {
+      flex: 1;
+    }
+    .size {
+      color: var(--sn-color-fg-muted);
+      font-size: var(--sn-font-size-small);
+    }
+    .meter {
+      width: 6rem;
+    }
   `,
 })
 class StatusBarDemo {

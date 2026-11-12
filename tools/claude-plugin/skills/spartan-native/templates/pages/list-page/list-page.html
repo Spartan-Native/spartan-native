@@ -1,8 +1,20 @@
 <!-- The OS's command surface: CommandBar, NSToolbar, AdwHeaderBar, KToolBar… -->
 <sn-command-bar title="Items">
   <button snCommand icon="lucidePlus" label="New" (click)="adding.set(true)"></button>
-  <button snCommand icon="lucidePencil" label="Rename" [disabled]="selection().length !== 1" (click)="rename(selection()[0])"></button>
-  <button snCommand icon="lucideTrash2" label="Delete" [disabled]="!hasSelection()" (click)="remove(selection())"></button>
+  <button
+    snCommand
+    icon="lucidePencil"
+    label="Rename"
+    [disabled]="selection().length !== 1"
+    (click)="rename(selection()[0])"
+  ></button>
+  <button
+    snCommand
+    icon="lucideTrash2"
+    label="Delete"
+    [disabled]="!hasSelection()"
+    (click)="remove(selection())"
+  ></button>
 
   <ng-template snCommandOverflow>
     <div hlmDropdownMenu>
@@ -12,7 +24,12 @@
 </sn-command-bar>
 
 @if (items().length === 0) {
-  <sn-status-page class="fill" icon="lucideInbox" title="No items yet" description="Create your first item to get started.">
+  <sn-status-page
+    class="fill"
+    icon="lucideInbox"
+    title="No items yet"
+    description="Create your first item to get started."
+  >
     <button hlmBtn (click)="adding.set(true)">New item</button>
   </sn-status-page>
 } @else {

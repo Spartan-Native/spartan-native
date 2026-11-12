@@ -19,6 +19,7 @@ Reviewed at commit `109ed73` (`main`), 2026-11-12. Delete this file when the wor
 Branch `public-release-prep` (not committed yet).
 
 **Decisions taken** (by the owner: D1, D2; recommended defaults applied: D3, D7, D8):
+
 - D1: MIT. `LICENSE` in the root and in every package folder (ng-packagr copies a package's own `LICENSE` into `dist/`). Copyright holder: Roland Molnár. Third-party notice for `libs/spartan-ui` in `NOTICE`.
 - D2: npmjs.org. All published packages have `publishConfig.access: "public"`; nothing points at GitHub Packages any more.
 - D3: `host-electron` is built and tested but not published (`"private": true`, left out of `scripts/libraries.mjs`).
@@ -27,6 +28,7 @@ Branch `public-release-prep` (not committed yet).
 - Still open: D4, D5, D6.
 
 **Done:**
+
 - Phase 1: 1.1–1.10 all done. CI (`ci.yml`) runs tests, `build:libs` and `check:packages`; add `format:check` and `lint` after phase 3.
 - Phase 6: 1, 2 and 4 done. `release.yml` publishes to npmjs.org (trusted publishing or `NPM_TOKEN`, provenance when the repository is public, skips versions already on npm) and creates the GitHub Release from `CHANGELOG.md`. `scripts/check-packages.mjs` checks metadata, tarball contents and README links. Fixed: `npm publish "dist/$lib"` was read by npm 11 as a GitHub `owner/repo` shorthand; it is now `./dist/$lib`. 3 (installing the tarballs into a scratch app) and 5 (peer warnings) are not done.
 - Phase 5.2: the published-library list is now one file, `scripts/libraries.mjs`, read by the pack, stamp, check and release scripts.
@@ -39,6 +41,7 @@ Branch `public-release-prep` (not committed yet).
 **Before the first npm release (owner):** create the `spartan-native` organization on npmjs.com (the packages don't exist there yet; the scope itself could not be checked from the CLI), add an `NPM_TOKEN` secret for the first publish, then set up trusted publishing per package and delete the secret.
 
 **Owner tasks moved from `TODO.md`** (deleted in phase 2; the repository split it tracked is already on `main`):
+
 - GitHub Packages still holds the old `0.1.0` packages published from this repository before the split, including the broken `@spartan-native/host-wails@0.1.0` and the scaffold `host-tauri`, `host-dotnet` and `host-electron`. Delete them (package settings → Manage versions) so nobody installs them by accident.
 - The sibling repositories (`host-wails`, `host-tauri`, `host-dotnet`, `harbor`) still install from or publish to GitHub Packages. Move them to npmjs.org too, or `harbor` will keep needing a token. Each has its own `TODO.md`.
 - `host-tauri` and `host-dotnet`: create the GitHub repositories, push the local clones, and follow each repository's `TODO.md`.
@@ -82,17 +85,22 @@ Nothing below can be chosen by an agent. Each item lists a recommendation.
 All new files go in the repository root unless noted.
 
 ### 1.1 `LICENSE`
+
 The full text of the license chosen in D1, with the year and the copyright holder the owner names.
 
 ### 1.2 `package.json` metadata
+
 In the root and in every `packages/**/package.json` (theme, helm, desktop-ui, host-web, host-conformance, host-electron): add `license`, `repository` (with `directory` for each package), `homepage`, `bugs` and `author`. `scripts/stamp-release.mjs` already writes `repository` at release time; make the two agree, and keep `directory`.
 
 Also fix in passing:
+
 - The root `version` is `0.0.0` while the packages are `0.1.0`, and the comments in `scripts/stamp-release.mjs` ("the sources keep their 0.0.0 placeholder versions") and `scripts/pack-libs.mjs` (`spartan-native-theme-0.0.0.tgz`) are out of date. Pick one rule and make the comments true.
 - Add `LICENSE` to the `assets` of each `ng-package.json` so it ships in every package, the same way `AGENTS.md` already does.
 
 ### 1.3 `CONTRIBUTING.md`
+
 Content to cover, most of it movable from the "Workspace" half of the root `README.md`:
+
 - Requirements and setup (`nvm use`, `npm install`).
 - The command table, including "do not run `npm run test:visual` casually" and why.
 - Build order and the source-versus-`dist` path mapping.
@@ -103,33 +111,41 @@ Content to cover, most of it movable from the "Workspace" half of the root `READ
 - Commit and pull request expectations, and how releases are tagged.
 
 ### 1.4 `CODE_OF_CONDUCT.md`
+
 Contributor Covenant 2.1 with the contact from D8.
 
 ### 1.5 `SECURITY.md`
+
 Supported versions (latest only), how to report (D8), and what is in scope. Worth one sentence: the host adapters read OS settings and expose file dialogs, so reports about those are welcome.
 
 ### 1.6 `CHANGELOG.md`
+
 Keep a Changelog format. Start with `0.1.0` and an "Unreleased" section. Note that every `@spartan-native/*` package shares one version.
 
 ### 1.7 `.github/`
+
 - `workflows/ci.yml`: on pull requests and pushes to `main`, run `npm ci`, `npm test -- --watch=false`, `npm run build:libs` and (after phase 3) `npm run format:check` and `npm run lint`. Use `node-version-file: .nvmrc`. No visual tests in CI: the baselines are per operating system and not committed.
 - `ISSUE_TEMPLATE/bug_report.yml` (fields: package, version, skin, host/runtime, OS, steps), `ISSUE_TEMPLATE/feature_request.yml`, `ISSUE_TEMPLATE/config.yml`.
 - `PULL_REQUEST_TEMPLATE.md` with a short checklist: tests, `AGENTS.md` updated, skill updated, "affects screenshots: yes/no".
 - `dependabot.yml` for npm and GitHub Actions.
 
 ### 1.8 `.gitattributes`
+
 ```
 libs/spartan-ui/** linguist-generated=true
 packages/theme/styles/contract/_palette-defaults.scss linguist-generated=true
 docs/reference/** linguist-documentation=true
 package-lock.json linguist-generated=true
 ```
+
 This collapses generated files in pull request diffs and keeps roughly 600 stock spartan files out of the repository's language statistics.
 
 ### 1.9 Third-party notice
+
 `libs/spartan-ui/` is code generated by the spartan CLI and committed here. Check spartan/ui's license and add the required attribution, either in `libs/spartan-ui/README.md` or a root `NOTICE` file.
 
 ### 1.10 `.gitignore`
+
 Remove the `# Nx cache` entry (the workspace does not use Nx; there is no `nx.json`) or keep it only if the spartan CLI really creates `.nx/`. Check before deleting.
 
 **Done when:** a stranger landing on the repository can see the license, how to install, how to contribute and how to report a problem, and CI runs on a pull request.
@@ -139,18 +155,23 @@ Remove the `# Nx cache` entry (the workspace does not use Nx; there is no `nx.js
 ## Phase 2: make the documentation true
 
 ### 2.1 `docs/README.md` (rewrite)
+
 It is titled "implementation handover" and says "Status: design only… No package code exists yet". Rewrite it as the index of the design documentation for an implemented project. Remove the two claude.ai links, the "Gap: … chat conversations could not be read" note and the "How to view the mockups" section (D4).
 
 ### 2.2 `docs/09-roadmap.md`
+
 Line 3 says "The project is at phase 01". The phase sections mix original proposals with inline "(Done: …)" notes. Rewrite as a status table (done, in progress, open) followed by what is actually left: Electron host, window effects, Snap Layouts, `contrast: more` palette, `NotificationHost`, the playground. Also drop "Nx recommended".
 
 ### 2.3 `docs/10-open-questions.md`
+
 Remove the sentence about checking the claude.ai project chats. Fix the stale path in Q1: `packages/theme/src/styles/contract/` is now `packages/theme/styles/contract/`. Move decided questions (Q1, Q5, Q12) to a "Decided" section so the open list is only open things. Record the answers to Q10 and Q11 from phase 0.
 
 ### 2.4 `docs/01` to `docs/08`
+
 Read each one against the code and fix what describes a plan as the present or the reverse. Known cases: the docs speak of "28 components" in places while `libs/spartan-ui/README.md` lists 66 generated; `docs/08-sample-app.md` describes an app that now lives in another repository. State once, near the top of each file, whether it is specification (design intent) or a description of what is built.
 
 ### 2.5 Root `README.md`
+
 - The status paragraph is one 200-word block and contradicts itself: it says the theme is implemented for "Windows 11, macOS 26 and GNOME", while `STYLED_SKINS` and `packages/desktop-ui/README.md` cover all seven. Replace it with a short table: package, state, where it lives.
 - The Layout block says "skins for win/mac/gtk". Update it.
 - Add near the top: badges (CI, license, npm version), an "Install" section and a 20-line "Quick start" (install, `provideSpartanNative({ host: webHost() })`, the one `@use` line for styles). A visitor currently reads 100 lines before seeing how to use it.
@@ -158,19 +179,24 @@ Read each one against the code and fix what describes a plan as the present or t
 - The image footnote mentions `docs/reference/design-source/`; update it per D4.
 
 ### 2.6 `TODO.md`
+
 It is a private migration checklist that names unpushed local clones (`../host-tauri`), a branch (`repo-split-todo`) and a file that no longer exists (`REPO_SPLIT.md`). Finish or move the open items to GitHub issues, then delete the file.
 
 ### 2.7 `AGENTS.md` (root)
+
 The package table lists `host-wails`, `host-tauri` and `host-dotnet` as `packages/hosts/<host>/AGENTS.md`. Those folders moved to other repositories. Only `host-web`, `host-conformance` and `host-electron` are here. Fix the table and point to the other repositories by name.
 
 ### 2.8 Package READMEs
+
 - Every package README links to `../../docs/…` for its spec and images. Those links work on GitHub but break on the npm page and in `node_modules`. Use absolute GitHub URLs for anything that ships in a package. (The package `AGENTS.md` files already follow this rule.)
 - `libs/spartan-ui/README.md` points to `packages/theme/src/styles/_hooks.scss`; the file is `packages/theme/styles/_hooks.scss`.
 - `packages/hosts/README.md` and each host README: confirm the status lines after D3.
 - `apps/playground/README.md` says "Status: Angular CLI scaffold". See 5.1.
 
 ### 2.9 Source comments that point at the design phase
+
 Comments should explain the code to someone who has only the package. Reword these so they stand on their own:
+
 - `packages/theme/src/lib/palette/derive-palette.ts:3` "Ported from the design mockups (docs/reference/…)" and `:197` "Fix for docs/10-open-questions.md Q12".
 - `packages/theme/src/lib/contract/native-host.ts:2` "(docs/07-host-adapters.md)".
 - `packages/helm/src/lib/actions/dialog-actions.ts:78` "(docs/05, Q5)".
@@ -185,6 +211,7 @@ Comments should explain the code to someone who has only the package. Reword the
 ## Phase 3: one enforced code style
 
 ### 3.1 Format the repository once
+
 `.prettierrc` sets `printWidth: 100`, but `npx prettier --check` reports 191 unformatted files under `packages/`, `apps/` and `scripts/`, with many lines over 120 characters (worst: the `desktop-ui` stories, `menus.spec.ts`, `conformance.ts`, `menu-model.ts`).
 
 1. Add `.prettierignore`: `dist`, `libs/spartan-ui`, `docs/reference`, `package-lock.json`, `packages/theme/styles/contract/_palette-defaults.scss`, `**/__screenshots__`.
@@ -195,9 +222,11 @@ Comments should explain the code to someone who has only the package. Reword the
 Watch for hand-aligned tables that Prettier will reflow badly. Known ones: the one-line arrays in `native-host.ts` (`CAPABILITIES`), `spartan-native-theme.ts` (`APPEARANCE_KEYS`), `web-host.ts` (`STOCK_ACCENT`) and the `material3()` color tables in `derive-palette.ts`. Either accept the reflow or restructure them (4.1 does this for `material3`). Use `// prettier-ignore` sparingly.
 
 ### 3.2 Add ESLint
+
 There is no linter. Add `angular-eslint` with `typescript-eslint` (flat config, `eslint.config.js`), a `lint` script and a `lint` target per project. Ignore `libs/spartan-ui`, `dist` and `docs/reference`. Start from the recommended sets plus `@angular-eslint/prefer-on-push-component-change-detection` and the template accessibility rules. Fix what it reports instead of disabling rules; where a rule is genuinely wrong for this codebase, turn it off in the config with a one-line reason.
 
 ### 3.3 Stylelint (optional)
+
 `stylelint` with `stylelint-config-standard-scss` for the 155 files under `packages/theme/styles`. Worth it only if it can be configured to accept the existing layer and hook conventions without a wall of overrides. Try it; drop it if not.
 
 **Done when:** `npm run format:check` and `npm run lint` pass locally and in CI.
@@ -209,7 +238,9 @@ There is no linter. Add `angular-eslint` with `typescript-eslint` (flat config, 
 Ordered by value. None of these may change behavior or public names.
 
 ### 4.1 `packages/theme/src/lib/palette/derive-palette.ts`
+
 This is the file a curious reader opens first, and the hardest to read.
+
 - The imports are renamed to abbreviations: `adjustLightness as adjL`, `ensureContrast as ensure`, `readableOn as onText`. Use the real names.
 - Single-letter and cryptic locals: `p`, `acc`, `t`, `c`, `T`, `n0`, `n1`, `s0`, `l0`, `sc`. Rename to `base`, `accent`, `palette`, `tone`, `background`, `surface` and so on.
 - `material3()` builds an object with keys `pfg`, `pc`, `opc`, `scn`, `osc`, `onv`, `ov`, `inv`, `invP`, `err`, packed eight to a line. Use the Material 3 role names (`onPrimary`, `primaryContainer`, `onPrimaryContainer`, `secondaryContainer`, `onSurfaceVariant`, `outlineVariant`, `inverseSurface`, …), one per line, and type it.
@@ -220,25 +251,29 @@ This is the file a curious reader opens first, and the hardest to read.
 Guard: `derive-palette.spec.ts` must pass unchanged, and `npm run theme:palette` must regenerate `_palette-defaults.scss` byte for byte.
 
 ### 4.2 Skin identifiers
+
 Three vocabularies describe the same seven skins:
 
-| Skin id | CSS class | Folder in `packages/theme/styles/skins` |
-| --- | --- | --- |
-| `win` | `.t-win` | `win11` |
-| `w10` | `.t-win.t-w10` | `win10` |
-| `mac` | `.t-mac` | `macos26` |
-| `macc` | `.t-mac.t-macc` | `macos-classic` |
-| `gtk` | `.t-gtk` | `gtk` |
-| `qt` | `.t-qt` | `kde` |
-| `cros` | `.t-cros` | `chromeos` |
+| Skin id | CSS class       | Folder in `packages/theme/styles/skins` |
+| ------- | --------------- | --------------------------------------- |
+| `win`   | `.t-win`        | `win11`                                 |
+| `w10`   | `.t-win.t-w10`  | `win10`                                 |
+| `mac`   | `.t-mac`        | `macos26`                               |
+| `macc`  | `.t-mac.t-macc` | `macos-classic`                         |
+| `gtk`   | `.t-gtk`        | `gtk`                                   |
+| `qt`    | `.t-qt`         | `kde`                                   |
+| `cros`  | `.t-cros`       | `chromeos`                              |
 
 Per D5 the ids stay. Make them understandable instead:
+
 - Give the `Skin` type in `native-host.ts` a doc comment with this table (id, platform, toolkit, class), so hovering the type in an editor explains `macc` and `qt`.
 - Put the same table once in `packages/theme/README.md` and `packages/theme/AGENTS.md`, and have other documents link to it instead of repeating it.
 - `skin-labels.ts` already maps ids to display names; make sure every user-facing string goes through it.
 
 ### 4.3 Skin-specific branching in `desktop-ui`
+
 Components decide per-skin behavior with local arrays and inline comparisons, each in its own style:
+
 - `command-bar.ts`: `const LABELLED: readonly Skin[] = ['win', 'w10', 'qt']`, plus `skin === 'gtk' || family() === 'web'` written twice, plus a nested ternary for `moreGlyph`.
 - `tree.ts`: `const TRIANGLE = ['mac', 'macc', 'gtk', 'web']`.
 - `number-box.ts`: `const PLUS_MINUS = ['gtk', 'cros', 'web']`.
@@ -247,19 +282,23 @@ Components decide per-skin behavior with local arrays and inline comparisons, ea
 Do not build a framework for this. Do make it uniform: one small `Record<Skin, …>` per trait at the top of the file that uses it (for example `OVERFLOW_GLYPH: Record<Skin, 'dots' | 'menu' | 'vertical'>`), so adding an eighth skin is a compile error in every place that needs a decision, and the nested ternaries go away.
 
 ### 4.4 Split the largest components
+
 - `packages/desktop-ui/src/lib/patterns/command-bar.ts` (493 lines): four classes, a 60-line inline template and the overflow-fitting algorithm in one file. Move the template to `command-bar.html`, and move `fit()` with its measuring helpers into a `command-bar-overflow.ts` that takes the elements as arguments, so the algorithm can be read and tested without the component. Split the constructor's five unrelated blocks into named private methods (`keepDocumentOrder()`, `refitOnResize()`, `refitOnFontLoad()`, …).
 - `packages/desktop-ui/src/lib/controls/tree.ts` (438) and `number-box.ts` (382): same treatment where it helps. Do not split for the sake of line counts.
 - `private readonly items = this.ordered;` in `command-bar.ts` is a second name for the same signal with a comment that describes something else. Remove the alias.
 
 ### 4.5 Small duplications
+
 - Document-order sorting with `compareDocumentPosition` is written out in `tree.ts` (`domOrder`) and again inline in `command-bar.ts`.
 - `TYPEAHEAD_RESET_MS = 600` and `PAGE = 10` are declared in both `helm/…/selectable.ts` and `desktop-ui/…/tree.ts`. Export them from `@spartan-native/helm` next to the selection functions that `tree.ts` already imports. (That is a new public export: update `packages/helm/AGENTS.md`.)
 - `let nextId = 0` appears in eight files. Leave it. A shared id helper would be more code than it saves.
 
 ### 4.6 Public API surface
+
 `packages/theme/src/public-api.ts` uses `export *` for every file, so helpers such as `hexToRgb`, `toHsl`, `readStoredOverrides` and `DEFAULT_PERSIST_KEY` are public by accident, and other packages already import some of them (`host-web` uses `normalizeHex`). Before `1.0`, list the exports by name in each `public-api.ts`, decide which helpers are meant to be public, and mark the rest `@internal` or stop exporting them. Check the four other packages and the three external host repositories for uses first. Update each package `AGENTS.md`.
 
 ### 4.7 Skin stylesheets
+
 - Five skins have a `components/` folder with 24 or 25 partials; `win10` and `macos-classic` each have one `_components.scss` (270 and 174 lines) because they are overrides on top of `win11` and `macos26`. That is reasonable, but the folder names do not say so. State it in a comment at the top of each `_index.scss` (win10 already does) and in the theme README's "Adding a component skin" section.
 - `win11/components` has a `_navigation.scss` partial that the other four skins lack. Either add it to them or note at its top why it is Windows-only.
 - The heavy banner comments (`// ====…====`, `// --- Every variant -----…`) have ragged right edges after edits. Normalize to a plain `// Section name` style, or leave them; do not spend long here.
@@ -272,30 +311,38 @@ Do not build a framework for this. Do make it uniform: one small `Record<Skin, �
 ## Phase 5: remove scaffolding and generator leftovers
 
 ### 5.1 `apps/playground`
+
 `src/app/app.html` (353 lines) is the stock Angular CLI welcome page with its "Delete the template below to get started" banner. `app.ts` holds `title = signal('playground')`, `app.spec.ts` asserts "Hello, playground", and `app.routes.ts` is empty. The README calls it "the living spec".
 
 Choose one:
+
 - **Minimal real playground (recommended):** one page that shows a few stock components and two `desktop-ui` patterns with a skin, scheme and accent switcher, using `webHost()`. About 150 lines, and it doubles as the README's quick-start proof.
 - **Remove it:** delete `apps/playground`, its `angular.json` project, the `start` and `build` scripts' use of it, and the README mentions. The three Storybooks already do the job.
 
 ### 5.2 `packages/hosts/host-electron`
+
 Per D3. If it stays unpublished: remove it from `build:libs`, `scripts/pack-libs.mjs`, `scripts/stamp-release.mjs` and the publish loop in `release.yml`, and delete `scaffold.spec.ts` (it asserts that an import is defined). Note that the three library lists are maintained by hand in four places with "same list as…" comments; move the list to one JSON or `.mjs` file that all of them read.
 
 ### 5.3 Storybook configuration
+
 `packages/{theme,helm,desktop-ui}/.storybook/main.ts` are byte-identical, and so are `preview.ts`, `manager.tsx`, `tailwind.css` and `tsconfig.json` for helm and desktop-ui. This duplication is deliberate (each package is meant to be able to leave for its own repository; see "Package boundaries" in the README). Keep it, and add one comment line at the top of each file saying so, or it will read as copy-paste.
 
 ### 5.4 Generated configuration comments
+
 Ten `tsconfig.*.json` files start with the CLI's "To learn more about Typescript configuration file…" comment. Harmless; remove for tidiness when touching those files.
 
 ### 5.5 `docs/reference/`
+
 Per D4. `component-skins.mockup.css` (926 lines) and `palette.reference.ts` (213 lines) are superseded by `packages/theme`. If any test compares against `palette.reference.ts`, keep that file and say so at its top; otherwise remove both, or move the whole folder under `docs/archive/` with a README stating that it is historical and unmaintained.
 
 ### 5.6 `tools/claude-plugin`
+
 - The skill ships host references and templates for Wails, Tauri and .NET whose packages live in other repositories. Check each reference against the current state of those repositories before release, and say in `tools/claude-plugin/README.md` which package versions the skill was written for.
 - The root README lists it as layer "05 `spartan-native-plugin`" while `plugin.json` and `marketplace.json` name it `spartan-native`. Use one name.
 - `docs/09-roadmap.md` promises commands (`new-app`, `add-screen`, `audit`), a reviewer agent and a hook. None exist. Move them to the roadmap's open list (2.2).
 
 ### 5.7 Root tidy-up
+
 - `components.json`: keep; add a line about it in `CONTRIBUTING.md`.
 - `.vscode/`: tracked launch and task files are fine. Check they still name existing projects.
 - `tsconfig.json` carries about 66 `@spartan-ng/helm/*` path aliases written by the spartan CLI. Leave as is; mention in `CONTRIBUTING.md` that the CLI maintains them.

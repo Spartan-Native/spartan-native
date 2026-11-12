@@ -99,7 +99,9 @@ export class DisclosureShowcase {}
   template: `
     <div class="row">
       <span hlmAvatar size="sm"><span hlmAvatarFallback>RM</span></span>
-      <span hlmAvatar><img hlmAvatarImage [src]="avatarSrc" alt="Office laptop" /><span hlmAvatarFallback>OL</span></span>
+      <span hlmAvatar
+        ><img hlmAvatarImage [src]="avatarSrc" alt="Office laptop" /><span hlmAvatarFallback>OL</span></span
+      >
       <span hlmAvatar size="lg"><span hlmAvatarFallback>NAS</span><span hlmAvatarBadge></span></span>
       <div hlmAvatarGroup>
         <span hlmAvatar><span hlmAvatarFallback>AK</span></span>
@@ -152,7 +154,10 @@ export class DisclosureShowcase {}
       <h3 hlmH3>Choose a version</h3>
       <h4 hlmH4>Documents · Today, 09:12</h4>
       <p hlmLead>Backups run quietly in the background.</p>
-      <p hlmP>Harbor keeps hourly versions for a day, daily versions for a month and weekly versions after that. Run <code hlmCode>harbor verify</code> to check an archive.</p>
+      <p hlmP>
+        Harbor keeps hourly versions for a day, daily versions for a month and weekly versions after that. Run
+        <code hlmCode>harbor verify</code> to check an archive.
+      </p>
       <blockquote hlmBlockquote>“The best backup is the one you never think about.”</blockquote>
       <ul hlmUl>
         <li>Incremental and deduplicated</li>
@@ -248,12 +253,32 @@ export class DisplayShowcase {
     SHARED_STYLES,
     `
       .preview {
-        position: absolute; inset: 0; display: flex; flex-direction: column; gap: 0.25rem;
-        align-items: center; justify-content: center; border-radius: var(--radius); background: var(--muted);
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius);
+        background: var(--muted);
       }
-      .bordered { border: 1px solid var(--border); border-radius: var(--radius); }
-      .log-line { margin: 0 0 0.5rem; font-size: var(--sn-font-size-small); }
-      .pane { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.75rem; height: 100%; overflow: hidden; }
+      .bordered {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+      .log-line {
+        margin: 0 0 0.5rem;
+        font-size: var(--sn-font-size-small);
+      }
+      .pane {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.75rem;
+        height: 100%;
+        overflow: hidden;
+      }
     `,
   ],
 })
@@ -343,7 +368,9 @@ export class ContainersShowcase {
           </div>
         </hlm-sidebar>
         <main hlmSidebarInset style="padding: 1rem; gap: 0.5rem">
-          <span class="row" style="gap: 0.5rem; font-weight: 600"><ng-icon name="lucideCircleCheck" />All backups up to date</span>
+          <span class="row" style="gap: 0.5rem; font-weight: 600"
+            ><ng-icon name="lucideCircleCheck" />All backups up to date</span
+          >
           <p class="caption">Last run today at 09:12 · next run in 42 minutes</p>
         </main>
       </div>
@@ -351,8 +378,17 @@ export class ContainersShowcase {
   `,
   styles: [
     SHARED_STYLES,
-    `.frame { position: relative; overflow: hidden; width: 100%; max-width: 40rem; height: 22rem;
-              border: 1px solid var(--border); border-radius: var(--radius); }`,
+    `
+      .frame {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        max-width: 40rem;
+        height: 22rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+    `,
   ],
 })
 export class SidebarShowcase {}

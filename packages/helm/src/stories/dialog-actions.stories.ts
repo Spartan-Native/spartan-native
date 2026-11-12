@@ -10,13 +10,23 @@ import { SnDialogActionsImports } from '../lib/actions/dialog-actions';
 
 @Component({
   selector: 'sn-dialog-actions-demo',
-  imports: [HlmButtonImports, HlmCardImports, HlmDialogImports, HlmInputImports, HlmLabelImports, HlmTextareaImports, SnDialogActionsImports],
+  imports: [
+    HlmButtonImports,
+    HlmCardImports,
+    HlmDialogImports,
+    HlmInputImports,
+    HlmLabelImports,
+    HlmTextareaImports,
+    SnDialogActionsImports,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <form hlmCard (submit)="$event.preventDefault()">
       <div hlmCardHeader>
         <h3 hlmCardTitle>New destination</h3>
-        <p hlmCardDescription>Enter saves, Esc cancels, from any field. Enter in the notes adds a line. The buttons follow the OS's order.</p>
+        <p hlmCardDescription>
+          Enter saves, Esc cancels, from any field. Enter in the notes adds a line. The buttons follow the OS's order.
+        </p>
       </div>
       <div hlmCardContent class="fields">
         <label hlmLabel for="da-name">Name</label>
@@ -51,10 +61,25 @@ import { SnDialogActionsImports } from '../lib/actions/dialog-actions';
     <p class="status" aria-live="polite">Last action: {{ log() }}</p>
   `,
   styles: `
-    :host { display: flex; flex-direction: column; gap: 16px; max-width: 420px; align-items: flex-start; }
-    form { width: 100%; }
-    .fields { display: grid; gap: 6px; }
-    .status { margin: 0; font-size: var(--sn-font-size-small); color: var(--sn-color-fg-muted); }
+    :host {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 420px;
+      align-items: flex-start;
+    }
+    form {
+      width: 100%;
+    }
+    .fields {
+      display: grid;
+      gap: 6px;
+    }
+    .status {
+      margin: 0;
+      font-size: var(--sn-font-size-small);
+      color: var(--sn-color-fg-muted);
+    }
   `,
 })
 export class DialogActionsDemo {

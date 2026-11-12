@@ -27,7 +27,8 @@ export interface HostUnderTest {
  */
 export function describeHostConformance(name: string, factory: () => HostUnderTest | Promise<HostUnderTest>): void {
   const g = globalThis as TestGlobals;
-  if (!g.describe || !g.it) throw new Error('describeHostConformance needs global describe/it (enable your runner\'s globals).');
+  if (!g.describe || !g.it)
+    throw new Error("describeHostConformance needs global describe/it (enable your runner's globals).");
   const { describe, it } = g as Required<TestGlobals>;
 
   describe(`${name} · host conformance`, () => {

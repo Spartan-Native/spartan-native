@@ -24,7 +24,14 @@ export interface WebHostOptions {
 
 /** The platforms' stock accents, used when the browser hides the real one. */
 const STOCK_ACCENT: Record<string, string> = {
-  win: '#0078d4', w10: '#0078d4', mac: '#007aff', macc: '#007aff', gtk: '#3584e4', qt: '#3daee9', cros: '#0b57d0', web: '#0078d4',
+  win: '#0078d4',
+  w10: '#0078d4',
+  mac: '#007aff',
+  macc: '#007aff',
+  gtk: '#3584e4',
+  qt: '#3daee9',
+  cros: '#0b57d0',
+  web: '#0078d4',
 };
 
 /**
@@ -143,7 +150,10 @@ export function webHost(options: WebHostOptions = {}): NativeHost {
     // the accent has no change event: re-read when the user comes back to the app
     win?.addEventListener('focus', notify);
     doc?.addEventListener('visibilitychange', notify);
-    offs.push(() => win?.removeEventListener('focus', notify), () => doc?.removeEventListener('visibilitychange', notify));
+    offs.push(
+      () => win?.removeEventListener('focus', notify),
+      () => doc?.removeEventListener('visibilitychange', notify),
+    );
     return () => offs.forEach((off) => off());
   };
 
@@ -157,7 +167,8 @@ export function webHost(options: WebHostOptions = {}): NativeHost {
 
   // --- Capabilities --------------------------------------------------------------
   const level = (ok: boolean, yes: CapabilityLevel = 'partial'): CapabilityLevel => (ok ? yes : 'none');
-  const nav = win?.navigator as (Navigator & { windowControlsOverlay?: unknown; setAppBadge?: unknown; userAgentData?: unknown }) | undefined;
+  const nav = win?.navigator as
+    (Navigator & { windowControlsOverlay?: unknown; setAppBadge?: unknown; userAgentData?: unknown }) | undefined;
   const support: Partial<Record<Capability, CapabilityLevel>> = {
     // 'none' when the browser hides the OS accent (Chromium answers a fixed blue)
     systemAccent: level(exposesAccent),
@@ -241,7 +252,12 @@ function rgbToHex(color: string): string | null {
 
 function sameAppearance(a: AppearanceState, b: AppearanceState): boolean {
   return (
-    a.accent === b.accent && a.scheme === b.scheme && a.contrast === b.contrast && a.reduceTransparency === b.reduceTransparency &&
-    a.reduceMotion === b.reduceMotion && a.textScale === b.textScale && a.skin === b.skin
+    a.accent === b.accent &&
+    a.scheme === b.scheme &&
+    a.contrast === b.contrast &&
+    a.reduceTransparency === b.reduceTransparency &&
+    a.reduceMotion === b.reduceMotion &&
+    a.textScale === b.textScale &&
+    a.skin === b.skin
   );
 }

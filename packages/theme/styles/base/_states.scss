@@ -32,7 +32,18 @@
   // (Adwaita buttons and entries), follows the radius, and doesn't move layout.
   // Focused controls keep their platform focus ring instead.
   // Hooks, not raw data-slots: trigger buttons (hlmDialogTrigger, …) have no data-slot="button".
-  .hc :is(#{h.$button}, #{h.$text-field}, #{h.$select-trigger}, #{h.$card}, #{h.$checkbox}, #{h.$radio}, #{h.$switch}, #{h.$table-container}, #{h.$alert}):not(#{h.$button-link}, #{h.$text-field-invalid}, :focus-visible) {
+  .hc
+    :is(
+      #{h.$button},
+      #{h.$text-field},
+      #{h.$select-trigger},
+      #{h.$card},
+      #{h.$checkbox},
+      #{h.$radio},
+      #{h.$switch},
+      #{h.$table-container},
+      #{h.$alert}
+    ):not(#{h.$button-link}, #{h.$text-field-invalid}, :focus-visible) {
     outline: 1px solid var(--sn-color-fg-muted);
     outline-offset: -1px;
   }

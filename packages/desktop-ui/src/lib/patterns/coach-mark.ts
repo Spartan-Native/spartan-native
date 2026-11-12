@@ -209,7 +209,13 @@ export class SnCoachMark {
     // The margin toward the anchor depends on the axis; set it before the first measure.
     const first = positions[0];
     this.host.dataset['side'] =
-      first.overlayY === 'top' ? 'bottom' : first.overlayY === 'bottom' ? 'top' : first.originX === 'end' ? 'right' : 'left';
+      first.overlayY === 'top'
+        ? 'bottom'
+        : first.overlayY === 'bottom'
+          ? 'top'
+          : first.originX === 'end'
+            ? 'right'
+            : 'left';
     this.overlay.attach(new DomPortal(this.host));
   }
 
