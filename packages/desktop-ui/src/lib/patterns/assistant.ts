@@ -151,6 +151,7 @@ export class SnAssistant {
 
   /** Next on the last page. */
   readonly finish = output<void>();
+  // eslint-disable-next-line @angular-eslint/no-output-native -- public API; the DOM `cancel` event (dialogs) doesn't bubble, so it can't collide
   readonly cancel = output<void>();
 
   protected readonly skin = injectSkin();

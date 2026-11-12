@@ -66,6 +66,8 @@ Each library declares Angular, spartan/ui and its sibling `@spartan-native/*` pa
 | --- | --- |
 | `npm start` | Serve the playground |
 | `npm test` | Unit tests (Vitest through `@angular/build:unit-test`) for every project |
+| `npm run format` / `format:check` | Format every file with Prettier / check that it is formatted |
+| `npm run lint` | ESLint over the TypeScript, the Angular templates and the scripts (`eslint.config.mjs`) |
 | `npm run build:libs` | Build every library into `dist/`, in dependency order |
 | `npm run build` | Libraries, then the playground |
 | `npm run check:packages` | After `build:libs`: check each package's metadata and tarball contents |
@@ -116,8 +118,10 @@ After adding one, give it hooks in `packages/theme/styles/_hooks.scss` and a ski
 
 1. Branch from `main`.
 2. Make the change, with unit tests for new behavior.
-3. Run `npm test` and `npm run build:libs`. Run `npm run test:visual` if the change touches styles.
+3. Run `npm run format`, `npm run lint`, `npm test` and `npm run build:libs`. Run `npm run test:visual` if the change touches styles.
 4. Open the pull request and fill in the checklist. CI runs the unit tests, the builds and the package check.
+
+Code style is Prettier's (120 columns, `.prettierrc`); don't adjust it by hand. ESLint checks correctness and accessibility, not style. When a lint rule is wrong for one line, disable it on that line with the reason: `// eslint-disable-next-line <rule> -- why`.
 
 Keep a pull request to one topic. A large mechanical change (formatting, a rename) goes in its own pull request with nothing else in it.
 

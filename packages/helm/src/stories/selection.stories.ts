@@ -98,7 +98,7 @@ const HELP =
       }
     </div>
     <p class="status">{{ summary() }}</p>
-    <p class="help">${HELP}</p>
+    <p class="help">{{ help }}</p>
   `,
   styles: `
     :host {
@@ -137,6 +137,7 @@ const HELP =
   `,
 })
 export class FileListDemo {
+  protected readonly help = HELP;
   protected readonly files = FILES;
   protected readonly selection = signal<readonly string[]>(['report']);
   protected readonly opened = signal<string | null>(null);
@@ -177,7 +178,7 @@ export class FileListDemo {
       </table>
     </div>
     <p class="status">{{ selection().length }} selected{{ opened() ? ' · opened ' + opened() : '' }}</p>
-    <p class="help">${HELP}</p>
+    <p class="help">{{ help }}</p>
   `,
   styles: `
     :host {
@@ -208,6 +209,7 @@ export class FileListDemo {
   `,
 })
 export class FileTableDemo {
+  protected readonly help = HELP;
   protected readonly files = FILES;
   protected readonly selection = signal<readonly string[]>(['budget', 'notes']);
   protected readonly opened = signal<string | null>(null);

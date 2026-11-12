@@ -134,6 +134,7 @@ export class SnSidebarSection {
  * registered with provideIcons(); `badge` is a short count or label on the trailing side.
  */
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector -- an attribute on a real <a> or <button>, so links and buttons keep native behavior
   selector: 'a[snSidebarItem], button[snSidebarItem]',
   imports: [NgIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,

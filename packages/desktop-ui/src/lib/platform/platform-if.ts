@@ -26,6 +26,7 @@ export class SnPlatformIf {
   /** The skins and families to render on. */
   readonly platforms = input.required<PlatformMatch | readonly PlatformMatch[]>({ alias: 'snPlatformIf' });
   /** Rendered on every other platform. */
+  // eslint-disable-next-line @angular-eslint/no-input-rename -- `*snPlatformIf="…; else other"` binds to snPlatformIfElse
   readonly elseTemplate = input<TemplateRef<unknown> | null>(null, { alias: 'snPlatformIfElse' });
 
   private readonly template = inject(TemplateRef);

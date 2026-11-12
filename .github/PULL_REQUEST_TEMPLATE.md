@@ -4,7 +4,7 @@
 
 ## Checklist
 
-- [ ] `npm test` passes
+- [ ] `npm run format:check`, `npm run lint` and `npm test` pass
 - [ ] `npm run build:libs` passes
 - [ ] Public API changed (export, input, slot, token or host service): the package's `AGENTS.md` and, if app setup changed, `tools/claude-plugin` are updated
 - [ ] `CHANGELOG.md` has an entry under **Unreleased** (skip for docs and internal changes)

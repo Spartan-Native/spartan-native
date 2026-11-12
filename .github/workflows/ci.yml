@@ -1,5 +1,5 @@
-# Unit tests, library builds and a check of what each package would publish, on every pull
-# request and every push to main.
+# Formatting, lint, unit tests, library builds and a check of what each package would publish,
+# on every pull request and every push to main.
 #
 # The visual tests (npm run test:visual) do not run here: their baselines are per operating
 # system and are not committed. Run them locally.
@@ -32,6 +32,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
 
       - name: Run unit tests
         run: npm test -- --watch=false

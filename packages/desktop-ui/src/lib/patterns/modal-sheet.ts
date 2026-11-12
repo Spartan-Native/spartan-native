@@ -68,6 +68,8 @@ let nextId = 0;
         <div class="body"><ng-content /></div>
         <div class="actions">
           <span class="secondary"><ng-content select="[snSheetSecondary]" /></span>
+          <!-- Catches the click of the projected cancel button, which Enter and Space also fire. -->
+          <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
           <span class="cancel" (click)="open.set(false)"><ng-content select="[snSheetCancel]" /></span>
           <span class="primary"><ng-content select="[snSheetPrimary]" /></span>
         </div>
