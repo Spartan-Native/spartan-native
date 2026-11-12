@@ -55,6 +55,14 @@ Branch `public-release-prep` (not committed yet).
   - 4.7 `base/_components.scss` split into `base/components/`; the compiled CSS is cascade-equivalent (same rules, same order, per layer). The banner comment style was left alone.
   - Visual tests: the CSS is equivalent and no component template changed except moving the command bar's into its own file, so the screenshots should not move. Run `npm run test:visual` to confirm.
 
+- Phase 5: done.
+  - 5.1 `apps/playground` is a minimal real playground (one window of real components plus appearance controls on `webHost()`), checked in a browser on four skins and by clicking every control. That found and fixed one accessibility problem: spartan's switch names itself after its wrapping label's id, so without ids every switch was named after the first.
+  - 5.2 `host-electron`'s placeholder test, test target and spec tsconfig removed (and the root tsconfig reference to it, which broke every test run until it went).
+  - 5.3, 5.4 the Storybook configs say why they repeat; the CLI's boilerplate tsconfig comments are gone.
+  - 5.5 `docs/reference/` left as the labelled archive: deleting it is D4, still open.
+  - 5.6 the skill's Wails, Tauri and Photino.NET references and templates match the sibling repositories' code; the plugin README says what it was checked against.
+  - 5.7 the stale Karma debug launch configuration is gone; ESLint and Prettier are recommended extensions.
+
 **Owner tasks moved from `TODO.md`** (deleted in phase 2; the repository split it tracked is already on `main`):
 
 - GitHub Packages still holds the old `0.1.0` packages published from this repository before the split, including the broken `@spartan-native/host-wails@0.1.0` and the scaffold `host-tauri`, `host-dotnet` and `host-electron`. Delete them (package settings → Manage versions) so nobody installs them by accident.
@@ -64,7 +72,7 @@ Branch `public-release-prep` (not committed yet).
 - Run `npm run test:visual` to confirm the theme and desktop-ui baselines still match after the split.
 - The local branch `repo-split-todo` is merged and can be deleted.
 
-**Next:** phase 5.
+**Next:** the owner tasks above and the checklist below. Every phase of this plan is done.
 
 ## What the review found
 
@@ -377,11 +385,11 @@ Per D4. `component-skins.mockup.css` (926 lines) and `palette.reference.ts` (213
 ## Before flipping the repository to public
 
 - [ ] Phase 0 decisions recorded (in `docs/10-open-questions.md` where they answer a question).
-- [ ] `LICENSE` present and every `package.json` has `license` and `repository`.
-- [ ] `git grep -nE 'claude\.ai'` is empty outside `libs/`.
-- [ ] `TODO.md` and this file are deleted.
-- [ ] Search the full history, not only the working tree, for secrets and private names: `git log -p | grep -nE 'token|secret|password|api[_-]?key'`, or run `gitleaks detect`. The working tree is clean of personal paths and emails today; the history was not checked in this review.
-- [ ] Check commit author emails in `git log --format='%an <%ae>' | sort -u` are ones the owner is happy to publish.
+- [x] `LICENSE` present and every `package.json` has `license` and `repository`.
+- [x] `git grep -nE 'claude\.ai'` is empty outside `libs/`.
+- [ ] `TODO.md` (done) and this file are deleted.
+- [x] Search the full history, not only the working tree, for secrets and private names (done 2026-11-12: no secrets or personal paths in any added line): `git log -p | grep -nE 'token|secret|password|api[_-]?key'`, or run `gitleaks detect`. The working tree is clean of personal paths and emails today; the history was not checked in this review.
+- [x] Check commit author emails in `git log --format='%an <%ae>' | sort -u` are ones the owner is happy to publish (one identity, a GitHub noreply address).
 - [ ] CI is green on `main`.
 - [ ] `npm run test:visual` run by the owner after phases 4 and 5.
 - [ ] GitHub settings: description, topics, issue templates visible, private vulnerability reporting on, branch protection on `main`.
