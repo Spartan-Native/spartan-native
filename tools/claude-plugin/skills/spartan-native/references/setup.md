@@ -6,7 +6,7 @@ Requirements: Angular 22+, Tailwind CSS 4, spartan/ui (`@spartan-ng/brain` 1.9+)
 
 ## 1. Install
 
-The `@spartan-native/*` packages are on the public npm registry (npmjs.com), so no `.npmrc` or token is needed. The host adapters that live in their own repositories (`host-wails`, `host-tauri`, `host-dotnet`) say in their host reference where their native side comes from.
+The packages from the spartan-native repository (`theme`, `helm`, `desktop-ui`, `host-web`, `host-conformance`) are on the public npm registry (npmjs.com), so no `.npmrc` or token is needed. The host adapters that live in their own repositories (`host-wails`, `host-tauri`, `host-dotnet`) are, for now, still published to GitHub Packages: follow that adapter's host reference and its repository's README.
 
 Stable releases are on the `latest` dist-tag; betas are on `beta` (`npm install @spartan-native/theme@beta`). Install every `@spartan-native/*` package at the same version.
 
