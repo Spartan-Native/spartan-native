@@ -53,6 +53,21 @@ Without Angular (or before bootstrap), `applySpartanNative(element, appearance)`
 
 All CSS lives in one cascade layer, `spartan-native`, ordered **after** Tailwind's `utilities`. Skins beat spartan's utility classes without `!important`, and your own unlayered CSS still beats the skins.
 
+## Skins
+
+| Skin | Platform | Design language | Root classes | Folder in `styles/skins/` |
+| --- | --- | --- | --- | --- |
+| `win` | Windows 11 | Fluent: Mica and acrylic | `t-win` | `win11/` |
+| `w10` | Windows 10 | flat Fluent | `t-win t-w10` | `win10/`, overrides on top of `win11/` |
+| `mac` | macOS 26 | Liquid Glass | `t-mac` | `macos26/` |
+| `macc` | macOS 13–15 ("classic") | vibrancy | `t-mac t-macc` | `macos-classic/`, overrides on top of `macos26/` |
+| `gtk` | GNOME and other Linux | GTK 4 / Adwaita | `t-gtk` | `gtk/` |
+| `qt` | KDE Plasma | Qt 6 / Breeze | `t-qt` | `kde/` |
+| `cros` | ChromeOS | Material 3 | `t-cros` | `chromeos/` |
+| `web` | unknown OS | token defaults only | `t-web` | none |
+
+The ids are short because they are also CSS classes and are stored with the user's overrides, so they never change. The folders use the platform names instead. For a settings screen, show `SKIN_LABELS[skin]` ("Windows 11", "KDE Plasma", …), or offer `SKIN_OPTIONS`.
+
 ## Style structure
 
 ```

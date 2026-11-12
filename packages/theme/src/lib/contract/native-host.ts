@@ -4,7 +4,23 @@
  * components only ever talk to this interface.
  */
 
-/** Platform skin. `web` is the generic fallback when the OS is unknown. */
+/**
+ * A platform skin. The ids are short because they are also CSS classes (`t-<skin>`) and are
+ * stored with the user's overrides, so they never change.
+ *
+ * | Skin   | Platform                | Design language          | Root classes   |
+ * | ------ | ----------------------- | ------------------------ | -------------- |
+ * | `win`  | Windows 11              | Fluent: Mica and acrylic | `t-win`        |
+ * | `w10`  | Windows 10              | flat Fluent              | `t-win t-w10`  |
+ * | `mac`  | macOS 26                | Liquid Glass             | `t-mac`        |
+ * | `macc` | macOS 13–15 ("classic") | vibrancy                 | `t-mac t-macc` |
+ * | `gtk`  | GNOME and other Linux   | GTK 4 / Adwaita          | `t-gtk`        |
+ * | `qt`   | KDE Plasma              | Qt 6 / Breeze            | `t-qt`         |
+ * | `cros` | ChromeOS                | Material 3               | `t-cros`       |
+ * | `web`  | unknown OS              | token defaults only      | `t-web`        |
+ *
+ * Display names for settings screens are in `SKIN_LABELS`.
+ */
 export type Skin = 'win' | 'w10' | 'mac' | 'macc' | 'gtk' | 'qt' | 'cros' | 'web';
 
 /** The skins with a full style sheet in this release. */
