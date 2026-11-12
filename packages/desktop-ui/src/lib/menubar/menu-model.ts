@@ -239,7 +239,11 @@ export function matchesAccelerator(event: KeyboardEvent, accelerator: string, fa
   return pressed === key || event.code.toLowerCase() === `key${key}` || event.code.toLowerCase() === `digit${key}`;
 }
 
-/** Every item with an action and an accelerator, at any depth (for the in-page key bindings). */
+/**
+ * Every item with an action and an accelerator, at any depth (for the in-page key bindings).
+ *
+ * @internal Not in the public API; exported for the menubar and context menu.
+ */
 export function itemsWithAccelerators(items: readonly SnMenuItem[]): SnMenuItem[] {
   return items.flatMap((item) => [
     ...(item.action && item.accelerator && item.type !== 'separator' && !item.id?.startsWith(ROLE_ID) ? [item] : []),

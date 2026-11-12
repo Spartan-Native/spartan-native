@@ -35,6 +35,8 @@ export type CoachMarkSide = 'top' | 'bottom' | 'left' | 'right';
 /**
  * Overlay positions for a placement: centered on the anchor first, then aligned to its start and end
  * edges, then the same three on the opposite side.
+ *
+ * @internal Not in the public API; exported for the unit tests.
  */
 export function coachMarkPositions(placement: CoachMarkPlacement): ConnectedPosition[] {
   if (placement === 'top' || placement === 'bottom') {
@@ -61,7 +63,11 @@ export function coachMarkPositions(placement: CoachMarkPlacement): ConnectedPosi
 
 type Box = Pick<DOMRect, 'top' | 'bottom' | 'left' | 'right'>;
 
-/** Which side of the anchor the coach mark sits on, from the two rectangles. */
+/**
+ * Which side of the anchor the coach mark sits on, from the two rectangles.
+ *
+ * @internal Not in the public API; exported for the unit tests.
+ */
 export function coachMarkSide(tip: Box, anchor: Box): CoachMarkSide {
   if (tip.top >= anchor.bottom - 1) return 'bottom';
   if (tip.bottom <= anchor.top + 1) return 'top';
