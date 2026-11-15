@@ -15,6 +15,7 @@ import {
   effect,
   ElementRef,
   inject,
+  Injectable,
   InjectionToken,
   Injector,
   input,
@@ -87,6 +88,43 @@ const SN_COMMAND_BAR = new InjectionToken<SnCommandBar>('SnCommandBar');
 @Directive({ selector: 'ng-template[snCommandOverflow]' })
 export class SnCommandOverflow {
   readonly template = inject(TemplateRef);
+}
+
+/**
+ * The current page's own commands, for a shell whose single command bar is shared by every
+ * page. A page declares them with `<ng-template snPageCommands>`; the shell's bar shows them
+ * after its own:
+ *
+ * ```html
+ * <!-- the shell -->
+ * <sn-command-bar [title]="title()" [commands]="pageCommands.template()">…</sn-command-bar>
+ *
+ * <!-- a page -->
+ * <ng-template snPageCommands>
+ *   <button snCommand icon="lucideRefreshCw" label="Refresh" (click)="reload()"></button>
+ * </ng-template>
+ * ```
+ *
+ * The commands keep the page's context, so its bindings and handlers work as written. They go
+ * away with the page. One set at a time: a page that opens later replaces the earlier one's.
+ */
+@Injectable({ providedIn: 'root' })
+export class SnPageCommands {
+  /** The current page's commands; null when the page has none. */
+  readonly template = signal<TemplateRef<unknown> | null>(null);
+}
+
+/** Declares the current page's commands; see `SnPageCommands`. */
+@Directive({ selector: 'ng-template[snPageCommands]' })
+export class SnPageCommandsTemplate {
+  constructor() {
+    const template = inject(TemplateRef);
+    const commands = inject(SnPageCommands);
+    commands.template.set(template);
+    inject(DestroyRef).onDestroy(() => {
+      if (commands.template() === template) commands.template.set(null);
+    });
+  }
 }
 
 /**
@@ -225,7 +263,7 @@ export class SnCommand implements FocusableOption {
  *
  * Commands declared elsewhere (a page's commands shown by the shell's bar): pass them as a
  * template, `<sn-command-bar [commands]="page.commands()">`. Commands in it work exactly like
- * projected ones.
+ * projected ones. `SnPageCommands` and `<ng-template snPageCommands>` do the plumbing.
  *
  * Extra content: `[snCommandBarStart]` (e.g. a back button, or the window controls when the
  * bar is the title bar) and `[snCommandBarEnd]` (e.g. a search field). It carries `sn-chrome`,
@@ -455,4 +493,10 @@ export class SnCommandBar {
   }
 }
 
-export const SnCommandBarImports = [SnCommandBar, SnCommand, SnCommandGroup, SnCommandOverflow] as const;
+export const SnCommandBarImports = [
+  SnCommandBar,
+  SnCommand,
+  SnCommandGroup,
+  SnCommandOverflow,
+  SnPageCommandsTemplate,
+] as const;

@@ -103,6 +103,23 @@ export interface Palette {
   inputStroke: string;
   /** Sidebar fill. */
   sidebar: string;
+
+  // --- Categories ---------------------------------------------------------------------------
+  /**
+   * Eight colors that tell series apart (charts, tags, calendars, legends), from the platform's
+   * own named colors: Apple's system colors, Fluent's shared colors, the GNOME palette. Each is
+   * at least 3:1 against `bg`. Their order: blue, orange, green, purple, teal, pink, yellow, brown.
+   * They don't follow the accent, so a series keeps its color when the user changes it (only
+   * nudged lighter or darker where the accent-tinted background needs more contrast).
+   */
+  category1: string;
+  category2: string;
+  category3: string;
+  category4: string;
+  category5: string;
+  category6: string;
+  category7: string;
+  category8: string;
 }
 
 export interface DeriveOptions {
@@ -154,6 +171,53 @@ const NEUTRAL_SET: Record<Skin, NeutralSet> = {
   qt: 'qt',
   web: 'gtk',
 };
+
+/** Non-text contrast (WCAG 1.4.11): what a chart bar or a tag dot needs against the background. */
+const GRAPHIC_CONTRAST = 3;
+
+/**
+ * The platforms' named colors, in category order: blue, orange, green, purple, teal, pink,
+ * yellow, brown. Light, then dark.
+ */
+const CATEGORIES: Record<NeutralSet, Record<ColorScheme, readonly string[]>> = {
+  // Apple system colors
+  mac: {
+    light: ['#007aff', '#ff9500', '#34c759', '#af52de', '#30b0c7', '#ff2d55', '#ffcc00', '#a2845e'],
+    dark: ['#0a84ff', '#ff9f0a', '#30d158', '#bf5af2', '#40c8e0', '#ff375f', '#ffd60a', '#ac8e68'],
+  },
+  // Fluent shared colors
+  win: {
+    light: ['#0078d4', '#ca5010', '#107c10', '#8764b8', '#038387', '#c239b3', '#c19c00', '#8e562e'],
+    dark: ['#4f9fe0', '#e9835e', '#54b054', '#a083c9', '#4cb4b7', '#d77ccf', '#fde300', '#bb8f6f'],
+  },
+  // The GNOME palette (libadwaita named colors)
+  gtk: {
+    light: ['#3584e4', '#ff7800', '#2ec27e', '#9141ac', '#2190a4', '#d6417c', '#f5c211', '#986a44'],
+    dark: ['#62a0ea', '#ffa348', '#57e389', '#c061cb', '#5bc8af', '#f66151', '#f8e45c', '#b5835a'],
+  },
+  // Breeze
+  qt: {
+    light: ['#3daee9', '#f67400', '#27ae60', '#9b59b6', '#1abc9c', '#e93a9a', '#fdbc4b', '#a0785a'],
+    dark: ['#3daee9', '#f67400', '#2ecc71', '#9b59b6', '#1abc9c', '#e93a9a', '#fdbc4b', '#b08b6e'],
+  },
+};
+
+/** The categories for a background: the platform's colors, pushed until they reach 3:1 against it. */
+function categoriesFor(neutralSet: NeutralSet, bg: string, dark: boolean) {
+  const [c1, c2, c3, c4, c5, c6, c7, c8] = CATEGORIES[neutralSet][dark ? 'dark' : 'light'].map((color) =>
+    ensureContrast(color, bg, GRAPHIC_CONTRAST, dark),
+  );
+  return {
+    category1: c1,
+    category2: c2,
+    category3: c3,
+    category4: c4,
+    category5: c5,
+    category6: c6,
+    category7: c7,
+    category8: c8,
+  };
+}
 
 /** Hues of the status colors. */
 const HUE = { danger: 356, success: 145, warning: 38 };
@@ -254,6 +318,7 @@ function basePalette(neutralSet: NeutralSet, accent: string, dark: boolean): Pal
     toast: dark ? '#48484d' : '#2f2f33',
     inputStroke: rgba(fg, dark ? 0.55 : 0.45),
     sidebar: mix(bg, fg, dark ? 0.06 : 0.04),
+    ...categoriesFor(neutralSet, bg, dark),
   };
 }
 
@@ -414,6 +479,8 @@ function material3(palette: Palette, accent: string, dark: boolean): Palette {
     ring: rgba(m3.primary, 0.5),
     danger: m3.error,
     dangerFg: m3.onError,
+    // Checked again against the Material 3 surface, which replaces the background
+    ...categoriesFor('gtk', m3.surface, dark),
   };
 }
 

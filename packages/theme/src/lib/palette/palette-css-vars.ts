@@ -1,8 +1,8 @@
 import type { Palette } from './derive-palette';
 
-const kebab = (key: string) => key.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
+const kebab = (key: string) => key.replace(/[A-Z]|\d+/g, (c) => '-' + c.toLowerCase());
 
-/** `fgMuted` → `--sn-color-fg-muted`. The names match styles/contract/_tokens.scss. */
+/** `fgMuted` → `--sn-color-fg-muted`, `category1` → `--sn-color-category-1`. The names match styles/contract/_tokens.scss. */
 export function paletteVarName(key: keyof Palette): string {
   return `--sn-color-${kebab(key)}`;
 }

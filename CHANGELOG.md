@@ -6,6 +6,20 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Added
+
+- `@spartan-native/desktop-ui`: `SnAlert`, alerts and confirmations in one call: `show(options)` resolves the pressed button's id and `confirm(message, options)` a yes or no. It uses the host's native alert when there is one, and otherwise an in-page `alertdialog` sheet with the default button focused and Esc answering `cancelId`.
+- `@spartan-native/desktop-ui`: `[snResizable]`, for side panels the user can resize by dragging their inner edge (`<sn-sidebar-nav>`, `<sn-inspector>` or any panel). The width is a share of the parent and can be remembered per key; double-click resets it; ← → Home End work from the keyboard.
+- `@spartan-native/desktop-ui`: `collapsed` on `<sn-sidebar-nav>` folds it to icons. Labels and section titles stay for screen readers and show as tooltips, and badges become a mark on the icon.
+- `@spartan-native/desktop-ui`: `<sn-search-field>`, the platform's search field (magnifier, clear button, Esc empties it first). It works with `[(value)]`, `ngModel` and reactive forms.
+- `@spartan-native/desktop-ui`: `SnPageCommands` and `<ng-template snPageCommands>`, so a page can put its commands into the shell's `<sn-command-bar [commands]>`.
+- `@spartan-native/theme`: eight categorical colors, `--sn-color-category-1` … `-8` (`category1` … `category8` in `Palette`), for chart series, tags and calendars. They come from each platform's named colors and are each at least 3:1 against the background.
+
+### Fixed
+
+- `@spartan-native/desktop-ui`: `<sn-sidebar-nav>` items keep their look when they are also a spartan menu trigger. The styles now hang on the `sn-sidebar-item` class, because `hlmDropdownMenuTrigger` replaces the item's `data-slot`.
+- `@spartan-native/desktop-ui`: `<sn-modal-sheet role="alertdialog">` no longer puts the role on its own empty host element as well as on the dialog.
+
 ## [0.2.0] - 2026-11-12
 
 ### Added

@@ -1,0 +1,45 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/search-field.stories';
+
+<Meta of={Stories} />
+
+# Search field
+
+`<sn-search-field>` is a text field for searching and filtering, with a magnifier and a clear button. The field
+carries the theme's text-field hook (`data-slot="input"`), so it has each skin's border, hover and focus line.
+
+| OS | Native control | Magnifier | Clear button |
+| --- | --- | --- | --- |
+| Windows | AutoSuggestBox | At the end | A plain ✕ before it |
+| macOS | NSSearchField | At the start | A filled round ✕ |
+| GNOME | GtkSearchEntry | At the start | A symbolic ✕ |
+| KDE Plasma | KLineEdit with a search icon | At the start | A symbolic ✕ |
+| ChromeOS | Material 3 search bar | At the start | A symbolic ✕ (pill-shaped field) |
+
+<Canvas of={Stories.Default} />
+
+## Usage
+
+<Source
+  language="html"
+  code={`<sn-search-field [(value)]="query" placeholder="Search files" />
+<sn-search-field [formControl]="filter" label="Filter the list" />`}
+/>
+
+## API
+
+| Input | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` (model) | `''` | The text; also works with `ngModel` and reactive forms. |
+| `placeholder` | `string` | `'Search'` | Also the accessible name unless `label` is set. |
+| `label` | `string` | `''` | The accessible name, when the placeholder doesn't say enough. |
+| `clearLabel` | `string` | `'Clear'` | The clear button's accessible name. |
+| `disabled` | `boolean` | `false` | |
+
+Output: `(submitted)` with the text, on Enter. Methods: `focus()` (for ⌘F / Ctrl+F) and `clear()`.
+
+## Keyboard
+
+- Esc empties a field that has text and stops there; on an empty field it goes on, so the surrounding dialog
+  or menu still closes.
+- The clear button isn't a Tab stop (Esc does the same); it gives the focus back to the field.

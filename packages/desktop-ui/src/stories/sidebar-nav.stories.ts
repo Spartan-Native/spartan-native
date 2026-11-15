@@ -10,18 +10,27 @@ import {
   lucideUsb,
 } from '@ng-icons/lucide';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
+import { SnResizable } from '../lib/controls/resizable';
 import { SnSidebarNavImports } from '../lib/patterns/sidebar-nav';
 
 const ICONS = { lucideClock, lucideCloud, lucideHistory, lucideHouse, lucideServer, lucideSettings, lucideUsb };
 
 @Component({
   selector: 'sn-sidebar-nav-demo',
-  imports: [SnSidebarNavImports],
+  imports: [SnSidebarNavImports, SnResizable],
   providers: [provideIcons(ICONS)],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="sn-window frame">
-      <sn-sidebar-nav aria-label="Sections">
+      <sn-sidebar-nav
+        aria-label="Sections"
+        [collapsed]="collapsed()"
+        [snResizable]="resizable() ? 'story-sidebar' : ''"
+        [resizeDisabled]="!resizable() || collapsed()"
+        [resizeRatio]="0.3"
+        [resizeMin]="160"
+        resizeLabel="Resize the sidebar"
+      >
         @if (sections()) {
           <sn-sidebar-section title="Backups">
             <button snSidebarItem icon="lucideHouse" [active]="page() === 'Overview'" (click)="page.set('Overview')">
@@ -89,6 +98,9 @@ const ICONS = { lucideClock, lucideCloud, lucideHistory, lucideHouse, lucideServ
       <main class="sn-content content">
         <h1>{{ page() }}</h1>
         <p>Tab into the sidebar, then use ↑ ↓ Home End. Set Window → inactive to see the selection change.</p>
+        @if (resizable()) {
+          <p>Drag the sidebar's edge, or focus it and use ← →. Double-click it to go back to the default width.</p>
+        }
       </main>
     </div>
   `,
@@ -116,6 +128,8 @@ const ICONS = { lucideClock, lucideCloud, lucideHistory, lucideHouse, lucideServ
 })
 class SidebarNavDemo {
   readonly sections = input(true);
+  readonly collapsed = input(false);
+  readonly resizable = input(false);
   protected readonly page = signal('Overview');
   protected readonly flat = [
     { label: 'Overview', icon: 'lucideHouse' },
@@ -145,4 +159,14 @@ export const WithSections: StoryObj = {
 export const Flat: StoryObj = {
   name: 'Flat, with links',
   render: () => ({ template: `<div style="padding: 2rem"><sn-sidebar-nav-demo [sections]="false" /></div>` }),
+};
+
+/** Folded to icons: labels and section titles become tooltips, badges a mark on the icon. */
+export const Collapsed: StoryObj = {
+  render: () => ({ template: `<div style="padding: 2rem"><sn-sidebar-nav-demo [collapsed]="true" /></div>` }),
+};
+
+/** `snResizable`: drag the inner edge, or use ← → on it; double-click resets. */
+export const Resizable: StoryObj = {
+  render: () => ({ template: `<div style="padding: 2rem"><sn-sidebar-nav-demo [resizable]="true" /></div>` }),
 };

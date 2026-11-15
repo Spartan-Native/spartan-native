@@ -12,6 +12,8 @@ Import groups: desktop-ui `SnDesktopUiImports` (everything) or one group (`SnWin
 | Title bar with min/max/close | `<sn-title-bar title="…">` (`windowControls="native"` when the OS draws the buttons) | desktop-ui |
 | Window buttons somewhere else (e.g. in the macOS sidebar) | `<sn-window-controls>` | desktop-ui |
 | App navigation down the side | `<sn-sidebar-nav class="sn-sidebar">` > `<sn-sidebar-section>` > `a[snSidebarItem]` / `button[snSidebarItem]` | desktop-ui |
+| Sidebar folded to icons | `<sn-sidebar-nav [collapsed]="folded()">` | desktop-ui |
+| Sidebar or inspector the user can resize | `snResizable="key"` on `<sn-sidebar-nav>` / `<sn-inspector>` (`[resizeDisabled]` while collapsed) | desktop-ui |
 | Main content area | `<main class="sn-content">` | theme |
 | Tabs inside a page | `hlm-tabs` | spartan |
 | App menu bar (File, Edit, …) | `<sn-menubar [menu]="menu">` | desktop-ui |
@@ -22,7 +24,7 @@ Import groups: desktop-ui `SnDesktopUiImports` (everything) or one group (`SnWin
 | Need | Use | Package |
 | --- | --- | --- |
 | Toolbar over a view (New, Share, Delete) | `<sn-command-bar title="…">` + `button[snCommand]`; `<sn-command-group>` for capsules/dividers, `variant="accent"` for the main action, `priority` / `secondary` for what collapses into the overflow, `titlePosition="center"` for a centered title | desktop-ui |
-| A page's own commands in the shell's bar | `<sn-command-bar [commands]="pageCommandsTemplate">` (not a separate toolbar) | desktop-ui |
+| A page's own commands in the shell's bar | `<ng-template snPageCommands>` in the page, `<sn-command-bar [commands]="inject(SnPageCommands).template()">` in the shell (not a separate toolbar) | desktop-ui |
 | Standard button | `<button hlmBtn variant="outline">` | spartan |
 | Suggested / primary action | `<button hlmBtn>` (default variant = accent) | spartan |
 | Flat / toolbar-style button | `<button hlmBtn variant="ghost">` | spartan |
@@ -42,6 +44,7 @@ Import groups: desktop-ui `SnDesktopUiImports` (everything) or one group (`SnWin
 | Details / properties side panel | `<sn-inspector-layout>` > `<sn-inspector>` > `<sn-inspector-section>` > `<sn-inspector-property>` | desktop-ui |
 | Card | `hlmCard` | spartan |
 | Status tag | `<span hlmBadge class="sn-tone-success">` (`success`, `warning`, `danger`, `accent`) | spartan + theme |
+| Colors for chart series, tags, calendars | `var(--sn-color-category-1)` … `-8` | theme |
 | Empty / error state filling a view | `<sn-status-page icon title description>` | desktop-ui |
 | Inline message next to content | `hlmAlert` (+ `sn-tone-*`) | spartan |
 | Progress | `hlm-progress`, `hlm-spinner` | spartan |
@@ -53,6 +56,7 @@ Import groups: desktop-ui `SnDesktopUiImports` (everything) or one group (`SnWin
 | --- | --- | --- |
 | Settings / preferences screen | `<sn-settings-group title>` + `<sn-settings-row title subtitle>`, control as row content | desktop-ui |
 | Text field | `<input hlmInput>`, `<textarea hlmTextarea>`, labelled with `hlmLabel` | spartan |
+| Search / filter box | `<sn-search-field [(value)]="query" placeholder="Search files">` | desktop-ui |
 | Number with spin buttons | `<sn-number-box>` (works with `ngModel` / `formControl`) | desktop-ui |
 | On/off | `hlm-switch` (settings), `hlm-checkbox` (forms, lists) | spartan |
 | One of a few | `hlm-radio-group`, or `hlm-toggle-group` for a segmented control | spartan |
@@ -67,7 +71,8 @@ Import groups: desktop-ui `SnDesktopUiImports` (everything) or one group (`SnWin
 | Short modal form (New item…) | `<sn-modal-sheet [(open)] title>` + `[snSheetCancel]` / `[snSheetPrimary]` (+ `[snSheetSecondary]` for Back / Don't Save) | desktop-ui |
 | Step-by-step setup (wizard, Setup Assistant) | `<sn-assistant>` + `ng-template[snAssistantPage]`, in an `sn-modal-sheet` without sheet buttons | desktop-ui |
 | "Get started" task list | `<sn-checklist>` + `<sn-checklist-item [done]>` + `[snChecklistAction]` | desktop-ui |
-| Confirmation ("Delete 3 files?") | `<sn-modal-sheet role="alertdialog">` or `hlm-alert-dialog` | desktop-ui / spartan |
+| Confirmation ("Delete 3 files?") | `inject(SnAlert).confirm('Delete 3 files?', { confirmLabel: 'Delete' })`: the native alert where the host has one, else an in-page sheet | desktop-ui |
+| Alert with your own buttons (Save / Don't Save / Cancel) | `inject(SnAlert).show({ message, buttons, defaultId, cancelId })` | desktop-ui |
 | Larger dialog | `hlm-dialog` (footer buttons get OS order automatically) | spartan + helm |
 | Button row outside a dialog in OS order | `snDialogButtons` on the row | helm |
 | Onboarding / teaching tip | `<sn-coach-mark>` + `[snCoachMarkFor]` | desktop-ui |

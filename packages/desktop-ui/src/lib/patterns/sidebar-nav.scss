@@ -1,10 +1,11 @@
 // Sidebar navigation per OS. One sheet for the nav, its sections and its items: every rule
-// is scoped with the host's data-slot. Selection colors come from the skin tokens
+// is scoped with the host's data-slot (the item's with its class: a spartan menu trigger on
+// the item replaces its data-slot). Selection colors come from the skin tokens
 // (--sn-selection-*), so the inactive-window look (macOS grey, KDE muted) follows the theme.
 
 $nav: "[data-slot='sn-sidebar-nav']";
 $section: "[data-slot='sn-sidebar-section']";
-$item: "[data-slot='sn-sidebar-item']";
+$item: '.sn-sidebar-item';
 
 // --- Nav ---------------------------------------------------------------------------------
 :host(#{$nav}) {
@@ -213,6 +214,49 @@ $item: "[data-slot='sn-sidebar-item']";
   .badge {
     font-size: inherit;
     color: inherit;
+  }
+}
+
+// --- Collapsed: icons only ----------------------------------------------------------------------
+// The nav is laid out by the skin as usual, then narrowed to one column of icons. Labels and
+// section titles stay in the accessibility tree; the badge becomes a mark on the icon.
+:host(#{$nav}[data-collapsed]) {
+  inline-size: calc(var(--sn-list-item-height) + 1rem);
+  padding-inline: 0.5rem;
+  overflow-x: hidden;
+}
+
+:host(#{$section}[data-collapsed]) .heading,
+:host(#{$item}[data-collapsed]) .label {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:host(#{$section}[data-collapsed]) .heading {
+  padding: 0;
+}
+
+:host(#{$item}[data-collapsed]) {
+  justify-content: center;
+  padding-inline: 0;
+
+  .badge {
+    position: absolute;
+    inset-block-start: 0.125rem;
+    inset-inline-end: 0.125rem;
+    min-inline-size: 0.875rem;
+    padding: 0 0.1875rem;
+    box-sizing: border-box;
+    border-radius: var(--sn-radius-pill);
+    background: var(--sn-color-primary);
+    color: var(--sn-color-primary-fg);
+    font-size: 0.625rem;
+    line-height: 0.875rem;
+    text-align: center;
   }
 }
 

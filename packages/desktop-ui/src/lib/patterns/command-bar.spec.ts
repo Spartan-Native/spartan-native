@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, signal, type TemplateRef, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { SnCommandBarImports } from './command-bar';
+import { SnCommandBarImports, SnPageCommands } from './command-bar';
 
 @Component({
   imports: [SnCommandBarImports],
@@ -183,5 +183,48 @@ describe('SnCommandBar · groups, outside commands and overflow', () => {
       l.textContent!.trim(),
     );
     expect(labels).toEqual(['Delete', 'Rename', 'Settings']);
+  });
+});
+
+@Component({
+  imports: [SnCommandBarImports],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <sn-command-bar title="Shell" [commands]="page.template()">
+      <button snCommand label="Collect"></button>
+    </sn-command-bar>
+    @if (showPage()) {
+      <ng-template snPageCommands>
+        <button snCommand label="Refresh" (click)="refreshed = refreshed + 1"></button>
+      </ng-template>
+    }
+  `,
+})
+class Shell {
+  readonly page = TestBed.inject(SnPageCommands);
+  readonly showPage = signal(true);
+  refreshed = 0;
+}
+
+describe('SnPageCommands', () => {
+  it("shows the open page's commands in the shell's bar, with the page's handlers, until it closes", async () => {
+    document.documentElement.dataset['snSkin'] = 'win';
+    const fixture = TestBed.createComponent(Shell);
+    await fixture.whenStable();
+    const el: HTMLElement = fixture.nativeElement;
+    const labels = () =>
+      [...el.querySelectorAll<HTMLButtonElement>('[role="toolbar"] [data-slot="sn-command"]')].map(
+        (b) => b.getAttribute('aria-label') ?? b.textContent!.trim(),
+      );
+    expect(labels().some((l) => l.includes('Refresh'))).toBe(true);
+    [...el.querySelectorAll<HTMLButtonElement>('[role="toolbar"] button')]
+      .find((b) => b.textContent!.includes('Refresh'))!
+      .click();
+    expect(fixture.componentInstance.refreshed).toBe(1);
+
+    fixture.componentInstance.showPage.set(false);
+    await fixture.whenStable();
+    expect(fixture.componentInstance.page.template()).toBeNull();
+    expect(labels().some((l) => l.includes('Refresh'))).toBe(false);
   });
 });

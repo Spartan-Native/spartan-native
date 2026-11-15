@@ -18,11 +18,15 @@ export {
   SnCommandBarImports,
   SnCommandGroup,
   SnCommandOverflow,
+  SnPageCommands,
+  SnPageCommandsTemplate,
 } from './lib/patterns/command-bar';
 export type { SnCommandBarCollapse, SnCommandBarTitlePosition } from './lib/patterns/command-bar';
 export { SnCoachMark, SnCoachMarkFor, SnCoachMarkImports } from './lib/patterns/coach-mark';
 export type { CoachMarkPlacement, CoachMarkSide } from './lib/patterns/coach-mark';
 export { SnModalSheet } from './lib/patterns/modal-sheet';
+export { SnAlert } from './lib/patterns/alert';
+export type { SnConfirmOptions } from './lib/patterns/alert';
 export {
   SnInspector,
   SnInspectorImports,
@@ -40,6 +44,9 @@ export type { SnSplitButtonVariant } from './lib/controls/split-button';
 export { evaluateNumberExpression, SnNumberBox } from './lib/controls/number-box';
 export { SnTree, SnTreeImports, SnTreeItem } from './lib/controls/tree';
 export { SnTooltip, SnTooltipPanel } from './lib/controls/tooltip';
+export { SnSearchField } from './lib/controls/search-field';
+export { SnResizable } from './lib/controls/resizable';
+export type { SnResizeEdge } from './lib/controls/resizable';
 
 // Menus: the application menu bar and context menus, native through the host where it can
 export { inPageMenu, matchesAccelerator, runEditCommand, tidyMenu, toHostMenu } from './lib/menubar/menu-model';
@@ -70,13 +77,22 @@ import { SnStatusBarImports } from './lib/window/status-bar';
 import { SnStatusPage } from './lib/patterns/status-page';
 import { SnTreeImports } from './lib/controls/tree';
 import { SnTooltip } from './lib/controls/tooltip';
+import { SnSearchField } from './lib/controls/search-field';
+import { SnResizable } from './lib/controls/resizable';
 import { SnPlatformIf } from './lib/platform/platform-if';
 import { SnShortcut } from './lib/platform/shortcut';
 import { SnTitleBar } from './lib/window/title-bar';
 import { SnWindowControls } from './lib/window/window-controls';
 
 export const SnWindowImports = [SnTitleBar, SnWindowControls, ...SnStatusBarImports] as const;
-export const SnControlsImports = [...SnSplitButtonImports, SnNumberBox, ...SnTreeImports, SnTooltip] as const;
+export const SnControlsImports = [
+  ...SnSplitButtonImports,
+  SnNumberBox,
+  ...SnTreeImports,
+  SnTooltip,
+  SnSearchField,
+  SnResizable,
+] as const;
 export const SnMenuImports = [SnMenubar, SnContextMenu] as const;
 export const SnSettingsImports = [SnSettingsGroup, SnSettingsRow] as const;
 export const SnPlatformImports = [SnPlatformIf, SnShortcut] as const;

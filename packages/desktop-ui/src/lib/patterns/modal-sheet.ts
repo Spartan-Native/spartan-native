@@ -57,6 +57,8 @@ let nextId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'data-slot': 'sn-modal-sheet',
+    // `role` is an input for the dialog, not a role for this (empty) host element
+    '[attr.role]': 'null',
     '[attr.data-family]': 'family()',
     '[attr.data-skin]': 'skin()',
   },

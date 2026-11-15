@@ -126,7 +126,24 @@ No outputs: each command is a plain `<button>`, listen to its `(click)`.
 | `sn-command-group` (default slot) | A group of commands; nest `button[snCommand]` inside. |
 | `ng-template[snCommandOverflow]` | Your own overflow menu (an `hlmDropdownMenu` or any `cdkMenu`). Used while the bar has nothing of its own for the menu; once commands collapse (or with `secondary` commands or `overflowItems`) the bar draws the menu itself. |
 | `[snCommandBarStart]` | Before the title, outside the toolbar: back button, sidebar toggle, macOS window controls. |
-| `[snCommandBarEnd]` | After the commands, outside the toolbar: search field, GNOME window controls. |
+| `[snCommandBarEnd]` | After the commands, outside the toolbar: search field (`<sn-search-field>`), GNOME window controls. |
+
+### Page commands
+
+A shell with one bar for every page passes the current page's commands as `[commands]`. `SnPageCommands` holds
+them and `<ng-template snPageCommands>` declares them in the page; they keep the page's context and go away
+with it:
+
+<Source
+  language="html"
+  code={`<!-- shell: pageCommands = inject(SnPageCommands) -->
+<sn-command-bar [title]="title()" [commands]="pageCommands.template()">…</sn-command-bar>
+
+<!-- a page -->
+<ng-template snPageCommands>
+  <button snCommand icon="lucideRefreshCw" label="Refresh" (click)="reload()"></button>
+</ng-template>`}
+/>
 
 ### CSS hooks
 

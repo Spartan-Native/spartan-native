@@ -21,6 +21,36 @@ describe('derivePalette', () => {
     }
   }
 
+  it('has eight categories, distinct and each at least 3:1 against the background', () => {
+    for (const skin of SKINS) {
+      for (const scheme of ['light', 'dark'] as const) {
+        const first = derivePalette({ skin, accent: ACCENTS[0], scheme });
+        const categories = (p: typeof first) => [
+          p.category1,
+          p.category2,
+          p.category3,
+          p.category4,
+          p.category5,
+          p.category6,
+          p.category7,
+          p.category8,
+        ];
+        expect(new Set(categories(first)).size).toBe(8);
+        for (const accent of ACCENTS) {
+          const p = derivePalette({ skin, accent, scheme });
+          for (const color of categories(p)) expect(contrastRatio(color, p.bg)).toBeGreaterThanOrEqual(3);
+        }
+      }
+    }
+  });
+
+  it('names the categories --sn-color-category-1 … -8', () => {
+    const vars = paletteToCssVars(derivePalette({ skin: 'mac', accent: '#007AFF', scheme: 'light' }));
+    expect(vars['--sn-color-category-1']).toBeDefined();
+    expect(vars['--sn-color-category-8']).toBeDefined();
+    expect(vars['--sn-color-fg-muted']).toBeDefined();
+  });
+
   it('matches the design reference for Windows 11 light', () => {
     const p = derivePalette({ skin: 'win', accent: '#0078D4', scheme: 'light' });
     expect(p.primary).toBe('#0067b5');

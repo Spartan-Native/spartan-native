@@ -71,6 +71,14 @@ import { HlmSwitchImports } from '@spartan-ng/helm/switch';
 Give the layout a height (it fills its flex parent). The panel goes in the layout's trailing slot;
 everything else is the main content, which scrolls on its own.
 
+To let the user widen it, add `snResizable` (from the same package). The handle sits on the inspector's inner
+edge; the width is a share of the layout, remembered under the key you give:
+
+<Source
+  language="html"
+  code={`<sn-inspector [(open)]="infoOpen" [title]="file().name" snResizable="inspector" resizeLabel="Resize the details">…</sn-inspector>`}
+/>
+
 ## API
 
 ### `sn-inspector-layout`
@@ -84,7 +92,7 @@ container named `sn-inspector-layout`; below 40rem the inspector overlays the co
 | --- | --- | --- | --- |
 | `title` | `string` (required) | | Heading, usually the selected item's name; also the panel's accessible name. |
 | `icon` | `string` | `''` | Preview icon (an @ng-icons name registered with `provideIcons()`): large on top on KDE, beside the title elsewhere. |
-| `open` | `boolean` (model) | `true` | Shown or hidden; two-way bindable as `[(open)]`. The ChromeOS close button sets it to `false` (`openChange`). |
+| `open` | `boolean` (model) | `true` | Shown or hidden; two-way bindable as `[(open)]`. The ChromeOS close button sets it to `false`; `openChange` fires only then, when the user closes it, not when you set `open`. |
 
 Content: `sn-inspector-section`s, or anything.
 

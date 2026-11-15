@@ -1,0 +1,49 @@
+// The resize handle of [snResizable]: an invisible 8px strip centred on the panel's edge. A 2px
+// accent line shows while it is hovered, dragged or focused, like the split views of the OSes.
+
+:host {
+  position: absolute;
+  z-index: 2;
+  inline-size: 0.5rem;
+  translate: -50% 0;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+:host::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc(50% - 1px);
+  inline-size: 2px;
+  background: transparent;
+  transition: background-color var(--sn-duration-fast) var(--sn-easing);
+}
+
+:host(:hover)::after,
+:host(:active)::after,
+:host(:focus-visible)::after {
+  background: var(--sn-color-primary);
+}
+
+:host(:focus-visible) {
+  outline: none;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+// macOS shows no line, only the resize cursor (but the keyboard focus still needs one)
+:host([data-family='macos']:hover)::after,
+:host([data-family='macos']:active)::after {
+  background: transparent;
+}
+
+@media (forced-colors: active) {
+  :host(:hover)::after,
+  :host(:active)::after,
+  :host(:focus-visible)::after {
+    background: Highlight;
+  }
+}

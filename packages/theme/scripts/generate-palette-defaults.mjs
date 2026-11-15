@@ -33,7 +33,7 @@ const SKINS = [
   ['qt', 'KDE Plasma · Breeze', '.t-qt'],
   ['cros', 'ChromeOS', '.t-cros'],
 ];
-const kebab = (k) => k.replace(/[A-Z]/g, (c) => '-' + c.toLowerCase());
+const kebab = (k) => k.replace(/[A-Z]|\d+/g, (c) => '-' + c.toLowerCase());
 const block = (selector, palette) =>
   `  ${selector} {\n${Object.entries(palette)
     .map(([k, v]) => `    --sn-color-${kebab(k)}: ${v};`)

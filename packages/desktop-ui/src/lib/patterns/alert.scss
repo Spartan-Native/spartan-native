@@ -1,0 +1,40 @@
+// The in-page alert of SnAlert. Its layout is <sn-modal-sheet>'s; these are only the message
+// and the buttons' structure (their look comes from the theme, through spartan's button hooks).
+
+:host {
+  display: contents;
+}
+
+.message {
+  margin: 0;
+  white-space: pre-line;
+}
+
+// In the base layer, so every skin's button rules win.
+@layer spartan-native.base {
+  .sn-alert-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--sn-control-height);
+    padding-inline: var(--sn-control-padding-x, 0.75rem);
+    border: 1px solid var(--sn-color-border);
+    border-radius: var(--sn-radius-control);
+    background: var(--sn-color-control, var(--sn-color-bg));
+    color: var(--sn-color-fg);
+    font: inherit;
+    font-weight: var(--sn-font-weight-control);
+    white-space: nowrap;
+
+    &.bg-primary {
+      border-color: transparent;
+      background: var(--sn-color-primary);
+      color: var(--sn-color-primary-fg);
+    }
+
+    &:focus-visible {
+      outline: var(--sn-focus-outline);
+      outline-offset: var(--sn-focus-offset);
+    }
+  }
+}

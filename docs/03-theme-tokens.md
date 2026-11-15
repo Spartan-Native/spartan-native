@@ -53,6 +53,7 @@ Every color token is `--sn-color-<name>`, one per key of the `Palette` type (`fg
 | `scrim` | `--sn-color-scrim` | — | Modal backdrop |
 | `toastbg` | `--sn-color-toast` | — | Toast background |
 | `sidebg` | `--sn-color-sidebar` | `--sidebar` | Sidebar fill |
+| — | `--sn-color-category-1` … `-8` | — | Series and categories (charts, tags, calendars): the platform's named colors (Apple system colors, Fluent shared colors, the GNOME palette, Breeze) in the order blue, orange, green, purple, teal, pink, yellow, brown; each pushed to ≥ 3:1 against bg. They don't follow the accent |
 | `font`, `fs` | `--sn-font-sans`, `--sn-font-size` | `--font-sans` | Per-skin font stack and base size |
 | `ts` | `--sn-text-scale` | — | Text scale; the root font size is `16px × --sn-text-scale`, so every `rem` grows with it |
 

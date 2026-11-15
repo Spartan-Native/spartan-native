@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { injectSkin, skinFamily } from '@spartan-native/theme';
+import { SnTooltip } from '../controls/tooltip';
 
 let nextId = 0;
 
@@ -37,6 +38,11 @@ let nextId = 0;
  * ```
  *
  * With the Router: `<a snSidebarItem routerLink="/x" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">`.
+ *
+ * `collapsed` folds it to a strip of icons (Windows NavigationView's compact mode, a folded
+ * GNOME/KDE sidebar): labels and section titles stay for screen readers and show as tooltips,
+ * badges become a small mark on the icon. Give every item an `icon` then. Resizable with
+ * `snResizable`; pass `[resizeDisabled]="collapsed"` so the folded strip keeps its own width.
  */
 @Component({
   selector: 'sn-sidebar-nav',
@@ -45,6 +51,7 @@ let nextId = 0;
     'data-slot': 'sn-sidebar-nav',
     class: 'sn-sidebar',
     role: 'navigation',
+    '[attr.data-collapsed]': 'collapsed() ? "" : null',
     '[attr.data-family]': 'family()',
     '[attr.data-skin]': 'skin()',
     '(keydown)': 'onKeydown($event)',
@@ -53,6 +60,9 @@ let nextId = 0;
   styleUrl: './sidebar-nav.scss',
 })
 export class SnSidebarNav {
+  /** Folded to icons only; labels show as tooltips. */
+  readonly collapsed = input(false, { transform: booleanAttribute });
+
   private readonly items = contentChildren(
     forwardRef(() => SnSidebarItem),
     { descendants: true },
@@ -115,6 +125,7 @@ export function nextIndex(key: string, current: number, count: number): number |
     'data-slot': 'sn-sidebar-section',
     role: 'group',
     '[attr.aria-labelledby]': 'title() ? headingId : null',
+    '[attr.data-collapsed]': 'nav?.collapsed() ? "" : null',
     '[attr.data-family]': 'family()',
     '[attr.data-skin]': 'skin()',
   },
@@ -128,6 +139,7 @@ export function nextIndex(key: string, current: number, count: number): number |
 })
 export class SnSidebarSection {
   readonly title = input('');
+  protected readonly nav = inject(SnSidebarNav, { optional: true });
   protected readonly headingId = `sn-sidebar-section-${nextId++}`;
   protected readonly skin = injectSkin();
   protected readonly family = computed(() => skinFamily(this.skin()));
@@ -136,22 +148,29 @@ export class SnSidebarSection {
 /**
  * One navigation item, on an `<a>` or a `<button>`. `icon` is an @ng-icons name the app
  * registered with provideIcons(); `badge` is a short count or label on the trailing side.
+ *
+ * The styles hang on the `sn-sidebar-item` class, not on `data-slot`, so the item can also be
+ * the trigger of a spartan menu (`hlmDropdownMenuTrigger` sets its own `data-slot`).
  */
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector -- an attribute on a real <a> or <button>, so links and buttons keep native behavior
   selector: 'a[snSidebarItem], button[snSidebarItem]',
   imports: [NgIcon],
+  hostDirectives: [SnTooltip],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'data-slot': 'sn-sidebar-item',
-    class: 'sn-list-item',
+    class: 'sn-list-item sn-sidebar-item',
     '[attr.aria-current]': "active() ? 'page' : null",
     '[attr.data-active]': "active() ? '' : null",
+    '[attr.data-collapsed]': 'nav?.collapsed() ? "" : null',
     '[attr.tabindex]': 'nav?.tabStop() === this ? 0 : nav ? -1 : null',
     '[attr.type]': "element.localName === 'button' ? 'button' : null",
     '[attr.data-family]': 'family()',
     '[attr.data-skin]': 'skin()',
     '(focus)': 'nav?.setFocused(this)',
+    '(pointerenter)': 'syncTooltip()',
+    '(focusin)': 'syncTooltip()',
   },
   template: `
     @if (icon()) {
@@ -173,6 +192,18 @@ export class SnSidebarItem {
   protected readonly nav = inject(SnSidebarNav, { optional: true });
   protected readonly skin = injectSkin();
   protected readonly family = computed(() => skinFamily(this.skin()));
+  private readonly tooltip = inject(SnTooltip, { self: true });
+
+  /** Collapsed: the label (and badge) as the tooltip, read when the pointer or focus arrives. */
+  protected syncTooltip(): void {
+    if (!this.nav?.collapsed()) {
+      this.tooltip.text.set(null);
+      return;
+    }
+    const label = this.element.querySelector('.label')?.textContent?.trim() ?? '';
+    const badge = String(this.badge() ?? '').trim();
+    this.tooltip.text.set(badge ? `${label} (${badge})` : label);
+  }
 }
 
 export const SnSidebarNavImports = [SnSidebarNav, SnSidebarSection, SnSidebarItem] as const;

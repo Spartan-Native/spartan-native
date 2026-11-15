@@ -50,3 +50,23 @@ describe('SnModalSheet', () => {
     expect(dialog()).toBeNull();
   });
 });
+
+@Component({
+  imports: [SnModalSheet],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<sn-modal-sheet role="alertdialog" [open]="true" title="Delete it?"
+    ><button snSheetCancel>Cancel</button></sn-modal-sheet
+  >`,
+})
+class AlertHost {}
+
+describe('SnModalSheet role', () => {
+  it('puts the role on the dialog only, not on its host element', async () => {
+    const fixture = TestBed.createComponent(AlertHost);
+    await fixture.whenStable();
+    expect(document.querySelectorAll('[role="alertdialog"]').length).toBe(1);
+    expect(document.querySelector('[role="alertdialog"]')!.localName).not.toBe('sn-modal-sheet');
+    document.querySelector<HTMLButtonElement>('[snSheetCancel]')!.click();
+    await fixture.whenStable();
+  });
+});

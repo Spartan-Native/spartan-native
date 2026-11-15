@@ -1,0 +1,63 @@
+import { Meta, Canvas, Source } from '@storybook/addon-docs/blocks';
+import * as Stories from '../stories/alert.stories';
+
+<Meta of={Stories} />
+
+# Alert
+
+`SnAlert` asks a question or reports something with a few buttons, in one call. Where the host can show the
+OS's own alert (`NativeHost.dialogs.message`: NSAlert, TaskDialog, AdwAlertDialog), it does. Otherwise (in the
+browser, or on a host without alerts) it draws an in-page `alertdialog` in the layout of `<sn-modal-sheet>`.
+Your code gets the same answer either way, so you don't write the native call and its fallback twice.
+
+<Canvas of={Stories.Confirm} />
+
+<Canvas of={Stories.SaveChanges} />
+
+## Usage
+
+<Source
+  language="ts"
+  code={`import { SnAlert } from '@spartan-native/desktop-ui';
+
+private readonly alert = inject(SnAlert);
+
+async remove(file: File) {
+  const yes = await this.alert.confirm(\`Delete “\${file.name}”?\`, { confirmLabel: 'Delete', kind: 'warning' });
+  if (yes) await this.files.delete(file);
+}
+
+async close() {
+  const answer = await this.alert.show({
+    kind: 'warning',
+    title: 'Save changes to “Report.md”?',
+    message: 'Your changes are lost if you don’t save them.',
+    buttons: [
+      { id: 'save', label: 'Save' },
+      { id: 'discard', label: "Don't Save" },
+      { id: 'cancel', label: 'Cancel' },
+    ],
+    defaultId: 'save',
+    cancelId: 'cancel',
+  });
+  if (answer === 'save') …
+}`}
+/>
+
+## API
+
+| Method | Resolves | Description |
+| --- | --- | --- |
+| `show(options: MessageOptions)` | `string \| null` | The id of the pressed button; `cancelId` when dismissed (Esc), null without a `cancelId`. `MessageOptions` is the theme's: `kind`, `title`, `message`, `buttons`, `defaultId`, `cancelId`. |
+| `confirm(message, { title?, kind?, confirmLabel?, cancelLabel? })` | `boolean` | Two buttons, confirm (default "OK") and Cancel; true when confirmed. Name the confirm button after what it does. |
+
+The labels you pass are shown as they are: translate them in the app.
+
+## In-page alert
+
+- The default button (`defaultId`, else the first one that isn't the cancel button) is the sheet's primary
+  button and has the focus, so Enter presses it.
+- Esc and the `cancelId` button answer `cancelId`. Other buttons go where the skin puts a third dialog button.
+- With a `title`, the title is the heading and `message` the text under it; without one, the message is the
+  heading.
+- On macOS it hangs from the window marked `snSheetHost`, like every sheet.
