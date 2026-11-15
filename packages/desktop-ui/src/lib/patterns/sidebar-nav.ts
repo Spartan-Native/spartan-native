@@ -41,7 +41,8 @@ let nextId = 0;
  *
  * `collapsed` folds it to a strip of icons (Windows NavigationView's compact mode, a folded
  * GNOME/KDE sidebar): labels and section titles stay for screen readers and show as tooltips,
- * badges become a small mark on the icon. Give every item an `icon` then. Resizable with
+ * badges become a small mark on the icon. An item without an `icon` keeps its content (make it
+ * short enough for the strip, e.g. a number), with `tooltip` for what the tooltip should say. Resizable with
  * `snResizable`; pass `[resizeDisabled]="collapsed"` so the folded strip keeps its own width.
  */
 @Component({
@@ -164,6 +165,7 @@ export class SnSidebarSection {
     '[attr.aria-current]': "active() ? 'page' : null",
     '[attr.data-active]': "active() ? '' : null",
     '[attr.data-collapsed]': 'nav?.collapsed() ? "" : null',
+    '[attr.data-icon]': 'icon() ? "" : null',
     '[attr.tabindex]': 'nav?.tabStop() === this ? 0 : nav ? -1 : null',
     '[attr.type]': "element.localName === 'button' ? 'button' : null",
     '[attr.data-family]': 'family()',
@@ -187,22 +189,28 @@ export class SnSidebarItem {
   readonly active = input(false, { transform: booleanAttribute });
   readonly icon = input('');
   readonly badge = input<string | number>('');
+  /** The tooltip while the sidebar is collapsed. Default: the item's text (and badge). */
+  readonly tooltip = input('');
 
   readonly element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
   protected readonly nav = inject(SnSidebarNav, { optional: true });
   protected readonly skin = injectSkin();
   protected readonly family = computed(() => skinFamily(this.skin()));
-  private readonly tooltip = inject(SnTooltip, { self: true });
+  private readonly hint = inject(SnTooltip, { self: true });
 
   /** Collapsed: the label (and badge) as the tooltip, read when the pointer or focus arrives. */
   protected syncTooltip(): void {
     if (!this.nav?.collapsed()) {
-      this.tooltip.text.set(null);
+      this.hint.text.set(null);
+      return;
+    }
+    if (this.tooltip()) {
+      this.hint.text.set(this.tooltip());
       return;
     }
     const label = this.element.querySelector('.label')?.textContent?.trim() ?? '';
     const badge = String(this.badge() ?? '').trim();
-    this.tooltip.text.set(badge ? `${label} (${badge})` : label);
+    this.hint.text.set(badge ? `${label} (${badge})` : label);
   }
 }
 

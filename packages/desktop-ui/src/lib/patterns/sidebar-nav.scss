@@ -219,7 +219,8 @@ $item: '.sn-sidebar-item';
 
 // --- Collapsed: icons only ----------------------------------------------------------------------
 // The nav is laid out by the skin as usual, then narrowed to one column of icons. Labels and
-// section titles stay in the accessibility tree; the badge becomes a mark on the icon.
+// section titles stay in the accessibility tree; the badge becomes a mark on the icon. An item
+// without an icon keeps its (short) content.
 :host(#{$nav}[data-collapsed]) {
   inline-size: calc(var(--sn-list-item-height) + 1rem);
   padding-inline: 0.5rem;
@@ -227,7 +228,7 @@ $item: '.sn-sidebar-item';
 }
 
 :host(#{$section}[data-collapsed]) .heading,
-:host(#{$item}[data-collapsed]) .label {
+:host(#{$item}[data-collapsed][data-icon]) .label {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -238,6 +239,11 @@ $item: '.sn-sidebar-item';
 
 :host(#{$section}[data-collapsed]) .heading {
   padding: 0;
+}
+
+:host(#{$item}[data-collapsed]:not([data-icon])) .label {
+  flex: none;
+  overflow: visible;
 }
 
 :host(#{$item}[data-collapsed]) {

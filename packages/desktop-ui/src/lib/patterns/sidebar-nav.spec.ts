@@ -30,6 +30,7 @@ describe('sidebar nextIndex', () => {
     <sn-sidebar-nav aria-label="Sections" [collapsed]="collapsed()">
       <sn-sidebar-section title="Library">
         <button snSidebarItem icon="lucideInbox" badge="3" active>Inbox</button>
+        <a snSidebarItem href="#" tooltip="Monday, 27 October">27</a>
       </sn-sidebar-section>
     </sn-sidebar-nav>
   `,
@@ -53,8 +54,16 @@ describe('SnSidebarNav collapsed', () => {
 
     fixture.componentInstance.collapsed.set(true);
     await fixture.whenStable();
-    expect(el.querySelectorAll('[data-collapsed]').length).toBe(3);
+    expect(el.querySelectorAll('[data-collapsed]').length).toBe(4);
     item.dispatchEvent(new Event('pointerenter'));
     expect(tooltip.text()).toBe('Inbox (3)');
+
+    // an item without an icon keeps its content, and its tooltip says what `tooltip` says
+    const chip = el.querySelector<HTMLElement>('a[snSidebarItem]')!;
+    expect(chip.hasAttribute('data-icon')).toBe(false);
+    expect(item.hasAttribute('data-icon')).toBe(true);
+    chip.dispatchEvent(new Event('pointerenter'));
+    const chipTooltip = fixture.debugElement.query((d) => d.nativeElement === chip).injector.get(SnTooltip);
+    expect(chipTooltip.text()).toBe('Monday, 27 October');
   });
 });
