@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-11-17
+
 ### Added
 
 - `@spartan-native/desktop-ui`: `SnAlert`, alerts and confirmations in one call: `show(options)` resolves the pressed button's id and `confirm(message, options)` a yes or no. It uses the host's native alert when there is one, and otherwise an in-page `alertdialog` sheet with the default button focused and Esc answering `cancelId`.
@@ -49,6 +51,7 @@ First release.
 - `@spartan-native/host-web`: OS settings from browser APIs, live, for browsers and installed PWAs.
 - `@spartan-native/host-conformance`: the test suite every host adapter must pass.
 
-[Unreleased]: https://github.com/Spartan-Native/spartan-native/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/Spartan-Native/spartan-native/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/Spartan-Native/spartan-native/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/Spartan-Native/spartan-native/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Spartan-Native/spartan-native/releases/tag/v0.1.0

@@ -134,4 +134,4 @@ Maintainers only. All `@spartan-native/*` packages in this repository share one 
 2. Set `"version"` in the root and every package `package.json` to the new version (and the sibling `@spartan-native/*` peer versions), and merge that to `main`.
 3. Tag and push: `git tag vx.y.z && git push origin vx.y.z`. A `-beta` or `-beta.n` suffix publishes on the `beta` dist-tag.
 
-`.github/workflows/release.yml` then tests, builds, stamps the tag's version into every package, publishes them to npmjs.org and creates the GitHub Release from the changelog section. The tag decides the published version, even if a `package.json` was not bumped.
+`.github/workflows/release.yml` then tests, builds, stamps the tag's version into every package, and publishes them to npmjs.org. The tag decides the published version, even if a `package.json` was not bumped.

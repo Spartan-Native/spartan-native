@@ -1,5 +1,5 @@
 # Publishes every @spartan-native/* package listed in scripts/libraries.mjs to npmjs.org when a
-# release tag is pushed, then creates a GitHub Release from the matching CHANGELOG.md section.
+# release tag is pushed.
 #
 # Release tags (a leading "v" is optional):
 #   1.2.3 / v1.2.3                 -> published as 1.2.3 with dist-tag "latest"
@@ -68,7 +68,7 @@ jobs:
     if: needs.version.outputs.version != ''
     runs-on: ubuntu-latest
     permissions:
-      contents: write # create the GitHub Release
+      contents: read
       id-token: write # npm trusted publishing and provenance
     env:
       VERSION: ${{ needs.version.outputs.version }}
@@ -112,27 +112,3 @@ jobs:
             npm publish "./dist/$lib" --tag "$DIST_TAG" --access public $PROVENANCE
           done
 
-      - name: Create GitHub Release
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
-        run: |
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            echo "Release $TAG already exists."
-            exit 0
-          fi
-          # The CHANGELOG.md section "## [<version>] ..." up to the next "## [",
-          # without the "[x]: url" link definitions at the end of the file.
-          awk -v v="$VERSION" '
-            /^## \[/ { if (found) exit; if (index($0, "## [" v "]") == 1) { found = 1; next } }
-            /^\[[^]]+\]: / { next }
-            found { print }
-          ' CHANGELOG.md > release-notes.md
-          prerelease=""
-          [[ "$DIST_TAG" == "beta" ]] && prerelease="--prerelease"
-          if [[ -s release-notes.md ]]; then
-            gh release create "$TAG" --title "$VERSION" --notes-file release-notes.md $prerelease
-          else
-            echo "::warning::CHANGELOG.md has no section for $VERSION; using generated notes."
-            gh release create "$TAG" --title "$VERSION" --generate-notes $prerelease
-          fi
