@@ -76,7 +76,7 @@
     "remark-gfm": "^4.0.1",
     "storybook": "^10.6.6",
     "typescript": "~6.0.3",
-    "typescript-eslint": "8.71.0",
+    "typescript-eslint": "8.73.0",
     "vitest": "^5.0.0"
   },
   "description": "Spartan Native: a native-look theme for spartan/ui (Angular) on Windows, macOS, GNOME, KDE and ChromeOS.",
