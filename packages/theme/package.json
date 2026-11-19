@@ -24,8 +24,8 @@
     "@angular/common": "^22.2.0",
     "@angular/core": "^22.2.0",
     "@spartan-ng/brain": "^1.9.0",
-    "@storybook/angular": "^10.6.6",
-    "@storybook/addon-themes": "^10.6.6"
+    "@storybook/angular": "^10.6.7",
+    "@storybook/addon-themes": "^10.6.7"
   },
   "dependencies": {
     "tslib": "^2.3.0"
@@ -54,10 +54,10 @@
     "@ng-icons/core": "^33.4.0",
     "@ng-icons/lucide": "^33.4.0",
     "@spartan-ng/cli": "^1.9.0",
-    "@storybook/addon-a11y": "^10.6.6",
-    "@storybook/addon-docs": "^10.6.6",
-    "@storybook/addon-themes": "^10.6.6",
-    "@storybook/angular": "^10.6.6",
+    "@storybook/addon-a11y": "^10.6.7",
+    "@storybook/addon-docs": "^10.6.7",
+    "@storybook/addon-themes": "^10.6.7",
+    "@storybook/angular": "^10.6.7",
     "@tailwindcss/postcss": "^4.3.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
